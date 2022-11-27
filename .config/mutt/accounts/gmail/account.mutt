@@ -1,0 +1,18 @@
+# vim: filetype=muttrc
+## Mutt configuration template
+
+# Account config
+set my_name = "Miguel López Ruiz"
+set from = "miguel.lr96@gmail.com"
+
+set mbox_type   = Maildir
+set folder      = "~/.local/mail/gmail"
+set spoolfile   = "+Inbox"
+set record      = "+Local.Sents"
+set postponed   = "+Local.Drafts"
+set sendmail    = "msmtp -C $HOME/.config/mutt/config/msmtprc -a gmail"
+unmailboxes *
+mailboxes `zsh -i -c 'mailboxes ~/.local/mail/gmail'`
+
+macro index aa '<save-message>=Archive<enter><sync-mailbox>s'
+macro index ii '<save-message>=INBOX<enter><sync-mailbox>s'

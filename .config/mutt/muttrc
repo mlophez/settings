@@ -1,0 +1,14 @@
+# vim: filetype=muttrc
+
+#### SETTINGS
+source ~/.config/mutt/config/settings.mutt
+
+#### THEME
+source ~/.config/mutt/themes/dracula.mutt
+
+#### ACCOUNTS
+source ~/.config/mutt/accounts/logalty.mutt
+
+#macro index <f1> '<sync-mailbox><enter-command>source ~/.config/mutt/accounts/gmail/account.mutt<enter><change-folder>!<enter>'
+#macro index <f2> '<sync-mailbox><enter-command>source ~/.config/mutt/accounts/hotmail/account.mutt<enter><change-folder>!<enter>'
+#macro index <f3> '<sync-mailbox><enter-command>source ~/.config/mutt/accounts/trc/account.mutt<enter><change-folder>!<enter>'

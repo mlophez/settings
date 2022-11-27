@@ -1,0 +1,67 @@
+# vim: ft=dosini
+
+[general]
+accounts = gmail, hotmail, trc
+pythonfile = ~/.local/bin/offlineimappass
+
+[Account trc]
+localrepository = trc-local
+remoterepository = trc-remote
+
+[Repository trc-remote]
+type = IMAP
+remotehost = imap.grupotrc.com
+remoteport = 993
+remoteusereval = get_value("trc", "user")
+remotepasseval = get_pass("trc")
+maxconnections = 3
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Repository trc-local]
+type = Maildir
+localfolders = ~/.local/mail/trc
+
+[Account gmail]
+localrepository = gmail-local
+remoterepository = gmail-remote
+
+[Repository gmail-remote]
+type = IMAP
+maxconnections = 3
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+remotehost = imap.gmail.com
+remoteport = 993
+remoteusereval = get_value("gmail", "user")
+nametrans = lambda f: f.replace('[Gmail]/', 'GMAIL.') if f.startswith('[Gmail]/') else f
+
+#remotepasseval = get_pass("gmail")
+auth_mechanisms = XOAUTH2
+oauth2_request_url = https://accounts.google.com/o/oauth2/token
+oauth2_client_id_eval = get_value("gmail", "oauth_id")
+oauth2_client_secret_eval = get_value("gmail", "oauth_secret")
+oauth2_refresh_token_eval = get_value("gmail", "oauth_token")
+
+[Repository gmail-local]
+type = Maildir
+localfolders = ~/.local/mail/gmail
+nametrans = lambda f: '[Gmail]/' + f.split('.')[1] if f.startswith('GMAIL.') else f
+
+[Account hotmail]
+localrepository = hotmail-local
+remoterepository = hotmail-remote
+
+[Repository hotmail-remote]
+type = IMAP
+remotehost = outlook.office365.com
+remoteport = 993
+remoteusereval = get_value("hotmail", "user")
+remotepasseval = get_pass("hotmail")
+maxconnections = 3
+ssl = yes
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+[Repository hotmail-local]
+type = Maildir
+localfolders = ~/.local/mail/hotmail

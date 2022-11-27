@@ -1,0 +1,32 @@
+# vim: ft=Dockerfile
+# docker build -f wine.df -t wine:stable .
+# docker run -it --rm wine  /bin/bash
+
+FROM ubuntu:20.04 as builder
+RUN apt-get update && apt-get install --no-install-recommends -y software-properties-common wget curl gnupg2 ca-certificates && \
+    wget -nc https://dl.winehq.org/wine-builds/winehq.key && \
+    mv winehq.key /usr/share/keyrings/winehq-archive.key && \
+    wget -nc https://dl.winehq.org/wine-builds/ubuntu/dists/focal/winehq-focal.sources && \
+    mv winehq-focal.sources /etc/apt/sources.list.d/
+
+FROM ubuntu:20.04
+ARG USER=wine
+ARG UID=2000
+ARG SHELL=/bin/bash
+ENV DEBIAN_FRONTEND=noninteractive
+ENV CONTAINER=YES
+
+COPY --from=builder /usr/share/keyrings/winehq-archive.key /usr/share/keyrings/winehq-archive.key
+COPY --from=builder /etc/apt/sources.list.d/winehq-focal.sources /etc/apt/sources.list.d/winehq-focal.sources
+COPY --from=builder /etc/ssl /etc/ssl
+
+RUN dpkg --add-architecture i386 && apt-get update && \
+    apt-get install --install-recommends --fix-broken -y wget winehq-stable zenity cabextract && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget -nv -O /usr/bin/winetricks https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks && chmod +x /usr/bin/winetricks
+
+RUN useradd -u ${UID} -U -m -s ${SHELL} ${USER}
+USER ${USER}
+
+CMD ["/bin/bash"]

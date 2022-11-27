@@ -1,0 +1,9 @@
+PATH=/bin:/usr/bin
+MAILDIR=$HOME/.local/mail/trc
+DEFAULT=$HOME/.local/mail/trc/INBOX
+LOGFILE=/dev/null
+SHELL=/bin/sh
+
+:0
+* ^(From|Cc|To).*@gnet.es
+Personal

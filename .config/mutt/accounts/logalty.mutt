@@ -1,0 +1,32 @@
+# vim: filetype=muttrc
+## Mutt configuration template
+
+# Account config
+set my_name = "Miguel López Ruiz"
+set from = "miguel.lopez@logalty.com"
+
+set mbox_type   = Maildir
+set folder      = "~/.local/share/mail/logalty"
+set spoolfile   = "+Inbox"
+set record      = "+Sent"
+set postponed   = "+Drafts"
+#set sendmail    = "msmtp -C $HOME/.config/mutt/config/msmtprc -a logalty"
+unmailboxes *
+mailboxes `zsh -i -c 'mailboxes ~/.local/share/mail/logalty'`
+
+#set sort = last-date-received
+#set sort = date-received
+#set signature="~/.config/mutt/accounts/logalty/signature.txt"
+
+macro index aa '<save-message>=Archivo<enter><sync-mailbox>y'
+macro index ii '<save-message>=Inbox<enter><sync-mailbox>y'
+
+bind index f noop
+macro index fn '<tag-pattern>Backup Job Summary Report<enter>\
+                <tag-pattern>admin@services.logalty.com<enter>\
+                <tag-pattern>info.ca@logalty.com<enter>\
+                <tag-pattern>info.ca@logalty.es<enter>\
+                <tag-pattern>etl@logalty.es<enter>\
+                <tag-pattern>control@logalty.es<enter>\
+                <tag-pattern>control@logalty.com<enter>\
+                <tag-pattern>StatusCake Team<enter>'

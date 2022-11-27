@@ -1,0 +1,113 @@
+# vim: ft=mbsyncrc
+
+### LOGALTY
+IMAPAccount logalty
+Host outlook.office365.com
+User miguel.lopez@logalty.com
+PassCmd "pass mail/logalty"
+SSLType IMAPS
+SSLVersions TLSv1.2
+AuthMechs LOGIN
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore logalty-remote
+Account logalty 
+
+MaildirStore logalty-local
+SubFolders Verbatim
+Path ~/.local/share/mail/logalty/
+Inbox ~/.local/share/mail/logalty/Inbox
+
+Channel logalty 
+Far :logalty-remote:
+Near :logalty-local:
+Create Both
+Expunge Both
+Patterns "INBOX" "Archivo"
+SyncState *
+CopyArrivalDate yes
+
+#  ### GMAIL
+#  IMAPAccount gmail
+#  Host imap.gmail.com
+#  User miguel.lr96@gmail.com
+#  PassCmd "zsh -i -c 'pass-oauth2 web/google'"
+#  SSLType IMAPS
+#  SSLVersions TLSv1.2
+#  AuthMechs XOAUTH2
+#  CertificateFile /etc/ssl/certs/ca-certificates.crt
+#  
+#  IMAPStore gmail-remote
+#  Account gmail
+#  
+#  MaildirStore gmail-local
+#  SubFolders Verbatim
+#  Path ~/.local/mail/gmail/
+#  Inbox ~/.local/mail/gmail/Inbox
+#  
+#  Channel gmail
+#  Far :gmail-remote:
+#  Near :gmail-local:
+#  Create Both
+#  Expunge Both
+#  Patterns * ![Gmail]*
+#  SyncState *
+#  CopyArrivalDate yes
+#  
+#  ### HOTMAIL
+#  IMAPAccount hotmail
+#  Host outlook.office365.com
+#  User miguel.lr96@hotmail.com
+#  PassCmd "zsh -i -c 'pass email/hotmail password'"
+#  SSLType IMAPS
+#  SSLVersions TLSv1.2
+#  AuthMechs LOGIN
+#  CertificateFile /etc/ssl/certs/ca-certificates.crt
+#  
+#  IMAPStore hotmail-remote
+#  Account hotmail
+#  
+#  MaildirStore hotmail-local
+#  SubFolders Verbatim
+#  Path ~/.local/mail/hotmail/
+#  Inbox ~/.local/mail/hotmail/Inbox
+#  
+#  Channel hotmail
+#  Far :hotmail-remote:
+#  Near :hotmail-local:
+#  Create Both
+#  Expunge Both
+#  Patterns *
+#  SyncState *
+#  CopyArrivalDate yes
+
+## ### TRC
+## IMAPAccount trc
+## Host imap.grupotrc.com
+## User miguellopez@grupotrc.com
+## PassCmd "zsh -i -c 'pass email/trc token'"
+## SSLType IMAPS
+## SSLVersions TLSv1.2
+## AuthMechs PLAIN
+## CertificateFile /etc/ssl/certs/ca-certificates.crt
+## 
+## IMAPStore trc-remote
+## Account trc
+## 
+## MaildirStore trc-local
+## SubFolders Verbatim
+## Path ~/.local/mail/trc/
+## Inbox ~/.local/mail/trc/Inbox
+## 
+## Channel trc 
+## Far :trc-remote:
+## Near :trc-local:
+## Create Both
+## Patterns *
+## SyncState *
+## CopyArrivalDate yes
+## # Exclude everything under the internal [Gmail] folder, except the interesting folders
+## # Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+## # Or include everything
+## # Automatically create missing mailboxes, both locally and on the server
+## # Save the synchronization state files in the relevant directory

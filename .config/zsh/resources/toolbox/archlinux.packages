@@ -1,0 +1,78 @@
+### ARCHLINUX PACKAGES ###
+# NETWORK
+autossh sshpass sshuttle wol curl wget traceroute inetutils bind-tools dhclient nmap
+
+# SHELL
+bash zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting tmux sudo
+which ripgrep fzf expect pv bc jq yq lsd bat dialog
+
+# FILES
+unrar unzip tar p7zip zip
+
+# EDITOR
+nano neovim python-pynvim wl-clipboard
+
+# SECURITY
+gnupg paperkey zbar pass pass-otp cryfs
+
+# BACKUPS
+borg python-llfuse rsync rclone
+
+# UTILS
+htop man
+
+# ARCHLINUX
+arch-install-scripts
+# FONTS
+ttf-fira-code
+ttf-dejavu
+ttf-liberation
+ttf-font-awesome
+
+##################### DEVELOPMENT #####################
+# C/C++
+base-devel
+clang
+cmake
+extra-cmake-modules
+
+# PYTHON
+python
+python-pip
+python-virtualenv
+
+# RUST
+rustup
+
+# GO
+go
+go-tools
+
+# NODE
+nodejs
+npm
+yarn
+
+# JAVA
+jdk-openjdk
+jdk11-openjdk
+jdk8-openjdk
+maven
+
+##################### DEV/OPS #####################
+# GIT
+git
+
+# ANSIBLE
+ansible ansible-lint
+
+# TERRAFORM
+terraform
+
+# KUBERNETES
+kubectl
+helm
+
+
+### GNOME
+dconf

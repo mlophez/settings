@@ -1,0 +1,137 @@
+env:
+  TERM: screen-256color
+  TERMINAL: alacritty
+  ALACRITTY_THEME: nord
+window:
+  dimensions:
+    columns: 0
+    lines: 0
+  position:
+    x: 0
+    y: 0
+  padding:
+    x: 0
+    y: 0
+  opacity: 1
+  dynamic_padding: true
+  decorations: none
+  startup_mode: Windowed
+  title: Alacritty
+  dynamic_title: false
+  class:
+    instance: Alacritty
+    general: Alacritty
+  gtk_theme_variant: None
+scrolling:
+  history: 10000
+  multiplier: 3
+font:
+  normal:
+    family: Fira Code
+    style: Regular
+  bold:
+    family: Fira Code
+    style: Bold
+  italic:
+    family: Fira Code
+    style: Italic
+  bold_italic:
+    family: Fira Code
+    style: Bold Italic
+  size: 14.0
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  use_thin_strokes: false
+draw_bold_text_with_bright_colors: true
+colors:
+  primary:
+    background: '#2e3440'
+    foreground: '#d8dee9'
+    dim_foreground: '#a5abb6'
+  cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  vi_mode_cursor:
+    text: '#2e3440'
+    cursor: '#d8dee9'
+  selection:
+    text: CellForeground
+    background: '#4c566a'
+  search:
+    matches:
+      foreground: CellBackground
+      background: '#88c0d0'
+    bar:
+      background: '#434c5e'
+      foreground: '#d8dee9'
+  normal:
+    black: '#3b4252'
+    red: '#bf616a'
+    green: '#a3be8c'
+    yellow: '#ebcb8b'
+    blue: '#81a1c1'
+    magenta: '#b48ead'
+    cyan: '#88c0d0'
+    white: '#e5e9f0'
+  bright:
+    black: '#4c566a'
+    red: '#bf616a'
+    green: '#a3be8c'
+    yellow: '#ebcb8b'
+    blue: '#81a1c1'
+    magenta: '#b48ead'
+    cyan: '#8fbcbb'
+    white: '#eceff4'
+  dim:
+    black: '#373e4d'
+    red: '#94545d'
+    green: '#809575'
+    yellow: '#b29e75'
+    blue: '#68809a'
+    magenta: '#8c738c'
+    cyan: '#6d96a5'
+    white: '#aeb3bb'
+  indexed_colors: []
+bell:
+  animation: EaseOutExpo
+  duration: 0
+  color: '#ffffff'
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+cursor:
+  style: Underline
+  vi_mode_style: None
+  unfocused_hollow: true
+  thickness: 0.15
+live_config_reload: true
+shell:
+  program: /usr/bin/zsh
+working_directory: None
+winpty_backend: false
+alt_send_esc: true
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: false
+mouse_bindings:
+  - { mouse: Left, action: Copy }
+  - { mouse: Middle, action: PasteSelection }
+key_bindings:
+  - { key: Paste, action: Paste }
+  - { key: Copy, action: Copy }
+  - { key: 58, chars: "\x01" }
+  - { key: 36, mods: Alt, chars: "\x1b\x5b\x44" }
+  - { key: 37, mods: Alt, chars: "\x1b\x5b\x42" }
+  - { key: 38, mods: Alt, chars: "\x1b\x5b\x41" }
+  - { key: 39, mods: Alt, chars: "\x1b\x5b\x43" }
+  - { key: 16, mods: Alt, chars: "\x03\x04" }
+debug:
+  render_timer: false
+  persistent_logging: false
+  log_level: Warn
+  print_events: false

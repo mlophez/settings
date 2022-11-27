@@ -1,0 +1,123 @@
+env:
+  TERM: screen-256color
+  TERMINAL: alacritty
+  ALACRITTY_THEME: dracula
+window:
+  dimensions:
+    columns: 0
+    lines: 0
+  position:
+    x: 0
+    y: 0
+  padding:
+    x: 0
+    y: 0
+  dynamic_padding: true
+  decorations: none
+  startup_mode: Windowed
+  title: Alacritty
+  dynamic_title: false
+  class:
+    instance: Alacritty
+    general: Alacritty
+  gtk_theme_variant: None
+scrolling:
+  history: 10000
+  multiplier: 3
+font:
+  normal:
+    family: Fira Code
+    style: Regular
+  bold:
+    family: Fira Code
+    style: Bold
+  italic:
+    family: Fira Code
+    style: Italic
+  bold_italic:
+    family: Fira Code
+    style: Bold Italic
+  size: 14.0
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  use_thin_strokes: false
+draw_bold_text_with_bright_colors: true
+colors:
+  primary:
+    background: '#282a36'
+    foreground: '#f8f8f2'
+  cursor:
+    text: '#44475a'
+    cursor: '#f8f8f2'
+  normal:
+    black:   '#000000'
+    red:     '#ff5555'
+    green:   '#50fa7b'
+    yellow:  '#f1fa8c'
+    blue:    '#bd93f9'
+    magenta: '#ff79c6'
+    cyan:    '#8be9fd'
+    white:   '#bfbfbf'
+  bright:
+    black:   '#4d4d4d'
+    red:     '#ff6e67'
+    green:   '#5af78e'
+    yellow:  '#f4f99d'
+    blue:    '#caa9fa'
+    magenta: '#ff92d0'
+    cyan:    '#9aedfe'
+    white:   '#e6e6e6'
+  dim:
+    black:   '#14151b'
+    red:     '#ff2222'
+    green:   '#1ef956'
+    yellow:  '#ebf85b'
+    blue:    '#4d5b86'
+    magenta: '#ff46b0'
+    cyan:    '#59dffc'
+    white:   '#e6e6d1'
+  indexed_colors: []
+bell:
+  animation: EaseOutExpo
+  duration: 0
+  color: '#ffffff'
+background_opacity: 1
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+cursor:
+  style: Underline
+  vi_mode_style: None
+  unfocused_hollow: true
+  thickness: 0.15
+live_config_reload: true
+shell:
+  program: /usr/bin/zsh
+working_directory: None
+winpty_backend: false
+alt_send_esc: true
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: false
+mouse_bindings:
+  - { mouse: Left, action: Copy }
+  - { mouse: Middle, action: PasteSelection }
+key_bindings:
+  - { key: Paste, action: Paste }
+  - { key: Copy, action: Copy }
+  - { key: 58, chars: "\x01" }
+  - { key: 36, mods: Alt, chars: "\x1b\x5b\x44" }
+  - { key: 37, mods: Alt, chars: "\x1b\x5b\x42" }
+  - { key: 38, mods: Alt, chars: "\x1b\x5b\x41" }
+  - { key: 39, mods: Alt, chars: "\x1b\x5b\x43" }
+  - { key: 16, mods: Alt, chars: "\x03\x04" }
+debug:
+  render_timer: false
+  persistent_logging: false
+  log_level: Warn
+  print_events: false

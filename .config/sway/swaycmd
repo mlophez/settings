@@ -1,0 +1,203 @@
+#!/bin/bash
+
+SWAYPATH="$HOME/.config/sway"
+
+[[ -e $HOME/.config/zsh/.zshenv ]] && source $HOME/.config/zsh/.zshenv
+
+function cmd_waybar() {
+    export XDG_CURRENT_DESKTOP=Unity
+    exec waybar -c $SWAYPATH/waybar.conf -s $SWAYPATH/waybar.css "$@"
+    exit 0
+}
+
+function cmd_monitor() {
+    local screens external internal
+    local selected default
+
+    screens=$(swaymsg -t get_outputs | jq -r '.[].name' | sort)
+    default="$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)"
+
+    # Criteria one
+    #external=$(swaymsg -t get_outputs | jq -r '.[].name' | grep "HDMI" | head 0)
+    #internal=$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)
+
+    #[ -n "$external" ] && selected="$external"
+    #[ -z "$external" ] && selected="$internal"
+
+    # Criteria two
+    selected="$(swaymsg -t get_outputs | jq -r '.[].name' | sort | grep -v "eDP" | head -1)"
+    [ -z "$selected" ] && selected="$default"
+
+    echo $selected
+    for screen in $(echo "$screens"); do 
+        if [ "$screen" = "$selected" ]; then
+            swaymsg output $screen enable
+            swaymsg output $screen resolution "1920x1080" position "0,0" scale 1
+        else
+            swaymsg output $screen disable
+        fi
+    done
+
+    #daemonize /usr/lib/xdg-desktop-portal-wlr -r -o $monitor
+    #killall waybar &>/dev/null
+    #cmd_waybar
+}
+
+function cmd_locking() {
+    local image=$1
+
+    swaylock \
+    --ignore-empty-password \
+    --show-failed-attempts \
+    --indicator-radius 50 \
+    -f -i $image -s fill
+}
+
+function cmd_menu() {
+    [ -n "$(pidof wofi)" ] && return 0
+    exec wofi -i --show drun \
+        --no-actions \
+        --normal-window \
+        --allow-images \
+        --sort-order=alphabetical \
+        --parse-search \
+        --lines=10 --columns=10 \
+        -s $HOME/.config/sway/wofi.css
+        #--matching=fuzzy \
+}
+
+function menu() {
+    exec wofi -i --dmenu --no-actions --normal-window --allow-images -s $HOME/.config/sway/wofi.css
+}
+
+function cmd_menu-power() {
+    swaymsg exit
+    #local opt=$(printf "LOGOUT\nREBOOT\nPOWEROFF" | menu)
+    #[ "$opt" = "LOGOUT" ] && swaymsg exit
+    #[ "$opt" = "REBOOT" ] && systemctl reboot
+    #[ "$opt" = "POWEROFF" ] && systemctl poweroff
+}
+
+function cmd_pass {
+    local commands=("init" "ls" "grep" "find" "show" "insert" "edit" "generate" "rm" "mv" "cp" "git" "otp")
+    local args=( "$@" )
+    local pos=()
+    local clip=false
+    local rc
+
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -c|--clip)
+                clip=true
+                shift
+                ;;
+            -*)
+                shift
+                ;;
+            *)
+                pos+=("$1")
+                shift
+                ;;
+        esac
+    done
+
+    set -- "${args[@]}"
+    
+    if [[ "$1" = "list" ]]; then
+        find $PASSWORD_STORE_DIR -type f,l -name \*.gpg | sed "s#$PASSWORD_STORE_DIR/*##g" | sed 's/\.gpg$//g'
+    elif [[ "${commands[@]}" =~ "$1" ]]; then
+        command pass "$@"
+    else
+        if [ -z "${pos[1]}" ]; then
+            command pass "$@"
+        else
+            if [ "${pos[1]}" = "password" ]; then
+                rc=$(pass "${pos[0]}" | head -1)
+                [ -z "$rc" ] && return 1
+                [ "$clip" = "true" ] && echo $rc | wl-copy -n && return 0
+                echo $rc
+            elif [ "${pos[1]}" = "otpauth" ] || [ "${pos[1]}" = "otp" ]; then
+                if [ "$clip" = "true" ]; then
+                    command pass otp -c "${pos[0]}"
+                else
+                    command pass otp "${pos[0]}"
+                fi
+            else
+                rc=$(pass "${pos[0]}" | grep "^${pos[1]}:" | sed "s/^${pos[1]}: *//g" | tr '\n' ' ' | sed 's/ *$//g')
+                [ -z "$rc" ] && return 1
+                [ "$clip" = "true" ] && echo $rc | wl-copy -n && return 0
+                echo $rc
+            fi
+        fi
+    fi
+}
+
+function cmd_menu-pass() {
+    local entry entries
+    local subvalue subvalues
+
+    entries=$(cmd_pass list)
+    entry=$(printf "$entries" | menu)
+
+    subvalues=$(cmd_pass $entry | grep -n "^[a-zA-Z0-9]*:.*$" | cut -d ":" -f 1,2)
+    if [ -n "$subvalues" ]; then
+        subvalue=$(printf "1:password\n$subvalues" | menu)
+        cmd_pass -c $entry $(echo $subvalue | cut -d":" -f 2)
+    else
+        cmd_pass show -c $entry
+    fi
+}
+
+function cmd_autostart() {
+    ################### CONFIGURE ###################
+    mkdir -p /tmp/$USER 2> /dev/null
+     
+    # CACHE
+    mkdir -p /tmp/$USER/cache 2> /dev/null
+    rm -rf "$HOME/.cache" 2> /dev/null
+    ln -sf /tmp/$USER/cache $HOME/.cache
+     
+    # FLATPAK CACHE
+    for folder in $(find $HOME/.var/app/ -type d -name cache 2> /dev/null); do
+        rm -rf "$folder/*"
+    done
+     
+    # BROWSERS
+    rm -rf "$HOME/.mozilla" 2> /dev/null
+    #rm -rf "$HOME/.config/chromium" 2> /dev/null
+    #rm -rf "$HOME/.config/google-chrome" 2> /dev/null
+    #rm -rf "$HOME/.config/opera" 2> /dev/null
+     
+    # NETWORK MANAGER
+    # type nmcli &>/dev/null && nmcli radio wifi off
+     
+    # BALOOCTL
+    type balooctl &>/dev/null && balooctl disable &>/dev/null
+     
+    # VBOX
+    # type VBoxClient &>/dev/null && VBoxClient --clipboard
+     
+    ################### AUTOSTART ###################
+    nohup /usr/lib/xdg-desktop-portal -r &>/dev/null &
+    nohup /usr/lib/xdg-desktop-portal-wlr -r &>/dev/null &
+    nohup /usr/lib/xdg-desktop-portal-gtk -r &>/dev/null &
+
+
+    ################### SYSTEMD ###################
+    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    dbus-update-activation-environment --systemd --all
+    
+    exit 0
+}
+
+function main() {
+    local args="$@"
+    local command="$1"
+
+    [ "$args" = "-b bar-0" ] && cmd_waybar "$@"
+
+    shift
+    cmd_$command "$@"
+}
+
+main "$@"

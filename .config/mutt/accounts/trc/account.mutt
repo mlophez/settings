@@ -1,0 +1,48 @@
+# vim: filetype=muttrc
+## Mutt configuration template
+
+# Account config
+set my_name = "Miguel López Ruiz"
+set from = "miguellopez@grupotrc.com"
+
+set mbox_type   = Maildir
+set folder      = "~/.local/mail/trc"
+set spoolfile   = "+Inbox"
+set record      = "+Sent"
+set postponed   = "+Drafts"
+set sendmail    = "msmtp -C $HOME/.config/mutt/config/msmtprc -a trc"
+unmailboxes *
+mailboxes `zsh -i -c 'mailboxes ~/.local/mail/trc'`
+
+#set sort = last-date-received
+#set sort = date-received
+set signature="~/.config/mutt/accounts/trc/signature.txt"
+
+macro index aa '<save-message>=Archive<enter><sync-mailbox>s'
+macro index ii '<save-message>=INBOX<enter><sync-mailbox>s'
+
+bind index f noop
+macro index ff '<tag-pattern>notificacionesbackup<enter>\
+                <tag-pattern>notificacionesalfresco@gnet.es<enter>\
+                <tag-pattern>rubrik@mail.hmhospitales.com<enter>\
+                <tag-pattern>Informe programado:<enter>\
+                <tag-pattern>nagios@nag.vcloud<enter>\
+                <tag-pattern>partner.communications.spain@hpe.com<enter>\
+                <tag-pattern>Message Center Major Change Update Notification<enter>\
+                <tag-pattern>Weekly digest:<enter>\
+                <tag-pattern>notificacionesnas<enter>\
+                <tag-pattern>Error procesamiento SMS<enter>\
+                <tag-pattern>gnet-violin-acm-a<enter>\
+                <tag-pattern>Kaspersky Security Center 11 Administration Server Report<enter>\
+                <tag-pattern>Posible cuenta vulnerada<enter>\
+                <tag-pattern>Alarm Notice!<enter>\
+                <tag-pattern>nagios@nagiosabacid.grupotrc.com<enter>\
+                <tag-pattern>X-Force Exchange<enter>\
+                <tag-pattern>@connect.hpe.com<enter>\
+                <tag-pattern>nagiosdoctoris@grupotrc.com<enter>\
+                <tag-pattern>@ed-email.techtarget.com<enter>\
+                <tag-pattern>@connect.arubanetworks.com<enter>\
+                <tag-pattern>@monday.com<enter>\
+                <tag-pattern>@exclusive-networks.com<enter>\
+                <tag-pattern>ETERNUS SF Event Mail<enter>\
+                <tag-pattern>Informativo:<enter>'

@@ -1,0 +1,7 @@
+#anchor=bottom-right
+anchor=top-center
+layer=overlay
+font=Roboto Mono 14
+width=600
+height=400
+padding=10

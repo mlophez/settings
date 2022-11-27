@@ -1,0 +1,47 @@
+# vim: ft=mbsyncrc
+
+### LOGALTY
+IMAPAccount logalty
+Host outlook.office365.com
+User miguel.lopez@logalty.com
+PassCmd "zsh -i -c 'pass logalty/ldap/office password'"
+SSLType IMAPS
+SSLVersions TLSv1.2
+AuthMechs LOGIN
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore logalty-remote
+Account logalty
+
+MaildirStore logalty-local
+SubFolders Verbatim
+Path ~/.local/mail/logalty/
+Inbox ~/.local/mail/logalty/Inbox
+
+Channel logalty
+Far :logalty-remote:
+Near :logalty-local:
+Create Both
+Expunge Both
+Patterns "INBOX" "Archivo"
+SyncState *
+CopyArrivalDate yes
+
+Channel logalty-sent
+Far :logalty-remote:"Elementos enviados"
+Near :logalty-local:"Sent"
+Create Both
+Expunge Both
+SyncState *
+CopyArrivalDate yes
+
+Channel logalty-drafts
+Far :logalty-remote:"Borradores"
+Near :logalty-local:"Drafts"
+Create Both
+Expunge Both
+Patterns *
+SyncState *
+CopyArrivalDate yes
+
+

@@ -1,0 +1,133 @@
+env:
+  TERM: screen-256color
+  TERMINAL: alacritty
+  ALACRITTY_THEME: nord
+window:
+  dimensions:
+    columns: 0
+    lines: 0
+  position:
+    x: 0
+    y: 0
+  padding:
+    x: 0
+    y: 0
+  opacity: 1
+  dynamic_padding: true
+  startup_mode: Maximized
+  title: Alacritty
+  dynamic_title: false
+  class:
+    instance: Alacritty
+    general: Alacritty
+  gtk_theme_variant: None
+scrolling:
+  history: 10000
+  multiplier: 3
+font:
+  normal:
+    family: Fira Code
+    style: Regular
+  bold:
+    family: Fira Code
+    style: Bold
+  italic:
+    family: Fira Code
+    style: Italic
+  bold_italic:
+    family: Fira Code
+    style: Bold Italic
+  size: 14.0
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  AppleFontSmoothing: false
+draw_bold_text_with_bright_colors: true
+colors:
+  primary:
+    background: '#000000'
+    foreground: '#ffffff'
+    dim_foreground: '#ffffff'
+    bright_foreground: '#ffffff'
+  cursor:
+    text: '#000000'
+    cursor: '#ffffff'
+  vi_mode_cursor:
+    text: '#000000'
+    cursor: '#ffffff'
+  selection:
+    text: '#000000'
+    background: '#ffffff'
+  footer_bar:
+    background: '#434c5e'
+    foreground: '#d8dee9'
+  normal:
+    black:   '#000000'
+    red:     '#b21818'
+    green:   '#18b218'
+    yellow:  '#b26818'
+    blue:    '#1818b2'
+    magenta: '#b218b2'
+    cyan:    '#18b2b2'
+    white:   '#b2b2b2'
+  bright:
+    black:   '#686868'
+    red:     '#ff5454'
+    green:   '#54ff54'
+    yellow:  '#ffff54'
+    blue:    '#5454ff'
+    magenta: '#ff54ff'
+    cyan:    '#54ffff'
+    white:   '#b2b2b2'
+  dim:
+    black:   '#181818'
+    red:     '#650000'
+    green:   '#006500'
+    yellow:  '#654a00'
+    blue:    '#000065'
+    magenta: '#5f055f'
+    cyan:    '#18b2b2'
+    white:   '#656565'
+  indexed_colors: []
+bell:
+  animation: EaseOutExpo
+  duration: 0
+  color: '#ffffff'
+selection:
+  semantic_escape_chars: ",│`|:\"' ()[]{}<>\t"
+  save_to_clipboard: true
+cursor:
+  style: Underline
+  vi_mode_style: None
+  unfocused_hollow: true
+  thickness: 0.15
+live_config_reload: true
+shell:
+  program: /usr/bin/bash
+working_directory: None
+winpty_backend: false
+alt_send_esc: true
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: false
+mouse_bindings:
+  - { mouse: Left, action: Copy }
+  - { mouse: Middle, action: PasteSelection }
+key_bindings:
+  - { key: Paste, action: Paste }
+  - { key: Copy, action: Copy }
+  - { key: 58, chars: "\x01" }
+  - { key: 36, mods: Alt, chars: "\x1b\x5b\x44" }
+  - { key: 37, mods: Alt, chars: "\x1b\x5b\x42" }
+  - { key: 38, mods: Alt, chars: "\x1b\x5b\x41" }
+  - { key: 39, mods: Alt, chars: "\x1b\x5b\x43" }
+  - { key: 16, mods: Alt, chars: "\x03\x04" }
+debug:
+  render_timer: false
+  persistent_logging: false
+  log_level: Warn
+  print_events: false
