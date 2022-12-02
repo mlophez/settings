@@ -1,3 +1,4 @@
 ## GITIGNORE ##
+.config/systemd/user/default.target.wants
 *.bak
 .zcompdump

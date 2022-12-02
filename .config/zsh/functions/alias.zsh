@@ -25,7 +25,10 @@ alias dc="docker-compose"
 
 ## GIT
 alias g="git"
-alias commit="git add . && git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\""
+alias add="git add . && git status"
+alias commit="git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\""
+alias push="git push -u origin main"
+alias pull="git pull"
 alias undo="git reset --soft HEAD~1"
 
 ## TASK
@@ -33,8 +36,7 @@ alias configure="$HOME/.local/bin/configure"
 
 ## ANSIBLE
 alias playbook="ansible-playbook"
-alias role-ubuntu="ansible-playbook -k ~/Projects/GrupoTRC/ansible/playbooks/ubuntu.yaml"
-alias role-docker="ansible-playbook -k ~/Projects/GrupoTRC/ansible/playbooks/docker.yaml"
+alias inventory="ansible-inventory"
 
 ## WIFI
 alias wifi-on="nmcli radio wifi on"

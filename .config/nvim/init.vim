@@ -380,20 +380,25 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 " highlight clear CursorLine
 " highlight CursorLine gui=underline cterm=underline " guibg=Grey40
 " colorscheme gruvbox
-if terminal_theme == "dracula"
-    colorscheme dracula
-    let g:airline_theme = 'dracula'
-elseif terminal_theme == "gruvbox"
-    colorscheme gruvbox
-    let g:airline_theme = 'gruvbox'
-elseif terminal_theme == "nord"
-    colorscheme nord
-    let g:airline_theme = 'nord'
-else
-    colorscheme dracula
-    let g:airline_theme = 'dracula'
-    highlight Normal guibg=NONE ctermbg=NONE
-endif
+
+colorscheme dracula
+let g:airline_theme = 'dracula'
+highlight Normal guibg=NONE ctermbg=NONE
+
+" if terminal_theme == "dracula"
+"     colorscheme dracula
+"     let g:airline_theme = 'dracula'
+" elseif terminal_theme == "gruvbox"
+"     colorscheme gruvbox
+"     let g:airline_theme = 'gruvbox'
+" elseif terminal_theme == "nord"
+"     colorscheme nord
+"     let g:airline_theme = 'nord'
+" else
+"     colorscheme dracula
+"     let g:airline_theme = 'dracula'
+"     highlight Normal guibg=NONE ctermbg=NONE
+" endif
 
 """ FILETYPE
 augroup filetype_settings

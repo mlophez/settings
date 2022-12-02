@@ -4,12 +4,12 @@ function gic() {
     command git --git-dir=$HOME/.local/git --work-tree=$HOME "$@"
 }
 
-function show() {
+function status() {
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
             $HOME/.config/tmux \
             $HOME/.config/alacritty \
-            $HOME/.config/git/ \
+            $HOME/.config/git \
             $HOME/.config/qtile \
             $HOME/.config/waybar \
             $HOME/.config/sway \
@@ -22,10 +22,10 @@ function show() {
             $HOME/.config/gnupg \
             $HOME/.local/share/applications/archlinux.desktop \
             $HOME/.ssh/config \
+            $HOME/.bashrc \
             $HOME/.gitignore
 
     gic status
-
 }
 
 function save() {
@@ -33,14 +33,14 @@ function save() {
     gic push -u origin main
 }
 
-function down() {
+function load() {
     gic pull
 }
 
 function run_wsl_install() {
     #[ "$(whoami)" != "root" ] && echo "Run as a root" && return -1
 
-    sudo zsh <<EOF
+    sudo bash <<EOF
 apt install zsh tmux neovim fzf unzip
 cat $HOME/.config/zsh/resources/wsl/wsl.conf > /etc/wsl.conf
 cat $HOME/.config/zsh/resources/wsl/wslboot.sh > /usr/local/bin/wslboot
