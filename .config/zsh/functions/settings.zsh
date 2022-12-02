@@ -4,7 +4,7 @@ function gic() {
     command git --git-dir=$HOME/.local/git --work-tree=$HOME "$@"
 }
 
-function save() {
+function show() {
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
             $HOME/.config/tmux \
@@ -28,7 +28,7 @@ function save() {
 
 }
 
-function up() {
+function save() {
     gic commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
     gic push -u origin main
 }
