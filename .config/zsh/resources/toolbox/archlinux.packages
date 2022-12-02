@@ -23,6 +23,7 @@ htop man
 
 # ARCHLINUX
 arch-install-scripts
+
 # FONTS
 ttf-fira-code
 ttf-dejavu
@@ -72,7 +73,6 @@ terraform
 # KUBERNETES
 kubectl
 helm
-
 
 ### GNOME
 dconf

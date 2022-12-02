@@ -38,13 +38,18 @@ bindkey "\033[4~" end-of-line
 bindkey  "^[[3~"  delete-char
 
 #### PLUGINS
-if [ "$(cat /etc/lsb-release 2> /dev/null | grep DISTRIB_ID)" = "DISTRIB_ID=Ubuntu" ]; then
+[ -e /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+[ -e /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && \
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
+
+[ -e /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh ] && \
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+
+[ -e /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ] && \
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-fi
+
 source ~/.config/zsh/themes/dracula.zsh-theme
 
 # LOAD FILES

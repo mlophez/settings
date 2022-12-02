@@ -1,7 +1,5 @@
 env:
-  TERM: screen-256color
   TERMINAL: alacritty
-  ALACRITTY_THEME: nord
 window:
   dimensions:
     columns: 0
@@ -26,16 +24,16 @@ scrolling:
   multiplier: 3
 font:
   normal:
-    family: Fira Code
+    family: JetBrainsMono Nerd Font
     style: Regular
   bold:
-    family: Fira Code
+    family: JetBrainsMono Nerd Font
     style: Bold
   italic:
-    family: Fira Code
+    family: JetBrainsMono Nerd Font
     style: Italic
   bold_italic:
-    family: Fira Code
+    family: JetBrainsMono Nerd Font
     style: Bold Italic
   size: 14.0
   offset:
@@ -48,50 +46,56 @@ font:
 draw_bold_text_with_bright_colors: true
 colors:
   primary:
-    background: '#000000'
-    foreground: '#ffffff'
-    dim_foreground: '#ffffff'
+    background: '#282a36'
+    foreground: '#f8f8f2'
     bright_foreground: '#ffffff'
   cursor:
-    text: '#000000'
-    cursor: '#ffffff'
+    text: CellBackground
+    cursor: CellForeground
   vi_mode_cursor:
-    text: '#000000'
-    cursor: '#ffffff'
+    text: CellBackground
+    cursor: CellForeground
+  search:
+    matches:
+      foreground: '#44475a'
+      background: '#50fa7b'
+    focused_match:
+      foreground: '#44475a'
+      background: '#ffb86c'
+    footer_bar:
+      background: '#282a36'
+      foreground: '#f8f8f2'
+  hints:
+    start:
+      foreground: '#282a36'
+      background: '#f1fa8c'
+    end:
+      foreground: '#f1fa8c'
+      background: '#282a36'
+  line_indicator:
+    foreground: None
+    background: None
   selection:
-    text: '#000000'
-    background: '#ffffff'
-  footer_bar:
-    background: '#434c5e'
-    foreground: '#d8dee9'
+    text: CellForeground
+    background: '#44475a'
   normal:
-    black:   '#000000'
-    red:     '#b21818'
-    green:   '#18b218'
-    yellow:  '#b26818'
-    blue:    '#1818b2'
-    magenta: '#b218b2'
-    cyan:    '#18b2b2'
-    white:   '#b2b2b2'
+    black: '#21222c'
+    red: '#ff5555'
+    green: '#50fa7b'
+    yellow: '#f1fa8c'
+    blue: '#bd93f9'
+    magenta: '#ff79c6'
+    cyan: '#8be9fd'
+    white: '#f8f8f2'
   bright:
-    black:   '#686868'
-    red:     '#ff5454'
-    green:   '#54ff54'
-    yellow:  '#ffff54'
-    blue:    '#5454ff'
-    magenta: '#ff54ff'
-    cyan:    '#54ffff'
-    white:   '#b2b2b2'
-  dim:
-    black:   '#181818'
-    red:     '#650000'
-    green:   '#006500'
-    yellow:  '#654a00'
-    blue:    '#000065'
-    magenta: '#5f055f'
-    cyan:    '#18b2b2'
-    white:   '#656565'
-  indexed_colors: []
+    black: '#6272a4'
+    red: '#ff6e6e'
+    green: '#69ff94'
+    yellow: '#ffffa5'
+    blue: '#d6acff'
+    magenta: '#ff92df'
+    cyan: '#a4ffff'
+    white: '#ffffff'
 bell:
   animation: EaseOutExpo
   duration: 0
@@ -121,13 +125,14 @@ key_bindings:
   - { key: Paste, action: Paste }
   - { key: Copy, action: Copy }
   - { key: 58, chars: "\x01" }
-  - { key: 36, mods: Alt, chars: "\x1b\x5b\x44" }
-  - { key: 37, mods: Alt, chars: "\x1b\x5b\x42" }
-  - { key: 38, mods: Alt, chars: "\x1b\x5b\x41" }
-  - { key: 39, mods: Alt, chars: "\x1b\x5b\x43" }
+  - { key: 36, mods: Alt, chars: "\e[D" }
+  - { key: 37, mods: Alt, chars: "\e[B" }
+  - { key: 38, mods: Alt, chars: "\e[A" }
+  - { key: 39, mods: Alt, chars: "\e[C" }
   - { key: 16, mods: Alt, chars: "\x03\x04" }
 debug:
   render_timer: false
   persistent_logging: false
   log_level: Warn
   print_events: false
+theme: Dracula

@@ -1,0 +1,4 @@
+{
+    "python.venvPath": "~/.local/python/envs",
+    "coc.preferences.formatOnSaveFiletypes": ["css", "html", "dart"]
+}

@@ -25,7 +25,7 @@ alias dc="docker-compose"
 
 ## GIT
 alias g="git"
-alias save="git add . && git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\""
+alias commit="git add . && git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\""
 alias undo="git reset --soft HEAD~1"
 
 ## TASK

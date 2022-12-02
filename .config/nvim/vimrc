@@ -1,0 +1,104 @@
+" VIMRC
+
+"" Settings
+filetype plugin on
+syntax on
+set nocompatible
+set title
+set mouse-=a
+set clipboard+=unnamedplus
+set confirm
+set nowrap
+set tabstop=4 shiftwidth=4 softtabstop=4 shiftround expandtab
+set hidden
+set ignorecase
+set smartcase
+set spelllang=en,es
+
+" Numbers
+set number
+set relativenumber
+
+" CursorLine
+set cursorline
+" highlight clear CursorLine
+" highlight CursorLine gui=underline cterm=underline " guibg=Grey40
+
+"""
+""" mappings.vim
+"""
+
+"" Leader
+let g:mapleader=','
+nnoremap <leader><leader> :
+
+"" Save files
+nnoremap <C-s> :w<cr> " Guardar
+nnoremap <C-x> :x<cr> " Guardar y Salir
+inoremap <C-s> <esc>:w<cr> " Guardar
+inoremap <C-x> <esc>:x<cr> " Guardar y Salir
+
+nnoremap <leader>q :q<cr>
+nnoremap <leader>w :w<cr>
+nnoremap <leader>x :x<cr>
+
+"" Copy and Paste
+inoremap <C-p> <esc>pi
+inoremap <C-y> <esc>yyi
+inoremap <C-d> <esc>ddi
+
+"" Escape
+inoremap jk <esc>
+vnoremap jk <esc>
+cnoremap jk <esc>
+
+"" Reload config
+nnoremap <leader>R :so ~/.config/nvim/init.vim<cr>
+
+""Folding
+nnoremap <space> za
+
+"" Tabs
+nnoremap <leader>t :tabnew<cr>
+nnoremap <leader>1 :tabn1<cr>
+nnoremap <leader>2 :tabn2<cr>
+nnoremap <leader>3 :tabn3<cr>
+nnoremap <leader>4 :tabn4<cr>
+nnoremap <leader>5 :tabn5<cr>
+nnoremap <leader>6 :tabn6<cr>
+nnoremap <leader>7 :tabn7<cr>
+nnoremap <leader>8 :tabn8<cr>
+nnoremap <leader>9 :tabn9<cr>
+nnoremap <leader>0 :tabn10<cr>
+
+"" Splits
+nnoremap <leader>h :vsplit<cr><C-w><Right>
+nnoremap <leader>v :split<cr><C-w><Down>
+
+"" Navigations
+nnoremap j h
+nnoremap k j
+nnoremap l k
+nnoremap ñ l
+
+vnoremap j h
+vnoremap k j
+vnoremap l k
+vnoremap ñ l
+
+xnoremap j h
+xnoremap k j
+xnoremap l k
+xnoremap ñ l
+
+inoremap <C-j> <Left>
+inoremap <C-k> <Down>
+inoremap <C-l> <Up>
+
+nnoremap hñ A
+nnoremap hj I
+
+nnoremap <leader>j <C-w><Left>
+nnoremap <leader>k <C-w><Down>
+nnoremap <leader>l <C-w><Up>
+nnoremap <leader>ñ <C-w><Right>

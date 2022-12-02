@@ -20,9 +20,9 @@ function ssh () {
 
     [ -e $HOME/.ssh/config ] && cat $HOME/.ssh/config > /tmp/config
 
-    for x in $(ls $HOME/.ssh/ | grep conf); do
-        cat ~/.ssh/$x >> /tmp/config
-    done
+    #for x in $(ls $HOME/.ssh/ | grep conf); do
+    #    cat ~/.ssh/$x >> /tmp/config
+    #done
 
     printf "\e[?2004l"
     command ssh -F /tmp/config $@
@@ -40,7 +40,7 @@ function ssh-connect() {
     local entries entry
 
     cat ~/.ssh/config > /tmp/config
-    cat ~/.ssh/*.conf >> /tmp/config
+    #cat ~/.ssh/*.conf >> /tmp/config
 
     entries=$(cat /tmp/config | grep -i "^Host" | grep -v "*" | sed 's/ \+/ /g' | cut -d" " -f2-100000 | sort)
     entry=$(printf "$entries" | fzf)
