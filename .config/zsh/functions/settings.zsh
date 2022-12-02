@@ -5,11 +5,22 @@ function gic() {
 }
 
 function save() {
-    gic add $HOME/.config/zsh/ \
-            $HOME/.config/nvim/ \
-            $HOME/.config/tmux/ \
-            $HOME/.config/alacritty/ \
+    gic add $HOME/.config/zsh \
+            $HOME/.config/nvim \
+            $HOME/.config/tmux \
+            $HOME/.config/alacritty \
             $HOME/.config/git/ \
+            $HOME/.config/qtile \
+            $HOME/.config/waybar \
+            $HOME/.config/sway \
+            $HOME/.config/mutt \
+            $HOME/.config/systemd \
+            $HOME/.config/mako \
+            $HOME/.config/zsh \
+            $HOME/.config/containers \
+            $HOME/.config/i3 \
+            $HOME/.config/gnupg \
+            $HOME/.local/share/applications/archlinux.desktop \
             $HOME/.ssh/config \
             $HOME/.gitignore
 
