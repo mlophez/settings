@@ -19,7 +19,7 @@ function save() {
 
 function up() {
     gic commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
-    gic push -u origin master
+    gic push -u origin main
 }
 
 function down() {
