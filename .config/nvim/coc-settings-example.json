@@ -1,6 +1,0 @@
-{
-    "python.linting.enabled": false,
-    "python.venvFolders": ["envs", ".pyenv", ".direnv"],
-    "python.venvPath": "~/.local/python/envs",
-    "python.pythonPath": "~/.local/python/envs/nvim/python3"
-}

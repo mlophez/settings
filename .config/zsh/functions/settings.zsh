@@ -5,6 +5,7 @@ function gic() {
 }
 
 function status() {
+    gic restore --staged .
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
             $HOME/.config/tmux \
