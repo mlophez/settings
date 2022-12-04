@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 
-[ "$DISTRO" != "ARCHLINUX" ] && return
+[ -z "$(grep -i "ID=ARCH" /etc/os-release)" ] && return
 
 alias install="sudo pacman --needed -S"
 alias uninstall="sudo pacman -Rns"
