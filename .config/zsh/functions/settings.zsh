@@ -21,6 +21,7 @@ function status() {
             $HOME/.config/i3 \
             $HOME/.config/gnupg \
             $HOME/.local/share/applications/archlinux.desktop \
+            $HOME/.local/share/fonts \
             $HOME/.ssh/config \
             $HOME/.bashrc \
             $HOME/.gitignore

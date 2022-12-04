@@ -4,7 +4,7 @@ GenericName=Archlinux
 Comment=A fast, cross-platform, OpenGL terminal emulator
 StartupWMClass=Alacritty
 Type=Application
-Exec=alacritty --config-file /home/mlr/.config/alacritty/toolbox-archlinux.yml
+Exec=alacritty --title archlinux -e toolbox run -c archlinux bash -c 'export SHELL=/usr/bin/zsh; export ZDOTDIR=$HOME/.config/zsh; zsh'
 Icon=org.gnome.Terminal
 Terminal=false
 Categories=System;TerminalEmulator;
