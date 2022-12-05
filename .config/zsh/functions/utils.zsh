@@ -35,7 +35,7 @@ function cat() {
 }
 
 function editor() {
-    export TERM=xterm-256color
+    #export TERM=xterm-256color
     command nvim "$@"
 }
 

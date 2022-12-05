@@ -1,5 +1,6 @@
 env:
   TERMINAL: alacritty
+  TERM: xterm-256color
 window:
   dimensions:
     columns: 0
@@ -54,7 +55,7 @@ colors:
     cursor: CellForeground
   vi_mode_cursor:
     text: CellBackground
-    cursor: CellForeground
+    cursr: CellForeground
   search:
     matches:
       foreground: '#44475a'

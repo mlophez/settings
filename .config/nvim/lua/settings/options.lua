@@ -30,7 +30,8 @@ local options = {
   numberwidth = 4,                         -- set number column width to 2 {default 4}
   confirm = true,
   title = true,
-
+  guicursor = "n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50", -- default "n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20"
+  mouse = "",
   signcolumn = "yes",                      -- always show the sign column, otherwise it would shift the text each time
   wrap = true,                             -- display lines as one long line
   linebreak = true,                        -- companion to wrap, don't split words
