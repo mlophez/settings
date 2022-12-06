@@ -72,6 +72,7 @@ terraform
 
 # KUBERNETES
 kubectl
+stern
 helm
 
 ### GNOME

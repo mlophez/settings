@@ -1,10 +1,17 @@
 #!/usr/bin/zsh
 
-alias kubectl="command kubecolor"
 alias ku="kubectl"
 alias k="kubectl"
 alias apply="kubectl apply -f"
 alias delete="kubectl delete -f"
+
+function kubectl() {
+  if type kubecolor &>/dev/null; then
+    command kubecolor "$@"
+  else
+    command kubectl "$@"
+  fi
+}
 
 function kinfo() {
     local namespace="$1"
