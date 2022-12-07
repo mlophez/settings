@@ -21,7 +21,12 @@ alias menu-logout="fzf-logout"
 alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 
 ## DOCKER
+alias docker="podman"
 alias dc="docker-compose"
+
+## DISTROBOX
+alias host="distrobox-host-exec"
+alias host-bash="distrobox-host-exec bash -l"
 
 ## GIT
 alias g="git"

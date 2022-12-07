@@ -7,3 +7,5 @@ if test -L /dev/shm; then
     mount --bind /run/shm /dev/shm
     chmod 777 /dev/shm
 fi
+
+sysctl.vm.swappiness=1

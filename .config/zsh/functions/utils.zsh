@@ -54,3 +54,11 @@ function x11config() {
     export SDL_VIDEODRIVER=x11
     export WINIT_UNIX_BACKEND=x11
 }
+
+function podman() {
+  if [ "$container" = "podman" ]; then
+    command distrobox-host-exec podman "$@"
+  else
+    command podman "$@"
+  fi
+}

@@ -123,4 +123,5 @@ export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/vault/aws_secret_access_key)"
 export AWS_DEFAULT_REGION="eu-west-1"
 
 alias gitc="/usr/bin/git --git-dir=$HOME/.local/git --work-tree=$HOME" 
-alias archlinux="toolbox run -c archlinux bash -c 'export SHELL=/usr/bin/zsh; export ZDOTDIR=$HOME/.config/zsh; zsh'"
+#alias archlinux="toolbox run -c archlinux bash -c 'export SHELL=/usr/bin/zsh; export ZDOTDIR=$HOME/.config/zsh; zsh'"
+alias archlinux="exec $HOME/.local/bin/distrobox enter -a '--env SHELL=/usr/bin/zsh' -n arch -- zsh"

@@ -62,7 +62,9 @@ function run_wsl_config() {
     cp /tmp/alacritty.yml /mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/alacritty/alacritty.yml
 }
 
-function run_toolbox_install() {
+function run_arch_install() {
+  local packagefile="$HOME/.config/zsh/resources/toolbox/archlinux.packages"
+  sudo pacman --needed -S $(cat $packagefile | grep -v "^ *#" | grep -v "^ *$" | tr "\n" " ")
 }
 
 function run_toolbox_config() {
