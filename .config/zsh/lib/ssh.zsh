@@ -94,7 +94,7 @@ function tunnels-clean {
     sudo killall redsocks 2>/dev/null
 }
 
-functions tunnels() {
+function tunnels() {
     local IFS=$'\n'
     local CONFIG="$HOME/.config/tunnels.conf"
     local FCONFIG="/tmp/tun.conf"

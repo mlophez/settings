@@ -120,20 +120,15 @@ fi
 export ZDOTDIR=$HOME/.config/zsh
 
 # DISTROBOX
-[ -z "$container" ] && \
-  type distrobox &>/dev/null && \
-  [ -n "$(distrobox list --no-color | grep archlinux)" ] && \
-  exec distrobox enter archlinux
+[ -z "$(ps -aux | grep "distrobox-enter archlinux" | grep -v grep)" ] \
+  && type distrobox &>/dev/null \
+  && [ -n "$(distrobox list --no-color | grep archlinux)" ] \
+  && exec distrobox enter archlinux
 
 # ZSH
 [ -z "$is_load" ] && type zsh &>/dev/null && is_load=1 exec zsh
 
 # BASH
-export AWS_ACCESS_KEY_ID="AKIA2XRGJ4P2X52I47GB"
-export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/vault/aws_secret_access_key)"
-export AWS_DEFAULT_REGION="eu-west-1"
-
-# ZSH FUNC
 for file in $(ls ~/.config/zsh/lib/*.zsh); do
     source $file
 done

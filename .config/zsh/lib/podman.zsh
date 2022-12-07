@@ -4,13 +4,21 @@ alias docker="podman"
 alias dc="docker-compose"
 
 alias host="distrobox-host-exec"
-alias host-bash="distrobox-host-exec bash -l"
+alias host-bash="distrobox-host-exec bash --norc"
 
 function podman() {
-  if [ "$container" = "podman" ]; then
+  if [ -n "$container" ]; then
     command distrobox-host-exec podman "$@"
   else
     command podman "$@"
+  fi
+}
+
+function flatpak() {
+  if [ -n "$container" ]; then
+    command distrobox-host-exec flatpak "$@"
+  else
+    command flatpak "$@"
   fi
 }
 

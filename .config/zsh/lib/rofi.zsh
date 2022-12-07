@@ -11,8 +11,6 @@ function rofi-start() {
     local opt
     [ ! -e "$config" ] && return 1
     opt=$(printf "WORK\nNORMAL" | rofi -dmenu -i -p "Start" -config $config)
-    if [ $opt = "WORK" ]; then
-    fi
 }
 
 function rofi-pass() {
