@@ -25,7 +25,7 @@ function ssh () {
     #done
 
     printf "\e[?2004l"
-    command ssh -F /tmp/config $@
+    command ssh -F /tmp/config "$@"
 }
 
 function sshlegacy () {

@@ -50,10 +50,10 @@ bindkey  "^[[3~"  delete-char
 [ -e /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ] && \
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
-source ~/.config/zsh/themes/dracula.zsh-theme
+source ~/.config/zsh/lib/themes/dracula.zsh-theme
 
-# LOAD FILES
-for file in $(ls ~/.config/zsh/functions/*.zsh); do
+# LOADING
+for file in $(ls ~/.config/zsh/lib/*.zsh); do
     source $file
 done
 

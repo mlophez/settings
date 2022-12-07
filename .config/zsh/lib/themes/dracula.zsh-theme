@@ -13,7 +13,7 @@
 
 # Initialization {{{
 # source ${0:A:h}/plugins/async.zsh
-source ~/.config/zsh/plugins/async.zsh
+source ~/.config/zsh/lib/plugins/async.zsh
 autoload -Uz add-zsh-hook
 setopt PROMPT_SUBST
 async_init

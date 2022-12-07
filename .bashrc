@@ -116,12 +116,24 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# ENV
 export ZDOTDIR=$HOME/.config/zsh
 
+# DISTROBOX
+[ -z "$container" ] && \
+  type distrobox &>/dev/null && \
+  [ -n "$(distrobox list --no-color | grep archlinux)" ] && \
+  exec distrobox enter archlinux
+
+# ZSH
+[ -z "$is_load" ] && type zsh &>/dev/null && is_load=1 exec zsh
+
+# BASH
 export AWS_ACCESS_KEY_ID="AKIA2XRGJ4P2X52I47GB"
 export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/vault/aws_secret_access_key)"
 export AWS_DEFAULT_REGION="eu-west-1"
 
-alias gitc="/usr/bin/git --git-dir=$HOME/.local/git --work-tree=$HOME" 
-#alias archlinux="toolbox run -c archlinux bash -c 'export SHELL=/usr/bin/zsh; export ZDOTDIR=$HOME/.config/zsh; zsh'"
-alias archlinux="exec $HOME/.local/bin/distrobox enter -a '--env SHELL=/usr/bin/zsh' -n arch -- zsh"
+# ZSH FUNC
+for file in $(ls ~/.config/zsh/lib/*.zsh); do
+    source $file
+done

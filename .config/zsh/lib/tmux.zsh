@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 
-
+alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 function tm() {
     local session_name=$1
     [ -z "$session_name" ] && session_name=$USER

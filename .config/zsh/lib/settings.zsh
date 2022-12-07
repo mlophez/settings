@@ -44,8 +44,8 @@ function run_wsl_install() {
 
     sudo bash <<EOF
 apt install zsh tmux neovim fzf unzip
-cat $HOME/.config/zsh/resources/wsl/wsl.conf > /etc/wsl.conf
-cat $HOME/.config/zsh/resources/wsl/wslboot.sh > /usr/local/bin/wslboot
+cat $HOME/.config/zsh/res/wsl/wsl.conf > /etc/wsl.conf
+cat $HOME/.config/zsh/res/wsl/wslboot.sh > /usr/local/bin/wslboot
 chmod 755 /usr/local/bin/wslboot
 
 curl -sLo /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
@@ -60,12 +60,4 @@ function run_wsl_config() {
     cp $HOME/.config/alacritty/alacritty.yml /tmp/alacritty.yml 
     sed 's#program:.*$#program: "C:/Windows/System32/wsl.exe"\n  args:\n    - --cd ~#g' -i /tmp/alacritty.yml
     cp /tmp/alacritty.yml /mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/alacritty/alacritty.yml
-}
-
-function run_arch_install() {
-  local packagefile="$HOME/.config/zsh/resources/toolbox/archlinux.packages"
-  sudo pacman --needed -S $(cat $packagefile | grep -v "^ *#" | grep -v "^ *$" | tr "\n" " ")
-}
-
-function run_toolbox_config() {
 }

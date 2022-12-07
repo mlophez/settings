@@ -1,5 +1,20 @@
 #!/usr/bin/zsh
 
+alias reload="exec zsh"
+alias ll="ls -lh"
+alias mkdir="command mkdir -vp"
+
+alias info="notify-send -u low -t 3000"
+alias warn="notify-send -u normal -t 3000"
+alias critical="notify-send -u critical -t 3000"
+
+alias server-up="wol 00:4e:01:c5:bb:49"
+alias server-ssh="sshn root@192.168.1.230"
+alias server-tunnel="ssh -N -D5555 root@192.168.1.230"
+
+alias audio-hdmi="pactl set-card-profile 0 output:hdmi-stereo-extra1"
+alias audio-micro="pactl set-card-profile 0 output:analog-stereo+input:analog-stereo"
+
 # Underscore blinking # printf "\e[5 q" # Vertical Line }
 function precmd() {
     # printf "\e[3 q"
@@ -34,11 +49,6 @@ function cat() {
   fi
 }
 
-function editor() {
-    #export TERM=xterm-256color
-    command nvim "$@"
-}
-
 function clipboard() {
     if [ "$XDG_SESSION_TYPE" = "x11" ]; then
         xclip -i -r -sel clip "$@"
@@ -55,10 +65,3 @@ function x11config() {
     export WINIT_UNIX_BACKEND=x11
 }
 
-function podman() {
-  if [ "$container" = "podman" ]; then
-    command distrobox-host-exec podman "$@"
-  else
-    command podman "$@"
-  fi
-}

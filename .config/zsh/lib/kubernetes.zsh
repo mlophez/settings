@@ -27,3 +27,5 @@ function kinfo() {
         kubectl -n $namespace get ing -o wide
     fi
 }
+
+

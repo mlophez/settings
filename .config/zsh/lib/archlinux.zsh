@@ -1,4 +1,3 @@
-#!/usr/bin/zsh
 
 [ -z "$(grep -i "ID=ARCH" /etc/os-release)" ] && return
 

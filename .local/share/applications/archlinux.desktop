@@ -1,10 +1,12 @@
 [Desktop Entry]
 Name=Archlinux
-GenericName=Archlinux
-Comment=A fast, cross-platform, OpenGL terminal emulator
-StartupWMClass=Alacritty
+GenericName=Terminal entering Archlinux
+Comment=Terminal entering Archlinux
+Category=Distrobox;System;Utility"
+Exec=/home/mlr/.local/bin/distrobox enter archlinux --zsh
+Icon=/home/mlr/.local/share/icons/distrobox/arch.png
+Keywords=distrobox;
+NoDisplay=false
+Terminal=true
+TryExec=/home/mlr/.local/bin/distrobox
 Type=Application
-Exec=alacritty --title archlinux -e toolbox run -c archlinux bash -c 'export SHELL=/usr/bin/zsh; export ZDOTDIR=$HOME/.config/zsh; zsh'
-Icon=org.gnome.Terminal
-Terminal=false
-Categories=System;TerminalEmulator;
