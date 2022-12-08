@@ -117,6 +117,7 @@ if ! shopt -oq posix; then
 fi
 
 # ENV
+# export PATH=$PATH:$HOME/.local/bin
 export ZDOTDIR=$HOME/.config/zsh
 
 # DISTROBOX
