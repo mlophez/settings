@@ -174,6 +174,11 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 # Ensure effects are reset
-PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
+# (original) PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red}))${DRACULA_ARROW_ICON} '
+if [ -n "$container" ]; then
+  PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red})) c ${DRACULA_ARROW_ICON} '
+else
+  PROMPT+='%(1V:%F{yellow}:%(?:%F{green}:%F{red})) h ${DRACULA_ARROW_ICON} '
+fi
 PROMPT+='%f%b'
 

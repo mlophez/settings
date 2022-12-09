@@ -16,16 +16,16 @@ function docker-upload-image () {
 }
 
 function ssh () {
-    cat /dev/null > /tmp/config
+    #cat /dev/null > /tmp/config
 
-    [ -e $HOME/.ssh/config ] && cat $HOME/.ssh/config > /tmp/config
+    #[ -e $HOME/.ssh/config ] && cat $HOME/.ssh/config > /tmp/config
 
     #for x in $(ls $HOME/.ssh/ | grep conf); do
     #    cat ~/.ssh/$x >> /tmp/config
     #done
 
     printf "\e[?2004l"
-    command ssh -F /tmp/config "$@"
+    command ssh "$@"
 }
 
 function sshlegacy () {
@@ -39,17 +39,17 @@ alias s="ssh-connect"
 function ssh-connect() {
     local entries entry
 
-    cat ~/.ssh/config > /tmp/config
+    #cat ~/.ssh/config > /tmp/config
     #cat ~/.ssh/*.conf >> /tmp/config
 
-    entries=$(cat /tmp/config | grep -i "^Host" | grep -v "*" | sed 's/ \+/ /g' | cut -d" " -f2-100000 | sort)
+    entries=$(cat $HOME/.ssh/config | grep -i "^Host" | grep -v "*" | sed 's/ \+/ /g' | cut -d" " -f2-100000 | sort)
     entry=$(printf "$entries" | fzf)
     [ -z "$entry" ] && return 
 
     echo "[+] Connect to '$(echo $entry | cut -d" " -f1)'"
 
     printf "\e[?2004l"
-    eval "TERM=xterm-256color ssh -F /tmp/config $(echo $entry | cut -d" " -f1)"
+    eval "TERM=xterm-256color ssh $(echo $entry | cut -d" " -f1)"
 }
 
 function _s2() {

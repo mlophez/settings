@@ -124,7 +124,7 @@ export ZDOTDIR=$HOME/.config/zsh
 [ -z "$(ps -aux | grep "distrobox-enter archlinux" | grep -v grep)" ] \
   && type distrobox &>/dev/null \
   && [ -n "$(distrobox list --no-color | grep archlinux)" ] \
-  && exec distrobox enter archlinux
+  && distrobox enter archlinux
 
 # ZSH
 [ -z "$is_load" ] && type zsh &>/dev/null && is_load=1 exec zsh
