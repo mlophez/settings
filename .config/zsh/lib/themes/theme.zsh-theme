@@ -32,7 +32,7 @@ DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
 
 
 # Set to 1 to show the 'context' segment
-DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
+DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-1}
 
 
 # Changes the arrow icon
@@ -41,7 +41,6 @@ DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜ }
 
 # Set to 1 to use a new line for commands
 DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-0}
-
 
 # Set to 1 to show full path of current working directory
 DRACULA_DISPLAY_FULL_CWD=${DRACULA_DISPLAY_FULL_CWD:-0}
@@ -87,9 +86,17 @@ fi
 dracula_arrow() {
 	if [[ "$1" = "start" ]] && (( ! DRACULA_DISPLAY_NEW_LINE )); then
 		print -P "$DRACULA_ARROW_ICON"
-	elif [[ "$1" = "end" ]] && (( DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "\n$DRACULA_ARROW_ICON"
+  elif [[ "$1" = "end" ]]; then
+    if (( DRACULA_DISPLAY_NEW_LINE )); then
+		  print -P "\n %{%G❯%} "
+    else
+		  print -P " %{%G❯%} "
+    fi
 	fi
+	#elif [[ "$1" = "end" ]] && (( DRACULA_DISPLAY_NEW_LINE )); then
+	#	print -P "\n$DRACULA_ARROW_ICON"
+  #  PROMPT+=' %{%G❯%} '
+	#fi
 }
 
 # arrow is green if last command was successful, red if not, 
@@ -113,8 +120,11 @@ dracula_context() {
 	if (( DRACULA_DISPLAY_CONTEXT )); then
 		if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
 			echo '%n@%m '
+    elif [ -n "$container" ]; then
+      echo 'container '
 		else
-			echo '%n '
+      echo 'host '
+			#echo '%n '
 		fi
 	fi
 }

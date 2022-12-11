@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 function gic() {
-    command git --git-dir=$HOME/.local/git --work-tree=$HOME "$@"
+    command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
 }
 
 function status() {

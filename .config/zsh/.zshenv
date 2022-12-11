@@ -1,57 +1,34 @@
 #!/usr/bin/zsh
 
-[[ -e $HOME/.local/share/zsh/zshenv ]] && source $HOME/.local/share/zsh/zshenv
+## PATH
+paths="/usr/local/bin $HOME/.local/bin"
+for npath in $(echo $paths | tr ' ' '\n'); do
+  ! echo :$PATH: | grep -o "$npath" &>/dev/null && export PATH=$PATH:$npath
+done
 
-## COMENTADO ADAPTAR A PLASMA
-## # THEME
-## ## CURSORS
-## export XCURSOR_PATH=$HOME/.local/share/icons
-## export XCURSOR_SIZE=32
-## export XCURSOR_THEME="volantes-light-cursors"
-## ## QT
-## export QT_QPA_PLATFORMTHEME=qt5ct
-## ## GTK
-## export GTK_THEME=Nordic-Darker
-## export GTK2_RC_FILES=$HOME/.local/share/themes/Nordic-Darker/gtk-2.0/gtkrc
-## CUSTOM
-## export THEME_ICON=candy-icons
-## export THEME_FONT="Fira Code 14"
-
-## # PATH
-## export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-## export PATH=$PATH:$HOME/.local/bin
-#export PATH=$PATH:$HOME/.local/flutter/bin
-#export PATH=$PATH:$HOME/.local/android/android-studio/bin
-#export PATH=$PATH:/var/lib/snapd/snap/bin
-#export PATH=$PATH:/var/lib/flatpak/exports/bin
-
-# XDG
-#export XDG_DATA_DIRS=/usr/local/share:/usr/share
-#export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
-#export XDG_DATA_DIRS=$XDG_DATA_DIRS:/var/lib/snapd/desktop
-
-## THEME
-export ALACRITTY_THEME="${ALACRITTY_THEME:=nord}"
+## XDG
+# export XDG_DATA_HOME=$HOME/.local/share
+# export XDG_CONFIG_HOME=$HOME/.config
+export XDG_STATE_HOME=$HOME/.local/share/state
 
 ## ENV
 export SHELL=/usr/bin/zsh
 export HOSTNAME=$(hostname)
-#export TERM=xterm-256color
 export EDITOR=nvim
-export NVIM_PYTHON_LOG_FILE="/tmp/$USER/nvim.log"
 export GNUPGHOME="$HOME/.config/gnupg"
+#export TERM=xterm-256color
 
 ## KUBECTL
 export KUBECONFIG="$HOME/.config/kube/config"
+
+## NVIM
+#export NVIM_PYTHON_LOG_FILE="/tmp/$USER/nvim.log"
 
 ## ODBC
 export ODBCINI=$HOME/.config/odbc.ini
 export ODBCINSTINI=..$HOME/.config/odbcinst.ini
 
 ## PYTHON
-#export PYTHONCFG=$HOME/.local/python
-#export PYTHONPATH=$PYTHONCFG/lib/python$(python --version | cut -d" " -f2 | cut -d"." -f1,2)/site-packages
-#export PYTHONENVS=$PYTHONCFG/envs
 
 ## NODEJS
 export npm_config_prefix="$HOME/.local"
@@ -78,5 +55,7 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 # AWS CLI
 export AWS_DEFAULT_REGION="eu-west-1"
 export AWS_ACCESS_KEY_ID="AKIA2XRGJ4P2X52I47GB"
-[ -e $HOME/.local/vault/aws_secret_access_key ] && \
-  export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/vault/aws_secret_access_key)"
+[ -e $HOME/.local/share/vault/aws_secret_access_key ] && \
+  export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/share/vault/aws_secret_access_key)"
+
+# 
