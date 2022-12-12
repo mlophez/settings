@@ -56,6 +56,7 @@ nvim_tree.setup {
   view = {
     width = 30,
     side = "left",
+    hide_root_folder = true,
     mappings = {
       list = {
         { key = { "ñ", "<CR>", "o" }, cb = tree_cb "edit" },
@@ -65,6 +66,10 @@ nvim_tree.setup {
         { key = "r", cb = tree_cb "rename" },
       },
     },
+  },
+  filters = {
+    custom = { "^\\.git", "^\\.terraform" },
+    exclude = { ".gitignore" },
   },
 }
 
