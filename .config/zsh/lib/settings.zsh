@@ -59,5 +59,5 @@ function run_wsl_config() {
     #! test -L $HOME/Downloads && ln -sf /mnt/c/Users/miguel.lopez.logalty/Downloads $HOME/Downloads
     cp $HOME/.config/alacritty/alacritty.yml /tmp/alacritty.yml 
     sed 's#program:.*$#program: "C:/Windows/System32/wsl.exe"\n  args:\n    - --cd ~#g' -i /tmp/alacritty.yml
-    cp /tmp/alacritty.yml /mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/alacritty/alacritty.yml
+    cp /tmp/alacritty.yml $HOME/User/AppData/Roaming/alacritty/alacritty.yml
 }

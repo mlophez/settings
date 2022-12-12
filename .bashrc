@@ -118,17 +118,22 @@ fi
 
 # ENV
 export ZDOTDIR=$HOME/.config/zsh
+[ -e $HOME/.config/zsh/.zshenv ] && source $HOME/.config/zsh/.zshenv
 
-# DISTROBOX
-[ -z "$(ps -aux | grep "distrobox-enter archlinux" | grep -v grep)" ] \
-  && type distrobox &>/dev/null \
-  && [ -n "$(distrobox list --no-color | grep archlinux)" ] \
-  && distrobox enter archlinux
+# FUNC
+alias archlinux="exec distrobox enter archlinux"
 
-# ZSH
-[ -z "$is_load" ] && type zsh &>/dev/null && is_load=1 exec zsh
-
-# BASH
 for file in $(ls ~/.config/zsh/lib/*.zsh); do
     source $file
 done
+
+# DISTROBOX
+# [ -z "$(ps -aux | grep "distrobox-enter archlinux" | grep -v grep)" ] \
+#   && type distrobox &>/dev/null \
+#   && [ -n "$(distrobox list --no-color | grep archlinux)" ] \
+#   && distrobox enter archlinux
+
+# ZSH
+# [ -z "$is_load" ] && type zsh &>/dev/null && is_load=1 exec zsh
+
+# BASH
