@@ -52,10 +52,10 @@ export PASSWORD_STORE_CLIP_TIME=8
 #export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 
-# AWS CLI
-export AWS_DEFAULT_REGION="eu-west-1"
-export AWS_ACCESS_KEY_ID="AKIA2XRGJ4P2X52I47GB"
-[ -e $HOME/.local/share/vault/aws_secret_access_key ] && \
-  export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/share/vault/aws_secret_access_key)"
+# AWS CLI (in profile)
+#export AWS_DEFAULT_REGION="eu-west-1"
+#export AWS_ACCESS_KEY_ID="AKIA2XRGJ4P2X52I47GB"
+#[ -e $HOME/.local/share/vault/aws_secret_access_key ] && \
+#  export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/share/vault/aws_secret_access_key)"
 
 # 

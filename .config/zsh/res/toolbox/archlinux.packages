@@ -75,5 +75,8 @@ kubectl
 stern
 helm
 
+# AWS
+aws-cli-v2
+
 ### GNOME
 dconf

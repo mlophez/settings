@@ -24,6 +24,7 @@ function status() {
             $HOME/.local/share/applications/archlinux.desktop \
             $HOME/.local/share/fonts \
             $HOME/.ssh/config \
+            $HOME/.aws/config \
             $HOME/.bashrc \
             $HOME/.gitignore
 
