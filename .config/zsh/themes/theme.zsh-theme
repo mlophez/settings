@@ -121,9 +121,11 @@ dracula_context() {
 		if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
 			echo '%n@%m '
     elif [ -n "$container" ]; then
-      echo 'container '
+      #echo "$container "
+      echo "%m "
 		else
-      echo 'host '
+      #echo 'host '
+      echo "%m "
 			#echo '%n '
 		fi
 	fi

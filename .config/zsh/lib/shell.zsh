@@ -15,6 +15,8 @@ alias server-tunnel="ssh -N -D5555 root@192.168.1.230"
 alias audio-hdmi="pactl set-card-profile 0 output:hdmi-stereo-extra1"
 alias audio-micro="pactl set-card-profile 0 output:analog-stereo+input:analog-stereo"
 
+alias awslogin="aws sso login --sso-session awscli"
+
 # Underscore blinking # printf "\e[5 q" # Vertical Line }
 function precmd() {
     # printf "\e[3 q"
