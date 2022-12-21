@@ -123,9 +123,12 @@ export ZDOTDIR=$HOME/.config/zsh
 # FUNC
 alias archlinux="exec distrobox enter archlinux"
 
-for file in $(ls ~/.config/zsh/lib/*.zsh); do
-    source $file
-done
+file=$HOME/.config/zsh/lib/settings.zsh; [ -e $file ] && source $file
+file=$HOME/.config/zsh/lib/podman.zsh; [ -e $file ] && source $file
+
+#for file in $(ls ~/.config/zsh/lib/*.zsh); do
+#    source $file
+#done
 
 # DISTROBOX
 # [ -z "$(ps -aux | grep "distrobox-enter archlinux" | grep -v grep)" ] \

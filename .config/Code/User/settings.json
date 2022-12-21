@@ -1,0 +1,9 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "remote.SSH.remotePlatform": {
+        "systools": "linux"
+    },
+    "editor.fontFamily": "'JetBrainsMono Nerd Font'",
+    "window.restoreWindows": "all",
+    "files.hotExit": "off"
+}

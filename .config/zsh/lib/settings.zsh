@@ -23,6 +23,8 @@ function status() {
             $HOME/.config/gnupg \
             $HOME/.local/share/applications/archlinux.desktop \
             $HOME/.local/share/fonts \
+            $HOME/.config/Code/User/settings.json \
+            $HOME/.local/share/codews \
             $HOME/.ssh/config \
             $HOME/.aws/config \
             $HOME/.bashrc \
