@@ -240,11 +240,3 @@ function d() {
     local cmd=$(pass db/$(basename $entry | tr '[:upper:]' '[:lower:]') sqlline 2>/dev/null)
     eval "sqlline $cmd"
 }
-
-### WORKSPACE
-bindkey -s '^p' '_w\n'
-alias _w="workspace"
-function workspace() {
-  local wpath=($(find $HOME -maxdepth 2 -iname Projects -type d -print | tr '\n' ' '))
-  cd $(find $wpath -mindepth 1 -maxdepth 1 -type d -print | fzf)
-}
