@@ -54,9 +54,6 @@ source ~/.config/zsh/themes/theme.zsh-theme
 
 # LOADING
 source ~/.config/zsh/config.zsh
-for file in $(ls ~/.config/zsh/lib/*.zsh); do
-    source $file
-done
 
 #### ENDING
 [ -f $HOME/.xinitrc ] && rm -rf $HOME/.xinitrc 2>/dev/null
