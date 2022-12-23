@@ -21,9 +21,8 @@ alias awslogin="aws sso login --sso-session awscli"
 alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 
 # EDITOR
-alias vi="editor"
-alias vim="editor"
-alias nvim="editor"
+alias vi="nvim"
+alias vim="nvim"
 
 # SSH
 alias s="ssh_menu"
@@ -54,6 +53,7 @@ alias inventory="ansible-inventory"
 # GIT
 alias g="git_menu"
 alias wk="workspace"
+alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
 
 # DOCKER PODMAN
 alias docker="podman"
@@ -68,11 +68,16 @@ alias ku="kubectl"
 
 ##### FUNCTIONS
 # SHELL
-# Underscore blinking # printf "\e[5 q" # Vertical Line }
 function precmd() {
-    # printf "\e[3 q"
-    #printf "\e]12;red\x7;\e[5 q"
-    printf "\e[5 q"
+  # Underscore blinking # printf "\e[5 q" # Vertical Line }
+  # printf "\e[3 q"
+  #printf "\e]12;red\x7;\e[5 q"
+  printf "\e[5 q"
+  # if [ -n "$TMUX" ]; then
+  #   if [ -d "./.git" ]; then
+  #     tmux rename-window $(basename $(pwd) | tr '[:lower:]' '[:upper:]')
+  #   fi
+  # fi
 }
 
 function timezsh() {
@@ -136,12 +141,6 @@ function tm() {
     fi
 }
 
-# EDITOR
-function editor() {
-    #export TERM=xterm-256color
-    command nvim "$@"
-}
-
 # GIT
 function git_menu() {
   local cmd
@@ -176,26 +175,22 @@ function git_generate_random_branch() {
   git push --set-upstream origin $username-$random
 }
 
-# function git() {
-#   if [ "$(command git remote -v | grep origin | grep -o "platform.logalty.com")" ]; then
-#     git config user.name "Your Name"
-#     git config user.email "youremail@yourdomain.com"
-#   fi
-#   command git "$@"
-# }
-
 function workspace() {
   local wpath=($(find $HOME -maxdepth 2 -iname Projects -type d -print | tr '\n' ' '))
-  cd $(find $wpath -mindepth 1 -maxdepth 1 -type d -print | fzf)
+  local selected=$(find $wpath -mindepth 1 -maxdepth 1 -type d -print | fzf)
+
+  cd $selected
+
+  [ -n "$TMUX" ] && tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
 }
 
 # SSH
-function ssh () {
+function ssh() {
     printf "\e[?2004l"
     command ssh "$@"
 }
 
-function ssh-legacy () {
+function ssh-legacy() {
     export TERM=xterm-256color
     printf "\e[?2004l"
     command ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 $@
