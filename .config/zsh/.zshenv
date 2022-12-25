@@ -19,8 +19,8 @@ export GNUPGHOME="$HOME/.config/gnupg"
 #export TERM=xterm-256color
 
 ## LANG
-lang=$(cat /etc/locale.conf | grep -i "^LANG=" | cut -d"=" -f 2)
-if [ -z "$lang" ]; then
+lang=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)
+if [ -n "$lang" ]; then
   export LC_ALL=$lang
   export LANG=$lang
 fi
