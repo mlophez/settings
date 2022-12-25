@@ -67,7 +67,7 @@ alias k="kubectl"
 alias ku="kubectl"
 
 # DISTROBOX
-alias archlinux="exec distrobox-archlinux"
+alias archlinux="distrobox-archlinux"
 
 # DRIVE
 reload_drive="systemctl --user restart rclone@Drive.service"
@@ -252,7 +252,7 @@ function distrobox-archlinux() {
     distrobox-create -i docker.io/archlinux:latest -n archlinux
   fi
 
-  distrobox enter archlinux
+  exec distrobox enter archlinux
 }
 
 function distrobox-packages() {
