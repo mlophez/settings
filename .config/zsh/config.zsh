@@ -67,7 +67,10 @@ alias k="kubectl"
 alias ku="kubectl"
 
 # DISTROBOX
-alias archlinux="exec distrobox enter archlinux"
+alias archlinux="exec distrobox-archlinux"
+
+# DRIVE
+reload_drive="systemctl --user restart rclone@Drive.service"
 
 ##### FUNCTIONS
 # SHELL
@@ -245,8 +248,11 @@ function distrobox-uninstall() {
 }
 
 function distrobox-archlinux() {
-  $HOME/.local/bin/distrobox-create -i docker.io/archlinux:latest -n archlinux
-  $HOME/.local/bin/distrobox enter archlinux
+  if [ -z "$(distrobox list --no-color  | grep archlinux)" ]; then
+    distrobox-create -i docker.io/archlinux:latest -n archlinux
+  fi
+
+  distrobox enter archlinux
 }
 
 function distrobox-packages() {
