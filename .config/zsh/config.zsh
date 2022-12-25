@@ -252,7 +252,7 @@ function distrobox-archlinux() {
     distrobox-create -i docker.io/archlinux:latest -n archlinux
   fi
 
-  exec distrobox enter archlinux
+  exec distrobox enter archlinux -- bash
 }
 
 function distrobox-packages() {
