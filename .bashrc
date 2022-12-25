@@ -119,24 +119,7 @@ fi
 # ENV
 export ZDOTDIR=$HOME/.config/zsh
 [ -e $HOME/.config/zsh/.zshenv ] && source $HOME/.config/zsh/.zshenv
+[ -e $HOME/.config/zsh/config.zsh ] && source $HOME/.config/zsh/config.zsh
 
-# FUNC
-alias archlinux="exec distrobox enter archlinux"
-
-file=$HOME/.config/zsh/lib/settings.zsh; [ -e $file ] && source $file
-file=$HOME/.config/zsh/lib/podman.zsh; [ -e $file ] && source $file
-
-#for file in $(ls ~/.config/zsh/lib/*.zsh); do
-#    source $file
-#done
-
-# DISTROBOX
-# [ -z "$(ps -aux | grep "distrobox-enter archlinux" | grep -v grep)" ] \
-#   && type distrobox &>/dev/null \
-#   && [ -n "$(distrobox list --no-color | grep archlinux)" ] \
-#   && distrobox enter archlinux
-
-# ZSH
-# [ -z "$is_load" ] && type zsh &>/dev/null && is_load=1 exec zsh
-
-# BASH
+# USE ZSH BY DEFAULT
+[ -n "$container" ] && type zsh &> /dev/null && [ -z "$zsh_is_loaded" ] && zsh_is_loaded=1 exec zsh

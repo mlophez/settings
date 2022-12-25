@@ -66,6 +66,9 @@ alias se="service"
 alias k="kubectl"
 alias ku="kubectl"
 
+# DISTROBOX
+alias archlinux="exec distrobox enter archlinux"
+
 ##### FUNCTIONS
 # SHELL
 function precmd() {

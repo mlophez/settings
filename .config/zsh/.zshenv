@@ -18,6 +18,14 @@ export EDITOR=nvim
 export GNUPGHOME="$HOME/.config/gnupg"
 #export TERM=xterm-256color
 
+## LANG
+lang=$(cat /etc/locale.conf | grep -i "^LANG=" | cut -d"=" -f 2)
+if [ -z "$lang" ]; then
+  export LC_ALL=$lang
+  export LANG=$lang
+fi
+unset lang
+
 ## KUBECTL
 export KUBECONFIG="$HOME/.config/kube/config"
 
