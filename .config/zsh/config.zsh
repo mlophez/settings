@@ -539,14 +539,16 @@ function notes() {
   [ "$notespath/pages" ] && mkdir -p "$notespath/pages" &>/dev/null
   [ "$notespath/assets" ] && mkdir -p "$notespath/assets" &>/dev/null
 
+  [ -n "$TMUX" ] && tmux rename-window 'NOTES'
+
   # Download changes
-  git pull
+  # git pull
 
   # Run editor
-  cd $notespath; nvim
+  cd $notespath; nvim pages/Home.md
 
   # Save changes
-  git add .
-  git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
-  git push -u origin main
+  #git add .
+  #git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
+  #git push -u origin main
 }
