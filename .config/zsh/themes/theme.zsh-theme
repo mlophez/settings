@@ -85,7 +85,8 @@ fi
 # Status segment {{{
 dracula_arrow() {
 	if [[ "$1" = "start" ]] && (( ! DRACULA_DISPLAY_NEW_LINE )); then
-		print -P "$DRACULA_ARROW_ICON"
+		#print -P "$DRACULA_ARROW_ICON"
+		print -P ""
   elif [[ "$1" = "end" ]]; then
     if (( DRACULA_DISPLAY_NEW_LINE )); then
 		  print -P "\n %{%G❯%} "
@@ -120,14 +121,14 @@ dracula_context() {
 	if (( DRACULA_DISPLAY_CONTEXT )); then
 		if [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY-}" ]] || (( EUID == 0 )); then
 			echo '%n@%m '
-    elif [ -n "$container" ]; then
-      #echo "$container "
-      echo "%m "
 		else
       #echo 'host '
-      echo "%m "
+			echo '%n@%m:'
 			#echo '%n '
 		fi
+    #elif [ -n "$container" ]; then
+    #  #echo "$container "
+    #  echo "%m "
 	fi
 }
 
@@ -138,11 +139,9 @@ PROMPT+='%F{magenta}%B$(dracula_context)'
 # Directory segment {{{
 dracula_directory() {
 	if (( DRACULA_DISPLAY_FULL_CWD )); then
-		print -P '%~ '
-
+		print -P '%~:'
 	else
-
-		print -P '%c '
+		print -P '%c:'
 	fi
 }
 
