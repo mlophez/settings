@@ -121,5 +121,8 @@ export ZDOTDIR=$HOME/.config/zsh
 [ -e $HOME/.config/zsh/.zshenv ] && source $HOME/.config/zsh/.zshenv
 [ -e $HOME/.config/zsh/config.zsh ] && source $HOME/.config/zsh/config.zsh
 
+# Load changes in settings
+[ ! -e $XDG_RUNTIME_DIR/settings.lock ] && touch $XDG_RUNTIME_DIR/settings.lock && load
+
 # USE ZSH BY DEFAULT
 [ -n "$container" ] && type zsh &> /dev/null && [ -z "$zsh_is_loaded" ] && zsh_is_loaded=1 exec zsh

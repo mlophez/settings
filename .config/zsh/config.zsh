@@ -60,6 +60,7 @@ alias docker="podman"
 alias podman="distrobox-host podman"
 alias flatpak="distrobox-host flatpak"
 alias distrobox="distrobox-host distrobox"
+alias systemctl="distrobox-host systemctl"
 alias se="service"
 
 # KUBERNETES
@@ -528,4 +529,24 @@ function copysec() {
 
         eval "sudo rsync $options / $dst/"
     fi
+}
+
+# NOTES
+function notes() {
+  local notespath="$HOME/Documents/Notes"
+  local repository=""
+
+  [ "$notespath/pages" ] && mkdir -p "$notespath/pages" &>/dev/null
+  [ "$notespath/assets" ] && mkdir -p "$notespath/assets" &>/dev/null
+
+  # Download changes
+  git pull
+
+  # Run editor
+  cd $notespath; nvim
+
+  # Save changes
+  git add .
+  git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
+  git push -u origin main
 }
