@@ -541,14 +541,18 @@ function notes() {
 
   [ -n "$TMUX" ] && tmux rename-window 'NOTES'
 
+  cd $notespath
+
   # Download changes
-  # git pull
+  [ -d ".git/" ] && git pull
 
   # Run editor
-  cd $notespath; nvim pages/Home.md
+  nvim pages/Home.md
 
   # Save changes
-  #git add .
-  #git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
-  #git push -u origin main
+  #[ -n "$(git status | grep -i untracked)" ] && \
+  [ -d ".git/" ] && \
+    git add . && \
+    git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" && \
+    git push -u origin main
 }
