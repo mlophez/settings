@@ -162,6 +162,7 @@ function git_menu() {
     "add: git add . && git status"
     "discard: git restore ."
     "random-branch: git_generate_random_branch"
+    "save: git add . && git commit -m '$(date '+%Y-%m-%d %H:%M:%S')' && git push -u origin main"
   )
 
   cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
@@ -541,18 +542,16 @@ function notes() {
 
   [ -n "$TMUX" ] && tmux rename-window 'NOTES'
 
+  # Run NeoVim
   cd $notespath
-
-  # Download changes
   [ -d ".git/" ] && git pull
-
-  # Run editor
   nvim pages/Home.md
+  [ -d ".git/" ] && git status
 
   # Save changes
   #[ -n "$(git status | grep -i untracked)" ] && \
-  [ -d ".git/" ] && \
-    git add . && \
-    git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" && \
-    git push -u origin main
+  #[ -d ".git/" ] && \
+  #  git add . && \
+  #  git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" && \
+  #  git push -u origin main
 }

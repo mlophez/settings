@@ -12,4 +12,5 @@ require "plugin.lualine"
 require "plugin.nvim-tree"
 require "plugin.toggleterm"
 require "plugin.treesitter"
+require "plugin.notes"
 
