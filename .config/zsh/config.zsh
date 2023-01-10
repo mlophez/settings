@@ -162,7 +162,7 @@ function git_menu() {
     "add: git add . && git status"
     "discard: git restore ."
     "random-branch: git_generate_random_branch"
-    "save: git add . && git commit -m '$(date '+%Y-%m-%d %H:%M:%S')' && git push -u origin main"
+    "save: git add . && git commit -m '$(date '+%Y-%m-%d %H:%M:%S')' && git push"
   )
 
   cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
