@@ -69,6 +69,7 @@ ansible ansible-lint
 
 # TERRAFORM
 terraform
+terragrunt
 
 # KUBERNETES
 kubectl
