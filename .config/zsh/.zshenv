@@ -26,6 +26,9 @@ if [ -n "$lang" ]; then
 fi
 unset lang
 
+# SPACESHIP
+export SPACESHIP_CONFIG="$HOME/.config/zsh/spaceship.zsh"
+
 ## KUBECTL
 export KUBECONFIG="$HOME/.config/kube/config"
 

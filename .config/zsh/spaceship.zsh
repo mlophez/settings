@@ -1,0 +1,10 @@
+SPACESHIP_PROMPT_ORDER=(user host dir git aws async line_sep char)
+
+SPACESHIP_TIME_SHOW=true
+
+SPACESHIP_USER_SHOW=always
+
+SPACESHIP_HOST_SHOW="always"
+
+SPACESHIP_DIR_TRUNC_REPO=false
+SPACESHIP_DIR_TRUNC=0

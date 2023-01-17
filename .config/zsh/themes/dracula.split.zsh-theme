@@ -28,11 +28,11 @@ PROMPT=''
 DRACULA_DISPLAY_GIT=${DRACULA_DISPLAY_GIT:-1}
 
 # Set to 1 to show the date
-DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-0}
+DRACULA_DISPLAY_TIME=${DRACULA_DISPLAY_TIME:-1}
 
 
 # Set to 1 to show the 'context' segment
-DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
+DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-1}
 
 
 # Changes the arrow icon
@@ -40,11 +40,11 @@ DRACULA_DISPLAY_CONTEXT=${DRACULA_DISPLAY_CONTEXT:-0}
 DRACULA_ARROW_ICON=${DRACULA_ARROW_ICON:-➜ }
 
 # Set to 1 to use a new line for commands
-DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-0}
+DRACULA_DISPLAY_NEW_LINE=${DRACULA_DISPLAY_NEW_LINE:-1}
 
 
 # Set to 1 to show full path of current working directory
-DRACULA_DISPLAY_FULL_CWD=${DRACULA_DISPLAY_FULL_CWD:-0}
+DRACULA_DISPLAY_FULL_CWD=${DRACULA_DISPLAY_FULL_CWD:-1}
 
 # function to detect if git has support for --no-optional-locks
 dracula_test_git_optional_lock() {

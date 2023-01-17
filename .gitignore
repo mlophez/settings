@@ -1,5 +1,6 @@
 ## GITIGNORE ##
 .config/systemd/user/default.target.wants
 .config/nvim/plugin
+*.zsh.zwc
 *.bak
 .zcompdump

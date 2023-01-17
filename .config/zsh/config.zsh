@@ -23,6 +23,8 @@ alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 # EDITOR
 alias vi="nvim"
 alias vim="nvim"
+alias cc="cd \$(find . -type d -print | fzf)"
+alias edit="nvim \$(find . -type f -print | fzf)"
 
 # SSH
 alias s="ssh_menu"
@@ -158,11 +160,13 @@ function git_menu() {
     "clean: git checkout main && git branch | grep -v 'main' | xargs -I@ git branch -D @"
     "pull: git pull"
     "push: git push"
-    "datecommit: git commit -m \"$(date '+%Y-%m-%d %H:%M:%S')\""
-    "add: git add . && git status"
-    "discard: git restore ."
-    "random-branch: git_generate_random_branch"
-    "save: git add . && git commit -m '$(date '+%Y-%m-%d %H:%M:%S')' && git push"
+    'datecommit: git commit -m "$(date "+%Y-%m-%d %H:%M:%S")"'
+    'add: git add . && git status'
+    'discard: git restore .'
+    'random-branch: git_generate_random_branch'
+    'save: git add . && git commit -m "$(date "+%Y-%m-%d %H:%M:%S")" && git push'
+    'tag-upload: git push --tags'
+    'tag-delete: tag=$(git tag | fzf); git tag -d $tag; git push --delete origin $tag'
   )
 
   cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)

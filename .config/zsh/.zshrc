@@ -50,7 +50,12 @@ bindkey  "^[[3~"  delete-char
 [ -e /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ] && \
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
-source ~/.config/zsh/themes/theme.zsh-theme
+# LOAD PLUGINS
+[ ! -d "$HOME/.local/share/zsh/spaceship" ] && \
+  git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.local/share/zsh/spaceship"
+
+# PROMPT
+source ~/.local/share/zsh/spaceship/spaceship.zsh
 
 # LOADING
 source ~/.config/zsh/config.zsh
