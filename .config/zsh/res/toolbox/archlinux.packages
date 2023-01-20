@@ -60,6 +60,10 @@ jdk11-openjdk
 jdk8-openjdk
 maven
 
+# RUBY
+ruby
+rubygems
+
 ##################### DEV/OPS #####################
 # GIT
 git

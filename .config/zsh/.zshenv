@@ -1,8 +1,12 @@
 #!/usr/bin/zsh
 
 ## PATH
-paths="/usr/local/bin $HOME/.local/bin"
-for npath in $(echo $paths | tr ' ' '\n'); do
+paths=(
+  "/usr/local/bin"
+  "$HOME/.local/bin"
+  #"$HOME/.local/share/gem/ruby/3.0.0/bin"
+)
+for npath in $paths; do
   ! echo :$PATH: | grep -o "$npath" &>/dev/null && export PATH=$PATH:$npath
 done
 
@@ -70,3 +74,5 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 #  export AWS_SECRET_ACCESS_KEY="$(cat $HOME/.local/share/vault/aws_secret_access_key)"
 
 # 
+# RUBY
+export GEM_HOME=$HOME/.local/share/ruby
