@@ -64,6 +64,7 @@ alias flatpak="distrobox-host flatpak"
 alias distrobox="distrobox-host distrobox"
 alias systemctl="distrobox-host systemctl"
 alias se="service"
+alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/vault/infracost-api-key) -v $HOME:$HOME -w $(pwd) infracost/infracost:ci-latest"
 
 # KUBERNETES
 alias k="kubectl"
@@ -163,7 +164,8 @@ function git_menu() {
     'datecommit: git commit -m "$(date "+%Y-%m-%d %H:%M:%S")"'
     'add: git add . && git status'
     'discard: git restore .'
-    'random-branch: git_generate_random_branch'
+    'branch-create: git_branch_create'
+    'branch-random: git_generate_random_branch'
     'save: git add . && git commit -m "$(date "+%Y-%m-%d %H:%M:%S")" && git push'
     'tag-upload: git push --tags'
     'tag-delete: tag=$(git tag | fzf); git tag -d $tag; git push --delete origin $tag'
@@ -185,6 +187,15 @@ function git_generate_random_branch() {
 
   git checkout -b $username-$random
   git push --set-upstream origin $username-$random
+}
+
+function git_branch_create() {
+  echo -n "Branch name?: "
+  read name
+  if [ -n "$name" ]; then
+    git checkout -b $name
+    git push --set-upstream origin $name
+  fi
 }
 
 function workspace() {
