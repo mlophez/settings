@@ -80,6 +80,10 @@ kubectl
 stern
 helm
 
+# API
+httpie
+curlie
+
 # AWS
 aws-cli-v2
 
