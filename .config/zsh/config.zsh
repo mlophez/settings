@@ -20,6 +20,9 @@ alias awslogin="aws sso login --sso-session awscli"
 # TMUX
 alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 
+# ZSH
+alias config="nvim $HOME/.config/zsh/config.zsh"
+
 # EDITOR
 alias vi="nvim"
 alias vim="nvim"
@@ -27,6 +30,7 @@ alias cc="cd \$(find . -type d -print | fzf)"
 alias edit="nvim \$(find . -type f -print | fzf)"
 
 # SSH
+alias ssh_config="nvim $HOME/.ssh/config"
 alias s="ssh_menu"
 
 # SYSTEM
@@ -56,6 +60,9 @@ alias inventory="ansible-inventory"
 alias g="git_menu"
 alias wk="workspace"
 alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
+
+# AWS
+alias a="aws-ssm-connect"
 
 # DOCKER PODMAN
 alias docker="podman"
@@ -569,4 +576,42 @@ function notes() {
   #  git add . && \
   #  git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" && \
   #  git push -u origin main
+}
+
+function aws-inventory() {
+  local regions=("eu-west-1" "eu-south-2")
+  local profiles=("logalty" "demo")
+  local query='.Reservations[] | .Instances[] | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
+  local region profile
+
+  [ ! -d "$HOME/.aws" ] && mkdir -p $HOME/.aws
+  cat /dev/null > $HOME/.aws/inventory
+
+  for profile in $profiles; do
+    for region in $regions; do
+      aws ec2 describe-instances --region $region --profile $profile | \
+        jq --arg region "$region" --arg profile "$profile" -r "$query" >> $HOME/.aws/inventory
+    done
+  done
+}
+
+function aws-ssm-connect() {
+  local instance
+  local instance_name instance_id region profile
+
+  instance=$(cat $HOME/.aws/inventory | column -s ';' -t | fzf )
+  [ -z "$instance" ] && return 0
+
+  echo "$instance" | awk '{ print $1 }'
+
+  instance_name=$(echo "$instance" |  awk '{print $1 }')
+  instance_id=$(echo "$instance" |  awk '{print $2 }')
+  region=$(echo "$instance" |  awk '{print $3 }')
+  profile=$(echo "$instance" |  awk '{print $4 }')
+
+  echo "-> Connect to ${instance_id} - ${instance_name}"
+  eval aws ssm start-session --target ${instance_id} --region ${region} --profile ${profile}
+
+  #ProxyCommand aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p' --profile logalty
+  # aws ssm start-session --target "Your Instance ID" --document-name AWS-StartPortForwardingSession --parameters "portNumber"=["80"],"localPortNumber"=["56789"]
 }
