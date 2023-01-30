@@ -581,7 +581,7 @@ function notes() {
 function aws-inventory() {
   local regions=("eu-west-1" "eu-south-2")
   local profiles=("logalty" "demo")
-  local query='.Reservations[] | .Instances[] | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
+  local query='.Reservations[] | .Instances[] | select(.State.Name != "terminated") | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
   local region profile
 
   [ ! -d "$HOME/.aws" ] && mkdir -p $HOME/.aws
