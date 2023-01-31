@@ -63,6 +63,7 @@ alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
 
 # AWS
 alias a="aws-ssm-connect"
+alias am="aws-profile-menu"
 
 # DOCKER PODMAN
 alias docker="podman"
@@ -576,6 +577,12 @@ function notes() {
   #  git add . && \
   #  git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" && \
   #  git push -u origin main
+}
+
+funciton aws-profile-menu() {
+  local profile="$(cat $HOME/.aws/config | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | fzf)"
+  [ -z "$profile" ] && return 0
+  export AWS_PROFILE="$profile"
 }
 
 function aws-inventory() {
