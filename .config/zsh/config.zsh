@@ -579,7 +579,7 @@ function notes() {
   #  git push -u origin main
 }
 
-funciton aws-profile-menu() {
+function aws-profile-menu() {
   local profile="$(cat $HOME/.aws/config | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | fzf)"
   [ -z "$profile" ] && return 0
   export AWS_PROFILE="$profile"
