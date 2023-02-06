@@ -392,7 +392,7 @@ function status() {
 }
 
 function save() {
-    gic commit -m "Commit on <$(date '+%Y-%m-%d %H:%M:%S')>"
+    gic commit -m "Commit on [$(date '+%Y-%m-%d %H:%M:%S')]"
     gic push -u origin main
 }
 
