@@ -174,7 +174,7 @@ function git_menu() {
     'discard: git restore .'
     'branch-create: git_branch_create'
     'branch-random: git_generate_random_branch'
-    'save: git add . && git commit -m "Commit on [$(date "+%Y-%m-%d %H:%M:%S")]" && git push'
+    'save: git add . && git commit -m "Commit on \"$(date "+%Y-%m-%d %H:%M:%S")]\" && git push'
     'tag-upload: git push --tags'
     'tag-delete: tag=$(git tag | fzf); git tag -d $tag; git push --delete origin $tag'
   )
@@ -587,7 +587,7 @@ function aws-profile-menu() {
 
 function aws-inventory() {
   local regions=("eu-west-1" "eu-south-2")
-  local profiles=("logalty" "demo")
+  local profiles=("logalty" "demo" "qa")
   local query='.Reservations[] | .Instances[] | select(.State.Name != "terminated") | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
   local region profile
 
