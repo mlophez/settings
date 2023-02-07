@@ -174,7 +174,7 @@ function git_menu() {
     'discard: git restore .'
     'branch-create: git_branch_create'
     'branch-random: git_generate_random_branch'
-    'save: git add . && git commit -m "Commit on \"$(date "+%Y-%m-%d %H:%M:%S")]\" && git push'
+    'save: git add . && git commit -m "Commit on '"'"'$(date "+%Y-%m-%d %H:%M:%S")'"'"'" && git push'
     'tag-upload: git push --tags'
     'tag-delete: tag=$(git tag | fzf); git tag -d $tag; git push --delete origin $tag'
   )
@@ -392,7 +392,7 @@ function status() {
 }
 
 function save() {
-    gic commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')]'"
+    gic commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
     gic push -u origin main
 }
 
