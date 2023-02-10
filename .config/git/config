@@ -6,4 +6,4 @@
 [core]
 	editor = nvim
 [credential]
-	helper = store
+	helper = "!f() { /home/mlr/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /tmp/vscode-remote-containers-6e6fd58d28941306e6c52465b05d0956656c8c1b.js git-credential-helper $*; }; f"

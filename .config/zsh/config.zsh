@@ -580,14 +580,14 @@ function notes() {
 }
 
 function aws-profile-menu() {
-  local profile="$(cat $HOME/.aws/config | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | fzf)"
+  local profile="$(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | fzf)"
   [ -z "$profile" ] && return 0
   export AWS_PROFILE="$profile"
 }
 
 function aws-inventory() {
   local regions=("eu-west-1" "eu-south-2")
-  local profiles=("logalty" "demo" "qa")
+  local profiles=($(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | grep -v root |tr "\n" ' '))
   local query='.Reservations[] | .Instances[] | select(.State.Name != "terminated") | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
   local region profile
 
