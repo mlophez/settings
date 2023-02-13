@@ -175,6 +175,7 @@ function git_menu() {
     'branch-create: git_branch_create'
     'branch-random: git_generate_random_branch'
     'save: git add . && git commit -m "Commit on '"'"'$(date "+%Y-%m-%d %H:%M:%S")'"'"'" && git push'
+    'branch-delete: branch=$(git branch | sed "s/[ \*]//g" | fzf); git branch -D $branch'
     'tag-upload: git push --tags'
     'tag-delete: tag=$(git tag | fzf); git tag -d $tag; git push --delete origin $tag'
   )
