@@ -75,6 +75,12 @@ ansible ansible-lint
 terraform
 terragrunt
 
+## CONTAINERS
+skopeo
+
+# NOMAD
+nomad
+
 # KUBERNETES
 kubectl
 stern
@@ -86,6 +92,7 @@ curlie
 
 # AWS
 aws-cli-v2
+
 
 ### GNOME
 dconf

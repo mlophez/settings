@@ -63,6 +63,7 @@ alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
 
 # AWS
 alias a="aws-ssm-connect"
+alias as="aws-ssm-connect ssh"
 alias am="aws-profile-menu"
 
 # DOCKER PODMAN
@@ -71,6 +72,7 @@ alias podman="distrobox-host podman"
 alias flatpak="distrobox-host flatpak"
 alias distrobox="distrobox-host distrobox"
 alias systemctl="distrobox-host systemctl"
+alias microk8s="distrobox-host microk8s"
 alias se="service"
 alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/vault/infracost-api-key) -v $HOME:$HOME -w $(pwd) infracost/infracost:ci-latest"
 
@@ -593,8 +595,9 @@ function aws-inventory() {
   local region profile
 
   [ ! -d "$HOME/.aws" ] && mkdir -p $HOME/.aws
-  cat /dev/null > $HOME/.aws/inventory
 
+  # INVENTORY FILE
+  cat /dev/null > $HOME/.aws/inventory
   for profile in $profiles; do
     for region in $regions; do
       aws ec2 describe-instances --region $region --profile $profile | \
@@ -618,7 +621,14 @@ function aws-ssm-connect() {
   profile=$(echo "$instance" |  awk '{print $4 }')
 
   echo "-> Connect to ${instance_id} - ${instance_name}"
-  eval aws ssm start-session --target ${instance_id} --region ${region} --profile ${profile}
+
+  if [ -n "$1" ]; then
+    eval ssh ${instance_id} -o ProxyCommand=\"aws ssm start-session --target ${instance_id} \
+      --document-name AWS-StartSSHSession --parameters 'portNumber=22' \
+      --region ${region} --profile ${profile}\"
+  else
+    eval aws ssm start-session --target ${instance_id} --region ${region} --profile ${profile}
+  fi
 
   #ProxyCommand aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p' --profile logalty
   # aws ssm start-session --target "Your Instance ID" --document-name AWS-StartPortForwardingSession --parameters "portNumber"=["80"],"localPortNumber"=["56789"]
