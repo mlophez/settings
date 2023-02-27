@@ -79,6 +79,8 @@ alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/v
 # KUBERNETES
 alias k="kubectl"
 alias ku="kubectl"
+alias apply="kubectl apply -f"
+alias delete="kubectl delete -f"
 
 # DISTROBOX
 alias archlinux="distrobox-archlinux"

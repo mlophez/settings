@@ -1,5 +1,5 @@
 # PROMPT
-SPACESHIP_PROMPT_ORDER=(user host dir git aws async line_sep char)
+SPACESHIP_PROMPT_ORDER=(user host dir git aws kubectl async line_sep char)
 
 # TIME
 SPACESHIP_TIME_SHOW=true

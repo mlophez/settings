@@ -33,8 +33,10 @@ unset lang
 # SPACESHIP
 export SPACESHIP_CONFIG="$HOME/.config/zsh/spaceship.zsh"
 
-## KUBECTL
+## KUBERNETES
 export KUBECONFIG="$HOME/.config/kube/config"
+export KUBE_EDITOR="nvim"
+export HELM_CONFIG_HOME="$HOME/.config/helm"
 
 # AWS
 export AWS_PROFILE="none"
