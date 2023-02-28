@@ -77,7 +77,8 @@ alias se="service"
 alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/vault/infracost-api-key) -v $HOME:$HOME -w $(pwd) infracost/infracost:ci-latest"
 
 # KUBERNETES
-alias k="kubectl"
+alias k="kubectl-context-selector"
+alias kn="kubectl-namespace-selector"
 alias ku="kubectl"
 alias apply="kubectl apply -f"
 alias delete="kubectl delete -f"
@@ -345,6 +346,18 @@ function kubectl() {
   else
     command kubectl "$@"
   fi
+}
+
+function kubectl-context-selector() {
+  local context=$(kubectl config get-contexts | tail -n +2 | awk '{print $2}' | fzf)
+  [ -z "$context" ] && return 0
+  kubectl config set-context $context
+}
+
+function kubectl-namespace-selector() {
+  local ns=$(kubectl get ns | tail -n +2 | awk '{print $1}' | fzf)
+  [ -z "$ns" ] && return 0
+  kubectl config set-context --current --namespace=$ns
 }
 
 function kinfo() {

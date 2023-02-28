@@ -83,6 +83,7 @@ nomad
 
 # KUBERNETES
 kubectl
+kustomize
 stern
 helm
 helmfile
