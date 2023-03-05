@@ -22,6 +22,7 @@ alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 
 # ZSH
 alias config="nvim $HOME/.config/zsh/config.zsh"
+alias confignvim="cd $HOME/.config/nvim && nvim; cd"
 
 # EDITOR
 alias vi="nvim"
@@ -77,11 +78,11 @@ alias se="service"
 alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/vault/infracost-api-key) -v $HOME:$HOME -w $(pwd) infracost/infracost:ci-latest"
 
 # KUBERNETES
-alias k="kubectl-context-selector"
-alias kn="kubectl-namespace-selector"
-alias ku="kubectl"
-alias apply="kubectl apply -f"
-alias delete="kubectl delete -f"
+alias k="kube"
+alias apply="kube apply -k ."
+alias delete="kube delete -k ."
+#alias k="kubectl-context-selector"
+#alias kn="kubectl-namespace-selector"
 
 # DISTROBOX
 alias archlinux="distrobox-archlinux"
@@ -348,6 +349,16 @@ function kubectl() {
   fi
 }
 
+function kube() {
+  local context=$(basename $(pwd))
+
+  if [ -z "$(kubectl config get-contexts | tail -n +2 | awk '{print $2}' | grep "$context")" ]; then
+    kubectl "$@"
+  else
+    kubectl --context="$context" "$@"
+  fi
+}
+
 function kubectl-context-selector() {
   local context=$(kubectl config get-contexts | tail -n +2 | awk '{print $2}' | fzf)
   [ -z "$context" ] && return 0
@@ -358,6 +369,14 @@ function kubectl-namespace-selector() {
   local ns=$(kubectl get ns | tail -n +2 | awk '{print $1}' | fzf)
   [ -z "$ns" ] && return 0
   kubectl config set-context --current --namespace=$ns
+}
+
+function kubeenc() {
+  local namespace="$1"
+  local name="$1"
+  local password="$1"
+
+  echo -n "$password" | kubeseal --raw --namespace $namespace --name $name
 }
 
 function kinfo() {
@@ -637,7 +656,7 @@ function aws-ssm-connect() {
 
   echo "-> Connect to ${instance_id} - ${instance_name}"
 
-  if [ -n "$1" ]; then
+  if [ -z "$1" ]; then
     eval ssh ${instance_id} -o ProxyCommand=\"aws ssm start-session --target ${instance_id} \
       --document-name AWS-StartSSHSession --parameters 'portNumber=22' \
       --region ${region} --profile ${profile}\"

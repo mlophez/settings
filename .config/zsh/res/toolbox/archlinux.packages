@@ -84,6 +84,7 @@ nomad
 # KUBERNETES
 kubectl
 kustomize
+eksctl
 stern
 helm
 helmfile
