@@ -79,8 +79,8 @@ alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/v
 
 # KUBERNETES
 alias k="kube"
-alias apply="kube apply -k ."
-alias delete="kube delete -k ."
+alias apply="kube apply -k"
+alias delete="kube delete -k"
 #alias k="kubectl-context-selector"
 #alias kn="kubectl-namespace-selector"
 
@@ -372,11 +372,16 @@ function kubectl-namespace-selector() {
 }
 
 function kubeenc() {
-  local namespace="$1"
-  local name="$1"
   local password="$1"
 
-  echo -n "$password" | kubeseal --raw --namespace $namespace --name $name
+  local context=$(basename $(pwd))
+  if [ -z "$(kubectl config get-contexts | tail -n +2 | awk '{print $2}' | grep "$context")" ]; then
+    echo "kubeseal --raw --scope cluster-wide"
+    echo -n "$password" | kubeseal --raw --scope cluster-wide
+  else
+    echo "kubeseal --context=$context --raw --scope cluster-wide"
+    echo -n "$password" | kubeseal --context=$context --raw --scope cluster-wide
+  fi
 }
 
 function kinfo() {
@@ -401,6 +406,10 @@ function gic() {
 
 function status() {
     gic restore --staged .
+
+    [ -e '/mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/Code/User/settings.json' ] && \
+      cat /mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/Code/User/settings.json > $HOME/.config/Code/User/settings.json
+
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
             $HOME/.config/tmux \
@@ -424,6 +433,8 @@ function status() {
             $HOME/.aws/config \
             $HOME/.bashrc \
             $HOME/.gitignore
+
+
 
     gic status
 }

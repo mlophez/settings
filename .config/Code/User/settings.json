@@ -1,9 +1,28 @@
 {
-    "workbench.colorTheme": "Default Dark+",
-    "remote.SSH.remotePlatform": {
-        "systools": "linux"
-    },
+    "workbench.colorTheme": "Dracula",
+    "workbench.iconTheme": "eq-material-theme-icons-light",
+    "editor.tabSize": 2,
     "editor.fontFamily": "'JetBrainsMono Nerd Font'",
-    "window.restoreWindows": "all",
-    "files.hotExit": "off"
+    "window.dialogStyle": "custom",
+    "window.restoreWindows": "none",
+    "git.autofetch": true,
+    "git.autofetchPeriod": 60,
+    "git.branchPrefix": "miguellopez-",
+    "yaml.schemas": {
+        "Kubernetes": [
+            "*.yaml"
+        ],
+        "file:///home/mlr/.vscode-server/extensions/atlassian.atlascode-3.0.2/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    },
+    "vs-kubernetes": {
+        "vscode-kubernetes.helm-path.linux": "/home/mlr/.local/share/state/vs-kubernetes/tools/helm/linux-amd64/helm"
+    },
+    "redhat.telemetry.enabled": false,
+    "atlascode.jira.enabled": false,
+    "atlascode.bitbucket.statusbar.enabled": false,
+    "atlascode.bitbucket.contextMenus.enabled": true,
+    "atlascode.bitbucket.pipelines.explorerEnabled": false,
+    "atlascode.bitbucket.explorer.refreshInterval": 1,
+    "atlascode.showWelcomeOnInstall": false,
+    "atlascode.helpExplorerEnabled": false,
 }
