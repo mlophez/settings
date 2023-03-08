@@ -25,4 +25,7 @@
     "atlascode.bitbucket.explorer.refreshInterval": 1,
     "atlascode.showWelcomeOnInstall": false,
     "atlascode.helpExplorerEnabled": false,
+    "editor.fontSize": 14,
+    "terminal.integrated.fontSize": 16,
+    "window.zoomLevel": 1,
 }

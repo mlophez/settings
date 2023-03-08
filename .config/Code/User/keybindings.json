@@ -1,0 +1,11 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+  {
+    "key": "alt+g",
+    "command": "git-graph.view"
+  },
+  {
+    "key": "ctrl+oem_7",
+    "command": "vscode-yaml-sort.customSortYaml_1"
+  }
+]

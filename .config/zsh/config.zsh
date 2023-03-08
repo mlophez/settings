@@ -404,12 +404,20 @@ function gic() {
     command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
 }
 
+function status-vscode-wsl() {
+    local codePath="/mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/Code"
+    local files=("User/settings.json" "User/keybindings.json")
+    local file
+
+    for file in ${files[@]}; do
+      [ -e "$codePath/$file" ] && cat "$codePath/$file" > $HOME/.config/Code/$file
+    done
+
+}
+
 function status() {
     gic restore --staged .
-
-    [ -e '/mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/Code/User/settings.json' ] && \
-      cat /mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/Code/User/settings.json > $HOME/.config/Code/User/settings.json
-
+    status-vscode-wsl
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
             $HOME/.config/tmux \
@@ -428,6 +436,7 @@ function status() {
             $HOME/.local/share/applications/archlinux.desktop \
             $HOME/.local/share/fonts \
             $HOME/.config/Code/User/settings.json \
+            $HOME/.config/Code/User/keybindings.json \
             $HOME/.local/share/codews \
             $HOME/.ssh/config \
             $HOME/.aws/config \
