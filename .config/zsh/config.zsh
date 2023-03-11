@@ -215,7 +215,7 @@ function git_branch_create() {
 
 function workspace() {
   local wpath=($(find $HOME -maxdepth 2 -iname Projects -type d -print | tr '\n' ' '))
-  local selected=$(find $wpath -mindepth 1 -maxdepth 1 -type d -print | fzf)
+  local selected=$(find $wpath -mindepth 1 -maxdepth 1 -type d,l -print | fzf)
 
   cd $selected
 
