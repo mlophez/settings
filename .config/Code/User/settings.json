@@ -27,8 +27,10 @@
     "atlascode.helpExplorerEnabled": false,
     "editor.fontSize": 14,
     "terminal.integrated.fontSize": 16,
-    "window.zoomLevel": 1,
     "[yaml]": {
         "editor.formatOnSave": false
     },
+    "jenkins.pipeline.linter.connector.crumbUrl": "http://jenkins.logalty.com/jenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,%22:%22,//crumb)",
+    "jenkins.pipeline.linter.connector.url": "http://jenkins.logalty.com/jenkins/pipeline-model-converter/validate",
+    "jenkins.pipeline.linter.connector.user": "miguel.lopez",
 }

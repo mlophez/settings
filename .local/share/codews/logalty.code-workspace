@@ -4,10 +4,13 @@
 			"path": "../../../Documents/Projects/terraform"
 		},
 		{
-			"path": "../../../Documents/Projects/application-config-demo"
+			"path": "../../../Documents/Projects/ansible"
 		},
 		{
-			"path": "../../../Documents/Projects/databases"
+			"path": "../../../Documents/Projects/jenkins"
+		},
+		{
+			"path": "../../../Documents/Projects/kubernetes"
 		}
 	],
 	"settings": {}

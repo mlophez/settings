@@ -675,6 +675,7 @@ function aws-ssm-connect() {
   profile=$(echo "$instance" |  awk '{print $4 }')
 
   echo "-> Connect to ${instance_id} - ${instance_name}"
+  echo "aws ssm start-session --target ${instance_id} --region ${region} --profile ${profile}"
 
   if [ -z "$1" ]; then
     eval ssh ${instance_id} -o ProxyCommand=\"aws ssm start-session --target ${instance_id} \
