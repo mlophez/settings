@@ -81,14 +81,13 @@ alias se="service"
 alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/vault/infracost-api-key) -v $HOME:$HOME -w $(pwd) infracost/infracost:ci-latest"
 
 # KUBERNETES
-alias k="kube"
-alias apply="kube apply -k"
-alias delete="kube delete -k"
-#alias k="kubectl-context-selector"
-#alias kn="kubectl-namespace-selector"
+alias k="kubectl-context"
+alias apply="kubectl apply -k"
+alias delete="kubectl delete -k"
 
 # DISTROBOX
 alias archlinux="distrobox-archlinux"
+alias archlinux-install="sudo pacman --needed -S $(cat $HOME/.config/distrobox/Packages.Archlinux | grep -v "^ *#" | grep -v "^ *$" | tr "\n" " ")"
 
 # DRIVE
 reload_drive="systemctl --user restart rclone@Drive.service"
@@ -286,13 +285,7 @@ function distrobox-archlinux() {
   if [ -z "$(distrobox list --no-color  | grep archlinux)" ]; then
     distrobox-create -i docker.io/archlinux:latest -n archlinux
   fi
-
   exec distrobox enter archlinux -- bash
-}
-
-function distrobox-packages() {
-  local packagefile="$HOME/.config/zsh/res/toolbox/archlinux.packages"
-  sudo pacman --needed -S $(cat $packagefile | grep -v "^ *#" | grep -v "^ *$" | tr "\n" " ")
 }
 
 ## APPS
@@ -352,26 +345,13 @@ function kubectl() {
   fi
 }
 
-function kube() {
-  local context=$(basename $(pwd))
+function kubectl-context() {
+  local context
 
-  if [ -z "$(kubectl config get-contexts | tail -n +2 | awk '{print $2}' | grep "$context")" ]; then
-    kubectl "$@"
-  else
-    kubectl --context="$context" "$@"
-  fi
-}
-
-function kubectl-context-selector() {
-  local context=$(kubectl config get-contexts | tail -n +2 | awk '{print $2}' | fzf)
+  context=$(kubectl config get-contexts | tail -n +2 | awk '{print $1}' | fzf)
   [ -z "$context" ] && return 0
-  kubectl config set-context $context
-}
 
-function kubectl-namespace-selector() {
-  local ns=$(kubectl get ns | tail -n +2 | awk '{print $1}' | fzf)
-  [ -z "$ns" ] && return 0
-  kubectl config set-context --current --namespace=$ns
+  sed "s/current-context:.*$/current-context: $context/g" -i $KUBECONFIG
 }
 
 function kubeenc() {
@@ -442,6 +422,7 @@ function status() {
             $HOME/.config/tmux \
             $HOME/.config/alacritty \
             $HOME/.config/git \
+            $HOME/.config/kube/config \
             $HOME/.config/wsl \
             $HOME/.config/qtile \
             $HOME/.config/waybar \
@@ -451,14 +432,15 @@ function status() {
             $HOME/.config/mako \
             $HOME/.config/zsh \
             $HOME/.config/containers \
+            $HOME/.config/distrobox \
             $HOME/.config/i3 \
             $HOME/.config/gnupg \
-            $HOME/.local/share/applications/archlinux.desktop \
-            $HOME/.local/share/fonts \
             $HOME/.config/Windows \
             $HOME/.config/Code/User/settings.json \
             $HOME/.config/Code/User/keybindings.json \
             $HOME/.local/share/codews \
+            $HOME/.local/share/applications/archlinux.desktop \
+            $HOME/.local/share/fonts \
             $HOME/.ssh/config \
             $HOME/.aws/config \
             $HOME/.bashrc \

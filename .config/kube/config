@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Config
+current-context: tools
+preferences: {}
+
+clusters:
+- name: k0s
+  cluster:
+    server: https://k0s.cluster.local:6443
+    certificate-authority: creds.k0s.crt
+
+- name: aws-spain-tools
+  cluster:
+    server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
+    certificate-authority: creds.tools.crt 
+
+users:
+- name: k0s
+  user:
+    client-certificate: creds.k0s.user.crt
+    client-key: creds.k0s.user.key
+
+- name: terraform
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: aws
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "terraform"]
+
+- name: tools
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: aws
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools"]
+
+contexts:
+- name: k0s
+  context:
+    cluster: k0s
+    user: k0s
+
+- name: tools
+  context:
+    cluster: aws-spain-tools
+    user: tools
