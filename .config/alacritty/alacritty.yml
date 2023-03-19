@@ -12,7 +12,7 @@ window:
     x: 0
     y: 0
   opacity: 1
-  dynamic_padding: true
+  dynamic_padding: false
   startup_mode: Maximized
   title: Alacritty
   dynamic_title: false

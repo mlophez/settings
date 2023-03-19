@@ -22,7 +22,10 @@ alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 
 # ZSH
 alias config="nvim $HOME/.config/zsh/config.zsh"
-alias confignvim="cd $HOME/.config/nvim && nvim; cd"
+alias config-zsh="nvim $HOME/.config/zsh/.zshrc"
+alias config-env="nvim $HOME/.config/zsh/.zshenv"
+alias config-nvim="cd $HOME/.config/nvim && nvim; cd"
+alias config-tmux="nvim $HOME/.config/tmux/tmux.conf"
 
 # EDITOR
 alias vi="nvim"
@@ -384,6 +387,18 @@ function kubeenc() {
   fi
 }
 
+function helm-template() {
+  local name="$1"
+  local repo="$2"
+  local version
+
+  version="$(helm search repo $repo | grep -v "^NAME" | head -1 | awk '{ OFS = "_" } {print $2,$3}')"
+  
+  echo "Version: $version"
+  [ ! -e ${name}-${version}.values.yaml ] && helm show values $repo > ${name}-${version}.values.yaml
+  helm template $name $repo -f ${name}-${version}.values.yaml --include-crds --skip-tests --release-name > ${name}-${version}.yaml
+}
+
 function kinfo() {
     local namespace="$1"
     clear
@@ -404,25 +419,30 @@ function gic() {
     command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
 }
 
-function status-vscode-wsl() {
-    local codePath="/mnt/c/Users/miguel.lopez.logalty/AppData/Roaming/Code"
-    local files=("User/settings.json" "User/keybindings.json")
-    local file
+function status-get-windows-files() {
+    [ ! -d "$HOME/.config/Windows" ] && mkdir -p $HOME/.config/Windows
 
-    for file in ${files[@]}; do
-      [ -e "$codePath/$file" ] && cat "$codePath/$file" > $HOME/.config/Code/$file
-    done
+    cp $WSLHOME/AppData/Roaming/Code/User/settings.json \
+      $HOME/.config/Windows/code-user-settings.json
 
+    cp $WSLHOME/AppData/Roaming/Code/User/keybindings.json \
+      $HOME/.config/Windows/code-user-keybindings.json
+
+    cp $WSLHOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+      $HOME/.config/Windows/terminal-settings.json
 }
 
 function status() {
     gic restore --staged .
-    status-vscode-wsl
+
+    status-get-windows-files
+
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
             $HOME/.config/tmux \
             $HOME/.config/alacritty \
             $HOME/.config/git \
+            $HOME/.config/wsl \
             $HOME/.config/qtile \
             $HOME/.config/waybar \
             $HOME/.config/sway \
@@ -435,6 +455,7 @@ function status() {
             $HOME/.config/gnupg \
             $HOME/.local/share/applications/archlinux.desktop \
             $HOME/.local/share/fonts \
+            $HOME/.config/Windows \
             $HOME/.config/Code/User/settings.json \
             $HOME/.config/Code/User/keybindings.json \
             $HOME/.local/share/codews \
@@ -457,14 +478,11 @@ function load() {
     gic pull
 }
 
-function wsl_install() {
+function wsl-install() {
     #[ "$(whoami)" != "root" ] && echo "Run as a root" && return -1
 
     sudo bash <<EOF
 apt install zsh tmux neovim fzf unzip
-cat $HOME/.config/zsh/res/wsl/wsl.conf > /etc/wsl.conf
-cat $HOME/.config/zsh/res/wsl/wslboot.sh > /usr/local/bin/wslboot
-chmod 755 /usr/local/bin/wslboot
 
 curl -sLo /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
 unzip -p /tmp/win32yank.zip win32yank.exe > /usr/local/bin/win32yank.exe
@@ -472,12 +490,13 @@ chmod +x /usr/local/bin/win32yank.exe
 EOF
 }
 
-function wsl_config() {
-    # Set download in windows 11
-    #! test -L $HOME/Downloads && ln -sf /mnt/c/Users/miguel.lopez.logalty/Downloads $HOME/Downloads
-    cp $HOME/.config/alacritty/alacritty.yml /tmp/alacritty.yml 
-    sed 's#program:.*$#program: "C:/Windows/System32/wsl.exe"\n  args:\n    - --cd ~#g' -i /tmp/alacritty.yml
-    cp /tmp/alacritty.yml $HOME/User/AppData/Roaming/alacritty/alacritty.yml
+function wsl-configure() {
+  cat $HOME/.config/wsl/wslconfig > $WSLHOME/.wslconfig
+  sudo bash <<EOF
+cat $HOME/.config/wsl/wsl.conf > /etc/wsl.conf
+cat $HOME/.config/wsl/wslboot.sh > /usr/local/bin/wslboot
+chmod 755 /usr/local/bin/wslboot
+EOF
 }
 
 # PASS

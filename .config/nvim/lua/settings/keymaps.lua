@@ -35,6 +35,11 @@ keymap("x", "ñ", "l", opts)
 keymap("n", "hñ", "A", opts)
 keymap("n", "hj", "I", opts)
 
+keymap("i", "<A-j>", "<Left>", opts)
+keymap("i", "<A-k>", "<Down>", opts)
+keymap("i", "<A-l>", "<Up>", opts)
+keymap("i", "<A-ñ>", "<Right>", opts)
+
 -- Buffers
 --keymap("n", "<BS>", ":bd<cr>", opts)
 keymap("n", "<BS>", ":bp<bar>sp<bar>bn<bar>bd<cr>", opts)

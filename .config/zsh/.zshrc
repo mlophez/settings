@@ -30,12 +30,18 @@ setopt completealiases
 
 #### BINDKEYS
 bindkey -e
+
+# Search
 bindkey '^R' history-incremental-search-backward
-bindkey '^H' backward-kill-word
-bindkey '^[^?' backward-kill-word
-bindkey "\033[1~" beginning-of-line
-bindkey "\033[4~" end-of-line
-bindkey  "^[[3~"  delete-char
+
+# Clear screen
+bindkey '\eh' clear-screen
+
+# Move
+bindkey -s '\eñ' '^[[C'
+bindkey -s '\ej' '^[[D'
+bindkey -s '\ek' '^[[B'
+bindkey -s '\el' '^[[A'
 
 #### PLUGINS
 [ -e /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \

@@ -33,6 +33,9 @@ unset lang
 # SPACESHIP
 export SPACESHIP_CONFIG="$HOME/.config/zsh/spaceship.zsh"
 
+# WSL
+export WSLHOME="/mnt/c/Users/miguel.lopez.logalty"
+
 ## KUBERNETES
 export KUBECONFIG="$HOME/.config/kube/config"
 export KUBE_EDITOR="nvim"

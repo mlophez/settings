@@ -1,0 +1,47 @@
+{
+    "workbench.colorTheme": "Dracula",
+    "workbench.iconTheme": "eq-material-theme-icons-light",
+    "editor.tabSize": 2,
+    "editor.fontFamily": "'JetBrainsMono Nerd Font'",
+    "window.dialogStyle": "custom",
+    "window.restoreWindows": "none",
+    "git.autofetch": true,
+    "git.autofetchPeriod": 60,
+    "git.branchPrefix": "miguellopez-",
+    "yaml.schemas": {
+        "Kubernetes": [
+            "*.yaml"
+        ],
+        "file:///home/mlr/.vscode-server/extensions/atlassian.atlascode-3.0.2/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+    },
+    "vs-kubernetes": {
+        "vscode-kubernetes.helm-path.linux": "/home/mlr/.local/share/state/vs-kubernetes/tools/helm/linux-amd64/helm",
+        "vscode-kubernetes.kubectl-path.linux": "/home/mlr/.local/share/state/vs-kubernetes/tools/kubectl/kubectl"
+    },
+    "redhat.telemetry.enabled": false,
+    "atlascode.jira.enabled": false,
+    "atlascode.bitbucket.statusbar.enabled": false,
+    "atlascode.bitbucket.contextMenus.enabled": true,
+    "atlascode.bitbucket.pipelines.explorerEnabled": false,
+    "atlascode.bitbucket.explorer.refreshInterval": 1,
+    "atlascode.showWelcomeOnInstall": false,
+    "atlascode.helpExplorerEnabled": false,
+    "editor.fontSize": 14,
+    "terminal.integrated.fontSize": 16,
+    "[yaml]": {
+        "editor.formatOnSave": false
+    },
+    "jenkins.pipeline.linter.connector.crumbUrl": "http://jenkins.logalty.com/jenkins/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,%22:%22,//crumb)",
+    "jenkins.pipeline.linter.connector.url": "http://jenkins.logalty.com/jenkins/pipeline-model-converter/validate",
+    "jenkins.pipeline.linter.connector.user": "miguel.lopez",
+    "remote.SSH.remotePlatform": {
+        "systools": "linux"
+    },
+    "[sql]": {
+        "editor.defaultFormatter": "cymonk.sql-formatter"
+    },
+    "vscode-neovim.useWSL": true,
+    "vscode-neovim.neovimInitVimPaths.linux": "/home/mlr/.config/nvim/init.lua",
+    "vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+    "explorer.compactFolders": false,
+}

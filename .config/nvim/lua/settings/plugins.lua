@@ -69,6 +69,17 @@ return packer.startup(function(use)
 -- ToggleTerm 
     use { "akinsho/toggleterm.nvim" }
 
+    -- VimWiki
+    -- use { "vimwiki/vimwiki",
+    --   config = function()
+    --     vim.g.vimwiki_list = {{
+    --       path = '~/Documents/Wiki',
+    --       syntax = 'markdown',
+    --       ext = '.md',
+    --     }}
+    --   end
+    -- }
+
 --  use { "ahmedkhalf/project.nvim" }
 --  use { "lewis6991/impatient.nvim" }
 --  use { "lukas-reineke/indent-blankline.nvim" }
@@ -89,10 +100,10 @@ return packer.startup(function(use)
 --  use { "rafamadriz/friendly-snippets" } -- a bunch of snippets to use
 --
     -- LSP
-    use { "neovim/nvim-lspconfig" } -- enable LSP
-    use { "williamboman/mason.nvim" } -- simple to use language server installer
-    use { "williamboman/mason-lspconfig.nvim" }
-    use { "jose-elias-alvarez/null-ls.nvim" } -- for formatters and linters
+    -- use { "neovim/nvim-lspconfig" } -- enable LSP
+    -- use { "williamboman/mason.nvim" } -- simple to use language server installer
+    -- use { "williamboman/mason-lspconfig.nvim" }
+    -- use { "jose-elias-alvarez/null-ls.nvim" } -- for formatters and linters
     --use { "RRethy/vim-illuminate" }
 
 -- Treesitter
