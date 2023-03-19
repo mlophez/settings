@@ -618,7 +618,7 @@ function copysec() {
 
 # NOTES
 function notes() {
-  local notespath="$HOME/Documents/Notes"
+  local notespath="$HOME/Documents/Wiki"
   local repository=""
 
   [ "$notespath/pages" ] && mkdir -p "$notespath/pages" &>/dev/null
@@ -629,7 +629,7 @@ function notes() {
   # Run NeoVim
   cd $notespath
   [ -d ".git/" ] && git pull
-  nvim pages/Home.md
+  nvim index.md
   [ -d ".git/" ] && git status
 
   # Save changes
