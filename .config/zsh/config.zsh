@@ -348,7 +348,7 @@ function kubectl() {
 function kubectl-context() {
   local context
 
-  context=$(kubectl config get-contexts | tail -n +2 | awk '{print $1}' | fzf)
+  context=$(kubectl config get-contexts -o name | fzf)
   [ -z "$context" ] && return 0
 
   sed "s/current-context:.*$/current-context: $context/g" -i $KUBECONFIG
@@ -358,7 +358,7 @@ function kubeenc() {
   local password="$1"
 
   local context=$(basename $(pwd))
-  if [ -z "$(kubectl config get-contexts | tail -n +2 | awk '{print $2}' | grep "$context")" ]; then
+  if [ -z "$(kubectl config get-contexts -o name | grep "$context")" ]; then
     echo "kubeseal --raw --scope cluster-wide"
     echo -n "$password" | kubeseal --raw --scope cluster-wide
   else
@@ -416,6 +416,9 @@ function status() {
     gic restore --staged .
 
     status-get-windows-files
+
+    [ -e "$KUBECONFIG" ] && \
+      sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
 
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
