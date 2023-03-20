@@ -37,15 +37,11 @@ return {
         i = {
           ["<esc>"] = "close",
           ["<C-c>"] = "close",
-          ["<A-k>"] = "move_selection_next",
-          ["<A-l>"] = "move_selection_previous",
         },
         n = {
           ["<esc>"] = "close",
           ["<C-c>"] = "close",
           ["<leader>q"] = "close",
-          ["<A-k>"] = "move_selection_next",
-          ["<A-l>"] = "move_selection_previous",
         }
       }
     }

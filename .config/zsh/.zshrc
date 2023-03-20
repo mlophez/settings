@@ -37,11 +37,11 @@ bindkey '^R' history-incremental-search-backward
 # Clear screen
 bindkey '\eh' clear-screen
 
-# Move
-bindkey -s '\eñ' '^[[C'
-bindkey -s '\ej' '^[[D'
-bindkey -s '\ek' '^[[B'
-bindkey -s '\el' '^[[A'
+#  # Move
+#  bindkey -s '\eñ' '^[[C'
+#  bindkey -s '\ej' '^[[D'
+#  bindkey -s '\ek' '^[[B'
+#  bindkey -s '\el' '^[[A'
 
 #### PLUGINS
 [ -e /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
