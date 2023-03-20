@@ -59,7 +59,7 @@ nvim_tree.setup {
     hide_root_folder = true,
     mappings = {
       list = {
-        { key = { "ñ", "<CR>", "o" }, cb = tree_cb "edit" },
+        { key = { "ñ", "<CR>", "o" }, action = "edit", mode = 'n' },
         { key = "j", cb = tree_cb "close_node" },
         { key = "v", cb = tree_cb "vsplit" },
         { key = "c", cb = tree_cb "create" },

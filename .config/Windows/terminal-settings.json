@@ -71,10 +71,6 @@
             },
             {
                 "commandline": "C:\\Windows\\System32\\wsl.exe -d Ubuntu",
-                "font": 
-                {
-                    "size": 14.0
-                },
                 "guid": "{34d350f4-5ddd-4414-88c4-402f035fd87e}",
                 "hidden": false,
                 "name": "Ubuntu",
