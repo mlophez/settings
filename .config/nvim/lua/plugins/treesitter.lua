@@ -1,6 +1,10 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  lazy = false,
+  main = "nvim-treesitter.configs",
   opts = {
+    sync_install = true,
+    auto_install = true,
     ensure_installed = { 
       "bash", "c", "javascript", "json", "lua", "python", 
       "typescript", "tsx", "css", "rust", "java", "yaml", 
@@ -15,5 +19,5 @@ return {
 	  	enable = true,
 	  },
 	  indent = { enable = true, disable = { "python", "css" } },
-  }
+  },
 }

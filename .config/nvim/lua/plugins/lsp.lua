@@ -1,5 +1,17 @@
-return {
-}
+return {}
+-- return {
+--   "neovim/nvim-lspconfig",
+--   dependencies = {
+--     { "williamboman/mason.nvim" },
+--     { "williamboman/mason-lspconfig.nvim",
+--       opts = {
+--         ensure_installed = { "hcl" },
+-- 
+--       }
+--     }
+--   }
+-- 
+-- }
 
 --   -- LSP Config
 --   
