@@ -53,7 +53,8 @@
                 "size": 10.0,
                 "weight": "normal"
             },
-            "opacity": 100
+            "opacity": 90,
+            "useAcrylic": true
         },
         "list": 
         [

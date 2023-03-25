@@ -1,13 +1,13 @@
 return {
   'jakewvincent/mkdnflow.nvim',
-  keys = {
-    { "<cr>", "<cmd>MkdnEnter<cr>" },
-    { "m", "$v0<cr>" }, 
-  },
+  -- keys = {
+  --   { "<cr>", "<cmd>MkdnEnter<cr>"  },
+  --   { "m", "$v0<cr>" }, 
+  -- },
   opts = {
-    modules = {
-      maps = false,
-    },
+    --modules = {
+    --  maps = false,
+    --},
     perspective = {
       priority = 'root',
       root_tell = 'index.md',
@@ -26,12 +26,12 @@ return {
         return(text)
       end
     },
-    -- mappings = {
-    --   MkdnNextLink = {'n', 'n'},
-    --   MkdnPrevLink = {'n', 'b'},
-    --   MkdnGoBack = false,
-    --   MkdnEnter = {{'i', 'n', 'v'}, '<CR>'}
-    -- }
+    mappings = {
+      MkdnNextLink = {'n', 'n'},
+      MkdnPrevLink = {'n', 'b'},
+      MkdnGoBack = false,
+      MkdnEnter = {{'i', 'n', 'v'}, '<CR>'}
+    }
   }
 }
 

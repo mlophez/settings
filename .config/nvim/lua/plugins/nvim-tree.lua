@@ -51,7 +51,7 @@ return {
       },
     },
     view = {
-      width = 40,
+      width = 80,
       side = "left",
       hide_root_folder = true,
       mappings = {
