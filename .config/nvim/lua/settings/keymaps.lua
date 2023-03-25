@@ -91,6 +91,3 @@ keymap("n", "<leader>ñ", "<C-w><Right>", opts)
 --nnoremap <leader><Up> <C-w><Up>
 --nnoremap <leader><Right> <C-w><Right>
 
-
-
-
