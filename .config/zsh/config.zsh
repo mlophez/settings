@@ -37,6 +37,9 @@ alias edit="nvim \$(find . -type f -print | fzf)"
 alias ssh_config="nvim $HOME/.ssh/config"
 alias s="ssh_menu"
 
+# NOTES
+alias notes="cd $HOME/Documents/Wiki && tmux rename-window NOTES && nvim index.md"
+
 # SYSTEM
 alias install="sudo pacman --needed -S"
 alias uninstall="sudo pacman -Rns"
@@ -618,28 +621,28 @@ function copysec() {
 }
 
 # NOTES
-function notes() {
-  local notespath="$HOME/Documents/Wiki"
-  local repository=""
-
-  [ "$notespath/pages" ] && mkdir -p "$notespath/pages" &>/dev/null
-  [ "$notespath/assets" ] && mkdir -p "$notespath/assets" &>/dev/null
-
-  [ -n "$TMUX" ] && tmux rename-window 'NOTES'
-
-  # Run NeoVim
-  cd $notespath
-  [ -d ".git/" ] && git pull
-  nvim index.md
-  [ -d ".git/" ] && git status
-
-  # Save changes
-  #[ -n "$(git status | grep -i untracked)" ] && \
-  #[ -d ".git/" ] && \
-  #  git add . && \
-  #  git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" && \
-  #  git push -u origin main
-}
+# function notes() {
+#   local notespath="$HOME/Documents/Wiki"
+#   local repository=""
+# 
+#   [ "$notespath/pages" ] && mkdir -p "$notespath/pages" &>/dev/null
+#   [ "$notespath/assets" ] && mkdir -p "$notespath/assets" &>/dev/null
+# 
+#   [ -n "$TMUX" ] && tmux rename-window 'NOTES'
+# 
+#   # Run NeoVim
+#   cd $notespath
+#   [ -d ".git/" ] && git pull
+#   nvim index.md
+#   [ -d ".git/" ] && git status
+# 
+#   # Save changes
+#   #[ -n "$(git status | grep -i untracked)" ] && \
+#   #[ -d ".git/" ] && \
+#   #  git add . && \
+#   #  git commit -m "$(date '+%Y-%m-%d %H:%M:%S')" && \
+#   #  git push -u origin main
+# }
 
 function aws-profile-menu() {
   local profile="$(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | fzf)"
