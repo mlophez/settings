@@ -8,7 +8,7 @@ return {
     ensure_installed = { 
       "bash", "c", "javascript", "json", "lua", "python", 
       "typescript", "tsx", "css", "rust", "java", "yaml", 
-      "markdown", "markdown_inline", "hcl", "http", "json"
+      "markdown", "markdown_inline", "hcl", "http", "json", "sql"
     },
 	  ignore_install = { "phpdoc" },
 	  highlight = {
