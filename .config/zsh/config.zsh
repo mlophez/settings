@@ -417,7 +417,7 @@ function status-get-windows-files() {
 }
 
 function status() {
-    gic restore --staged .
+    gic restore --staged . &>/dev/null
 
     status-get-windows-files
 
@@ -452,8 +452,6 @@ function status() {
             $HOME/.aws/config \
             $HOME/.bashrc \
             $HOME/.gitignore
-
-
 
     gic status
 }
