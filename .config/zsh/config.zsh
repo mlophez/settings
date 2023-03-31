@@ -84,7 +84,8 @@ alias se="service"
 alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/vault/infracost-api-key) -v $HOME:$HOME -w $(pwd) infracost/infracost:ci-latest"
 
 # KUBERNETES
-alias k="kubectl-context"
+alias k="kubectl"
+alias kc="kubectl-context"
 alias apply="kubectl apply -k"
 alias delete="kubectl delete -k"
 
