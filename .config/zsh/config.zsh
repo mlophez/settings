@@ -226,7 +226,6 @@ function workspace() {
 
   [ -n "$TMUX" ] && tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
   cd $selected
-  nvim
 }
 
 # SSH
