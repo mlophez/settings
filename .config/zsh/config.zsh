@@ -96,6 +96,9 @@ alias archlinux-install="sudo pacman --needed -S $(cat $HOME/.config/distrobox/P
 # DRIVE
 reload_drive="systemctl --user restart rclone@Drive.service"
 
+# VSCODE
+alias code="/mnt/c/Users/miguel.lopez.logalty/AppData/Local/Programs/'Microsoft VS Code'/code.exe"
+
 ##### FUNCTIONS
 # SHELL
 function precmd() {
