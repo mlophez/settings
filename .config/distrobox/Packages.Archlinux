@@ -89,6 +89,7 @@ stern
 helm
 helmfile
 kubeseal
+kompose
 
 # API
 httpie

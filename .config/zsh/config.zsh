@@ -66,6 +66,7 @@ alias inventory="ansible-inventory"
 # GIT
 alias g="git_menu"
 alias wk="workspace"
+alias ck="workspace-path"
 alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
 
 # AWS
@@ -86,6 +87,7 @@ alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/v
 # KUBERNETES
 alias k="kubectl"
 alias kc="kubectl-context"
+alias check="kustomize build . > /tmp/test.yaml && kube-score score /tmp/test.yaml"
 alias apply="kubectl apply -k"
 alias delete="kubectl delete -k"
 
@@ -229,7 +231,15 @@ function workspace() {
 
   [ -n "$TMUX" ] && tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
   cd $selected
+  export WORKSPACE=$(pwd)
 }
+
+function workspace-path() {
+  local selected=$(find $WORKSPACE -mindepth 1 -type d -print | grep -v ".git" | fzf)
+  [ -z "$selected" ] && return 0
+  cd $selected
+}
+
 
 # SSH
 function ssh() {
@@ -359,6 +369,14 @@ function kubectl-context() {
   [ -z "$context" ] && return 0
 
   sed "s/current-context:.*$/current-context: $context/g" -i $KUBECONFIG
+}
+
+function kvalidator() {
+  kustomize build . > /tmp/test.yaml
+  echo "***** KUBE-SCORE *****"
+  kube-score score --ignore-test "pod-networkpolicy" /tmp/test.yaml
+  echo "***** KUBEVAL *****"
+  kubeval --ignore-missing-schemas --strict /tmp/test.yaml || return 0
 }
 
 function kubeenc() {
