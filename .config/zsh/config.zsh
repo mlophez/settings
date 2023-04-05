@@ -87,7 +87,6 @@ alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/v
 # KUBERNETES
 alias k="kubectl"
 alias kc="kubectl-context"
-alias check="kustomize build . > /tmp/test.yaml && kube-score score /tmp/test.yaml"
 alias apply="kubectl apply -k"
 alias delete="kubectl delete -k"
 
@@ -372,11 +371,15 @@ function kubectl-context() {
 }
 
 function kvalidator() {
-  kustomize build . > /tmp/test.yaml
   echo "***** KUBE-SCORE *****"
-  kube-score score --ignore-test "pod-networkpolicy" /tmp/test.yaml
+
+  kustomize build . | kube-score score \
+    --kubernetes-version "v1.25" \
+    --ignore-test "pod-networkpolicy" \
+    -
+
   echo "***** KUBEVAL *****"
-  kubeval --ignore-missing-schemas --strict /tmp/test.yaml || return 0
+  kustomize build . | kubeval --ignore-missing-schemas --strict || return 0
 }
 
 function kubeenc() {
