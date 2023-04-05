@@ -34,8 +34,8 @@ bindkey -e
 # Search
 bindkey '^R' history-incremental-search-backward
 
-# Clear screen
-bindkey '\eh' clear-screen
+# Clear screen A-h
+# bindkey '\eh' clear-screen
 
 #  # Move
 #  bindkey -s '\eñ' '^[[C'

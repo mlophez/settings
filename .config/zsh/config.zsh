@@ -364,14 +364,17 @@ function kubectl-context() {
 function kubeenc() {
   local password="$1"
 
-  local context=$(basename $(pwd))
-  if [ -z "$(kubectl config get-contexts -o name | grep "$context")" ]; then
-    echo "kubeseal --raw --scope cluster-wide"
-    echo -n "$password" | kubeseal --raw --scope cluster-wide
-  else
-    echo "kubeseal --context=$context --raw --scope cluster-wide"
-    echo -n "$password" | kubeseal --context=$context --raw --scope cluster-wide
-  fi
+  echo "kubeseal --raw --scope cluster-wide"
+  echo -n "$password" | kubeseal --raw --scope cluster-wide
+
+  # local context=$(basename $(pwd))
+  # if [ -z "$(kubectl config get-contexts -o name | grep "$context")" ]; then
+  #   echo "kubeseal --raw --scope cluster-wide"
+  #   echo -n "$password" | kubeseal --raw --scope cluster-wide
+  # else
+  #   echo "kubeseal --context=$context --raw --scope cluster-wide"
+  #   echo -n "$password" | kubeseal --context=$context --raw --scope cluster-wide
+  # fi
 }
 
 function helm-template() {
