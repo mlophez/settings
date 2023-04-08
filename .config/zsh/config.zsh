@@ -375,7 +375,10 @@ function kvalidator() {
 
   kustomize build . | kube-score score \
     --kubernetes-version "v1.25" \
+    --ignore-container-cpu-limit \
+    --ignore-container-memory-limit \
     --ignore-test "pod-networkpolicy" \
+    --ignore-test "container-ephemeral-storage-request-and-limit" \
     -
 
   echo "***** KUBEVAL *****"
