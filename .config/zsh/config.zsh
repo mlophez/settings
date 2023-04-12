@@ -87,8 +87,6 @@ alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/v
 # KUBERNETES
 alias k="kubectl"
 alias kc="kubectl-context"
-alias apply="kubectl apply -k"
-alias delete="kubectl delete -k"
 
 # DISTROBOX
 alias archlinux="distrobox-archlinux"
@@ -373,7 +371,7 @@ function kubectl-context() {
 function kvalidator() {
   echo "***** KUBE-SCORE *****"
 
-  kustomize build . | kube-score score \
+  kustomize build . --enable-helm | kube-score score \
     --kubernetes-version "v1.25" \
     --ignore-container-cpu-limit \
     --ignore-container-memory-limit \
@@ -382,7 +380,48 @@ function kvalidator() {
     -
 
   echo "***** KUBEVAL *****"
-  kustomize build . | kubeval --ignore-missing-schemas --strict || return 0
+  kustomize build . --enable-helm | kubeval --ignore-missing-schemas --strict || return 0
+}
+
+function kbuild() {
+  local target="$1"; shift
+  [ -z "$target" ] && echo "Especify target" && return 1
+  kustomize build "$target" --enable-helm
+}
+
+function kapply() {
+  local target="$1"; shift
+  [ -z "$target" ] && echo "Especify target" && return 1
+  kustomize build "$target" --enable-helm | kubectl apply "$@" -f -
+}
+
+function kdelete() {
+  local target="$1"
+  [ -z "$target" ] && echo "Especify target" && return 1
+  kustomize build "$target" --enable-helm | kubectl delete --ignore-not-found=true "$@" -f -
+}
+
+
+function kfolder() {
+  local folder="$1"
+
+  if [ -z "$folder" ]; then
+    for folder in $(find $(pwd) -maxdepth 1 -mindepth 1 -type d); do
+      [ ! -d "$folder/base" ] && mkdir -p $folder/base &>/dev/null
+      mv $folder/*.* $folder/base/ &> /dev/null
+    done
+  else
+      [ ! -d "$folder/base" ] && mkdir -p $folder/base &>/dev/null
+      [ ! -d "$folder/overlays/default" ] && mkdir -p $folder/overlays/default &>/dev/null
+      mv $folder/*.* $folder/base/ &> /dev/null
+      cat << EOF > $folder/overlays/default/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+EOF
+  fi
 }
 
 function kubeenc() {
