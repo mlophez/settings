@@ -372,7 +372,7 @@ function kvalidator() {
   echo "***** KUBE-SCORE *****"
 
   kustomize build . --enable-helm | kube-score score \
-    --kubernetes-version "v1.25" \
+    --kubernetes-version "v1.26" \
     --ignore-container-cpu-limit \
     --ignore-container-memory-limit \
     --ignore-test "pod-networkpolicy" \
@@ -389,16 +389,22 @@ function kbuild() {
   kustomize build "$target" --enable-helm
 }
 
+function kdiff() {
+  local target="$1"; shift
+  [ -z "$target" ] && echo "Especify target" && return 1
+  kustomize build "$target" --enable-helm | kubectl diff --server-side "$@" -f -
+}
+
 function kapply() {
   local target="$1"; shift
   [ -z "$target" ] && echo "Especify target" && return 1
-  kustomize build "$target" --enable-helm | kubectl apply "$@" -f -
+  kustomize build "$target" --enable-helm | kubectl apply --server-side "$@" -f -
 }
 
 function kdelete() {
   local target="$1"
   [ -z "$target" ] && echo "Especify target" && return 1
-  kustomize build "$target" --enable-helm | kubectl delete --ignore-not-found=true "$@" -f -
+  kustomize build "$target" --enable-helm | kubectl delete --server-side --ignore-not-found=true "$@" -f -
 }
 
 
