@@ -38,7 +38,7 @@ alias ssh_config="nvim $HOME/.ssh/config"
 alias s="ssh_menu"
 
 # NOTES
-alias notes="cd $HOME/Documents/Wiki && tmux rename-window NOTES && nvim index.md"
+alias notes="cd $HOME/Documents/Notes && tmux rename-window NOTES && nvim index.md"
 
 # SYSTEM
 alias install="sudo pacman --needed -S"
@@ -228,6 +228,7 @@ function workspace() {
 
   [ -n "$TMUX" ] && tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
   cd $selected
+
   export WORKSPACE=$(pwd)
 }
 
@@ -240,7 +241,6 @@ function workspace-path() {
 
 # SSH
 function ssh() {
-
   printf "\e[?2004l"
   command ssh "$@"
 }
