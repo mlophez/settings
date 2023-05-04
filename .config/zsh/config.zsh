@@ -408,6 +408,8 @@ function kdiff() {
 function kapply() {
   local target="$1"; shift
   [ -z "$target" ] && echo "Especify target" && return 1
+  [ -d "$target/charts" ] && rm -rf "$target/charts" &>/dev/null
+
   kustomize build "$target" --enable-helm | kubectl apply --server-side "$@" -f -
 }
 

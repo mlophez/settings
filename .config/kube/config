@@ -9,15 +9,15 @@ clusters:
     server: https://k0s.cluster.local:6443
     certificate-authority: creds.k0s.crt
 
-- name: aws-spain-tools
+- name: tools
   cluster:
     server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
     certificate-authority: creds.tools.crt 
 
-- name: aws-spain-demo
+- name: demo
   cluster:
-    server: https://475786AE88BBA5A5DE1BE2756E081525.gr7.eu-south-2.eks.amazonaws.com
-    certificate-authority: creds.demo.crt 
+    server: https://F5851AC7E11F8F70D49A24D805F6F029.yl4.eu-south-2.eks.amazonaws.com
+    certificate-authority: creds.demo.crt
 
 users:
 - name: k0s
@@ -54,10 +54,10 @@ contexts:
 
 - name: tools
   context:
-    cluster: aws-spain-tools
+    cluster: tools
     user: tools
 
 - name: demo
   context:
-    cluster: aws-spain-demo
+    cluster: demo
     user: demo
