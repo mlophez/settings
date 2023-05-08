@@ -396,6 +396,7 @@ function kvalidator() {
 function kbuild() {
   local target="$1"; shift
   [ -z "$target" ] && echo "Especify target" && return 1
+
   kustomize build "$target" --enable-helm
 }
 
