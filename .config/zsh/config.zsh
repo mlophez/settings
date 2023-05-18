@@ -502,7 +502,6 @@ function status() {
             $HOME/.config/Code/User/settings.json \
             $HOME/.config/Code/User/keybindings.json \
             $HOME/.local/share/codews \
-            $HOME/.local/share/applications/archlinux.desktop \
             $HOME/.local/share/fonts \
             $HOME/.ssh/config \
             $HOME/.aws/config \

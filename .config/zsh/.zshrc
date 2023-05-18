@@ -70,6 +70,9 @@ source ~/.local/share/zsh/spaceship/spaceship.zsh
 # LOADING
 source ~/.config/zsh/config.zsh
 
+# AUTOCOMPLETE
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+
 #### ENDING
 [ -f $HOME/.xinitrc ] && rm -rf $HOME/.xinitrc 2>/dev/null
 echo > /dev/null
