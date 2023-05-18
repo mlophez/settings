@@ -76,27 +76,19 @@ alias am="aws-profile-menu"
 
 # DOCKER PODMAN
 alias docker="podman"
-alias podman="distrobox-host podman"
-alias flatpak="distrobox-host flatpak"
-alias distrobox="distrobox-host distrobox"
-alias systemctl="distrobox-host systemctl"
-alias microk8s="distrobox-host microk8s"
-alias se="service"
-alias infracost="docker run --rm -e INFRACOST_API_KEY=$(cat $HOME/.local/share/vault/infracost-api-key) -v $HOME:$HOME -w $(pwd) infracost/infracost:ci-latest"
 
 # KUBERNETES
 alias k="kubectl"
 alias kc="kubectl-context"
+alias apply="kubectl apply --server-side -f"
+alias delete="kubectl delete -f"
 
 # DISTROBOX
-alias archlinux="distrobox-archlinux"
+alias archlinux='eval $(distrobox enter archlinux --dry-run -- bash)'
 alias archlinux-install="sudo pacman --needed -S $(cat $HOME/.config/distrobox/Packages.Archlinux | grep -v "^ *#" | grep -v "^ *$" | tr "\n" " ")"
 
 # DRIVE
-reload_drive="systemctl --user restart rclone@Drive.service"
-
-# VSCODE
-alias code="/mnt/c/Users/miguel.lopez.logalty/AppData/Local/Programs/'Microsoft VS Code'/code.exe"
+alias reload_drive="systemctl --user restart rclone@Drive.service"
 
 ##### FUNCTIONS
 # SHELL
@@ -286,30 +278,6 @@ function docker-upload-image () {
         ssh $host "docker tag $image $(echo $image | sed 's#localhost/##g')"
         ssh $host "docker image rm $image"
     fi
-}
-
-# PODMAN
-function distrobox-host() {
-  if [ -n "$container" ]; then
-    command distrobox-host-exec "$@"
-  else
-    command "$@"
-  fi
-}
-
-function distrobox-install() {
-  curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --prefix ~/.local 
-}
-
-function distrobox-uninstall() {
-  curl -s https://raw.githubusercontent.com/89luca89/distrobox/main/install | sh -s -- --next --prefix ~/.local
-}
-
-function distrobox-archlinux() {
-  if [ -z "$(distrobox list --no-color  | grep archlinux)" ]; then
-    distrobox-create -i docker.io/archlinux:latest -n archlinux
-  fi
-  exec distrobox enter archlinux -- bash
 }
 
 ## APPS

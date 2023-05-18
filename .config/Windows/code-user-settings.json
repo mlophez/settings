@@ -47,4 +47,7 @@
     "files.associations": {
         "*.yaml": "dockercompose"
     },
+    "workbench.startupEditor": "none",
+    "telemetry.telemetryLevel": "off",
+    "security.workspace.trust.untrustedFiles": "open",
 }
