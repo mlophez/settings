@@ -38,7 +38,7 @@ alias ssh_config="nvim $HOME/.ssh/config"
 alias s="ssh_menu"
 
 # NOTES
-alias notes="cd $HOME/Documents/Notes && tmux rename-window NOTES && nvim index.md"
+alias notes="cd $HOME/Documents/Notes && tmux rename-window NOTES && nvim home.md"
 
 # SYSTEM
 alias install="sudo pacman --needed -S"

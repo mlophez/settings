@@ -11,7 +11,7 @@ return {
       transform_implicit = function(text)
         text = text:gsub(" ", "-")
         text = text:lower()
-        return('pages/'.. text)
+        return('pkm/'.. text)
       end,
       transform_explicit = function(text)
         text = text:gsub(" ", "-")
