@@ -78,10 +78,10 @@ alias am="aws-profile-menu"
 alias docker="podman"
 
 # KUBERNETES
-alias k="kubectl"
-alias kc="kubectl-context"
-alias apply="kubectl apply --server-side -f"
-alias delete="kubectl delete -f"
+alias k="kubectl-wrapper"
+#alias apply="kubectl apply --server-side -f"
+#alias delete="kubectl delete -f"
+#alias kc="kubectl-context"
 
 # DISTROBOX
 alias archlinux='eval $(distrobox enter archlinux --dry-run -- bash)'
@@ -329,12 +329,14 @@ function flyway() {
 }
 
 # KUBERNETES
-function kubectl() {
-  if type kubecolor &>/dev/null; then
-    command kubecolor "$@"
-  else
-    command kubectl "$@"
-  fi
+function kubectl-wrapper() {
+  local cmd="kubectl"
+  local extra_args
+
+  [ -n "$(echo "$@" | grep -e ' -f ' -e ' -k ')" ] && extra_args="--server-side"
+  type kubecolor &>/dev/null && cmd="kubecolor"
+
+  command $cmd "$@" $extra_args
 }
 
 function kubectl-context() {

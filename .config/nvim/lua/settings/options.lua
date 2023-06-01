@@ -53,17 +53,17 @@ vim.opt.formatoptions:remove({ "c", "r", "o" })        -- don't insert the curre
 vim.opt.runtimepath:remove("/usr/share/vim/vimfiles")  -- separate vim plugins from neovim in case vim still in use
 
 -- Clipboard
-vim.cmd [[
-let g:clipboard = {
-  \   'name': 'WslClipboard',
-  \   'copy': {
-  \      '+': 'clip.exe',
-  \      '*': 'clip.exe',
-  \    },
-  \   'paste': {
-  \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-  \   },
-  \   'cache_enabled': 0,
-  \ }
-]]
+-- vim.cmd [[
+-- let g:clipboard = {
+--   \   'name': 'WslClipboard',
+--   \   'copy': {
+--   \      '+': 'clip.exe',
+--   \      '*': 'clip.exe',
+--   \    },
+--   \   'paste': {
+--   \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+--   \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+--   \   },
+--   \   'cache_enabled': 0,
+--   \ }
+-- ]]
