@@ -114,7 +114,7 @@ function ls() {
   local afunctrace=($functrace) 
   if [[ ${#afunctrace[@]} -le 1 ]]; then
     if type lsd &>/dev/null; then
-      lsd -v "$@"
+      lsd "$@"
     else
       command ls -v --color "$@"
     fi
@@ -333,7 +333,7 @@ function kubectl-wrapper() {
   local cmd="kubectl"
   local extra_args
 
-  [ -n "$(echo "$@" | grep -e ' -f ' -e ' -k ')" ] && extra_args="--server-side"
+  #[ -n "$(echo "$@" | grep -e ' -f ' -e ' -k ')" ] && extra_args="--server-side"
   type kubecolor &>/dev/null && cmd="kubecolor"
 
   command $cmd "$@" $extra_args
@@ -429,16 +429,38 @@ function kubeenc() {
   # fi
 }
 
-function helm-template() {
-  local name="$1"
-  local repo="$2"
-  local version
+function kustomize-helm() {
+  local chart="$1"
+  local version="$2"
+  local name="$3"
+  local repo
 
-  version="$(helm search repo $repo | grep -v "^NAME" | head -1 | awk '{ OFS = "_" } {print $2,$3}')"
-  
-  echo "Version: $version"
-  [ ! -e ${name}-${version}.values.yaml ] && helm show values $repo > ${name}-${version}.values.yaml
-  helm template $name $repo -f ${name}-${version}.values.yaml --include-crds --skip-tests --release-name > ${name}-${version}.yaml
+  # # ADD REPO IF NOT EXISTS
+  # [ -z "$(helm repo list -o table | grep -i "$repo_name" | grep -i "$repo_url")" ] && \
+  #   helm repo add $repo $repo_name
+
+  # # UPDATE REPOSITORY
+  # helm repo update $repo_name --fail-on-repo-update-fail
+
+  # GET VERSIONS
+  [ -z "$version" ] && \
+    helm search repo $chart --versions -o table | head -10 && return 0
+    #helm search repo $chart --versions -o json | jq -r '.[].version' | head -5 && return 0
+
+  shift; shift; shift
+
+  # GET DEFAULTS VALUES
+  [ ! -e "${name}-values-${version}.yaml" ] && \
+    helm show values ${chart} --version ${version} | tee ${name}-values-${version}.yaml ${name}-default-values-${version}.yaml
+
+  # GET BUNDLE FILE
+  helm template ${name} ${chart} \
+    --include-crds \
+    --skip-tests \
+    --values $name-values-$version.yaml \
+    --version $version "$@" \
+    | grep -v -e "app\.kubernetes\.io/managed-by: Helm" -e "helm.sh/.*:" > ${name}-bundle-${version}.yaml
+    #--namespace kube-ingress
 }
 
 function kinfo() {
