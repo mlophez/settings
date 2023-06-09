@@ -51,7 +51,7 @@ return {
       },
     },
     view = {
-      width = 80,
+      width = 50,
       side = "left",
       hide_root_folder = true,
       mappings = {
@@ -66,7 +66,7 @@ return {
     },
     actions = {
       open_file = {
-        quit_on_open = true,
+        quit_on_open = false,
       }
     },
     filters = {
