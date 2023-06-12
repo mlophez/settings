@@ -79,8 +79,8 @@ alias docker="podman"
 
 # KUBERNETES
 alias k="kubectl-wrapper"
-#alias apply="kubectl apply --server-side -f"
-#alias delete="kubectl delete -f"
+#alias apply="kubectl apply --server-side"
+#alias delete="kubectl delete"
 #alias kc="kubectl-context"
 
 # DISTROBOX
