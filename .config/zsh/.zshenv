@@ -4,6 +4,7 @@
 paths=(
   "/usr/local/bin"
   "$HOME/.local/bin"
+  "$HOME/.arkade/bin"
   #"$HOME/.local/share/gem/ruby/3.0.0/bin"
 )
 for npath in $paths; do
