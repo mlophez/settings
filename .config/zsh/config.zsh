@@ -78,7 +78,7 @@ alias am="aws-profile-menu"
 alias docker="podman"
 
 # KUBERNETES
-alias k="kubectl-wrapper"
+alias k="kubectl-wrapper --context"
 #alias apply="kubectl apply --server-side"
 #alias delete="kubectl delete"
 #alias kc="kubectl-context"
