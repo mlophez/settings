@@ -79,6 +79,8 @@ alias docker="podman"
 
 # KUBERNETES
 alias k="kubectl-wrapper --context"
+alias ks="kubectl-shell-menu"
+alias kl="kubectl-log-menu"
 #alias apply="kubectl apply --server-side"
 #alias delete="kubectl delete"
 #alias kc="kubectl-context"
@@ -774,3 +776,43 @@ function aws-ssm-connect() {
   # aws ssm start-session --target "Your Instance ID" --document-name AWS-StartPortForwardingSession --parameters "portNumber"=["80"],"localPortNumber"=["56789"]
 }
 
+function kubectl-shell-menu() {
+  local context="$1"
+  local instance pod namespace
+  local datafile=$(mktemp)
+
+  [ -z "$context" ] && echo "kubectl-shell-menu <context>" && return -1
+
+  kubectl --context $context get pods -A -o template --template='{{range .items}}{{.metadata.name}}{{";"}}{{.metadata.namespace}}{{"\n"}}{{end}}' > $datafile
+
+  instance=$(cat $datafile | column -s ';' -t | fzf)
+  [ -z "$instance" ] && return 0
+
+  pod=$(echo "$instance" | awk '{print $1 }')
+  namespace=$(echo "$instance" | awk '{print $2 }')
+
+  kubectl --context $context -n $namespace exec -it $pod -- sh -c "(bash || ash || sh)"
+}
+
+function kubectl-log-menu() {
+  local context="$1"
+  local instance pod namespace
+  local datafile=$(mktemp)
+
+  [ -z "$context" ] && echo "kubectl-shell-menu <context>" && return -1
+
+  kubectl --context $context get pods -A -o template --template='{{range .items}}{{.metadata.name}}{{";"}}{{.metadata.namespace}}{{"\n"}}{{end}}' > $datafile
+
+  instance=$(cat $datafile | column -s ';' -t | fzf)
+  [ -z "$instance" ] && return 0
+
+  pod=$(echo "$instance" | awk '{print $1 }')
+  namespace=$(echo "$instance" | awk '{print $2 }')
+  regex=$(echo $pod | cut -d"-" -f1)
+
+  if type stern &>/dev/null; then
+    stern --context $context -n $namespace $regex
+  else
+    kubectl --context $context -n $namespace logs -f pod/$pod
+  fi
+}
