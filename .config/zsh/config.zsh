@@ -816,3 +816,4 @@ function kubectl-log-menu() {
     kubectl --context $context -n $namespace logs -f pod/$pod
   fi
 }
+
