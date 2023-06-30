@@ -81,6 +81,8 @@ alias docker="podman"
 alias k="kubectl-wrapper --context"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
+alias kp="kubectl-menu port-forward pods"
+alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
 #alias apply="kubectl apply --server-side"
 #alias delete="kubectl delete"
 #alias kc="kubectl-context"
@@ -762,7 +764,7 @@ function aws-ssm-connect() {
   profile=$(echo "$instance" |  awk '{print $4 }')
 
   echo "-> Connect to ${instance_id} - ${instance_name}"
-  echo "aws ssm start-session --target ${instance_id} --region ${region} --profile ${profile}"
+  echo "aws ssm start-session --target ${instance_id} --region ${region} --profile ${profile}" --cli-read-timeout 8000
 
   if [ -z "$1" ]; then
     eval ssh ${instance_id} -o ProxyCommand=\"aws ssm start-session --target ${instance_id} \
@@ -815,5 +817,26 @@ function kubectl-log-menu() {
   else
     kubectl --context $context -n $namespace logs -f pod/$pod
   fi
+}
+
+# alias df=kubectl-menu port-forward pods
+function kubectl-menu() {
+  local verb="$1"
+  local objects="$2"
+  local context="$3"
+  local datafile=$(mktemp)
+  local instance object namespace
+
+  [ -z "$context" ] && echo "kubectl-menu <context> <verb> <objects>" && return -1
+
+  kubectl --context $context get ${objects} -A -o template --template='{{range .items}}{{.metadata.name}}{{";"}}{{.metadata.namespace}}{{"\n"}}{{end}}' > $datafile
+
+  instance=$(cat $datafile | column -s ';' -t | fzf)
+  [ -z "$instance" ] && return 0
+
+  object=$(echo "$instance" | awk '{print $1 }')
+  namespace=$(echo "$instance" | awk '{print $2 }')
+
+  print -z "kubectl --context ${context} -n ${namespace} ${verb} ${objects}/${object}"
 }
 
