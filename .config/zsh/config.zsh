@@ -840,3 +840,36 @@ function kubectl-menu() {
   print -z "kubectl --context ${context} -n ${namespace} ${verb} ${objects}/${object}"
 }
 
+function eks-volume-delete() {
+  local context="$1"
+  local temp=$(mktemp)
+  local template='{{ range .items }}{{ .status.phase }} {{ .metadata.name }} {{ .spec.claimRef.name }} {{ .spec.csi.driver }} {{ .spec.csi.volumeHandle }}{{ "\n" }}{{ end }}'
+
+  [ -z "$context" ] && echo "kubectl-menu <context> <verb> <objects>" && return -1
+
+  #kubectl --context ${context} get pv | grep -i Released > $temp
+  kubectl --context ${context} get pv -o template --template="$template" | grep -i '^Released' | column -t > $temp
+
+  local pvo=$(cat $temp | fzf)
+  local pv="$(echo $pvo | awk '{print $2}')"
+  local fs="$(echo $pvo | awk '{print $5}' | grep -o 'fs-[a-z0-9]*')"
+  local ap="$(echo $pvo | awk '{print $5}' | grep -o 'fsap-.*$')"
+
+  [ -z "$pv" ] && return 0
+  [ -z "$fs" ] && return 0
+
+  echo "Filesystem: ${fs}"
+  echo "Deleting volume pv: $pv"
+  echo "Deleting access point: $ap"
+  echo
+
+  kubectl --context ${context} delete pv ${pv}
+  aws efs delete-access-point --access-point-id ${ap} --profile ${context}
+
+  # Erase filesystem
+  local podname="volume-delete"
+  local override="{\"spec\":{\"containers\":[{\"name\": \"${podname}\", \"volumeMounts\":[{\"name\":\"storage\",\"mountPath\":\"/data\"}]}],\"volumes\":[{\"name\":\"storage\",\"nfs\":{\"server\":\"${fs}.efs.eu-south-2.amazonaws.com\",\"path\":\"/\"}}]}}"
+
+  kubectl --context ${context} run ${podname} -i --rm --image=ubuntu --restart=Never --override-type=strategic --overrides="${override}" -- bash -c "ls -lh /data/${pv}/ ; while [ -d '/data/${pv}' ]; do rm -I -r /data/${pv}/; done"
+}
+
