@@ -13,6 +13,7 @@ return {
       update_cwd = true,
     },
     renderer = {
+      root_folder_label = false,
       root_folder_modifier = ":t",
       icons = {
         glyphs = {
@@ -53,7 +54,6 @@ return {
     view = {
       width = 50,
       side = "left",
-      hide_root_folder = true,
       mappings = {
         list = {
           { key = { "ñ", "<CR>", "o" }, action = "edit" },

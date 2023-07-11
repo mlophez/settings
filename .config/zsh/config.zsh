@@ -82,6 +82,7 @@ alias k="kubectl-wrapper --context"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
+alias krun="echo kubectl --context demo run ubuntu -it --rm --image=ubuntu:latest --restart=Never -- bash"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
 #alias apply="kubectl apply --server-side"
 #alias delete="kubectl delete"
@@ -810,11 +811,14 @@ function kubectl-log-menu() {
 
   pod=$(echo "$instance" | awk '{print $1 }')
   namespace=$(echo "$instance" | awk '{print $2 }')
-  regex=$(echo $pod | cut -d"-" -f1)
+  regex="$(echo $pod | sed 's/-[a-z0-9]\+$//g')-"
+  #regex="$(echo $pod | sed 's/-[a-z0-9]\+-[a-z0-9]\+$//g')-"
 
   if type stern &>/dev/null; then
-    stern --context $context -n $namespace $regex
+    echo stern --context ${context} -n ${namespace} ${regex}
+    stern --context ${context} -n ${namespace} ${regex}
   else
+    echo kubectl --context $context -n $namespace logs -f pod/$pod
     kubectl --context $context -n $namespace logs -f pod/$pod
   fi
 }
