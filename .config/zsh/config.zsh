@@ -815,11 +815,11 @@ function kubectl-log-menu() {
   #regex="$(echo $pod | sed 's/-[a-z0-9]\+-[a-z0-9]\+$//g')-"
 
   if type stern &>/dev/null; then
-    echo stern --context ${context} -n ${namespace} ${regex}
-    stern --context ${context} -n ${namespace} ${regex}
+    print -z stern --context ${context} -n ${namespace} ${regex}
+    #stern --context ${context} -n ${namespace} ${regex}
   else
-    echo kubectl --context $context -n $namespace logs -f pod/$pod
-    kubectl --context $context -n $namespace logs -f pod/$pod
+    print -z kubectl --context $context -n $namespace logs -f pod/$pod
+    #kubectl --context $context -n $namespace logs -f pod/$pod
   fi
 }
 
