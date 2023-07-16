@@ -28,6 +28,7 @@ alias config-nvim="cd $HOME/.config/nvim && nvim; cd"
 alias config-tmux="nvim $HOME/.config/tmux/tmux.conf"
 
 # EDITOR
+alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 alias cc="cd \$(find . -type d -print | fzf)"

@@ -30,12 +30,8 @@ setopt completealiases
 
 #### BINDKEYS
 bindkey -e
-
-# Begin and end
 bindkey "\033[1~" beginning-of-line
 bindkey "\033[4~" end-of-line
-
-# Search
 bindkey '^R' history-incremental-search-backward
 
 # Clear screen A-h

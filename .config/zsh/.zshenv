@@ -23,6 +23,7 @@ export EDITOR=nvim
 export GNUPGHOME="$HOME/.config/gnupg"
 #export TERM=xterm-256color
 
+
 ## LANG
 lang=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)
 if [ -n "$lang" ]; then
@@ -30,6 +31,9 @@ if [ -n "$lang" ]; then
   export LANG=$lang
 fi
 unset lang
+
+## ZSH
+export KEYTIMEOUT=1
 
 # SPACESHIP
 export SPACESHIP_CONFIG="$HOME/.config/zsh/spaceship.zsh"
