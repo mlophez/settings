@@ -80,6 +80,7 @@ alias docker="podman"
 
 # KUBERNETES
 alias k="kubectl-wrapper --context"
+alias ka="kubectl apply --server-side --context"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
@@ -159,7 +160,7 @@ function tm() {
     [ -z "$session_name" ] && session_name=$USER
 
     if [ -n "$(tmux ls 2>/dev/null | grep $session_name:)" ]; then
-        exec tmux attach-session -t $session_name
+        tmux attach-session -t $session_name
     else
         if [ "$session_name" = "$USER" ]; then
             #tmux start-server
@@ -167,7 +168,7 @@ function tm() {
         else
             tmux -2 new-session -d -s $session_name -n LOCAL
         fi
-        exec tmux attach-session -t $session_name
+        tmux attach-session -t $session_name
     fi
 }
 
@@ -223,9 +224,14 @@ function workspace() {
   local wpath=($(find $HOME -maxdepth 2 -iname Projects -type d -print | tr '\n' ' '))
   local selected=$(find $wpath -mindepth 1 -maxdepth 1 -type d,l -print | fzf)
   [ -z "$selected" ] && return 0
-
-  [ -n "$TMUX" ] && tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
   cd $selected
+
+  if [ -n "$TMUX" ]; then
+    tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
+    tmux split-window -v -l 30%
+    tmux select-pane -U
+    tmux send-keys nvim Enter
+  fi
 
   export WORKSPACE=$(pwd)
 }
