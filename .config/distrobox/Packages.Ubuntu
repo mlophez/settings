@@ -4,7 +4,8 @@ autossh sshpass  sshuttle curl wget traceroute nmap
 
 # SHELL
 bash zsh zsh-autosuggestions zsh-syntax-highlighting tmux sudo
-ripgrep fzf expect pv bc jq bat dialog
+ripgrep fzf expect pv bc jq dialog
+exa duf aria2 bat most
 # which yq lsd
 
 # FILES
