@@ -33,6 +33,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias cc="cd \$(find . -type d -print | fzf)"
 alias edit="nvim \$(find . -type f -print | fzf)"
+alias e="editor"
 
 # SSH
 alias ssh_config="nvim $HOME/.ssh/config"
@@ -228,12 +229,17 @@ function workspace() {
 
   if [ -n "$TMUX" ]; then
     tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
+  fi
+
+  export WORKSPACE=$(pwd)
+}
+
+function editor() {
+  if [ -n "$TMUX" ]; then
     tmux split-window -v -l 30%
     tmux select-pane -U
     tmux send-keys nvim Enter
   fi
-
-  export WORKSPACE=$(pwd)
 }
 
 function workspace-path() {
