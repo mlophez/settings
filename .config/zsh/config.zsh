@@ -792,6 +792,19 @@ function aws-ssm-connect() {
   # aws ssm start-session --target "Your Instance ID" --document-name AWS-StartPortForwardingSession --parameters "portNumber"=["80"],"localPortNumber"=["56789"]
 }
 
+function kubectl-get-all {
+  local context="${1}"
+  local namespace="${2}"
+
+  for i in $(kubectl --context=${context} api-resources --verbs=list --namespaced -o name | grep -v "events.events.k8s.io" | grep -v "events" | sort | uniq); do
+    echo "Resource:" $i
+    echo 
+    kubectl --context=${context} -n ${namespace} get --ignore-not-found ${i}
+    echo ---
+  done
+
+}
+
 function kubectl-shell-menu() {
   local context="$1"
   local instance pod namespace
