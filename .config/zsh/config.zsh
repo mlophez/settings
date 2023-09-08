@@ -85,6 +85,7 @@ alias ka="kubectl apply --server-side --context"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
+alias kt="kubectl-pod"
 alias krun="echo kubectl --context demo run ubuntu -it --rm --image=ubuntu:latest --restart=Never -- bash"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
 #alias apply="kubectl apply --server-side"
@@ -868,6 +869,15 @@ function kubectl-menu() {
   namespace=$(echo "$instance" | awk '{print $2 }')
 
   print -z "kubectl --context ${context} -n ${namespace} ${verb} ${objects}/${object}"
+}
+
+function kubectl-pod() {
+  local context="$1"
+  local image="${2:-ubuntu:latest}"
+
+  [ -z "$context" ] && echo "kubectl-pod <context> <image:default=ubuntu:latest>" && return -1
+
+  kubectl --context ${context} run pod-${USER}-$(echo $RANDOM | md5sum | head -c 10) -it --rm --image=${image} --restart=Never -- sh -c "clear; (bash || ash || sh)"
 }
 
 function eks-volume-delete() {
