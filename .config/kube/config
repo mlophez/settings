@@ -39,6 +39,13 @@ users:
       command: aws
       args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools"]
 
+- name: tools-operator
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: aws
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools-operator"]
+
 - name: demo 
   user:
     exec:
@@ -53,6 +60,13 @@ users:
       command: aws
       args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo-operator"]
 
+- name: demo-viewer
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: aws
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo-viewer"]
+
 contexts:
 - name: k0s
   context:
@@ -64,6 +78,11 @@ contexts:
     cluster: tools
     user: tools
 
+- name: tools-operator
+  context:
+    cluster: tools
+    user: tools-operator
+
 - name: demo
   context:
     cluster: demo
@@ -73,3 +92,8 @@ contexts:
   context:
     cluster: demo
     user: demo-operator
+
+- name: demo-viewer
+  context:
+    cluster: demo
+    user: demo-viewer

@@ -82,6 +82,7 @@ alias docker="podman"
 # KUBERNETES
 alias k="kubectl-wrapper --context"
 alias ka="kubectl apply --server-side --context"
+alias kd="kubectl delete --ignore-not-found=true --context"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
@@ -244,8 +245,16 @@ function editor() {
 }
 
 function workspace-path() {
+  [ -z "$WORKSPACE" ] && return 0
+
   local selected=$(find $WORKSPACE -mindepth 1 -type d -print | grep -v ".git" | fzf)
+
   [ -z "$selected" ] && return 0
+
+  if [ -n "$TMUX" ]; then
+    tmux rename-window $(basename ${WORKSPACE}| tr '[:lower:]' '[:upper:]')-$(basename ${selected} | tr '[:lower:]' '[:upper:]')
+  fi
+
   cd $selected
 }
 
@@ -495,6 +504,21 @@ function kinfo() {
         echo
         kubectl -n $namespace get ing -o wide
     fi
+}
+
+function kubernetes-clean-terminated-pods() {
+  local context="$1"
+  local namespace
+  local pod
+
+  [ -z "$context" ] && echo "$0 <context>" && return -1
+
+  for i in $(kubectl --context ${context} get pods -A | grep 'Terminating' | awk '{print $1 ":" $2}'); do
+    pod=$(echo $i | cut -d":" -f2)
+    namespace=$(echo $i | cut -d":" -f1)
+    kubectl --context ${context} -n ${namespace} delete pod --force --grace-period=0 ${pod}
+  done
+  
 }
 
 # SETTINGS
