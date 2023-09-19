@@ -845,7 +845,8 @@ function kubectl-shell-menu() {
   pod=$(echo "$instance" | awk '{print $1 }')
   namespace=$(echo "$instance" | awk '{print $2 }')
 
-  kubectl --context $context -n $namespace exec -it $pod -- sh -c "(bash || ash || sh)"
+  #kubectl --context $context -n $namespace exec -it $pod -- sh -c "(bash || ash || sh)"
+  print -z kubectl --context $context -n $namespace exec -it $pod -- sh -c "'(bash || ash || sh)'"
 }
 
 function kubectl-log-menu() {
