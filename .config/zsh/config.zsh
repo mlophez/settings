@@ -226,14 +226,21 @@ function git_branch_create() {
 function workspace() {
   local wpath=($(find $HOME -maxdepth 2 -iname Projects -type d -print | tr '\n' ' '))
   local selected=$(find $wpath -mindepth 1 -maxdepth 1 -type d,l -print | fzf)
+
   [ -z "$selected" ] && return 0
+
   cd $selected
+
+  export WORKSPACE=$(pwd)
 
   if [ -n "$TMUX" ]; then
     tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
+    tmux split-window -v -l 30%
+    tmux select-pane -l
+    tmux resize-pane -Z
   fi
 
-  export WORKSPACE=$(pwd)
+  nvim
 }
 
 function editor() {
