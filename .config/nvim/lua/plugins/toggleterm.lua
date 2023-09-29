@@ -1,6 +1,6 @@
 return {
   'akinsho/toggleterm.nvim', version = "*",
-  enabled = false,
+  enabled = true,
   lazy = false,
   -- keys = {
   --   { "<leader>t", ":ToggleTerm<cr>" }

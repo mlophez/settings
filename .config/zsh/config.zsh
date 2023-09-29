@@ -68,7 +68,7 @@ alias inventory="ansible-inventory"
 # GIT
 alias g="git_menu"
 alias wk="workspace"
-alias ck="workspace-path"
+alias ck="workspace move"
 alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
 
 # AWS
@@ -233,14 +233,16 @@ function workspace() {
 
   export WORKSPACE=$(pwd)
 
-  if [ -n "$TMUX" ]; then
-    tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
-    tmux split-window -v -l 30%
-    tmux select-pane -l
-    tmux resize-pane -Z
+  if [ -z "$1" ]; then
+    if [ -n "$TMUX" ]; then
+      tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
+      tmux split-window -v -l 30%
+      tmux select-pane -l
+      tmux resize-pane -Z
+    fi
+    nvim
   fi
 
-  nvim
 }
 
 function editor() {

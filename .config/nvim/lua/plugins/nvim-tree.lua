@@ -1,5 +1,5 @@
 return {
-  "kyazdani42/nvim-tree.lua",
+  "kyazdani42/nvim-tree.lua", version = "ce3495b",
   dependencies = {
     { "kyazdani42/nvim-web-devicons" },
   },
@@ -54,15 +54,15 @@ return {
     view = {
       width = 50,
       side = "left",
-      mappings = {
-        list = {
-          { key = { "ñ", "<CR>", "o" }, action = "edit" },
-          { key = "j", action = "close_node" },
-          { key = "v", action = "vsplit" },
-          { key = "c", action = "create" },
-          { key = "r", action = "rename" },
-        },
-      },
+      --mappings = {
+      --  list = {
+      --    { key = { "ñ", "<CR>", "o" }, action = "edit" },
+      --    { key = "j", action = "close_node" },
+      --    { key = "v", action = "vsplit" },
+      --    { key = "c", action = "create" },
+      --    { key = "r", action = "rename" },
+      --  },
+      --},
     },
     actions = {
       open_file = {
