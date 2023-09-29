@@ -20,6 +20,9 @@ alias awslogin="aws sso login --sso-session awscli"
 # TMUX
 alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 
+# ZELLIJ
+alias zel="zellij"
+
 # ZSH
 alias config="nvim $HOME/.config/zsh/config.zsh"
 alias config-zsh="nvim $HOME/.config/zsh/.zshrc"
@@ -559,6 +562,7 @@ function status() {
     gic add $HOME/.config/zsh \
             $HOME/.config/nvim \
             $HOME/.config/tmux \
+            $HOME/.config/zellij \
             $HOME/.config/alacritty \
             $HOME/.config/git \
             $HOME/.config/kube/config \
