@@ -12,10 +12,9 @@ layout {
     //    height "90%"
     //  }
     //}
-    pane
+    pane cwd="$HOME"
   }
   tab name="#1 LOCAL"
-  tab name="#2 NOTES" cwd="Documents/Notes"
   //tab name="#3 TERRAFORM" cwd="Documents/Projects/terraform"
   //tab name="#4 KUBERNETES" cwd="Documents/Projects/kubernetes"
 }

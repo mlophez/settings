@@ -23,7 +23,7 @@ keybinds clear-defaults=true {
   normal {
     bind "Ctrl b" { }
 
-    bind "Alt n" { NewTab; }
+    bind "Alt n" { NewTab "/home/mlr"; }
     bind "Alt v" { NewPane "Down"; }
     bind "Alt h" { NewPane "Right"; }
     bind "Alt f" { ToggleFocusFullscreen; }
