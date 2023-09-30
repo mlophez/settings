@@ -36,19 +36,10 @@ vim.api.nvim_set_keymap("n", "hj", "I", opts)
 
 -- Buffers
 --keymap("n", "<BS>", ":bd<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>n", ":enew<cr>", opts)
 vim.api.nvim_set_keymap("n", "<BS>", ":bp<bar>sp<bar>bn<bar>bd<cr>", opts)
 vim.api.nvim_set_keymap("n", "<TAB>", ":bnext<cr>", opts)
 vim.api.nvim_set_keymap("n", "<S-TAB>", ":bprev<cr>", opts)
-
--- Learn real vim
-vim.api.nvim_set_keymap("n", "<Up>", "<nop>", opts)
-vim.api.nvim_set_keymap("n", "<Down>", "<nop>", opts)
-vim.api.nvim_set_keymap("n", "<Left>", "<nop>", opts)
-vim.api.nvim_set_keymap("n", "<Right>", "<nop>", opts)
-vim.api.nvim_set_keymap("n", ":", "<nop>", opts)
-vim.api.nvim_set_keymap("n", "Q", "<nop>", opts)
-vim.api.nvim_set_keymap("n", "q", "<nop>", opts)
-vim.api.nvim_set_keymap("i", "<esc>", "<nop>", opts)
 
 -- Save files
 vim.api.nvim_set_keymap("n", "<C-s>", ":w<cr>", opts)
@@ -82,3 +73,13 @@ vim.api.nvim_set_keymap("n", "<leader>j", "<C-w><Left>", opts)
 vim.api.nvim_set_keymap("n", "<leader>k", "<C-w><Down>", opts)
 vim.api.nvim_set_keymap("n", "<leader>l", "<C-w><Up>", opts)
 vim.api.nvim_set_keymap("n", "<leader>ñ", "<C-w><Right>", opts)
+
+-- Learn real vim
+vim.api.nvim_set_keymap("n", "<Up>", "<nop>", opts)
+vim.api.nvim_set_keymap("n", "<Down>", "<nop>", opts)
+vim.api.nvim_set_keymap("n", "<Left>", "<nop>", opts)
+vim.api.nvim_set_keymap("n", "<Right>", "<nop>", opts)
+vim.api.nvim_set_keymap("n", ":", "<nop>", opts)
+vim.api.nvim_set_keymap("n", "Q", "<nop>", opts)
+vim.api.nvim_set_keymap("n", "q", "<nop>", opts)
+vim.api.nvim_set_keymap("i", "<esc>", "<nop>", opts)

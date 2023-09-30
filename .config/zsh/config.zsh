@@ -42,9 +42,6 @@ alias e="editor"
 alias ssh_config="nvim $HOME/.ssh/config"
 alias s="ssh_menu"
 
-# NOTES
-alias notes="cd $HOME/Documents/Notes && tmux rename-window NOTES && nvim inbox.md"
-
 # SYSTEM
 alias install="sudo pacman --needed -S"
 alias uninstall="sudo pacman -Rns"
@@ -738,6 +735,14 @@ function bluetooth_menu() {
 
     bluetoothctl power on
     bluetoothctl connect "$(echo $device | cut -d' ' -f 2)"
+}
+
+# NOTES
+function notes() {
+  cd $HOME/Documents/Notes
+  [ -n "$TMUX" ]   && tmux rename-window "NOTES"
+  [ -n "$ZELLIJ" ] && zellij action rename-tab "2# NOTES"
+  nvim inbox.md
 }
 
 # BACKUPS

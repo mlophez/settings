@@ -12,7 +12,7 @@
         "Kubernetes": [
             "*.yaml"
         ],
-        "file:///home/mlr/.vscode-server/extensions/atlassian.atlascode-3.0.6/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+        "file:///c%3A/Users/miguel.lopez.logalty/.vscode/extensions/atlassian.atlascode-3.0.6/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
     },
     "vs-kubernetes": {
         "vscode-kubernetes.helm-path.linux": "/home/mlr/.local/share/state/vs-kubernetes/tools/helm/linux-amd64/helm",
