@@ -1,11 +1,13 @@
 return {
-  "kyazdani42/nvim-tree.lua", version = "ce3495b",
+  "kyazdani42/nvim-tree.lua",
+  version = "ce3495b",
   dependencies = {
     { "kyazdani42/nvim-web-devicons" },
   },
   keys = {
     { "<leader>e", ":NvimTreeOpen<cr>" }, 
     { "<leader>b", ":NvimTreeClose<cr>" },
+    --{ "<space>", ":NvimTreeFocus<cr>" },
   },
   opts = {
     update_focused_file = {
@@ -53,7 +55,7 @@ return {
     },
     view = {
       width = 50,
-      side = "left",
+      side = "right",
       --mappings = {
       --  list = {
       --    { key = { "ñ", "<CR>", "o" }, action = "edit" },
@@ -73,5 +75,8 @@ return {
       custom = { "^\\.git", "^\\.terraform" },
       exclude = { ".gitignore" },
     },
-  }
+  },
+  init = function()
+    require("nvim-tree.api").tree.open()
+  end
 }

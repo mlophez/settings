@@ -1,10 +1,18 @@
 return {
   'VonHeikemen/fine-cmdline.nvim',
+  enabled = true,
   dependencies = {
     {'MunifTanjim/nui.nvim'}
   },
-  enabled = false
-  --keys = {
-  --  { "<leader><leader>", "<cmd>FineCmdline<cr>", }
-  --}
+  keys = {
+    { "<space>", "<cmd>FineCmdline<cr>", }
+  },
+  opts = {
+    popup = {
+      position = {
+        row = '45%',
+        col = '50%'
+      }
+    }
+  }
 }
