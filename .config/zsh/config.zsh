@@ -21,7 +21,7 @@ alias awslogin="aws sso login --sso-session awscli"
 alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
 
 # ZELLIJ
-alias zel="zellij"
+alias zel="zellij -s $USER"
 
 # ZSH
 alias config="nvim $HOME/.config/zsh/config.zsh"
