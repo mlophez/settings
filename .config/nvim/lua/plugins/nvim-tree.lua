@@ -5,7 +5,7 @@ return {
     { "kyazdani42/nvim-web-devicons" },
   },
   keys = {
-    { "<leader>e", ":NvimTreeOpen<cr>" }, 
+    --{ "<leader>e", ":NvimTreeOpen<cr>" }, 
     { "<leader>b", ":NvimTreeClose<cr>" },
     { "<space>", ":NvimTreeFocusToggle<cr>" },
   },

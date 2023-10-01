@@ -81,7 +81,7 @@
                 "name": "Command Prompt"
             },
             {
-                "colorScheme": "Catppuccin Macchiato",
+                "colorScheme": "Catppuccin Mocha",
                 "commandline": "C:\\Windows\\System32\\wsl.exe -d Ubuntu",
                 "guid": "{34d350f4-5ddd-4414-88c4-402f035fd87e}",
                 "hidden": false,
@@ -464,7 +464,7 @@
     "showTabsInTitlebar": false,
     "showTerminalTitleInTitlebar": false,
     "tabWidthMode": "equal",
-    "theme": "Catppuccin Macchiato",
+    "theme": "Catppuccin Mocha",
     "themes": 
     [
         {
