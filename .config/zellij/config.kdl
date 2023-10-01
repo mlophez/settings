@@ -8,6 +8,8 @@ default_layout "main"
 default_mode "normal"
 pane_frames false
 auto_layout true
+copy_on_select true
+mouse_mode false
 
 ui {
   pane_frames {
@@ -27,7 +29,7 @@ keybinds clear-defaults=true {
     bind "Alt v" { NewPane "Down"; }
     bind "Alt h" { NewPane "Right"; }
     bind "Alt g" { ToggleFocusFullscreen; }
-    bind "Alt t" { ToggleFloatingPanes; }
+    bind "Alt t" "Alt m" { ToggleFloatingPanes; }
     bind "Alt u" { CloseFocus; }
 
     bind "Alt j" "Alt a" { MoveFocus "Left"; }
