@@ -1,6 +1,7 @@
 return {
   'hrsh7th/nvim-cmp',
-  enabled = require('plugins.lspconfig').enabled,
+  --enabled = require('plugins.lspconfig').enabled,
+  enabled = false,
   event = "InsertEnter",
   dependencies = {
     -- Autocompletion
