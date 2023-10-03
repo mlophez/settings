@@ -69,6 +69,7 @@ vim.api.nvim_set_keymap("n", "<leader>R", ":so ~/.config/nvim/init.lua<cr>", opt
 vim.api.nvim_set_keymap("n", "<leader>h", ":vsplit<cr><C-w><Right>", opts)
 vim.api.nvim_set_keymap("n", "<leader>v", ":split<cr><C-w><Down>", opts)
 
+-- Move
 vim.api.nvim_set_keymap("n", "<leader>j", "<C-w><Left>", opts)
 vim.api.nvim_set_keymap("n", "<leader>k", "<C-w><Down>", opts)
 vim.api.nvim_set_keymap("n", "<leader>l", "<C-w><Up>", opts)
