@@ -17,9 +17,6 @@ alias server-tunnel="ssh -N -D5555 root@192.168.1.230"
 
 alias awslogin="aws sso login --sso-session awscli"
 
-# TMUX
-alias tmux="command tmux -f $HOME/.config/tmux/tmux.conf"
-
 # ZELLIJ
 alias zel="zellij -s $USER"
 
@@ -70,6 +67,9 @@ alias g="git_menu"
 alias wk="workspace"
 alias ck="workspace move"
 alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
+
+# TUNNEL
+alias t="tunnel_menu"
 
 # AWS
 alias a="aws-ssm-connect"
@@ -167,12 +167,27 @@ function tm() {
     else
         if [ "$session_name" = "$USER" ]; then
             #tmux start-server
-            tmux -2 new-session -d -s $session_name -n LOCAL
+            tmux -2 new-session -d -s $session_name -n HOME
         else
-            tmux -2 new-session -d -s $session_name -n LOCAL
+            tmux -2 new-session -d -s $session_name -n HOME
         fi
         tmux attach-session -t $session_name
     fi
+}
+
+# TUNNELS
+function tunnel_menu() {
+  local cmd
+  local opts=(
+    "demodb:  ssh -L 1521:demo-db.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com:1521 -N 52.50.61.78"
+    "oradb01: aws-tunnel 1521:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0fcd1f120811b7f42"
+  )
+
+  cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
+  [ -z "$cmd" ] && return 0
+
+  echo "-> $cmd"
+  eval "$(echo $cmd | cut -d ":" -f 2-100000000 | sed 's/^ *//g')"
 }
 
 # GIT
@@ -843,6 +858,21 @@ function aws-ssm-connect() {
 
   #ProxyCommand aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p' --profile logalty
   # aws ssm start-session --target "Your Instance ID" --document-name AWS-StartPortForwardingSession --parameters "portNumber"=["80"],"localPortNumber"=["56789"]
+}
+
+function aws-tunnel() { # 1521:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0fcd1f120811b7f42
+  local target=$1
+  local instance=$2
+  local profile=$3
+
+  local lport=$(echo $target | cut -d":" -f 1)
+  local host=$(echo $target | cut -d":" -f 2)
+  local port=$(echo $target | cut -d":" -f 3)
+
+  aws ssm start-session --cli-read-timeout 80000 --target ${instance} \
+  --document-name AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters "{\"host\":[\"${host}\"],\"portNumber\":[\"${port}\"],\"localPortNumber\":[\"${lport}\"]}" \
+  --profile demo
 }
 
 function kubectl-get-all {
