@@ -22,7 +22,8 @@ clusters:
 - name: biid-des
   cluster:
     server: https://54.74.163.210:6443
-    certificate-authority: creds.biid-des.crt
+    insecure-skip-tls-verify: true
+    #certificate-authority: creds.biid-des.crt
 
 users:
 - name: k0s
