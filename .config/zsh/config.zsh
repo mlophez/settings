@@ -180,7 +180,7 @@ function tunnel_menu() {
   local cmd
   local opts=(
     "demodb:  ssh -L 1521:demo-db.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com:1521 -N 52.50.61.78"
-    "oradb01: aws-tunnel 1521:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0fcd1f120811b7f42"
+    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0fcd1f120811b7f42"
   )
 
   cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
@@ -251,9 +251,9 @@ function workspace() {
 
     if [ -n "$TMUX" ]; then
       tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
-      tmux split-window -v -l 30%
-      tmux select-pane -l
-      tmux resize-pane -Z
+      #tmux split-window -v -l 30%
+      #tmux select-pane -l
+      #tmux resize-pane -Z
     fi
 
     if [ -n "$ZELLIJ" ]; then

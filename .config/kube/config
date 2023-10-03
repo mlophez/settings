@@ -19,6 +19,11 @@ clusters:
     server: https://7765F82FD0DBC9B034E8C053F844D80D.gr7.eu-south-2.eks.amazonaws.com
     certificate-authority: creds.demo.crt
 
+- name: biid-des
+  cluster:
+    server: https://54.74.163.210:6443
+    certificate-authority: creds.biid-des.crt
+
 users:
 - name: k0s
   user:
@@ -67,6 +72,11 @@ users:
       command: aws
       args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo-viewer"]
 
+- name: biid-des-admin
+  user:
+    client-key: creds.biid-des.user.key
+    client-certificate: creds.biid-des.user.crt
+
 contexts:
 - name: k0s
   context:
@@ -97,3 +107,8 @@ contexts:
   context:
     cluster: demo
     user: demo-viewer
+
+- name: biid-des
+  context:
+    cluster: biid-des
+    user: biid-des-admin
