@@ -4,33 +4,33 @@ current-context: none
 preferences: {}
 
 clusters:
-- name: k0s
-  cluster:
-    server: https://k0s.cluster.local:6443
-    certificate-authority: creds.k0s.crt
-
-- name: tools
-  cluster:
-    server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
-    certificate-authority: creds.tools.crt 
 
 - name: demo
   cluster:
     server: https://7765F82FD0DBC9B034E8C053F844D80D.gr7.eu-south-2.eks.amazonaws.com
-    certificate-authority: creds.demo.crt
+    certificate-authority: demo.crt
 
-- name: biid-des
+- name: tools
+  cluster:
+    server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
+    certificate-authority: tools.crt 
+
+- name: biiddev
   cluster:
     server: https://54.74.163.210:6443
     insecure-skip-tls-verify: true
-    #certificate-authority: creds.biid-des.crt
+
+- name: biiduat
+  cluster:
+    server: https://34.246.33.86:6443
+    insecure-skip-tls-verify: true
+
+- name: biidprod
+  cluster:
+    server: https://34.247.238.150:6443
+    insecure-skip-tls-verify: true
 
 users:
-- name: k0s
-  user:
-    client-certificate: creds.k0s.user.crt
-    client-key: creds.k0s.user.key
-
 - name: terraform
   user:
     exec:
@@ -38,78 +38,57 @@ users:
       command: aws
       args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "terraform"]
 
-- name: tools
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools"]
-
-- name: tools-operator
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools-operator"]
-
-- name: demo 
+- name: demo-admin
   user:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       command: aws
       args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo"]
 
-- name: demo-operator
+- name: tools-admin
   user:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo-operator"]
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools"]
 
-- name: demo-viewer
+- name: biiddev-admin
   user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo-viewer"]
+    client-key: biiddev-admin.key
+    client-certificate: biiddev-admin.crt
 
-- name: biid-des-admin
+- name: biiduat-admin
   user:
-    client-key: creds.biid-des.user.key
-    client-certificate: creds.biid-des.user.crt
+    client-key: biiduat-admin.key
+    client-certificate: biiduat-admin.crt
+
+- name: biidprod-admin
+  user:
+    client-key: biidprod-admin.key
+    client-certificate: biidprod-admin.crt
 
 contexts:
-- name: k0s
+- name: demo
   context:
-    cluster: k0s
-    user: k0s
+    cluster: demo
+    user: demo-admin
 
 - name: tools
   context:
     cluster: tools
-    user: tools
+    user: tools-admin
 
-- name: tools-operator
+- name: biiddev
   context:
-    cluster: tools
-    user: tools-operator
+    cluster: biiddev
+    user: biiddev-admin
 
-- name: demo
+- name: biiduat
   context:
-    cluster: demo
-    user: demo
+    cluster: biiduat
+    user: biiduat-admin
 
-- name: demo-operator
+- name: biidprod
   context:
-    cluster: demo
-    user: demo-operator
-
-- name: demo-viewer
-  context:
-    cluster: demo
-    user: demo-viewer
-
-- name: biid-des
-  context:
-    cluster: biid-des
-    user: biid-des-admin
+    cluster: biidprod
+    user: biidprod-admin
