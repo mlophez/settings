@@ -81,7 +81,7 @@ alias docker="podman"
 
 # KUBERNETES
 alias k="kubectl-wrapper --context"
-alias ka="kubectl apply --server-side --context"
+alias ka="kustomize_menu apply"
 alias kd="kubectl delete --ignore-not-found=true --context"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
@@ -452,6 +452,15 @@ function kdelete() {
   kustomize build "$target" --enable-helm | kubectl delete --ignore-not-found=true "$@" -f -
 }
 
+function kfilter() {
+  local kind="$1"
+  if [ -z "$kind" ]; then
+    cat /dev/stdin | yq "."
+  else
+    cat /dev/stdin | yq ". | select(.kind == \"${kind}\")"
+  fi
+}
+
 
 function kfolder() {
   local folder="$1"
@@ -538,6 +547,13 @@ function kinfo() {
         echo
         kubectl -n $namespace get ing -o wide
     fi
+}
+
+function kustomize_menu {
+  local entry=$(find . -path "*/overlays/*" -type f -name kustomization.yaml | xargs -I@ dirname @ | fzf)
+  [ -z "$entry" ] && return 0
+
+  kubectl --context $(basename $entry) apply --server-side --force-conflicts -k ${entry}
 }
 
 function kubernetes-clean-terminated-pods() {
