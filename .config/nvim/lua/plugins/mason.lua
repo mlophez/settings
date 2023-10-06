@@ -1,6 +1,6 @@
 return {
   'williamboman/mason.nvim',
-  enabled = require('plugins.lspconfig').enabled,
+  enabled = require('plugins.nvim-lspconfig').enabled,
   dependencies = {
     { "williamboman/mason-lspconfig.nvim", opts = { automatic_installation = true } },
   },

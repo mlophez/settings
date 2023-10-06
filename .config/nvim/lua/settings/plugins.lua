@@ -1,7 +1,12 @@
+-- https://www.lazyvim.org/plugins/lsp
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 local opts = {
-  lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json"
+  lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
+  change_detection = {
+    notify = false,
+  },
 }
 
 if not vim.loop.fs_stat(lazypath) then

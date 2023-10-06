@@ -4,7 +4,8 @@ return {
   'neovim/nvim-lspconfig',
   enabled = true,
   dependencies = {
-    'williamboman/mason.nvim'
+    'williamboman/mason.nvim',
+    "williamboman/mason-lspconfig.nvim"
   },
   init = function()
     -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
