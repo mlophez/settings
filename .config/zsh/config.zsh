@@ -937,8 +937,8 @@ function kubectl-log-menu() {
 
   pod=$(echo "$instance" | awk '{print $1 }')
   namespace=$(echo "$instance" | awk '{print $2 }')
-  regex="$(echo $pod | sed 's/-[a-z0-9]\+$//g')-"
-  #regex="$(echo $pod | sed 's/-[a-z0-9]\+-[a-z0-9]\+$//g')-"
+  #regex="$(echo $pod | sed 's/-[a-z0-9]\+$//g')-"
+  regex="$(echo $pod | sed 's/-[a-z0-9]\+-[a-z0-9]\+$//g')-"
 
   if type stern &>/dev/null; then
     print -z stern --context ${context} -n ${namespace} ${regex}
