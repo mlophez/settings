@@ -29,6 +29,7 @@ return {
 				-- linters
 				"pylint",
 				"tflint",
+				"tfsec",
 			},
 		})
 	end,
