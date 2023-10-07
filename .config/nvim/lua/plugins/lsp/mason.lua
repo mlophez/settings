@@ -25,7 +25,7 @@ return {
 				"stylua",
 				"isort",
 				"black",
-				"prettierd",
+				"prettier",
 				-- linters
 				"pylint",
 				"tflint",

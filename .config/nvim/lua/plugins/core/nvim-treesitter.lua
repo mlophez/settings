@@ -1,23 +1,39 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  lazy = false,
-  main = "nvim-treesitter.configs",
-  opts = {
-    sync_install = true,
-    auto_install = true,
-    ensure_installed = { 
-      "bash", "c", "javascript", "json", "lua", "python", 
-      "typescript", "tsx", "css", "rust", "java", "yaml", 
-      "markdown", "markdown_inline", "hcl", "http", "json", "sql", "terraform"
-    },
-	  ignore_install = { "phpdoc" },
-	  highlight = {
-	  	enable = true,
-	  	disable = { "css" },
-	  },
-	  autopairs = {
-	  	enable = true,
-	  },
-	  indent = { enable = true, disable = { "python", "css" } },
-  },
+	"nvim-treesitter/nvim-treesitter",
+	lazy = false,
+	main = "nvim-treesitter.configs",
+	opts = {
+		sync_install = true,
+		auto_install = true,
+		ignore_install = { "phpdoc" },
+		highlight = {
+			enable = true,
+			disable = { "css" },
+		},
+		autopairs = {
+			enable = true,
+		},
+		indent = { enable = true, disable = { "python", "css" } },
+		ensure_installed = {
+			"bash",
+			"c",
+			"javascript",
+			"json",
+			"lua",
+			"python",
+			"typescript",
+			"tsx",
+			"css",
+			"rust",
+			"java",
+			"yaml",
+			"markdown",
+			"markdown_inline",
+			"hcl",
+			"http",
+			"json",
+			"sql",
+			"terraform",
+		},
+	},
 }
