@@ -2,7 +2,7 @@ return {
   "kyazdani42/nvim-tree.lua",
   version = "ce3495b",
   dependencies = {
-    { "kyazdani42/nvim-web-devicons" },
+    "kyazdani42/nvim-web-devicons"
   },
   keys = {
     --{ "<leader>e", ":NvimTreeOpen<cr>" }, 
