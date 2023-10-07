@@ -1,8 +1,6 @@
 -- https://vonheikemen.github.io/devlog/es/tools/setup-nvim-lspconfig-plus-nvim-cmp/
-
 return {
   'neovim/nvim-lspconfig',
-  enabled = true,
   dependencies = {
     'williamboman/mason.nvim',
     "williamboman/mason-lspconfig.nvim"

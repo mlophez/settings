@@ -1,11 +1,10 @@
 return {
-  'jakewvincent/mkdnflow.nvim',
-  enabled = false,
+  'jakewvincent/mkdnflow.nvim', enabled = false,
   opts = {
     perspective = {
       priority = 'root',
       root_tell = 'index.md',
-    },    
+    },
     links = {
       style = 'markdown',
       name_is_source = true,

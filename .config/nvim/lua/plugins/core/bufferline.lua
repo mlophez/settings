@@ -1,5 +1,6 @@
 return {
   "akinsho/bufferline.nvim",
+  version = false,
   opts = {
     options = {
       numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,

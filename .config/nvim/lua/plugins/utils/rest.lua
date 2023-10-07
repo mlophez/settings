@@ -1,7 +1,9 @@
 return {
   "rest-nvim/rest.nvim",
-  dependencies = { "nvim-lua/plenary.nvim" },
   main = "rest-nvim",
+  dependencies = {
+    "nvim-lua/plenary.nvim"
+  },
   opts = {
     skip_ssl_verification = true,
   },

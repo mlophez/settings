@@ -1,5 +1,4 @@
 -- https://www.lazyvim.org/plugins/lsp
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 local opts = {
@@ -9,6 +8,14 @@ local opts = {
   },
 }
 
+local setup = {
+  { import = "plugins.core" },
+  { import = "plugins.lsp" },
+  { import = "plugins.ui" },
+  { import = "plugins.utils" }
+}
+
+-- Setup --
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
     "git",
@@ -20,5 +27,4 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-
-require("lazy").setup("plugins", opts)
+require("lazy").setup(setup, opts)
