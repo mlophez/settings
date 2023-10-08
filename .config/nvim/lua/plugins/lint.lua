@@ -1,7 +1,9 @@
 return {
 	"mfussenegger/nvim-lint",
+  enabled = Plugins.lint,
 	event = { "BufReadPre", "BufNewFile" },
-	init = function()
+	cmd = "Mason",
+	config = function()
 		local lint = require("lint")
 
 		lint.linters_by_ft = {

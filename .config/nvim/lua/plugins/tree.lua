@@ -1,11 +1,13 @@
 return {
 	"kyazdani42/nvim-tree.lua",
+  enabled = Plugins.nvim_tree,
 	version = "ce3495b",
+	-- event = "VimEnter",
 	dependencies = {
 		"kyazdani42/nvim-web-devicons",
 	},
 	keys = {
-		--{ "<leader>e", ":NvimTreeOpen<cr>" },
+		{ "<leader>e", ":NvimTreeOpen<cr>" },
 		{ "<leader>b", ":NvimTreeClose<cr>" },
 		{ "<space>", ":NvimTreeFocusToggle<cr>" },
 	},
@@ -76,8 +78,10 @@ return {
 			exclude = { ".gitignore" },
 		},
 	},
-	init = function()
-		require("nvim-tree.api").tree.open()
+	config = function(_, opts)
+    require("nvim-tree").setup(opts)
+    -- require("nvim-tree.api").tree.open()
+		-- vim.cmd("wincmd p")
 
 		local function is_modified_buffer_open(buffers)
 			for _, v in pairs(buffers) do

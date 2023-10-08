@@ -1,5 +1,7 @@
 return {
 	"williamboman/mason.nvim",
+  enabled = Plugins.mason,
+  lazy = false,
 	dependencies = {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
@@ -12,7 +14,8 @@ return {
 			},
 		},
 	},
-	init = function()
+	config = function(_, opts)
+    require("mason").setup(opts)
 		require("mason-tool-installer").setup({
 			auto_update = true,
 			ensure_installed = {
@@ -26,6 +29,7 @@ return {
 				"isort",
 				"black",
 				"prettier",
+				"yamlfmt",
 				-- linters
 				"pylint",
 				"tflint",

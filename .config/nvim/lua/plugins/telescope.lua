@@ -1,6 +1,7 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	event = "VeryLazy",
+  enabled = Plugins.telescope,
+  cmd = "Telescope",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"kyazdani42/nvim-web-devicons",

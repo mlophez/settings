@@ -1,7 +1,11 @@
 return {
 	"akinsho/toggleterm.nvim",
+  enabled = Plugins.toggleterm,
 	version = "*",
-	lazy = false,
+  cmd = "ToggleTerm",
+	keys = {
+		{ "<leader>t", ":ToggleTerm<cr>" },
+	},
 	opts = {
 		size = 20,
 		open_mapping = [[<leader>t]],

@@ -1,7 +1,8 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	lazy = false,
+  enabled = Plugins.treesitter,
 	main = "nvim-treesitter.configs",
+	lazy = false,
 	opts = {
 		sync_install = true,
 		auto_install = true,

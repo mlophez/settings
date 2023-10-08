@@ -17,7 +17,7 @@ zstyle 'completion:*' menu select
 setopt autocd			# Imply cd when directory path is supplied
 setopt automenu			# Automatically use menu completion on 2nd tab
 setopt menucomplete		# Cycle though autocomplete options
-	
+
 # History options
 setopt appendhistory	# Append history file rather than replace it
 setopt extendedhistory	# Save each commands time stamp

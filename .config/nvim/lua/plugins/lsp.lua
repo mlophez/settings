@@ -2,7 +2,10 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 return {
 	"neovim/nvim-lspconfig",
-	init = function()
+  enabled = Plugins.lsp,
+	event = { "BufReadPre", "BufNewFile" },
+	cmd = "Mason",
+	config = function()
 		-- Setup
 		-- local lspconfig = require('lspconfig')
 		-- local lsp_defaults = lspconfig.util.default_config
