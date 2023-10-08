@@ -1,15 +1,17 @@
 return {
 	"mfussenegger/nvim-lint",
-  enabled = Plugins.lint,
+	enabled = Plugins.lint,
 	event = { "BufReadPre", "BufNewFile" },
-	cmd = "Mason",
-	config = function()
+	opts = {
+		python = { "pylint" },
+		terraform = { "tflint", "tfsec" },
+		-- yaml = { "sonarlint-language-server" },
+		-- lua = { "luacheck" },
+	},
+	config = function(_, opts)
 		local lint = require("lint")
 
-		lint.linters_by_ft = {
-			python = { "pylint" },
-			terraform = { "tflint", "tfsec" },
-		}
+		lint.linters_by_ft = opts
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
@@ -19,8 +21,8 @@ return {
 			end,
 		})
 
-		vim.keymap.set("n", "<leader>l", function()
+		vim.api.nvim_create_user_command("Lint", function()
 			lint.try_lint()
-		end)
+		end, {})
 	end,
 }

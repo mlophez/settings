@@ -1,22 +1,21 @@
 return {
 	"williamboman/mason.nvim",
-  enabled = Plugins.mason,
-  lazy = false,
+	enabled = Plugins.mason,
+	lazy = false,
 	dependencies = {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	opts = {
-		ui = {
-			icons = {
-				package_installed = "✓",
-				package_pending = "➜",
-				package_uninstalled = "✗",
+		mason = {
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
 			},
 		},
-	},
-	config = function(_, opts)
-    require("mason").setup(opts)
-		require("mason-tool-installer").setup({
+		installer = {
 			auto_update = true,
 			ensure_installed = {
 				-- lsp
@@ -34,8 +33,14 @@ return {
 				"pylint",
 				"tflint",
 				"tfsec",
+				"luacheck",
+				"sonarlint-language-server",
 			},
-		})
+		},
+	},
+	config = function(_, opts)
+		require("mason").setup(opts.mason)
+		require("mason-tool-installer").setup(opts.installer)
 	end,
 }
 

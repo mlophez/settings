@@ -30,14 +30,16 @@ return {
 			timeout_ms = 1000,
 		},
 	},
-	config = function()
+	config = function(_, opts)
 		local conform = require("conform")
-		vim.keymap.set({ "n", "v" }, "<leader>e", function()
+    conform.setup(opts)
+
+		vim.api.nvim_create_user_command("Format", function()
 			conform.format({
 				lsp_fallback = true,
 				async = false,
 				timeout_ms = 3000,
 			})
-		end)
+    end, {})
 	end,
 }
