@@ -1,6 +1,5 @@
 return {
 	"stevearc/conform.nvim",
-	enabled = Plugins.conform,
 	event = { "BufReadPre", "BufNewFile" },
 	cmd = { "ConformInfo", "Format" },
 	opts = {
@@ -43,4 +42,5 @@ return {
 			})
 		end, {})
 	end,
+	enabled = vim.g.plugins.conform,
 }

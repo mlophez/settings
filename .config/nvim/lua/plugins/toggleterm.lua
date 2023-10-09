@@ -1,6 +1,5 @@
 return {
 	"akinsho/toggleterm.nvim",
-	enabled = Plugins.toggleterm,
 	version = "*",
 	cmd = "ToggleTerm",
 	keys = {
@@ -28,4 +27,5 @@ return {
 			},
 		},
 	},
+	enabled = vim.g.plugins.toggleterm,
 }

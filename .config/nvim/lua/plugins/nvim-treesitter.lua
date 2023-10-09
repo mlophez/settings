@@ -1,6 +1,5 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-  enabled = Plugins.treesitter,
 	main = "nvim-treesitter.configs",
 	lazy = false,
 	opts = {
@@ -37,4 +36,5 @@ return {
 			"terraform",
 		},
 	},
+	enabled = vim.g.plugins.nvim_treesitter,
 }

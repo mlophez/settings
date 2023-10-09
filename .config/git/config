@@ -1,6 +1,3 @@
-[user]
-  name = Miguel Lopez Ruiz
-  #email = miguel.lr96@gmail.com
 [init]
 	defaultBranch = main
 [core]
@@ -13,3 +10,6 @@
 	rebase = true
 [rebase]
 	autoStash = true
+; [user]
+;   name = Miguel Lopez Ruiz
+;   email = miguel.lr96@gmail.com

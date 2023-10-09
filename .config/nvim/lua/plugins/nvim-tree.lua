@@ -1,6 +1,5 @@
 return {
 	"kyazdani42/nvim-tree.lua",
-  enabled = Plugins.nvim_tree,
 	version = "ce3495b",
 	-- event = "VimEnter",
 	dependencies = {
@@ -79,8 +78,8 @@ return {
 		},
 	},
 	config = function(_, opts)
-    require("nvim-tree").setup(opts)
-    -- require("nvim-tree.api").tree.open()
+		require("nvim-tree").setup(opts)
+		-- require("nvim-tree.api").tree.open()
 		-- vim.cmd("wincmd p")
 
 		local function is_modified_buffer_open(buffers)
@@ -119,4 +118,5 @@ return {
 			end
 		end, {})
 	end,
+	enabled = vim.g.plugins.nvim_tree,
 }

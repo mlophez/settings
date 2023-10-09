@@ -66,7 +66,8 @@ alias inventory="ansible-inventory"
 alias g="git_menu"
 alias wk="workspace"
 alias ck="workspace move"
-alias git-config-logalty="git config user.email 'miguel.lopez@logalty.com'"
+alias git-id-personal="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lopez@logalty.com'"
+alias git-id-logalty="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lopez@logalty.com'"
 
 # TUNNEL
 alias t="tunnel_menu"
@@ -121,7 +122,7 @@ function timezsh() {
 }
 
 function ls() {
-  local afunctrace=($functrace) 
+  local afunctrace=($functrace)
   if [[ ${#afunctrace[@]} -le 1 ]]; then
     if type lsd &>/dev/null; then
       lsd "$@"
@@ -180,7 +181,8 @@ function tunnel_menu() {
   local cmd
   local opts=(
     "demodb:  ssh -L 1521:demo-db.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com:1521 -N 52.50.61.78"
-    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0fcd1f120811b7f42"
+    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-02100d52440fe7ed3"
+    "logaltyQA: aws-tunnel 1523:logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com:1521 i-04a7f8ed6a1c77a37"
   )
 
   cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
@@ -246,7 +248,7 @@ function workspace() {
     selected=$(find $wpath -mindepth 1 -maxdepth 1 -type d,l -print | fzf)
     [ -z "$selected" ] && return 0
     cd $selected
-    
+
     export WORKSPACE=$(pwd)
 
     if [ -n "$TMUX" ]; then
@@ -311,7 +313,7 @@ function ssh_menu() {
 
     entries=$(cat $HOME/.ssh/config | grep -i "^Host" | grep -v "*" | sed 's/ \+/ /g' | cut -d" " -f2-100000 | sort)
     entry=$(printf "$entries" | fzf)
-    [ -z "$entry" ] && return 
+    [ -z "$entry" ] && return
 
     # Password
     if [ -e $HOME/.ssh/credentials ]; then
@@ -553,7 +555,7 @@ function kustomize_menu {
   local entry=$(find . -path "*/overlays/*" -type f -name kustomization.yaml | xargs -I@ dirname @ | fzf)
   [ -z "$entry" ] && return 0
 
-  kubectl --context $(basename $entry) apply --server-side --force-conflicts -k ${entry}
+  print -z kubectl --context $(basename $entry) apply --server-side --force-conflicts -k ${entry}
 }
 
 function kubernetes-clean-terminated-pods() {
@@ -568,7 +570,7 @@ function kubernetes-clean-terminated-pods() {
     namespace=$(echo $i | cut -d":" -f1)
     kubectl --context ${context} -n ${namespace} delete pod --force --grace-period=0 ${pod}
   done
-  
+
 }
 
 # SETTINGS
@@ -684,7 +686,7 @@ function pass {
     done
 
     set -- "${args[@]}"
-    
+
     if [[ "$1" = "list" ]]; then
         find $PASSWORD_STORE_DIR -type f,l -name \*.gpg | sed "s#$PASSWORD_STORE_DIR/*##g" | sed 's/\.gpg$//g'
     elif [[ "${commands[@]}" =~ "$1" ]]; then
@@ -717,7 +719,7 @@ function pass {
 function pass_menu() {
     local entries=$(pass list)
     local entry=$(printf "$entries" | fzf)
-    [ -z "$entry" ] && return 
+    [ -z "$entry" ] && return
 
     eval "pass $entry"
 }
@@ -725,7 +727,7 @@ function pass_menu() {
 function pass_menu_edit() {
     local entries=$(pass list)
     local entry=$(printf "$entries" | fzf)
-    [ -z "$entry" ] && return 
+    [ -z "$entry" ] && return
 
     eval "pass edit $entry"
 }
@@ -753,7 +755,7 @@ function pass2csv() {
 # JAVA
 function java_menu() {
     local entry=$(archlinux-java status | grep "^ " | sed 's/^ *//g' |cut -d" " -f1 | fzf)
-    [ -z "$entry" ] && return 
+    [ -z "$entry" ] && return
     sudo archlinux-java set $entry
 }
 
@@ -803,18 +805,18 @@ function copysec() {
 # function notes() {
 #   local notespath="$HOME/Documents/Wiki"
 #   local repository=""
-# 
+#
 #   [ "$notespath/pages" ] && mkdir -p "$notespath/pages" &>/dev/null
 #   [ "$notespath/assets" ] && mkdir -p "$notespath/assets" &>/dev/null
-# 
+#
 #   [ -n "$TMUX" ] && tmux rename-window 'NOTES'
-# 
+#
 #   # Run NeoVim
 #   cd $notespath
 #   [ -d ".git/" ] && git pull
 #   nvim index.md
 #   [ -d ".git/" ] && git status
-# 
+#
 #   # Save changes
 #   #[ -n "$(git status | grep -i untracked)" ] && \
 #   #[ -d ".git/" ] && \
@@ -897,7 +899,7 @@ function kubectl-get-all {
 
   for i in $(kubectl --context=${context} api-resources --verbs=list --namespaced -o name | grep -v "events.events.k8s.io" | grep -v "events" | sort | uniq); do
     echo "Resource:" $i
-    echo 
+    echo
     kubectl --context=${context} -n ${namespace} get --ignore-not-found ${i}
     echo ---
   done

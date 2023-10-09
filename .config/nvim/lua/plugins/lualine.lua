@@ -1,6 +1,5 @@
 return {
 	"nvim-lualine/lualine.nvim",
-  enabled = Plugins.lualine,
 	dependencies = {
 		"kyazdani42/nvim-web-devicons",
 	},
@@ -26,4 +25,5 @@ return {
 		tabline = {},
 		extensions = {},
 	},
+	enabled = vim.g.plugins.lualine,
 }

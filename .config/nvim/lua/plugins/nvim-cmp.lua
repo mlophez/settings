@@ -73,5 +73,5 @@ return {
 			},
 		}
 	end,
-	enabled = Plugins.cmp,
+	enabled = vim.g.plugins.nvim_lspconfig and vim.g.plugins.nvim_cmp,
 }

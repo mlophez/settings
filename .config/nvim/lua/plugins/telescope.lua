@@ -1,7 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
-  enabled = Plugins.telescope,
-  cmd = "Telescope",
+	cmd = "Telescope",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"kyazdani42/nvim-web-devicons",
@@ -35,4 +34,5 @@ return {
 		{ "<leader>f", ":Telescope find_files<cr>" },
 		{ "<leader>r", ":Telescope live_grep<cr>" },
 	},
+	enabled = vim.g.plugins.telescope,
 }

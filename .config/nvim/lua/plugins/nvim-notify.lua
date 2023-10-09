@@ -21,5 +21,5 @@ return {
 			vim.notify.dismiss({ silent = true, pending = true })
 		end, {})
 	end,
-	enabled = Plugins.notify,
+	enabled = vim.g.plugins.nvim_notify,
 }

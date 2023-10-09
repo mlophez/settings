@@ -1,6 +1,5 @@
 return {
 	"williamboman/mason.nvim",
-	enabled = Plugins.mason,
 	lazy = false,
 	dependencies = {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
@@ -42,6 +41,7 @@ return {
 		require("mason").setup(opts.mason)
 		require("mason-tool-installer").setup(opts.installer)
 	end,
+	enabled = vim.g.plugins.mason,
 }
 
 -- return {
