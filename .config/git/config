@@ -1,6 +1,6 @@
 [user]
-	email = miguel.lr96@gmail.com
-	name = Miguel Lopez Ruiz
+  name = Miguel Lopez Ruiz
+  #email = miguel.lr96@gmail.com
 [init]
 	defaultBranch = main
 [core]

@@ -1,6 +1,5 @@
 return {
 	"hrsh7th/nvim-cmp",
-  enabled = Plugins.cmp,
 	version = false,
 	event = "InsertEnter",
 	dependencies = {
@@ -74,4 +73,5 @@ return {
 			},
 		}
 	end,
+	enabled = Plugins.cmp,
 }

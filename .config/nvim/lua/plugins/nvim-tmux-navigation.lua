@@ -1,6 +1,6 @@
 return {
 	"alexghergh/nvim-tmux-navigation",
-  enabled = Plugins.tmux_navigation,
+	enabled = Plugins.tmux_navigation,
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local nvim_tmux_nav = require("nvim-tmux-navigation")

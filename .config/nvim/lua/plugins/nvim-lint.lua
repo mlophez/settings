@@ -1,7 +1,7 @@
 return {
 	"mfussenegger/nvim-lint",
-	enabled = Plugins.lint,
 	event = { "BufReadPre", "BufNewFile" },
+	cmd = { "Lint" },
 	opts = {
 		python = { "pylint" },
 		terraform = { "tflint", "tfsec" },
@@ -25,4 +25,5 @@ return {
 			lint.try_lint()
 		end, {})
 	end,
+	enabled = Plugins.lint,
 }

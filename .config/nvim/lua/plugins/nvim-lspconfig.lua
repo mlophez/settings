@@ -2,8 +2,8 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 return {
 	"neovim/nvim-lspconfig",
-  enabled = Plugins.lsp,
 	event = { "BufReadPre", "BufNewFile" },
+	cmd = { "LspInfo", "LspInstall", "LspUninstall" },
 	config = function()
 		-- Setup
 		-- local lspconfig = require('lspconfig')
@@ -92,4 +92,5 @@ return {
 		--	},
 		--})
 	end,
+	enabled = Plugins.lsp,
 }

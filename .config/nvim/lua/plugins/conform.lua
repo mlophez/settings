@@ -1,7 +1,8 @@
 return {
 	"stevearc/conform.nvim",
-  enabled = Plugins.conform,
+	enabled = Plugins.conform,
 	event = { "BufReadPre", "BufNewFile" },
+	cmd = { "ConformInfo", "Format" },
 	opts = {
 		formatters_by_ft = {
 			javascript = { "prettier" },
@@ -32,7 +33,7 @@ return {
 	},
 	config = function(_, opts)
 		local conform = require("conform")
-    conform.setup(opts)
+		conform.setup(opts)
 
 		vim.api.nvim_create_user_command("Format", function()
 			conform.format({
@@ -40,6 +41,6 @@ return {
 				async = false,
 				timeout_ms = 3000,
 			})
-    end, {})
+		end, {})
 	end,
 }
