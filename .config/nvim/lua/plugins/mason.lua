@@ -28,6 +28,7 @@ return {
 				"black",
 				"prettier",
 				"yamlfmt",
+				"xmlformatter",
 				-- linters
 				"pylint",
 				"tflint",
