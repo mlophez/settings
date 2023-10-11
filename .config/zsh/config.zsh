@@ -181,7 +181,7 @@ function tunnel_menu() {
   local cmd
   local opts=(
     "demodb:  ssh -L 1521:demo-db.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com:1521 -N 52.50.61.78"
-    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0486583d5ea0fb74f"
+    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0508356f3327546e4"
     "logaltyQA: aws-tunnel 1523:logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com:1521 i-04a7f8ed6a1c77a37"
   )
 
