@@ -561,15 +561,18 @@ function gic() {
 }
 
 function status-get-windows-files() {
+    local windows_user_home=$(echo $PATH | grep -io -P "/mnt/c/Users/.*?/" | head -1)
+
+    [ -z "${windows_user_home}" ] && return 0
     [ ! -d "$HOME/.config/Windows" ] && mkdir -p $HOME/.config/Windows
 
-    cp $WSLHOME/AppData/Roaming/Code/User/settings.json \
+    cp $windows_user_home/AppData/Roaming/Code/User/settings.json \
       $HOME/.config/Windows/code-user-settings.json
 
-    cp $WSLHOME/AppData/Roaming/Code/User/keybindings.json \
+    cp $windows_user_home/AppData/Roaming/Code/User/keybindings.json \
       $HOME/.config/Windows/code-user-keybindings.json
 
-    cp $WSLHOME/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+    cp $windows_user_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
       $HOME/.config/Windows/terminal-settings.json
 }
 
