@@ -55,8 +55,8 @@ vim.api.nvim_set_keymap("i", "<C-x>", ":x<cr>", opts)
 
 vim.api.nvim_set_keymap("n", "<leader>q", ":q<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>Q", ":q<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>w", ":w<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>x", ":x<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>w", ":silent w<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>x", ":silent x<cr>", opts)
 
 -- Copy and paste
 vim.api.nvim_set_keymap("i", "<C-p>", "<esc>pi", opts)

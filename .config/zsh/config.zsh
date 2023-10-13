@@ -1,7 +1,5 @@
 #!/usr/bin/zsh
 
-##### ALIAS
-
 # SHELL
 alias reload="exec zsh"
 alias ll="ls -lh"
@@ -45,7 +43,8 @@ alias playbook="ansible-playbook"
 alias inventory="ansible-inventory"
 
 # GIT
-alias g="git_menu"
+alias g="git"
+alias gm="git_menu"
 alias wk="workspace"
 alias ck="workspace move"
 alias git-id-personal="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lr96@gmail.com'"
@@ -63,22 +62,13 @@ alias am="aws-profile-menu"
 alias docker="podman"
 
 # KUBERNETES
-alias k="kubectl-wrapper --context"
+alias k="kubectl --context"
 alias ka="kustomize_menu apply"
-alias kd="kubectl delete --ignore-not-found=true --context"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
 alias kt="kubectl-pod"
-alias krun="echo kubectl --context demo run ubuntu -it --rm --image=ubuntu:latest --restart=Never -- bash"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
-#alias apply="kubectl apply --server-side"
-#alias delete="kubectl delete"
-#alias kc="kubectl-context"
-
-# DISTROBOX
-alias archlinux='eval $(distrobox enter archlinux --dry-run -- bash)'
-alias archlinux-install="sudo pacman --needed -S $(cat $HOME/.config/distrobox/Packages.Archlinux | grep -v "^ *#" | grep -v "^ *$" | tr "\n" " ")"
 
 # DRIVE
 alias reload_drive="systemctl --user restart rclone@Drive.service"
@@ -86,15 +76,7 @@ alias reload_drive="systemctl --user restart rclone@Drive.service"
 ##### FUNCTIONS
 # SHELL
 function precmd() {
-  # Underscore blinking # printf "\e[5 q" # Vertical Line }
-  # printf "\e[3 q"
-  #printf "\e]12;red\x7;\e[5 q"
   printf "\e[5 q"
-  # if [ -n "$TMUX" ]; then
-  #   if [ -d "./.git" ]; then
-  #     tmux rename-window $(basename $(pwd) | tr '[:lower:]' '[:upper:]')
-  #   fi
-  # fi
 }
 
 function timezsh() {
@@ -158,20 +140,74 @@ function tm() {
     fi
 }
 
-# TUNNELS
-function tunnel_menu() {
-  local cmd
-  local opts=(
-    "demodb:  ssh -L 1521:demo-db.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com:1521 -N 52.50.61.78"
-    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0508356f3327546e4"
-    "logaltyQA: aws-tunnel 1523:logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com:1521 i-04a7f8ed6a1c77a37"
-  )
+# SETTINGS
+function gic() {
+    command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
+}
 
-  cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
-  [ -z "$cmd" ] && return 0
+function status-get-windows-files() {
+    local windows_user_home=$(echo $PATH | grep -io -P "/mnt/c/Users/.*?/" | head -1)
 
-  echo "-> $cmd"
-  eval "$(echo $cmd | cut -d ":" -f 2-100000000 | sed 's/^ *//g')"
+    [ -z "${windows_user_home}" ] && return 0
+    [ ! -d "$HOME/.config/Windows" ] && mkdir -p $HOME/.config/Windows
+
+    cp $windows_user_home/AppData/Roaming/Code/User/settings.json \
+      $HOME/.config/Windows/code-user-settings.json
+
+    cp $windows_user_home/AppData/Roaming/Code/User/keybindings.json \
+      $HOME/.config/Windows/code-user-keybindings.json
+
+    cp $windows_user_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+      $HOME/.config/Windows/terminal-settings.json
+}
+
+function status() {
+    gic restore --staged . &>/dev/null
+
+    status-get-windows-files
+
+    [ -e "$KUBECONFIG" ] && \
+      sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
+
+    gic add $HOME/.config/zsh \
+            $HOME/.config/nvim \
+            $HOME/.config/tmux \
+            $HOME/.config/zellij \
+            $HOME/.config/alacritty \
+            $HOME/.config/git \
+            $HOME/.config/kube/config \
+            $HOME/.config/wsl \
+            $HOME/.config/qtile \
+            $HOME/.config/waybar \
+            $HOME/.config/sway \
+            $HOME/.config/mutt \
+            $HOME/.config/systemd \
+            $HOME/.config/mako \
+            $HOME/.config/zsh \
+            $HOME/.config/containers \
+            $HOME/.config/distrobox \
+            $HOME/.config/i3 \
+            $HOME/.config/gnupg \
+            $HOME/.config/Windows \
+            $HOME/.config/Code/User/settings.json \
+            $HOME/.config/Code/User/keybindings.json \
+            $HOME/.local/share/codews \
+            $HOME/.local/share/fonts \
+            $HOME/.ssh/config \
+            $HOME/.aws/config \
+            $HOME/.bashrc \
+            $HOME/.gitignore
+
+    gic status
+}
+
+function save() {
+    gic commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
+    gic push -u origin main
+}
+
+function load() {
+    gic pull
 }
 
 # GIT
@@ -276,7 +312,6 @@ function workspace-path() {
   cd $selected
 }
 
-
 # SSH
 function ssh() {
   printf "\e[?2004l"
@@ -326,45 +361,6 @@ function docker-upload-image () {
     fi
 }
 
-## APPS
-function service() {
-  local cmd
-  local opts=(
-    "jenkins"
-    "postgresql"
-  )
-
-  cmd=$(printf '%s\n' "${opts[@]}" | fzf)
-  [ -z "$cmd" ] && return 0
-
-  echo "-> $cmd"
-  eval "_service_$cmd"
-
-  podman volume prune
-}
-
-function _service_jenkins() {
-  mkdir -p $HOME/.local/share/volumes/jenkins &>/dev/null
-
-  autossh -M 20001 -N -R 9090:127.0.0.1:8080 demo-public-a-haproxy &>/dev/null &
-
-  podman run --rm --network=host \
-    -v $HOME/.local/share/volumes/jenkins:/var/jenkins_home \
-    -e "JENKINS_OPTS=--prefix=/jenkins" \
-    --user root --name jenkins docker.io/jenkins/jenkins:lts
-
-  fg
-}
-
-function _service_postgresql() {
-  podman run --rm --network=host \
-    -e "POSTGRES_DB=logalty" \
-    -e "POSTGRES_USER=flyway" \
-    -e "POSTGRES_PASSWORD=T3mp0r4l" \
-    --user root --name postgres docker.io/postgres:latest
-    #-e PGDATA=/var/lib/postgresql/data/pgdata \
-}
-
 function flyway() {
   local args
   [ -d "$(pwd)/sql" ] && args="-v $(pwd)/sql:/flyway/sql"
@@ -375,7 +371,7 @@ function flyway() {
 }
 
 # KUBERNETES
-function kubectl-wrapper() {
+function kubectl() {
   local cmd="kubectl"
   local extra_args
 
@@ -383,15 +379,6 @@ function kubectl-wrapper() {
   type kubecolor &>/dev/null && cmd="kubecolor"
 
   command $cmd "$@" $extra_args
-}
-
-function kubectl-context() {
-  local context
-
-  context=$(kubectl config get-contexts -o name | fzf)
-  [ -z "$context" ] && return 0
-
-  sed "s/current-context:.*$/current-context: $context/g" -i $KUBECONFIG
 }
 
 function kvalidator() {
@@ -407,130 +394,6 @@ function kvalidator() {
 
   echo "***** KUBEVAL *****"
   kustomize build . --enable-helm | kubeval --ignore-missing-schemas --strict || return 0
-}
-
-function kbuild() {
-  local target="$1"; shift
-  [ -z "$target" ] && echo "Especify target" && return 1
-
-  kustomize build "$target" --enable-helm
-}
-
-function kdiff() {
-  local target="$1"; shift
-  [ -z "$target" ] && echo "Especify target" && return 1
-  kustomize build "$target" --enable-helm | kubectl diff --server-side "$@" -f -
-}
-
-function kapply() {
-  local target="$1"; shift
-  [ -z "$target" ] && echo "Especify target" && return 1
-  [ -d "$target/charts" ] && rm -rf "$target/charts" &>/dev/null
-
-  kustomize build "$target" --enable-helm | kubectl apply --server-side "$@" -f -
-}
-
-function kdelete() {
-  local target="$1"; shift
-  [ -z "$target" ] && echo "Especify target" && return 1
-  kustomize build "$target" --enable-helm | kubectl delete --ignore-not-found=true "$@" -f -
-}
-
-function kfilter() {
-  local kind="$1"
-  if [ -z "$kind" ]; then
-    cat /dev/stdin | yq "."
-  else
-    cat /dev/stdin | yq ". | select(.kind == \"${kind}\")"
-  fi
-}
-
-
-function kfolder() {
-  local folder="$1"
-
-  if [ -z "$folder" ]; then
-    for folder in $(find $(pwd) -maxdepth 1 -mindepth 1 -type d); do
-      [ ! -d "$folder/base" ] && mkdir -p $folder/base &>/dev/null
-      mv $folder/*.* $folder/base/ &> /dev/null
-    done
-  else
-      [ ! -d "$folder/base" ] && mkdir -p $folder/base &>/dev/null
-      [ ! -d "$folder/overlays/default" ] && mkdir -p $folder/overlays/default &>/dev/null
-      mv $folder/*.* $folder/base/ &> /dev/null
-      cat << EOF > $folder/overlays/default/kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-  - ../../base
-EOF
-  fi
-}
-
-function kubeenc() {
-  local password="$1"
-
-  echo "kubeseal --raw --scope cluster-wide"
-  echo -n "$password" | kubeseal --raw --scope cluster-wide
-
-  # local context=$(basename $(pwd))
-  # if [ -z "$(kubectl config get-contexts -o name | grep "$context")" ]; then
-  #   echo "kubeseal --raw --scope cluster-wide"
-  #   echo -n "$password" | kubeseal --raw --scope cluster-wide
-  # else
-  #   echo "kubeseal --context=$context --raw --scope cluster-wide"
-  #   echo -n "$password" | kubeseal --context=$context --raw --scope cluster-wide
-  # fi
-}
-
-function kustomize-helm() {
-  local chart="$1"
-  local version="$2"
-  local name="$3"
-  local repo
-
-  # # ADD REPO IF NOT EXISTS
-  # [ -z "$(helm repo list -o table | grep -i "$repo_name" | grep -i "$repo_url")" ] && \
-  #   helm repo add $repo $repo_name
-
-  # # UPDATE REPOSITORY
-  # helm repo update $repo_name --fail-on-repo-update-fail
-
-  # GET VERSIONS
-  [ -z "$version" ] && \
-    helm search repo $chart --versions -o table | head -10 && return 0
-    #helm search repo $chart --versions -o json | jq -r '.[].version' | head -5 && return 0
-
-  shift; shift; shift
-
-  # GET DEFAULTS VALUES
-  [ ! -e "${name}-values-${version}.yaml" ] && \
-    helm show values ${chart} --version ${version} | tee ${name}-values-${version}.yaml ${name}-default-values-${version}.yaml
-
-  # GET BUNDLE FILE
-  helm template ${name} ${chart} \
-    --include-crds \
-    --skip-tests \
-    --values $name-values-$version.yaml \
-    --version $version "$@" \
-    | grep -v -e "app\.kubernetes\.io/managed-by: Helm" -e "helm.sh/.*:" > ${name}-bundle-${version}.yaml
-    #--namespace kube-ingress
-}
-
-function kinfo() {
-    local namespace="$1"
-    clear
-
-    if [ -z "$namespace" ]; then
-        kubectl get all -o wide
-        echo
-        kubectl get ing -o wide
-    else
-        kubectl -n $namespace get all -o wide
-        echo
-        kubectl -n $namespace get ing -o wide
-    fi
 }
 
 function kustomize_menu {
@@ -553,97 +416,6 @@ function kubernetes-clean-terminated-pods() {
     kubectl --context ${context} -n ${namespace} delete pod --force --grace-period=0 ${pod}
   done
 
-}
-
-# SETTINGS
-function gic() {
-    command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
-}
-
-function status-get-windows-files() {
-    local windows_user_home=$(echo $PATH | grep -io -P "/mnt/c/Users/.*?/" | head -1)
-
-    [ -z "${windows_user_home}" ] && return 0
-    [ ! -d "$HOME/.config/Windows" ] && mkdir -p $HOME/.config/Windows
-
-    cp $windows_user_home/AppData/Roaming/Code/User/settings.json \
-      $HOME/.config/Windows/code-user-settings.json
-
-    cp $windows_user_home/AppData/Roaming/Code/User/keybindings.json \
-      $HOME/.config/Windows/code-user-keybindings.json
-
-    cp $windows_user_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
-      $HOME/.config/Windows/terminal-settings.json
-}
-
-function status() {
-    gic restore --staged . &>/dev/null
-
-    status-get-windows-files
-
-    [ -e "$KUBECONFIG" ] && \
-      sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
-
-    gic add $HOME/.config/zsh \
-            $HOME/.config/nvim \
-            $HOME/.config/tmux \
-            $HOME/.config/zellij \
-            $HOME/.config/alacritty \
-            $HOME/.config/git \
-            $HOME/.config/kube/config \
-            $HOME/.config/wsl \
-            $HOME/.config/qtile \
-            $HOME/.config/waybar \
-            $HOME/.config/sway \
-            $HOME/.config/mutt \
-            $HOME/.config/systemd \
-            $HOME/.config/mako \
-            $HOME/.config/zsh \
-            $HOME/.config/containers \
-            $HOME/.config/distrobox \
-            $HOME/.config/i3 \
-            $HOME/.config/gnupg \
-            $HOME/.config/Windows \
-            $HOME/.config/Code/User/settings.json \
-            $HOME/.config/Code/User/keybindings.json \
-            $HOME/.local/share/codews \
-            $HOME/.local/share/fonts \
-            $HOME/.ssh/config \
-            $HOME/.aws/config \
-            $HOME/.bashrc \
-            $HOME/.gitignore
-
-    gic status
-}
-
-function save() {
-    gic commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
-    gic push -u origin main
-}
-
-function load() {
-    gic pull
-}
-
-function wsl-install() {
-    #[ "$(whoami)" != "root" ] && echo "Run as a root" && return -1
-
-    sudo bash <<EOF
-apt install zsh tmux neovim fzf unzip
-
-curl -sLo /tmp/win32yank.zip https://github.com/equalsraf/win32yank/releases/download/v0.0.4/win32yank-x64.zip
-unzip -p /tmp/win32yank.zip win32yank.exe > /usr/local/bin/win32yank.exe
-chmod +x /usr/local/bin/win32yank.exe
-EOF
-}
-
-function wsl-configure() {
-  cat $HOME/.config/wsl/wslconfig > $WSLHOME/.wslconfig
-  sudo bash <<EOF
-cat $HOME/.config/wsl/wsl.conf > /etc/wsl.conf
-cat $HOME/.config/wsl/wslboot.sh > /usr/local/bin/wslboot
-chmod 755 /usr/local/bin/wslboot
-EOF
 }
 
 # PASS
@@ -999,3 +771,18 @@ function eks-volume-delete() {
   kubectl --context ${context} run ${podname} -i --rm --image=ubuntu --restart=Never --override-type=strategic --overrides="${override}" -- bash -c "ls -lh /data/${pv}/ ; while [ -d '/data/${pv}' ]; do rm -I -r /data/${pv}/; done"
 }
 
+# TUNNELS
+function tunnel_menu() {
+  local cmd
+  local opts=(
+    "demodb:  ssh -L 1521:demo-db.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com:1521 -N 52.50.61.78"
+    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0508356f3327546e4"
+    "logaltyQA: aws-tunnel 1523:logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com:1521 i-04a7f8ed6a1c77a37"
+  )
+
+  cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
+  [ -z "$cmd" ] && return 0
+
+  echo "-> $cmd"
+  eval "$(echo $cmd | cut -d ":" -f 2-100000000 | sed 's/^ *//g')"
+}
