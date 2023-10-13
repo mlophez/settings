@@ -43,5 +43,5 @@ return {
 			})
 		end, {})
 	end,
-	enabled = vim.g.plugins.conform,
+	enabled = true,
 }

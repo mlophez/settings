@@ -1,45 +1,20 @@
--- Plugins
-vim.g.plugins = {
-	-- ui --
-	lualine = true,
-	bufferline = true,
-	nvim_notify = true,
-	-- installers --
-	mason = true,
-	-- files --
-	nvim_tree = true,
-	telescope = true,
-	-- term --
-	toggleterm = true,
-	-- lang --
-	treesitter = true,
-	-- formatter --
-	conform = true,
-	-- lsp --
-	nvim_lspconfig = true,
-	nvim_cmp = true,
-	nvim_lint = true,
-	-- utils --
-	tmux_navigation = true,
-	mini_comment = false,
-	mini_pairs = false,
-}
-
 -- https://www.lazyvim.org/plugins/lsp
---
--- LAZY SETUP
---
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
--- local lazy_plugins_paths = {
--- 	{ import = "plugins.core" },
--- 	{ import = "plugins.lsp" },
--- 	{ import = "plugins.ui" },
--- 	{ import = "plugins.utils" },
--- }
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"https://github.com/folke/lazy.nvim.git",
+		"--branch=stable", -- latest stable release
+		lazypath,
+	})
+end
 
-local lazy_opts = {
+vim.opt.rtp:prepend(lazypath)
+
+local opts = {
 	lockfile = vim.fn.stdpath("data") .. "/lazy-lock.json",
 	default = {
 		lazy = true,
@@ -63,16 +38,7 @@ local lazy_opts = {
 	},
 }
 
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
-end
-
-vim.opt.rtp:prepend(lazypath)
-require("lazy").setup("plugins", lazy_opts)
+require("lazy").setup({
+	{ import = "plugins" },
+	{ "akinsho/bufferline.nvim", enabled = true },
+}, opts)

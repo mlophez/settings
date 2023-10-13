@@ -36,5 +36,5 @@ return {
 			"terraform",
 		},
 	},
-	enabled = vim.g.plugins.nvim_treesitter,
+	enabled = true,
 }

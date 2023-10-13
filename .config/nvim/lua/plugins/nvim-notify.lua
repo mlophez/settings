@@ -15,11 +15,12 @@ return {
 	},
 	config = function(_, opts)
 		require("notify").setup(opts)
+
 		vim.notify = require("notify")
 
 		vim.api.nvim_create_user_command("NotifyDismiss", function()
-			vim.notify.dismiss({ silent = true, pending = true })
+			require("notify").dismiss({ silent = true, pending = true })
 		end, {})
 	end,
-	enabled = vim.g.plugins.nvim_notify,
+	enabled = true,
 }

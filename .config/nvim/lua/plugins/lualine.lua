@@ -25,5 +25,5 @@ return {
 		tabline = {},
 		extensions = {},
 	},
-	enabled = vim.g.plugins.lualine,
+	enabled = true,
 }

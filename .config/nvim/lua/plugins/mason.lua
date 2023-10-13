@@ -42,7 +42,7 @@ return {
 		require("mason").setup(opts.mason)
 		require("mason-tool-installer").setup(opts.installer)
 	end,
-	enabled = vim.g.plugins.mason,
+	enabled = true,
 }
 
 -- return {

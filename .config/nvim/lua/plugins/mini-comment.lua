@@ -7,5 +7,5 @@ return {
 			comment_line = "<leader>c",
 		},
 	},
-	enabled = vim.g.plugins.mini_comment,
+	enabled = false,
 }

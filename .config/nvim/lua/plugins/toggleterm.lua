@@ -27,5 +27,5 @@ return {
 			},
 		},
 	},
-	enabled = vim.g.plugins.toggleterm,
+	enabled = true,
 }

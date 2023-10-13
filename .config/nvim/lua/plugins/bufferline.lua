@@ -161,5 +161,5 @@ return {
 			},
 		},
 	},
-	enabled = vim.g.plugins.bufferline,
+	enabled = true,
 }

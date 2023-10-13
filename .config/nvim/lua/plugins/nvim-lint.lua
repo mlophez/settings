@@ -25,5 +25,5 @@ return {
 			lint.try_lint()
 		end, {})
 	end,
-	enabled = vim.g.plugins.nvim_lspconfig and vim.g.plugins.nvim_lint,
+	enabled = true,
 }

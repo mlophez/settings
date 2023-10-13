@@ -34,5 +34,5 @@ return {
 		{ "<leader>f", ":Telescope find_files<cr>" },
 		{ "<leader>r", ":Telescope live_grep<cr>" },
 	},
-	enabled = vim.g.plugins.telescope,
+	enabled = true,
 }

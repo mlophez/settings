@@ -17,5 +17,5 @@ return {
 		--vim.keymap.set('n', "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
 		--vim.keymap.set('n', "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
 	end,
-	enabled = vim.g.plugins.nvim_tmux_navigation,
+	enabled = true,
 }

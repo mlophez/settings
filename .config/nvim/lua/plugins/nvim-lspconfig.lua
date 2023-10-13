@@ -2,7 +2,7 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 return {
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" },
+	event = "VeryLazy",
 	cmd = { "LspInfo", "LspInstall", "LspUninstall" },
 	config = function()
 		-- Setup
@@ -91,5 +91,5 @@ return {
 			},
 		})
 	end,
-	enabled = vim.g.plugins.nvim_lspconfig,
+	enabled = true,
 }
