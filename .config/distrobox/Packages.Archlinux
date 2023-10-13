@@ -3,8 +3,26 @@
 autossh sshpass sshuttle wol curl wget traceroute inetutils bind-tools dhclient nmap
 
 # SHELL
-bash zsh zsh-completions zsh-autosuggestions zsh-syntax-highlighting tmux sudo
-which ripgrep fzf expect pv bc jq yq lsd bat dialog
+bash
+sudo
+which
+ripgrep
+fzf
+expect
+pv
+bc
+jq
+yq
+lsd
+bat
+dialog
+tmux
+
+## ZSH
+zsh
+zsh-completions
+zsh-autosuggestions
+zsh-syntax-highlighting
 
 # FILES
 unrar unzip tar p7zip zip
@@ -42,9 +60,6 @@ python
 python-pip
 python-virtualenv
 
-# RUST
-rustup
-
 # GO
 go
 go-tools
@@ -54,22 +69,29 @@ nodejs
 npm
 yarn
 
+# RUST
+rustup
+
+# LUA
+luarocks
+
 # JAVA
 jdk-openjdk
 jdk11-openjdk
 jdk8-openjdk
 maven
 
-# RUBY
-ruby
-rubygems
+# # RUBY
+# ruby
+# rubygems
 
 ##################### DEV/OPS #####################
 # GIT
 git
 
 # ANSIBLE
-ansible ansible-lint
+ansible
+ansible-lint
 
 # TERRAFORM
 terraform
@@ -79,7 +101,7 @@ terragrunt
 skopeo
 
 # NOMAD
-nomad
+# nomad
 
 # KUBERNETES
 kubectl
@@ -87,9 +109,10 @@ kustomize
 eksctl
 stern
 helm
-helmfile
-kubeseal
+#helmfile
+#kubeseal
 kompose
+aur/kubecolor
 
 # API
 httpie
@@ -100,4 +123,4 @@ aws-cli-v2
 
 
 ### GNOME
-dconf
+# dconf

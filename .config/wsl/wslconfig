@@ -1,4 +1,4 @@
 [wsl2]
-memory=6GB
-swap=6GB
-kernelCommandLine = "sysctl.vm.swappiness=5"
+memory=2GB
+swap=4GB
+kernelCommandLine = "sysctl.vm.swappiness=1"

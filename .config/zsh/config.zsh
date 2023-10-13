@@ -7,26 +7,6 @@ alias reload="exec zsh"
 alias ll="ls -lh"
 alias mkdir="command mkdir -vp"
 
-alias info="notify-send -u low -t 3000"
-alias warn="notify-send -u normal -t 3000"
-alias critical="notify-send -u critical -t 3000"
-
-alias server-up="wol 00:4e:01:c5:bb:49"
-alias server-ssh="sshn root@192.168.1.230"
-alias server-tunnel="ssh -N -D5555 root@192.168.1.230"
-
-alias awslogin="aws sso login --sso-session awscli"
-
-# ZELLIJ
-alias zel="zellij -s $USER"
-
-# ZSH
-alias config="nvim $HOME/.config/zsh/config.zsh"
-alias config-zsh="nvim $HOME/.config/zsh/.zshrc"
-alias config-env="nvim $HOME/.config/zsh/.zshenv"
-alias config-nvim="cd $HOME/.config/nvim && nvim; cd"
-alias config-tmux="nvim $HOME/.config/tmux/tmux.conf"
-
 # EDITOR
 alias v="nvim"
 alias vi="nvim"
@@ -35,11 +15,13 @@ alias cc="cd \$(find . -type d -print | fzf)"
 alias edit="nvim \$(find . -type f -print | fzf)"
 alias e="editor"
 
+# ZELLIJ
+alias zel="zellij -s $USER"
+
 # SSH
-alias ssh_config="nvim $HOME/.ssh/config"
 alias s="ssh_menu"
 
-# SYSTEM
+# ARCHLINUX
 alias install="sudo pacman --needed -S"
 alias uninstall="sudo pacman -Rns"
 alias update="sudo reflector --verbose --latest 20 --sort rate --protocol https --save /etc/pacman.d/mirrorlist"
@@ -66,7 +48,7 @@ alias inventory="ansible-inventory"
 alias g="git_menu"
 alias wk="workspace"
 alias ck="workspace move"
-alias git-id-personal="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lopez@logalty.com'"
+alias git-id-personal="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lr96@gmail.com'"
 alias git-id-logalty="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lopez@logalty.com'"
 
 # TUNNEL

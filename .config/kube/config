@@ -13,7 +13,7 @@ clusters:
 - name: tools
   cluster:
     server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
-    certificate-authority: tools.crt 
+    certificate-authority: tools.crt
 
 - name: biiddev
   cluster:
