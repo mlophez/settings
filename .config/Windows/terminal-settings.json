@@ -94,6 +94,7 @@
                 "guid": "{dd2d7685-6dd9-46cb-95da-88e5a736739b}",
                 "hidden": false,
                 "name": "Archlinux",
+                "opacity": 100,
                 "startingDirectory": "/home/mlr"
             }
         ]

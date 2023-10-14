@@ -1,6 +1,6 @@
 return {
 	"alexghergh/nvim-tmux-navigation",
-	event = { "BufReadPre", "BufNewFile" },
+	event = "VeryLazy",
 	config = function()
 		local nvim_tmux_nav = require("nvim-tmux-navigation")
 

@@ -1,5 +1,6 @@
 return {
 	"nvim-lualine/lualine.nvim",
+	event = "UIEnter",
 	dependencies = {
 		"kyazdani42/nvim-web-devicons",
 	},
@@ -25,5 +26,4 @@ return {
 		tabline = {},
 		extensions = {},
 	},
-	enabled = true,
 }

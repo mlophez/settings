@@ -1,6 +1,14 @@
 return {
 	"williamboman/mason.nvim",
-	lazy = false,
+	cmd = {
+		"Mason",
+		"MasonInstall",
+		"MasonUninstall",
+		"MasonUninstallAll",
+		"MasonLog",
+		"MasonUpdate", -- AstroNvim extension here as well
+		"MasonUpdateAll", -- AstroNvim specific
+	},
 	dependencies = {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},

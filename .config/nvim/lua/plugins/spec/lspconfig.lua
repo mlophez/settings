@@ -4,6 +4,9 @@ return {
 	"neovim/nvim-lspconfig",
 	event = "VeryLazy",
 	cmd = { "LspInfo", "LspInstall", "LspUninstall" },
+	dependencies = {
+		"b0o/SchemaStore.nvim",
+	},
 	config = function()
 		-- Setup
 		-- local lspconfig = require('lspconfig')

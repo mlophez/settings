@@ -1,7 +1,7 @@
 return {
 	"kyazdani42/nvim-tree.lua",
 	version = "ce3495b",
-	event = "VimEnter",
+	event = "UIEnter",
 	dependencies = {
 		"kyazdani42/nvim-web-devicons",
 	},

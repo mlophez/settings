@@ -1,6 +1,6 @@
 return {
 	"akinsho/bufferline.nvim",
-	version = false,
+	event = "UIEnter",
 	opts = {
 		options = {
 			numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
@@ -161,5 +161,4 @@ return {
 			},
 		},
 	},
-	enabled = true,
 }

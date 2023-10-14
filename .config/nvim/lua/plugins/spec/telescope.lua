@@ -9,6 +9,11 @@ return {
 		{ "junegunn/fzf.vim" },
 		{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
 	},
+	keys = {
+		{ "<C-p>", ":Telescope find_files<cr>", silent = true },
+		{ "<leader>f", ":Telescope find_files<cr>", silent = true },
+		{ "<leader>r", ":Telescope live_grep<cr>", silent = true },
+	},
 	opts = {
 		defaults = {
 			layout_strategy = "horizontal",
@@ -28,11 +33,6 @@ return {
 				},
 			},
 		},
-	},
-	keys = {
-		{ "<C-p>", ":Telescope find_files<cr>" },
-		{ "<leader>f", ":Telescope find_files<cr>" },
-		{ "<leader>r", ":Telescope live_grep<cr>" },
 	},
 	enabled = true,
 }

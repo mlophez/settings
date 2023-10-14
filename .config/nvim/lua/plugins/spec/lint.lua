@@ -1,6 +1,7 @@
 return {
 	"mfussenegger/nvim-lint",
-	event = { "BufReadPre", "BufNewFile" },
+	--event = { "BufReadPre", "BufNewFile" },
+	event = "VeryLazy",
 	cmd = { "Lint" },
 	opts = {
 		python = { "pylint" },

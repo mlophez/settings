@@ -1,6 +1,6 @@
 return {
 	"rcarriga/nvim-notify",
-	lazy = false,
+	event = "VeryLazy",
 	keys = {
 		{ "<cr>", ":NotifyDismiss<cr>", silent = true },
 	},
