@@ -1,0 +1,79 @@
+local M = {}
+
+M.plugins = {
+	-- colorschemes ---
+	"folke/tokyonight.nvim",
+	"Mofiqul/dracula.nvim",
+	"catppuccin/nvim",
+
+	-- ui --
+	"akinsho/bufferline.nvim",
+	"utilyre/barbecue.nvim",
+	"nvim-lualine/lualine.nvim",
+	"rcarriga/nvim-notify",
+	"folke/noice.nvim",
+
+	-- files --
+	"nvim-tree",
+	"telescope",
+
+	"nvim-treesitter/nvim-treesitter",
+	"williamboman/mason.nvim",
+	"stevearc/conform.nvim",
+
+	"neovim/nvim-lspconfig",
+	--"plugins.lsp.conform",,
+	-- -- parsers --
+	-- "nvim-treesitter/nvim-treesitter",,
+
+	-- -- installers --
+	-- "williamboman/mason.nvim",,
+
+	-- -- lsp, format, lint --
+	-- "neovim/nvim-lspconfig",,
+	-- "stevearc/conform.nvim",,
+	-- "mfussenegger/nvim-lint",,
+
+	-- -- AutoComplete --
+	-- "hrsh7th/nvim-cmp",,
+
+	-- -- utils --
+	"alexghergh/nvim-tmux-navigation",
+	"lukas-reineke/indent-blankline.nvim",
+	"xiyaowong/transparent.nvim",
+	-- "akinsho/toggleterm.nvim",,
+	-- "echasnovski/mini.comment",,
+	-- "echasnovski/mini.pairs",,
+	-- "rest-nvim/rest.nvim",,
+	-- -- "jakewvincent/mkdnflow.nvimplug",,
+	-- -- "kristijanhusak/vim-dadbod-ui",,
+}
+
+M.imports = {
+	{ import = "plugins.specs" },
+}
+
+function M.is(cname)
+	for _, name in pairs(M.plugins) do
+		if name == cname then
+			return true
+		end
+	end
+	return false
+end
+
+function M.load(name, spec)
+	spec.name = name
+	spec.enabled = false
+
+	for _, cname in pairs(M.plugins) do
+		if spec[1] == cname or name == cname then
+			spec.enabled = true
+			return spec
+		end
+	end
+
+	return spec
+end
+
+return M

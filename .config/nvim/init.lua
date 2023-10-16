@@ -1,3 +1,4 @@
+-- init.lua --
 if vim.loader and vim.fn.has("nvim-0.9.1") == 1 then
 	vim.loader.enable()
 end
@@ -5,4 +6,7 @@ end
 require("core.options")
 require("core.keymaps")
 require("core.filetype")
-require("plugins.lazy")
+
+require("plugins")
+
+vim.cmd.colorscheme("catppuccin-mocha")

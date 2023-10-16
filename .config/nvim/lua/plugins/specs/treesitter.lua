@@ -1,19 +1,28 @@
-return {
+local loader = require("plugins.loader").load
+return loader("treesitter", {
 	"nvim-treesitter/nvim-treesitter",
+
 	main = "nvim-treesitter.configs",
-	event = "UIEnter",
+	build = ":TSUpdate",
+	lazy = false,
+	event = "VimEnter",
+	cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+
 	opts = {
 		sync_install = true,
 		auto_install = true,
-		ignore_install = { "phpdoc" },
 		highlight = {
 			enable = true,
+			use_languagetree = true,
 			disable = { "css" },
 		},
 		autopairs = {
 			enable = true,
 		},
-		indent = { enable = true, disable = { "python", "css" } },
+		indent = {
+			enable = true,
+			disable = { "python", "css" },
+		},
 		ensure_installed = {
 			"bash",
 			"c",
@@ -35,6 +44,6 @@ return {
 			"sql",
 			"terraform",
 		},
+		ignore_install = { "phpdoc" },
 	},
-	enabled = true,
-}
+})

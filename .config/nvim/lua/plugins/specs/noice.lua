@@ -1,10 +1,13 @@
-return {
+local loader = require('plugins.loader').load
+return loader("noice", {
 	"folke/noice.nvim",
 	event = "VeryLazy",
+	
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		"rcarriga/nvim-notify", --optional
 	},
+	
 	opts = {
 		lsp = {
 			-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -23,4 +26,4 @@ return {
 			lsp_doc_border = false, -- add a border to hover docs and signature help
 		},
 	},
-}
+})

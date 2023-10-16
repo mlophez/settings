@@ -11,9 +11,10 @@ local term_opts = { silent = true }
 -- command_mode = "c",
 
 -- Leader
-vim.g.mapleader = ","
-vim.g.maplocalleader = ","
+vim.api.nvim_set_keymap("n", "<leader>c", ":", { noremap = true, silent = false })
 vim.api.nvim_set_keymap("n", "<leader><leader>", ":", { noremap = true, silent = false })
+vim.api.nvim_set_keymap("n", "<leader>", "<nop>", opts)
+vim.api.nvim_set_keymap("n", ",", "<nop>", opts)
 
 -- Navigation
 vim.api.nvim_set_keymap("n", "j", "h", opts)
@@ -35,10 +36,11 @@ vim.api.nvim_set_keymap("n", "hñ", "A", opts)
 vim.api.nvim_set_keymap("n", "hj", "I", opts)
 
 -- Move
-vim.api.nvim_set_keymap("n", "<leader>j", "<C-w><Left>", opts)
-vim.api.nvim_set_keymap("n", "<leader>k", "<C-w><Down>", opts)
-vim.api.nvim_set_keymap("n", "<leader>l", "<C-w><Up>", opts)
-vim.api.nvim_set_keymap("n", "<leader>ñ", "<C-w><Right>", opts)
+vim.keymap.set("n", "<C-j>", "<C-w><Left>", opts)
+vim.keymap.set("n", "<C-k>", "<C-w><Down>", opts)
+vim.keymap.set("n", "<C-l>", "<C-w><Up>", opts)
+vim.keymap.set("n", "<C-ñ>", "<C-w><Right>", opts)
+vim.keymap.set("n", "<F6>", "<C-w><Right>", opts)
 
 -- Buffers
 --keymap("n", "<BS>", ":bd<cr>", opts)
@@ -53,8 +55,8 @@ vim.api.nvim_set_keymap("n", "<C-x>", ":x<cr>", opts)
 vim.api.nvim_set_keymap("i", "<C-s>", ":w<cr>", opts)
 vim.api.nvim_set_keymap("i", "<C-x>", ":x<cr>", opts)
 
-vim.api.nvim_set_keymap("n", "<leader>q", ":q<cr>", opts)
-vim.api.nvim_set_keymap("n", "<leader>Q", ":q<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>q", ":qa<cr>", opts)
+vim.api.nvim_set_keymap("n", "<leader>Q", ":qa<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>w", ":silent w<cr>", opts)
 vim.api.nvim_set_keymap("n", "<leader>x", ":silent x<cr>", opts)
 

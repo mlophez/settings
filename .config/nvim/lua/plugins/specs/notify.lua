@@ -1,9 +1,14 @@
-return {
+local loader = require("plugins.loader").load
+return loader("nvim-notify", {
 	"rcarriga/nvim-notify",
-	event = "VeryLazy",
+
+	lazy = false,
+	--event = "VeryLazy",
+
 	keys = {
 		{ "<cr>", ":NotifyDismiss<cr>", silent = true },
 	},
+
 	opts = {
 		timeout = 5000,
 		max_height = function()
@@ -13,6 +18,7 @@ return {
 			return math.floor(vim.o.columns * 0.75)
 		end,
 	},
+
 	config = function(_, opts)
 		require("notify").setup(opts)
 
@@ -22,5 +28,4 @@ return {
 			require("notify").dismiss({ silent = true, pending = true })
 		end, {})
 	end,
-	enabled = true,
-}
+})

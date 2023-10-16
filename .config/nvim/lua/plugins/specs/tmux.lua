@@ -1,6 +1,8 @@
-return {
+local loader = require('plugins.loader').load
+return loader("nvim-tmux-navigation", {
 	"alexghergh/nvim-tmux-navigation",
 	event = "VeryLazy",
+	
 	config = function()
 		local nvim_tmux_nav = require("nvim-tmux-navigation")
 
@@ -17,5 +19,4 @@ return {
 		--vim.keymap.set('n', "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
 		--vim.keymap.set('n', "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
 	end,
-	enabled = true,
-}
+})

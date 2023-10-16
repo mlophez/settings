@@ -1,6 +1,14 @@
-return {
+local loader = require("plugins.loader").load
+return loader("bufferline", {
 	"akinsho/bufferline.nvim",
-	event = "UIEnter",
+
+	lazy = false,
+	event = "VimEnter",
+
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+	},
+
 	opts = {
 		options = {
 			numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
@@ -161,4 +169,4 @@ return {
 			},
 		},
 	},
-}
+})

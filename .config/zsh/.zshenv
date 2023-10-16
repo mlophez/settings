@@ -58,6 +58,10 @@ export PATH_DIRS=(
 )
 for pathdir in ${PATH_DIRS}; do ! echo :$PATH: | grep -o "$pathdir" &>/dev/null && export PATH=$PATH:$pathdir; done
 
+# LANG
+export LANG=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)
+export LC_ALL=$LANG
+
 # ANDROID
 # export ANDROID_HOME=$HOME/.local/share/android/sdk
 # export ANDROID_SDK_ROOT=$HOME/.local/share/android/sdk
@@ -66,11 +70,4 @@ for pathdir in ${PATH_DIRS}; do ! echo :$PATH: | grep -o "$pathdir" &>/dev/null 
 # export ODBCINI=$HOME/.config/odbc.ini
 # export ODBCINSTINI=..$HOME/.config/odbcinst.ini
 
-# ## LANG
-# lang=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)
-# if [ -n "$lang" ]; then
-#   export LC_ALL=$lang
-#   export LANG=$lang
-# fi
-# unset lang
 

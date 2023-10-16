@@ -1,19 +1,23 @@
-return {
+local loader = require("plugins.loader").load
+return loader("telescope", {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
+
 	dependencies = {
 		"nvim-lua/plenary.nvim",
-		"kyazdani42/nvim-web-devicons",
+		"nvim-tree/nvim-web-devicons",
 		-- fzf integration --
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		{ "junegunn/fzf.vim" },
 		{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
 	},
+
 	keys = {
 		{ "<C-p>", ":Telescope find_files<cr>", silent = true },
 		{ "<leader>f", ":Telescope find_files<cr>", silent = true },
 		{ "<leader>r", ":Telescope live_grep<cr>", silent = true },
 	},
+
 	opts = {
 		defaults = {
 			layout_strategy = "horizontal",
@@ -34,5 +38,4 @@ return {
 			},
 		},
 	},
-	enabled = true,
-}
+})

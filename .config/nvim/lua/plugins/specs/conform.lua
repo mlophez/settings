@@ -1,8 +1,10 @@
-return {
+local loader = require("plugins.loader").load
+return loader("conform", {
 	"stevearc/conform.nvim",
-	--event = { "BufReadPre", "BufNewFile" },
-	event = "VeryLazy",
-	cmd = { "ConformInfo", "Format" },
+
+	event = { "VeryLazy" },
+	cmd = { "ConformInfo", "ConformFormat" },
+
 	opts = {
 		formatters_by_ft = {
 			javascript = { "prettier" },
@@ -32,11 +34,12 @@ return {
 			timeout_ms = 1000,
 		},
 	},
+
 	config = function(_, opts)
 		local conform = require("conform")
 		conform.setup(opts)
 
-		vim.api.nvim_create_user_command("Format", function()
+		vim.api.nvim_create_user_command("ConformFormat", function()
 			conform.format({
 				lsp_fallback = true,
 				async = false,
@@ -44,5 +47,4 @@ return {
 			})
 		end, {})
 	end,
-	enabled = true,
-}
+})

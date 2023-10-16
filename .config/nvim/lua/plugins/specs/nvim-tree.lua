@@ -1,15 +1,21 @@
-return {
+local loader = require("plugins.loader").load
+return loader("nvim-tree", {
 	"kyazdani42/nvim-tree.lua",
-	version = "ce3495b",
-	event = "UIEnter",
+
+	--lazy = false,
+	event = "VimEnter",
+
 	dependencies = {
-		"kyazdani42/nvim-web-devicons",
+		"nvim-tree/nvim-web-devicons",
 	},
+
 	keys = {
-		{ "<leader>e", ":NvimTreeOpen<cr>", silent = true },
+		{ "<leader>e", ":NvimTreeFocusToggle<cr>", silent = true },
+		{ "<C-e>", ":NvimTreeFocusToggle<cr>", silent = true },
 		{ "<leader>b", ":NvimTreeClose<cr>", silent = true },
-		{ "<space>", ":NvimTreeFocusToggle<cr>", silent = true },
+		--{ "<leader>e", ":NvimTreeOpen<cr>", silent = true },
 	},
+
 	opts = {
 		update_focused_file = {
 			enable = true,
@@ -56,7 +62,7 @@ return {
 		},
 		view = {
 			width = 50,
-			side = "right",
+			side = "left",
 			--mappings = {
 			--  list = {
 			--    { key = { "ñ", "<CR>", "o" }, action = "edit" },
@@ -100,40 +106,35 @@ return {
 			vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("Copy Relative Path"))
 		end,
 	},
+
 	config = function(_, opts)
 		require("nvim-tree").setup(opts)
 		require("nvim-tree.api").tree.open()
 		vim.cmd("wincmd p")
 
-		local function is_modified_buffer_open(buffers)
-			for _, v in pairs(buffers) do
-				if v.name:match("NvimTree_") == nil then
-					return true
-				end
-			end
-			return false
-		end
+		-- local function is_modified_buffer_open(buffers)
+		-- 	for _, v in pairs(buffers) do
+		-- 		if v.name:match("NvimTree_") == nil then
+		-- 			return true
+		-- 		end
+		-- 	end
+		-- 	return false
+		-- end
 
-		vim.api.nvim_create_autocmd("BufEnter", {
-			nested = true,
-			callback = function()
-				if
-					#vim.api.nvim_list_wins() == 1
-					and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil
-					and is_modified_buffer_open(vim.fn.getbufinfo({ bufmodified = 1 })) == false
-				then
-					vim.cmd("quit")
-				end
-			end,
-		})
+		--vim.api.nvim_create_autocmd("BufEnter", {
+		--	nested = true,
+		--	callback = function()
+		--		if
+		--			#vim.api.nvim_list_wins() == 1
+		--			and vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil
+		--			and is_modified_buffer_open(vim.fn.getbufinfo({ bufmodified = 1 })) == false
+		--		then
+		--			vim.cmd("quit")
+		--		end
+		--	end,
+		--})
 
 		vim.api.nvim_create_user_command("NvimTreeFocusToggle", function()
-			--if (not require'nvim-tree.view'.win_open() or vim.bo.filetype ~= 'NvimTree') then
-			--  vim.cmd('NvimTreeFindFileToggle')
-			--else
-			--  vim.cmd('NvimTreeFindFileToggle')
-			--  vim.cmd('wincmd p')
-			--end
 			if vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
 				vim.cmd("wincmd p")
 			else
@@ -141,5 +142,4 @@ return {
 			end
 		end, {})
 	end,
-	enabled = true,
-}
+})
