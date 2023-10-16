@@ -40,7 +40,6 @@ M.plugins = {
 	-- -- utils --
 	"alexghergh/nvim-tmux-navigation",
 	"lukas-reineke/indent-blankline.nvim",
-	"xiyaowong/transparent.nvim",
 	-- "akinsho/toggleterm.nvim",,
 	-- "echasnovski/mini.comment",,
 	-- "echasnovski/mini.pairs",,

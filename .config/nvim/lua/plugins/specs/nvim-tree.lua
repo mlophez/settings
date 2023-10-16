@@ -3,7 +3,7 @@ return loader("nvim-tree", {
 	"kyazdani42/nvim-tree.lua",
 
 	--lazy = false,
-	event = "VimEnter",
+	--event = "VimEnter",
 
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
@@ -109,8 +109,9 @@ return loader("nvim-tree", {
 
 	config = function(_, opts)
 		require("nvim-tree").setup(opts)
-		require("nvim-tree.api").tree.open()
-		vim.cmd("wincmd p")
+
+		--require("nvim-tree.api").tree.open()
+		--vim.cmd("wincmd p")
 
 		-- local function is_modified_buffer_open(buffers)
 		-- 	for _, v in pairs(buffers) do

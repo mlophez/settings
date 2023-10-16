@@ -2,7 +2,7 @@ local loader = require("plugins.loader").load
 return loader("conform", {
 	"stevearc/conform.nvim",
 
-	event = { "VeryLazy" },
+	event = { "BufWritePre" },
 	cmd = { "ConformInfo", "ConformFormat" },
 
 	opts = {
