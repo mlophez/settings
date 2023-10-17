@@ -22,4 +22,13 @@ return {
 		-- catppuccin, catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 		--vim.cmd.colorscheme("catppuccin-mocha")
 	}),
+
+	loader("nord", {
+		"gbprod/nord.nvim",
+		priority = 10000,
+		install = {
+			colorscheme = { "nord" },
+		},
+		--vim.cmd.colorscheme("nord")
+	}),
 }

@@ -4,6 +4,7 @@ local loader = require("plugins.loader").load
 return loader("nvim-lspconfig", {
 	"neovim/nvim-lspconfig",
 
+	version = false,
 	event = { "BufReadPost", "BufNewFile" },
 	--event = { "VeryLazy" },
 	cmd = { "LspInfo", "LspInstall", "LspUninstall" },
@@ -14,10 +15,12 @@ return loader("nvim-lspconfig", {
 
 	config = function(_, opts)
 		vim.opt.completeopt = { "menu", "menuone", "noselect" }
+		require("plugins.lsp.servers")
 
-		local lspconfig = require("lspconfig")
-		local util = require("lspconfig/util")
-		local lsp_defaults = lspconfig.util.default_config
+		--local lspconfig = require("lspconfig")
+		--local util = require("lspconfig/util")
+		--local lsp_defaults = lspconfig.util.default_config
+		-- Language Servers
 
 		--lsp_defaults.capabilities = vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 
@@ -41,76 +44,6 @@ return loader("nvim-lspconfig", {
 		--     vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<cr>', opts)
 		--     vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<cr>', opts)
 		--   end
-		-- })
-
-		-- Language Servers
-		-- lua --
-		-- lspconfig.lua_ls.setup({
-		-- 	settings = {
-		-- 		Lua = {
-		-- 			diagnostics = {
-		-- 				globals = { "vim" },
-		-- 			},
-		-- 			workspace = {
-		-- 				library = {
-		-- 					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-		-- 					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-		-- 					[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
-		-- 				},
-		-- 				maxPreload = 100000,
-		-- 				preloadFileSize = 10000,
-		-- 			},
-		-- 		},
-		-- 	},
-		-- })
-
-		-- python --
-		lspconfig.pyright.setup({})
-
-		-- terraform --
-		lspconfig.terraformls.setup({})
-
-		-- go --
-		lspconfig.gopls.setup({
-			--capabilities = capabilities,
-			cmd = { "gopls" },
-			filetypes = { "go", "gomod", "gowork", "gotmpl" },
-			root_dir = util.root_pattern("go.work", "go.mod", ".git"),
-			settings = {
-				gopls = {
-					completeUnimported = true,
-					usePlaceholders = true,
-					analyses = {
-						unusedparams = true,
-					},
-				},
-			},
-		})
-
-		-- yamls --
-		-- lspconfig.yamlls.setup({
-		-- 	settings = {
-		-- 		yaml = {
-		-- 			trace = {
-		-- 				server = "verbose",
-		-- 			},
-		-- 			schemas = {
-		-- 				["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-		-- 				--["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-		-- 				--["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-		-- 				--["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-		-- 				--["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-		-- 				--["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
-		-- 				--["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-		-- 				--["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
-		-- 				--["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-		-- 				--["https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/schemas/v3.1/schema.json"] = "*api*.{yml,yaml}",
-		-- 				--["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*docker-compose*.{yml,yaml}",
-		-- 				--["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
-		-- 				--["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.27.6/all.json"] = "*.yaml",
-		-- 			},
-		-- 		},
-		-- 	},
 		-- })
 	end,
 })

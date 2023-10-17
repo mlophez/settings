@@ -54,11 +54,24 @@ return loader("lualine", {
 
 	opts = {
 		options = {
-			theme = "auto",
+			theme = "nord",
 			icons_enabled = true,
 			global_status = true,
+			disabled_filetypes = {
+				statusline = {
+					"NvimTree",
+					"TelescopePrompt",
+					"lazy",
+					"mason",
+				},
+			},
+			ignore_focus = {
+				"NvimTree",
+				"TelescopePrompt",
+				"lazy",
+				"mason",
+			},
 		},
-		--ignore_focus = {},
 		sections = {
 			lualine_a = { "mode" },
 			lualine_b = {
@@ -75,15 +88,24 @@ return loader("lualine", {
 					},
 				},
 			},
-			lualine_c = {
-				{ lsp, icon = " lsp:", color = { fg = "#ffffff", gui = "bold" } },
-				{ formatter, icon = " formatter:", color = { fg = "#ffffff", gui = "bold" } },
+			lualine_c = {},
+			lualine_x = {
+				{ lsp, icon = " lsp:", color = { bg = "#9e187d", fg = "#ffffff", gui = "bold" } },
+				{ formatter, icon = "formatter:", color = { bg = "#5f2c8f", fg = "#ffffff", gui = "bold" } },
+				{ "filetype" },
 			},
-			lualine_x = { "filetype" },
 			lualine_y = { "progress" },
 			lualine_z = { "location" },
 		},
 		tabline = {},
 		extensions = {},
+	},
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = {},
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = {},
 	},
 })

@@ -33,7 +33,7 @@ return loader("telescope", {
 				n = {
 					["<esc>"] = "close",
 					["<C-c>"] = "close",
-					["<leader>q"] = "close",
+					["q"] = "close",
 				},
 			},
 		},

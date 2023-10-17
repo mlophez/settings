@@ -12,6 +12,7 @@ return loader("nvim-tree", {
 	keys = {
 		{ "<leader>e", ":NvimTreeFocusToggle<cr>", silent = true },
 		{ "<C-e>", ":NvimTreeFocusToggle<cr>", silent = true },
+		{ "m", ":NvimTreeFocusToggle<cr>", silent = true },
 		{ "<leader>b", ":NvimTreeClose<cr>", silent = true },
 		--{ "<leader>e", ":NvimTreeOpen<cr>", silent = true },
 	},

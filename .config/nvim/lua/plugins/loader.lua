@@ -5,6 +5,7 @@ M.plugins = {
 	"folke/tokyonight.nvim",
 	"Mofiqul/dracula.nvim",
 	"catppuccin/nvim",
+	"gbprod/nord.nvim",
 
 	-- ui --
 	"akinsho/bufferline.nvim",

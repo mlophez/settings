@@ -18,7 +18,7 @@ require("lazy").setup(require("plugins.loader").imports, {
 	lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
 	defaults = {
 		lazy = true,
-		version = "*",
+		--version = "*",
 	},
 	checker = {
 		enabled = false,
@@ -41,3 +41,4 @@ require("lazy").setup(require("plugins.loader").imports, {
 		},
 	},
 })
+
