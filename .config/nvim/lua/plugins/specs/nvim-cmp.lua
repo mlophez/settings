@@ -1,7 +1,10 @@
-return {
+local loader = require("plugins.loader").load
+return loader("nvim-cmp", {
 	"hrsh7th/nvim-cmp",
+
 	version = false,
 	event = "InsertEnter",
+
 	dependencies = {
 		-- Autocompletion
 		"hrsh7th/cmp-buffer", -- Optional
@@ -12,6 +15,7 @@ return {
 		"L3MON4D3/LuaSnip", -- Required
 		-- 'rafamadriz/friendly-snippets', -- Optional
 	},
+
 	opts = function()
 		local cmp = require("cmp")
 		return {
@@ -73,5 +77,4 @@ return {
 			},
 		}
 	end,
-	enabled = true,
-}
+})

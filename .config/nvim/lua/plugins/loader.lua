@@ -15,30 +15,24 @@ M.plugins = {
 	"folke/noice.nvim",
 
 	-- files --
-	"nvim-tree",
-	"telescope",
+	"kyazdani42/nvim-tree.lua",
+	"nvim-telescope/telescope.nvim",
 
-	"nvim-treesitter/nvim-treesitter",
+	-- installers --
 	"williamboman/mason.nvim",
-	"stevearc/conform.nvim",
 
-	"neovim/nvim-lspconfig",
-	--"plugins.lsp.conform",,
-	-- -- parsers --
-	-- "nvim-treesitter/nvim-treesitter",,
-
-	-- -- installers --
-	-- "williamboman/mason.nvim",,
+	-- parsers --
+	"nvim-treesitter/nvim-treesitter",
 
 	-- -- lsp, format, lint --
-	-- "neovim/nvim-lspconfig",,
-	-- "stevearc/conform.nvim",,
-	-- "mfussenegger/nvim-lint",,
+	"neovim/nvim-lspconfig",
+	"stevearc/conform.nvim",
+	-- "mfussenegger/nvim-lint",
 
-	-- -- AutoComplete --
-	-- "hrsh7th/nvim-cmp",,
+	-- AutoComplete --
+	"hrsh7th/nvim-cmp",
 
-	-- -- utils --
+	-- utils --
 	"alexghergh/nvim-tmux-navigation",
 	"lukas-reineke/indent-blankline.nvim",
 	-- "akinsho/toggleterm.nvim",,

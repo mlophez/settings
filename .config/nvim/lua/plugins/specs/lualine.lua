@@ -1,5 +1,3 @@
-local loader = require("plugins.loader").load
-
 local lsp = function()
 	local msg = "none"
 	local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
@@ -26,14 +24,25 @@ local formatter = function()
 		local formatters = conform.list_formatters_for_buffer()
 
 		if not vim.tbl_isempty(lsp_formatters) or not vim.tbl_isempty(formatters) then
+			--print(vim.inspect(require("conform.lsp_format").get_format_clients({ bufnr = vim.api.nvim_get_current_buf() })))
+			--print(vim.inspect(require("conform").list_formatters_for_buffer()))
 			msg = ""
+
+			if type(formatters[1]) == "table" then
+				formatters = formatters[1]
+			end
+
 			for _, formatter in ipairs(lsp_formatters) do
 				msg = msg .. formatter.name .. ", "
 			end
+
 			for _, formatter in ipairs(formatters) do
 				msg = msg .. formatter .. ", "
 			end
-			msg = msg:sub(1, -3)
+
+			if string.len(msg) > 2 then
+				msg = msg:sub(1, -3)
+			end
 		end
 	else
 		msg = "disabled"
@@ -42,6 +51,7 @@ local formatter = function()
 	return msg
 end
 
+local loader = require("plugins.loader").load
 return loader("lualine", {
 	"nvim-lualine/lualine.nvim",
 
@@ -54,7 +64,7 @@ return loader("lualine", {
 
 	opts = {
 		options = {
-			theme = "nord",
+			theme = "auto",
 			icons_enabled = true,
 			global_status = true,
 			disabled_filetypes = {
@@ -90,8 +100,8 @@ return loader("lualine", {
 			},
 			lualine_c = {},
 			lualine_x = {
-				{ lsp, icon = " lsp:", color = { bg = "#9e187d", fg = "#ffffff", gui = "bold" } },
-				{ formatter, icon = "formatter:", color = { bg = "#5f2c8f", fg = "#ffffff", gui = "bold" } },
+				{ lsp, icon = "lsp:", color = { bg = "#630a4d", fg = "#ffffff", gui = "bold" } },
+				{ formatter, icon = "formatter:", color = { bg = "#351454", fg = "#ffffff", gui = "bold" } },
 				{ "filetype" },
 			},
 			lualine_y = { "progress" },

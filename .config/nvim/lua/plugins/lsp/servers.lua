@@ -1,7 +1,15 @@
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig/util")
+
+local defaults = lspconfig.util.default_config
+local capabilities = defaults.capabilities
+
+-- local status, cmp = pcall(require, "cmp_nvim_lsp")
+-- defaults.capabilities = vim.tbl_deep_extend("force", defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+
 -- lua --
 lspconfig.lua_ls.setup({
+	capabilities = capabilities,
 	settings = {
 		Lua = {
 			diagnostics = {
@@ -21,14 +29,18 @@ lspconfig.lua_ls.setup({
 })
 
 -- python --
-lspconfig.pyright.setup({})
+lspconfig.pyright.setup({
+	capabilities = capabilities,
+})
 
 -- terraform --
-lspconfig.terraformls.setup({})
+lspconfig.terraformls.setup({
+	capabilities = capabilities,
+})
 
 -- go --
 lspconfig.gopls.setup({
-	--capabilities = capabilities,
+	capabilities = capabilities,
 	cmd = { "gopls" },
 	filetypes = { "go", "gomod", "gowork", "gotmpl" },
 	root_dir = lsputil.root_pattern("go.work", "go.mod", ".git"),

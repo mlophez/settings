@@ -403,6 +403,16 @@ function kustomize_menu {
   print -z kubectl --context $(basename $entry) apply --server-side --force-conflicts -k ${entry}
 }
 
+function kompare() {
+  local file1="$1"
+  local file2="$2"
+
+  cat $file1 | yq -r '(.kind + ":" + .metadata.namespace + ":" + .metadata.name)' | sort > /tmp/file1.txt
+  cat $file2 | yq -r '(.kind + ":" + .metadata.namespace + ":" + .metadata.name)' | sort > /tmp/file2.txt
+
+  colordiff /tmp/file1.txt /tmp/file2.txt
+}
+
 function kubernetes-clean-terminated-pods() {
   local context="$1"
   local namespace

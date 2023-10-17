@@ -89,7 +89,7 @@
                 "startingDirectory": "/home/mlr"
             },
             {
-                "colorScheme": "Catppuccin Mocha",
+                "colorScheme": "Dracula",
                 "commandline": "C:\\Windows\\System32\\wsl.exe -d Archlinux",
                 "guid": "{dd2d7685-6dd9-46cb-95da-88e5a736739b}",
                 "hidden": false,
