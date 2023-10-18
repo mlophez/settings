@@ -10,9 +10,9 @@ return loader("nvim-tree", {
 	},
 
 	keys = {
+		{ "m", ":NvimTreeToggle<cr>", silent = true },
 		{ "<leader>e", ":NvimTreeFocusToggle<cr>", silent = true },
 		{ "<C-e>", ":NvimTreeFocusToggle<cr>", silent = true },
-		{ "m", ":NvimTreeFocusToggle<cr>", silent = true },
 		{ "<leader>b", ":NvimTreeClose<cr>", silent = true },
 		--{ "<leader>e", ":NvimTreeOpen<cr>", silent = true },
 	},
@@ -76,7 +76,7 @@ return loader("nvim-tree", {
 		},
 		actions = {
 			open_file = {
-				quit_on_open = false,
+				quit_on_open = true,
 			},
 		},
 		filters = {
@@ -139,6 +139,14 @@ return loader("nvim-tree", {
 		vim.api.nvim_create_user_command("NvimTreeFocusToggle", function()
 			if vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
 				vim.cmd("wincmd p")
+			else
+				require("nvim-tree.api").tree.focus()
+			end
+		end, {})
+
+		vim.api.nvim_create_user_command("NvimTreeToggle", function()
+			if vim.api.nvim_buf_get_name(0):match("NvimTree_") ~= nil then
+				require("nvim-tree.api").tree.close()
 			else
 				require("nvim-tree.api").tree.focus()
 			end

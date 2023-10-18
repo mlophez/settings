@@ -1,4 +1,5 @@
-return {
+local loader = require("plugins.loader").load
+return loader("toggleterm", {
 	"akinsho/toggleterm.nvim",
 	version = "*",
 	cmd = "ToggleTerm",
@@ -27,4 +28,4 @@ return {
 			},
 		},
 	},
-}
+})

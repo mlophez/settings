@@ -1,0 +1,46 @@
+#!/bin/bash
+
+function start_session() {
+  local session_name="popup"
+
+  tmux attach -t ${session_name} || \
+  tmux new-session -d -c '#{pane_current_path}' -s ${session_name} && \
+  tmux set-option -t ${session_name} status off && \
+  tmux attach-session -t ${session_name}
+}
+
+function popup_with_session() {
+  if [ "$(tmux display-message -p -F "#{session_name}")" = "popup" ];then
+    #tmux detach-client
+    tmux display-popup -t '#{session_name}' -C
+  else
+    #tmux display-popup -d '#{pane_current_path}' -w 95% -h 80% -E "$TMUX_PATH/bin/tmux-popup session"
+    #tmux display-popup -d '#{pane_current_path}' -w 95% -h 80% -E "tmux attach -t popup || tmux new -s popup"
+    tmux display-popup -t '#{session_name}' -d '#{pane_current_path}' -w 95% -h 80% -E
+  fi
+}
+
+function popup() {
+  if [ -n "${TMUX}" ];then
+    tmux display-popup -d '#{pane_current_path}' -w 95% -h 80% -E
+  else
+    tmux display-popup -t '#{session_name}' -C
+  fi
+}
+
+[ -z "$1" ] && popup "$@"
+[ "$1" = "session" ] && start_session "$@"
+
+exit 0
+
+# bind '"' if-shell -F '#{==:#{session_name},scratch}' {
+#
+#     detach-client
+#   } {
+#
+#     if-shell "tmux has-session -t scratch" {
+#       display-popup -E "tmux attach-session -t scratch"
+#     } {
+#       display-popup -E "tmux new-session -d -c '#{pane_current_path}' -s scratch && tmux set-option -t scratch status off && tmux attach-session -t scratch"
+#     }
+# }

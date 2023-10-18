@@ -4,10 +4,6 @@
     "actions": 
     [
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": "paste"
         },
         {
@@ -16,23 +12,6 @@
                 "action": "copy",
                 "singleLine": false
             }
-        },
-        {
-            "command": 
-            {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            },
-            "keys": "alt+shift+d"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+v"
-        },
-        {
-            "command": "unbound",
-            "keys": "ctrl+c"
         }
     ],
     "alwaysOnTop": false,
@@ -91,10 +70,16 @@
             {
                 "colorScheme": "Dracula",
                 "commandline": "C:\\Windows\\System32\\wsl.exe -d Archlinux",
+                "font": 
+                {
+                    "face": "JetBrainsMonoNL NF",
+                    "weight": "semi-bold"
+                },
                 "guid": "{dd2d7685-6dd9-46cb-95da-88e5a736739b}",
                 "hidden": false,
+                "intenseTextStyle": "all",
                 "name": "Archlinux",
-                "opacity": 100,
+                "opacity": 90,
                 "startingDirectory": "/home/mlr"
             }
         ]

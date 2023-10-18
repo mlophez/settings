@@ -28,22 +28,21 @@ keybinds clear-defaults=true {
     bind "Alt n" { NewTab; }
     bind "Alt v" { NewPane "Down"; }
     bind "Alt h" { NewPane "Right"; }
-    bind "Alt g" { ToggleFocusFullscreen; }
+    bind "Alt f" { ToggleFocusFullscreen; }
     bind "Alt t" "Alt m" { ToggleFloatingPanes; }
+    bind "Alt ," { SwitchToMode "RenameTab"; TabNameInput 0; }
     bind "Alt u" { CloseFocus; }
 
-    bind "Alt j" "Alt a" { MoveFocus "Left"; }
-    bind "Alt ñ" "Alt f" { MoveFocus "Right"; }
-    bind "Alt k" "Alt s" { MoveFocus "Down"; }
-    bind "Alt l" "Alt d" { MoveFocus "Up"; }
+    bind "Alt j" "Ctrl j" { MoveFocus "Left"; }
+    bind "Alt k" "Ctrl k" { MoveFocus "Down"; }
+    bind "Alt l" "Ctrl l" { MoveFocus "Up"; }
+    bind "Alt ñ" "Ctrl ñ" "F6" { MoveFocus "Right"; }
 
     bind "Alt J" "Alt Left"  { Resize "Increase Left"; }
     bind "Alt K" "Alt Down"  { Resize "Increase Down"; }
     bind "Alt L" "Alt Up"    { Resize "Increase Up"; }
     bind "Alt Ñ" "Alt Right" { Resize "Increase Right"; }
 
-    bind "Alt ," { SwitchToMode "RenameTab"; TabNameInput 0; }
-    
     //bind "Alt s" { GoToPreviousTab; }
     //bind "Alt d" { GoToNextTab; }
 

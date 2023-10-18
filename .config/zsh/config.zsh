@@ -319,8 +319,7 @@ function ssh() {
 }
 
 function ssh-legacy() {
-    export TERM=xterm-256color
-    printf "\e[?2004l"
+    #printf "\e[?2004l"
     command ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 $@
 }
 
@@ -342,8 +341,8 @@ function ssh_menu() {
 
     echo "[+] Connect to '$(echo $entry | cut -d" " -f1)'"
 
-    printf "\e[?2004l"
-    eval "TERM=xterm-256color $hook ssh $(echo $entry | cut -d" " -f1)"
+    #printf "\e[?2004l"
+    eval "$hook ssh $(echo $entry | cut -d" " -f1)"
 }
 
 function docker-upload-image () {

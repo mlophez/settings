@@ -35,7 +35,7 @@ M.plugins = {
 	-- utils --
 	"alexghergh/nvim-tmux-navigation",
 	"lukas-reineke/indent-blankline.nvim",
-	-- "akinsho/toggleterm.nvim",,
+	"akinsho/toggleterm.nvim",
 	-- "echasnovski/mini.comment",,
 	-- "echasnovski/mini.pairs",,
 	-- "rest-nvim/rest.nvim",,
