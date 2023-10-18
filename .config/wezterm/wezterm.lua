@@ -9,11 +9,12 @@ end
 -- Settings --
 config.color_scheme = "Dracula"
 config.font = wezterm.font("JetBrainsMono Nerd Font")
+config.font_size = 10.0
 
 config.window_decorations = "TITLE"
 config.hide_tab_bar_if_only_one_tab = true
 
-config.window_background_opacity = 0.0
+config.window_background_opacity = 0.5
 config.text_background_opacity = 1.0
 config.win32_system_backdrop = "Mica"
 
