@@ -174,6 +174,7 @@ function status() {
             $HOME/.config/tmux \
             $HOME/.config/zellij \
             $HOME/.config/alacritty \
+            $HOME/.config/wezterm \
             $HOME/.config/git \
             $HOME/.config/kube/config \
             $HOME/.config/wsl \
