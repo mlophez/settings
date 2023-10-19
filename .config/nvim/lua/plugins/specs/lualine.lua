@@ -103,7 +103,7 @@ return loader("lualine", {
 			lualine_x = {
 				{ lsp, icon = "lsp:", color = { bg = "#630a4d", fg = "#ffffff", gui = "bold" } },
 				{ formatter, icon = "formatter:", color = { bg = "#351454", fg = "#ffffff", gui = "bold" } },
-				--{ "filetype" },
+				{ "filetype" },
 			},
 			lualine_y = { "progress" },
 			lualine_z = { "location" },

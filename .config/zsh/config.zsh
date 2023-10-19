@@ -69,6 +69,7 @@ alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
 alias kt="kubectl-pod"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
+alias k9="k9s -c pods --context"
 
 # DRIVE
 alias reload_drive="systemctl --user restart rclone@Drive.service"
@@ -189,6 +190,7 @@ function status() {
             $HOME/.config/distrobox \
             $HOME/.config/i3 \
             $HOME/.config/gnupg \
+            $HOME/.config/k9s \
             $HOME/.config/Windows \
             $HOME/.config/Code/User/settings.json \
             $HOME/.config/Code/User/keybindings.json \

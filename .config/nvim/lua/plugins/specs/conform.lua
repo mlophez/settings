@@ -22,6 +22,7 @@ return loader("conform", {
 			lua = { "stylua" },
 			python = { "isort", "black" },
 			terraform = { "terraform_fmt" },
+			jsonnet = { "jsonnetfmt" },
 			-- Use the "*" filetype to run formatters on all filetypes.
 			-- ["*"] = { "codespell" },
 			-- ["*"] = { "trim_whitespace" },
@@ -33,6 +34,7 @@ return loader("conform", {
 			async = false,
 			timeout_ms = 1000,
 		},
+		formatters = require("plugins.lsp.formatters"),
 	},
 
 	config = function(_, opts)

@@ -68,6 +68,9 @@ source ~/.local/share/zsh/spaceship/spaceship.zsh
 
 # LOADING
 source ~/.config/zsh/config.zsh
+for file in $(ls ${ZDOTDIR}/functions); do
+  source ${ZDOTDIR}/functions/${file}
+done
 
 # AUTOCOMPLETE
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)

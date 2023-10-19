@@ -38,6 +38,9 @@ export HELM_CONFIG_HOME="$HOME/.config/helm"
 # ANSIBLE
 export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
+# PYTHON
+export PYTHONVENV="$HOME/.local/share/python"
+
 # GO
 export GOPATH="$HOME/.local/share/go"
 
@@ -55,6 +58,7 @@ export PATH_DIRS=(
   "/usr/local/bin"
   "$HOME/.local/bin"
   "$GOPATH/bin"
+  "$NPM_CONFIG_PREFIX/bin"
 )
 for pathdir in ${PATH_DIRS}; do ! echo :$PATH: | grep -o "$pathdir" &>/dev/null && export PATH=$PATH:$pathdir; done
 
