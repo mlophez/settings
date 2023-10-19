@@ -24,12 +24,12 @@
   "nvim-tmux-navigation": { "branch": "main", "commit": "543f090a45cef28156162883d2412fffecb6b750" },
   "nvim-tree": { "branch": "master", "commit": "40b9b887d090d5da89a84689b4ca0304a9649f62" },
   "nvim-web-devicons": { "branch": "master", "commit": "3af745113ea537f58c4b1573b64a429fefad9e07" },
+  "peek": { "branch": "master", "commit": "67752e7581f88da6899838985a05705b008e4185" },
   "plenary.nvim": { "branch": "master", "commit": "50012918b2fc8357b87cff2a7f7f0446e47da174" },
   "telescope": { "branch": "master", "commit": "74ce793a60759e3db0d265174f137fb627430355" },
   "telescope-fzf-native": { "branch": "main", "commit": "6c921ca12321edaa773e324ef64ea301a1d0da62" },
   "toggleterm": { "branch": "main", "commit": "faee9d60428afc7857e0927fdc18daa6c409fa64" },
   "tokyonight": { "branch": "main", "commit": "633039585dff7fd2b9b62fb190bf768702609d95" },
-  "transparent": { "branch": "main", "commit": "3af6232c8d39d51062702e875ff6407c1eeb0391" },
   "treesitter": { "branch": "master", "commit": "9c4fc86b67c1d68141cef57846d24cbee9b74fb0" },
   "vim-dispatch": { "branch": "master", "commit": "6cc2691576f97d43f8751664d1a1a908b99927e5" }
 }

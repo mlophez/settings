@@ -32,6 +32,9 @@ M.plugins = {
 	-- AutoComplete --
 	"hrsh7th/nvim-cmp",
 
+	-- markdown --
+	--"toppair/peek.nvim",
+
 	-- utils --
 	"alexghergh/nvim-tmux-navigation",
 	"lukas-reineke/indent-blankline.nvim",

@@ -5,6 +5,6 @@ return {
 		args = { "-" },
 		stdin = true,
 		inherit = true,
-		exit_codes = { 0, 1 },
+		exit_codes = { 0 },
 	},
 }
