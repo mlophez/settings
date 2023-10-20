@@ -15,4 +15,10 @@ return loader("peek", {
 		throttle_at = 200000,
 		throttle_time = "auto",
 	},
+
+	config = function(_, opts)
+		require("peek").setup(opts)
+		vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+		vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
+	end,
 })

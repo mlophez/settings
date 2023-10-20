@@ -20,8 +20,8 @@ vim.api.nvim_create_user_command("Quit", quit, {})
 -- Leader
 vim.keymap.set("n", "<leader>c", ":", { noremap = true, silent = false })
 vim.keymap.set("n", "<leader><leader>", ":", { noremap = true, silent = false })
+vim.keymap.set("n", "<leader>", "<nop>", opts)
 vim.keymap.set("n", ",", "<nop>", opts)
--- vim.keymap.set("n", "<leader>", "<nop>", opts)
 
 -- Navigation
 vim.keymap.set("n", "j", "h", opts)

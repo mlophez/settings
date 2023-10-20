@@ -1,5 +1,11 @@
 -- filetype.lua
 
+-- help --
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "help" },
+	command = "wincmd o",
+})
+
 -- autocmd BufNewFile,BufRead *.tf set filetype=hcl
 vim.cmd([[
   augroup filetype

@@ -90,12 +90,12 @@ function ls() {
   local afunctrace=($functrace)
   if [[ ${#afunctrace[@]} -le 1 ]]; then
     if type lsd &>/dev/null; then
-      lsd "$@"
+      lsd -v --group-directories-first "$@"
     else
-      command ls -v --color "$@"
+      command ls -v --group-directories-first --color "$@"
     fi
   else
-    command ls -v "$@"
+    command ls -v --group-directories-first "$@"
   fi
 }
 

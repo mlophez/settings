@@ -24,6 +24,7 @@ k9s:
         active: all
         lockFavorites: false
         favorites:
+        - all
         - default
       view:
         active: pods
@@ -48,7 +49,7 @@ k9s:
         - all
         - default
       view:
-        active: pod
+        active: pods
       featureGates:
         nodeShell: false
       shellPod:
