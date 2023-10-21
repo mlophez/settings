@@ -3,7 +3,7 @@ return loader("conform", {
 	"stevearc/conform.nvim",
 
 	event = { "BufWritePre" },
-	cmd = { "ConformInfo", "ConformFormat" },
+	cmd = { "ConformInfo", "ConformFormat", "Format" },
 
 	opts = {
 		formatters_by_ft = {
@@ -42,6 +42,14 @@ return loader("conform", {
 		conform.setup(opts)
 
 		vim.api.nvim_create_user_command("ConformFormat", function()
+			conform.format({
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 3000,
+			})
+		end, {})
+
+		vim.api.nvim_create_user_command("Format", function()
 			conform.format({
 				lsp_fallback = true,
 				async = false,

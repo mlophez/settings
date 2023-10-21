@@ -50,9 +50,9 @@ vim.keymap.set("n", "<C-ñ>", "<C-w><Right>", opts)
 vim.keymap.set("n", "<F6>", "<C-w><Right>", opts)
 
 -- Buffers
---keymap("n", "<BS>", ":bd<cr>", opts)
+vim.keymap.set("n", "<BS>", ":bd<cr>", opts)
 vim.keymap.set("n", "<leader>n", ":enew<cr>", opts)
-vim.keymap.set("n", "<BS>", ":bp<bar>sp<bar>bn<bar>bd<cr>", opts)
+--vim.keymap.set("n", "<BS>", ":bp<bar>sp<bar>bn<bar>bd<cr>", opts)
 vim.keymap.set("n", "<TAB>", ":bnext<cr>", opts)
 vim.keymap.set("n", "<S-TAB>", ":bprev<cr>", opts)
 
