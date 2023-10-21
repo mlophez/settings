@@ -59,15 +59,12 @@ bindkey '^R' history-incremental-search-backward
 [ -e "$HOME/.config/zsh/plugins/fzf-history-search.zsh" ] && \
     source $HOME/.config/zsh/plugins/fzf-history-search.zsh
 
-# LOAD PLUGINS
+# PROMPT
 [ ! -d "$HOME/.local/share/zsh/spaceship" ] && \
   git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.local/share/zsh/spaceship"
-
-# PROMPT
 source ~/.local/share/zsh/spaceship/spaceship.zsh
 
-# LOADING
-source ~/.config/zsh/config.zsh
+# FUNCTIONS
 for file in $(ls ${ZDOTDIR}/functions); do
   source ${ZDOTDIR}/functions/${file}
 done

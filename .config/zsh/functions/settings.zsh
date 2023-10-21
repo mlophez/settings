@@ -1,0 +1,76 @@
+#!/usr/bin/zsh
+
+alias sett="settings"
+
+function settings() {
+    command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
+}
+
+function status-get-windows-files() {
+    local windows_user_home=$(echo $PATH | grep -io -P "/mnt/c/Users/.*?/" | head -1)
+
+    [ -z "${windows_user_home}" ] && return 0
+    [ ! -d "$HOME/.config/Windows" ] && mkdir -p $HOME/.config/Windows
+
+    cp $windows_user_home/AppData/Roaming/Code/User/settings.json \
+      $HOME/.config/Windows/code-user-settings.json
+
+    cp $windows_user_home/AppData/Roaming/Code/User/keybindings.json \
+      $HOME/.config/Windows/code-user-keybindings.json
+
+    cp $windows_user_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+      $HOME/.config/Windows/terminal-settings.json
+}
+
+function status() {
+    settings restore --staged . &>/dev/null
+
+    status-get-windows-files
+
+    [ -e "$KUBECONFIG" ] && \
+      sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
+
+    settings add $HOME/.config/zsh \
+            $HOME/.config/nvim \
+            $HOME/.config/tmux \
+            $HOME/.config/zellij \
+            $HOME/.config/alacritty \
+            $HOME/.config/wezterm \
+            $HOME/.config/git \
+            $HOME/.config/kube/config \
+            $HOME/.config/wsl \
+            $HOME/.config/qtile \
+            $HOME/.config/waybar \
+            $HOME/.config/sway \
+            $HOME/.config/mutt \
+            $HOME/.config/systemd \
+            $HOME/.config/mako \
+            $HOME/.config/zsh \
+            $HOME/.config/containers \
+            $HOME/.config/distrobox \
+            $HOME/.config/i3 \
+            $HOME/.config/gnupg \
+            $HOME/.config/k9s \
+            $HOME/.config/Windows \
+            $HOME/.config/Code/User/settings.json \
+            $HOME/.config/Code/User/keybindings.json \
+            $HOME/.local/share/codews \
+            $HOME/.local/share/fonts \
+            $HOME/.ssh/config \
+            $HOME/.aws/config \
+            $HOME/.bashrc \
+            $HOME/.gitignore
+
+    settings status
+}
+
+function save() {
+    settings commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
+    settings push -u origin main
+}
+
+function load() {
+    settings pull
+}
+
+

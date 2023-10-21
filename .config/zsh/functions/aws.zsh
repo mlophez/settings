@@ -1,5 +1,9 @@
 #!/bin/bash
 
+alias a="aws-ssm-connect"
+alias as="aws-ssm-connect ssh"
+alias am="aws-profile-menu"
+
 function aws-profile-menu() {
   local profile="$(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | fzf)"
   [ -z "$profile" ] && return 0
@@ -68,18 +72,3 @@ function aws-tunnel() { # 1521:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com
   --profile demo
 }
 
-# TUNNELS
-function tunnel_menu() {
-  local cmd
-  local opts=(
-    "demodb:  ssh -L 1521:demo-db.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com:1521 -N 52.50.61.78"
-    "oradb01: aws-tunnel 1522:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-073dc348207b0c5ee"
-    "logaltyQA: aws-tunnel 1523:logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com:1521 i-04a7f8ed6a1c77a37"
-  )
-
-  cmd=$(printf '%s\n' "${opts[@]}" | fzf --layout=default)
-  [ -z "$cmd" ] && return 0
-
-  echo "-> $cmd"
-  eval "$(echo $cmd | cut -d ":" -f 2-100000000 | sed 's/^ *//g')"
-}
