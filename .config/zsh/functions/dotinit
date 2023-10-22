@@ -64,7 +64,7 @@ function status() {
 
 function save() {
   dot commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
-  push -u origin main
+  dot push -u origin main
 }
 
 function load() {
