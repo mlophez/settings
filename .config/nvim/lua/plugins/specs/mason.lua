@@ -5,6 +5,14 @@ return loader("mason", {
 	lazy = false,
 
 	opts = {
+		PATH = "prepend", -- '"prepend"' | '"append"' | '"skip"'
+		ui = {
+			icons = {
+				package_installed = "✓",
+				package_pending = "➜",
+				package_uninstalled = "✗",
+			},
+		},
 		ensure_installed = {
 			-- lsp
 			"lua-language-server", -- lua_ls
@@ -25,13 +33,6 @@ return loader("mason", {
 			"tfsec",
 			"luacheck",
 			--"sonarlint-language-server",
-		},
-		ui = {
-			icons = {
-				package_installed = "✓",
-				package_pending = "➜",
-				package_uninstalled = "✗",
-			},
 		},
 	},
 

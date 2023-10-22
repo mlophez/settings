@@ -43,6 +43,7 @@ export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # PYTHON
 export PYTHONVENV="$HOME/.local/share/python"
+#export VIRTUAL_ENV="${PYTHONVENV}"
 
 # GO
 export GOPATH="$HOME/.local/share/go"
@@ -59,10 +60,9 @@ export GEM_HOME=$HOME/.local/share/ruby
 # PATH
 export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:${HOME}/.local/bin
+export PATH=${PATH}:${PYTHONVENV}/bin
 export PATH=${PATH}:${GOPATH}/bin
 export PATH=${PATH}:${NPM_CONFIG_PREFIX}/bin
-typeset -U path
-typeset -U fpath
 
 # LANG
 export LANG=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)

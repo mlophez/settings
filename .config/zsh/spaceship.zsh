@@ -1,5 +1,5 @@
 # PROMPT
-SPACESHIP_PROMPT_ORDER=(user host dir git aws kubectl async line_sep char)
+SPACESHIP_PROMPT_ORDER=(user host dir git venv aws kubectl async line_sep char)
 
 # TIME
 SPACESHIP_TIME_SHOW=true
@@ -23,3 +23,7 @@ SPACESHIP_AWS_SYMBOL="☁️  "
 SPACESHIP_KUBECTL_SHOW=true
 SPACESHIP_KUBECTL_VERSION_SHOW=false
 SPACESHIP_KUBECTL_SYMBOL="☸️  "
+
+# PYTHON
+SPACESHIP_VENV_PREFIX="(venv: "
+SPACESHIP_VENV_SUFFIX=") "

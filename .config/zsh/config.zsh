@@ -61,38 +61,6 @@ function kubectl() {
 #     export WINIT_UNIX_BACKEND=x11
 # }
 #
-# function workspace() {
-#   local wpath selected
-#
-#   if [ -z "$1" ]; then
-#     wpath=($(find $HOME -maxdepth 2 -iname Projects -type d -print | tr '\n' ' '))
-#     selected=$(find $wpath -mindepth 1 -maxdepth 1 -type d,l -print | fzf)
-#     [ -z "$selected" ] && return 0
-#     cd $selected
-#
-#     export WORKSPACE=$(pwd)
-#
-#     if [ -n "$TMUX" ]; then
-#       tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
-#       #tmux split-window -v -l 30%
-#       #tmux select-pane -l
-#       #tmux resize-pane -Z
-#     fi
-#
-#     if [ -n "$ZELLIJ" ]; then
-#       zellij action rename-tab $(basename ${selected} | tr '[:lower:]' '[:upper:]')
-#     fi
-#     nvim
-#   else
-#     selected=$(find $(pwd) -mindepth 1 -maxdepth 10 -type d,l -print | fzf)
-#     [ -z "$selected" ] && return 0
-#     cd $selected
-#
-#     export WORKSPACE=$(pwd)
-#   fi
-#
-# }
-#
 # function workspace-path() {
 #   [ -z "$WORKSPACE" ] && return 0
 #

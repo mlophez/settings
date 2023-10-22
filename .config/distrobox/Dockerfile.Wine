@@ -1,4 +1,4 @@
-# vim: ft=Dockerfile
+# vim: ft=dockerfile
 # docker build -f wine.df -t wine:stable .
 # docker run -it --rm wine  /bin/bash
 

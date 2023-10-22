@@ -27,7 +27,7 @@ M.plugins = {
 	-- -- lsp, format, lint --
 	"neovim/nvim-lspconfig",
 	"stevearc/conform.nvim",
-	-- "mfussenegger/nvim-lint",
+	"mfussenegger/nvim-lint",
 
 	-- AutoComplete --
 	"hrsh7th/nvim-cmp",

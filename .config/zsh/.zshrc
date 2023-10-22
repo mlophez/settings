@@ -9,6 +9,9 @@ HISTFILE="$HOME/.zhistory"
 HISTIGNORE='pass *'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
+typeset -U path
+typeset -U fpath
+
 autoload -U colors && colors
 autoload -U compinit && compinit
 autoload -U select-word-style && select-word-style bash

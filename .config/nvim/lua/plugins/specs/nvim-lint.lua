@@ -1,14 +1,17 @@
-return {
+local loader = require("plugins.loader").load
+return loader("nvim-lint", {
 	"mfussenegger/nvim-lint",
-	--event = { "BufReadPre", "BufNewFile" },
-	event = "VeryLazy",
+
+	event = { "BufReadPost", "BufNewFile" },
 	cmd = { "Lint" },
+
 	opts = {
 		python = { "pylint" },
 		terraform = { "tflint", "tfsec" },
 		-- yaml = { "sonarlint-language-server" },
 		-- lua = { "luacheck" },
 	},
+
 	config = function(_, opts)
 		local lint = require("lint")
 
@@ -26,5 +29,4 @@ return {
 			lint.try_lint()
 		end, {})
 	end,
-	enabled = true,
-}
+})

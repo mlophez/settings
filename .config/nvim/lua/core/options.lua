@@ -45,9 +45,18 @@ for k, v in pairs(options) do
 	vim.opt[k] = v
 end
 
+-- Providers
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+
 -- leader key
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
+
+-- Python
+--vim.g.python3_host_prog = ""
 
 -- vim.opt.shortmess = "ilmnrx"                        -- flags to shorten vim messages, see :help 'shortmess'
 --vim.opt.shortmess:append("c") -- don't give |ins-completion-menu| messages
