@@ -31,11 +31,6 @@ alias sshl="ssh -oKexAlgorithms=+diffie-hellman-group1-sha1"
 # ARCHLINUX
 alias arch="archlinux"
 
-alias install="sudo pacman --needed -S"
-alias uninstall="sudo pacman -Rns"
-alias update="sudo reflector --verbose --latest 20 --sort rate --protocol https --save /etc/pacman.d/mirrorlist"
-alias upgrade="sudo pacman -Syu; type yay &> /dev/null && yay -Syua; sudo pacman -Scc"
-
 # AWS
 alias a="aws-ssm-connect"
 alias as="aws-ssm-connect ssh"

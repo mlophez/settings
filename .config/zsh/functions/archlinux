@@ -1,0 +1,184 @@
+#!/usr/bin/zsh
+
+
+# function archlinux__packages() {
+#   echo hola
+# }
+#
+# function archlinux__configure() {
+#   #[[ "$(whoami)" != "root" ]] && echo "You must be run like root" && return 1
+#   local section="$1"
+#
+#   print "CONFIGURE PACMAN"
+#   sudo sed "s/^#Color.*$/Color/g" -i /etc/pacman.conf
+#   sudo sed "s/^\[multilib\]/#[multilib]/g" -i /etc/pacman.conf
+#
+#   print "CONFIGURE IPTABLES"
+#   sudo cp $HOME/.config/archlinux/iptables.rules /etc/iptables/iptables.rules
+#   sudo cp $HOME/.config/archlinux/ip6tables.rules /etc/iptables/ip6tables.rules
+#   sudo systemctl enable iptables.service
+#   sudo systemctl enable ip6tables.service
+#
+#   print "CONFIGURE SYSCTL"
+#   sudo cp $HOME/.config/archlinux/sysctl.conf > /etc/sysctl.d/99-sysctl.conf
+#
+#   print "CONFIGURE NTP"
+#   local ntp="time.google.com"
+#   sed "s/^#NTP *=.*$/NTP=${ntp_server}/g" -i /etc/systemd/timesyncd.conf
+#   sed "s/^NTP *=.*$/NTP=${ntp_server}/g" -i /etc/systemd/timesyncd.conf
+#   sudo timedatectl set-ntp true
+#   sudo systemctl enable systemd-timesyncd
+# }
+#
+# function wst_ntp() {
+# }
+#
+# function wst_cronie() {
+#     ! type crond &>/dev/null && return 0
+#     print "CONFIGURE CRONIE"
+#     systemctl enable cronie
+# }
+#
+# function wst_networkmanager() {
+#     ! type nmcli &>/dev/null && return 0
+#     print "CONFIGURE NETWORK MANAGER"
+#     cat $WST_PATH/files/settings/NetworkManager.conf > /etc/NetworkManager/NetworkManager.conf
+#     systemctl enable NetworkManager
+# }
+#
+# function wst_power() {
+#     print "CONFIGURE POWER"
+#
+#     sed 's/^.*KillUserProcesses *=.*$/KillUserProcesses=yes/g' -i /etc/systemd/logind.conf
+#     sed 's/^.*HandlePowerKey *=.*$/HandlePowerKey=suspend/g' -i /etc/systemd/logind.conf
+#     sed 's/^.*HandleSuspendKey *=.*$/HandleSuspendKey=suspend/g' -i /etc/systemd/logind.conf
+#     sed 's/^.*HandleHibernateKey *=.*$/HandleHibernateKey=hibernate/g' -i /etc/systemd/logind.conf
+#     sed 's/^.*HandleLidSwitch *=.*$/HandleLidSwitch=ignore/g' -i /etc/systemd/logind.conf
+#     sed 's/^.*HandleLidSwitchExternalPower *=.*$/HandleLidSwitchExternalPower=ignore/g' -i /etc/systemd/logind.conf
+#     sed 's/^.*HandleLidSwitchDocked *=.*$/HandleLidSwitchDocked=ignore/g' -i /etc/systemd/logind.conf
+# }
+#
+# function wst_docker() {
+#     ! type docker &>/dev/null && return 0
+#     print "CONFIGURE DOCKER"
+#
+#     mkdir -p /etc/docker | echo &> /dev/null
+#     cat << EOF > /etc/docker/daemon.json
+# {
+#   "exec-opts": ["native.cgroupdriver=systemd"],
+#   "log-driver": "json-file",
+#   "log-opts": {
+#     "max-size": "100m"
+#   },
+#   "storage-driver": "overlay2"
+# }
+# EOF
+#     systemctl enable docker
+#
+#     if [ -z "$(cat /etc/group | grep "^docker" | grep $WST_USER_NAME)" ]; then
+#         usermod -a -G docker $WST_USER_NAME
+#     fi
+# }
+#
+# function wst_user() {
+#     print "CONFIGURE USER"
+#
+#     if [ -z "$(cat /etc/passwd | grep "$WST_USER_NAME:x:$WST_USER_ID")" ]; then
+#         groupadd $WST_USER_NAME -g $WST_USER_ID
+#         useradd -m -u $WST_USER_ID -g $WST_USER_ID \
+#             -d $WST_USER_PATH -s $WST_USER_SHELL -G users,audio,lp,optical,storage,video,wheel,games,power,scanner $WST_USER_NAME
+#
+#         usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $WST_USER_NAME
+#
+#         chfn -f "$WST_USER_FULL_NAME" $WST_USER_NAME
+#
+#         printf 'T3mp0r4l\nT3mp0r4l' | passwd $WST_USER_NAME
+#     fi
+#
+#     echo "$WST_USER_NAME ALL=(ALL) ALL" > /etc/sudoers.d/userconf
+#     /usr/bin/visudo -cf /etc/sudoers.d/userconf || rm -rf /etc/sudoers.d/userconf
+# }
+#
+# function wst_profile() {
+#     cat << EOF >> /etc/profile.d/editor.sh
+# #!/bin/sh
+# export EDITOR="nvim"
+# EOF
+# }
+#
+# function wst_boot() {
+#     mkinitcpio -P
+# }
+#
+# function wst_sddm() {
+#     ! type sddm &>/dev/null && return 0
+#
+#     cat << EOF > /etc/sddm.conf
+# [Theme]
+# Current=chili
+# EOF
+#     systemctl enable sddm
+# }
+#
+# function wst_sway() {
+#     ! type sway &>/dev/null && return 0
+#     print "CONFIGURE SWAY"
+#
+#     cat << EOF > /usr/share/wayland-sessions/sway.desktop
+# [Desktop Entry]
+# Name=Sway
+# Comment=An i3-compatible Wayland compositor
+# Exec=/usr/local/bin/start-session-sway
+# Type=Application
+# EOF
+#     cat << EOF > /usr/local/bin/start-session-sway
+# #!/bin/bash
+#
+# [ -e "\$HOME/.config/sway/swayenv.conf" ] && source \$HOME/.config/sway/swayenv.conf
+#
+# exec sway -c \$HOME/.config/sway/sway.conf > /tmp/sway.log 2>&1
+#
+# EOF
+#
+#     chmod 755 /usr/local/bin/start-session-sway
+# }
+#
+# function wst_flatpak() {
+#     ! type flatpak &>/dev/null && return 0
+#
+#     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+#     flatpak remote-add --if-not-exists fedora oci+https://registry.fedoraproject.org
+#     #flatpak remote-add --if-not-exists kdeapps https://distribute.kde.org/kdeapps.flatpakrepo
+#
+#     if [ -z "$(cat /etc/group | grep "^flatpak" | grep $WST_USER_NAME)" ]; then
+#         usermod -a -G flatpak $WST_USER_NAME
+#     fi
+# }
+
+function __archlinux_update() {
+  sudo reflector --verbose --latest 5 --sort rate --protocol https --save /etc/pacman.d/mirrorlist
+}
+
+function __archlinux_upgrade() {
+  sudo pacman -Syu
+  type yay &> /dev/null && yay -Syua
+  sudo pacman -Scc
+}
+
+function __archlinux_install() {
+  sudo pacman --needed -S "$@"
+}
+
+function __archlinux_uninstall() {
+  sudo pacman -Rns "$@"
+}
+
+function archlinux() {
+  local command="$1"; shift
+
+  if declare -f "__archlinux_$command" >/dev/null 2>&1; then
+    "__archlinux_$command" "$@"
+  fi
+}
+
+archlinux "$@"
