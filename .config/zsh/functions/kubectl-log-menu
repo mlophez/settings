@@ -1,0 +1,27 @@
+#!/usr/bin/zsh
+
+function kubectl-log-menu() {
+  local context="$1"
+  local instance pod namespace
+  local datafile=$(mktemp)
+
+  [ -z "$context" ] && echo "kubectl-shell-menu <context>" && return -1
+
+  kubectl --context $context get pods -A -o template --template='{{range .items}}{{.metadata.name}}{{";"}}{{.metadata.namespace}}{{"\n"}}{{end}}' > $datafile
+
+  instance=$(cat $datafile | column -s ';' -t | fzf)
+  [ -z "$instance" ] && return 0
+
+  pod=$(echo "$instance" | awk '{print $1 }')
+  namespace=$(echo "$instance" | awk '{print $2 }')
+  #regex="$(echo $pod | sed 's/-[a-z0-9]\+$//g')-"
+  regex="$(echo $pod | sed 's/-[a-z0-9]\+-[a-z0-9]\+$//g')-"
+
+  if type stern &>/dev/null; then
+    print -z stern --context ${context} -n ${namespace} ${regex}
+    #stern --context ${context} -n ${namespace} ${regex}
+  else
+    print -z kubectl --context $context -n $namespace logs -f pod/$pod
+    #kubectl --context $context -n $namespace logs -f pod/$pod
+  fi
+}

@@ -1,0 +1,8 @@
+#!/usr/bin/zsh
+
+function kustomize-menu {
+  local entry=$(find . -path "*/overlays/*" -type f -name kustomization.yaml | xargs -I@ dirname @ | fzf)
+  [ -z "$entry" ] && return 0
+
+  print -z kubectl --context $(basename $entry) apply --server-side --force-conflicts -k ${entry}
+}

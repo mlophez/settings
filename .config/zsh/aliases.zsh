@@ -51,11 +51,11 @@ alias git-id-logalty="git config user.name 'Miguel López Ruiz' && git config us
 
 # KUBERNETES
 alias k="kubectl --context"
-alias ka="kustomize_menu apply"
+alias ka="kustomize-menu apply"
 alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
-alias kt="kubectl-pod"
+alias kt="kubectl-run-pod"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
 alias k9="k9s -c pods --context"
 

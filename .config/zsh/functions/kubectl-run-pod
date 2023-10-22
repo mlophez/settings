@@ -1,0 +1,10 @@
+#!/usr/bin/zsh
+
+function kubectl-run-pod() {
+  local context="$1"
+  local image="${2:-ubuntu:latest}"
+
+  [ -z "$context" ] && echo "kubectl-pod <context> <image:default=ubuntu:latest>" && return -1
+
+  kubectl --context ${context} run pod-${USER}-$(echo $RANDOM | md5sum | head -c 10) -it --rm --image=${image} --restart=Never -- sh -c "clear; (bash || ash || sh)"
+}
