@@ -1,9 +1,5 @@
 #!/usr/bin/zsh
 
-# ZELLIJ
-alias zel="zellij -s $USER"
-
-# TMUX
 function tm() {
     local session_name=$1
     [ -z "$session_name" ] && session_name=$USER

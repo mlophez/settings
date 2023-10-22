@@ -1,12 +1,5 @@
 #!/bin/bash
 
-alias arch="archlinux"
-
-alias install="sudo pacman --needed -S"
-alias uninstall="sudo pacman -Rns"
-alias update="sudo reflector --verbose --latest 20 --sort rate --protocol https --save /etc/pacman.d/mirrorlist"
-alias upgrade="sudo pacman -Syu; type yay &> /dev/null && yay -Syua; sudo pacman -Scc"
-
 function archlinux() {
   local command="$1"; shift
 

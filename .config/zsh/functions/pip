@@ -1,11 +1,14 @@
 #!/user/bin/zsh
+# vim: ft=zsh
 
-function python_pip_setup() {
+function __pip_setup() {
   [ -d "${PYTHONVENV}" ] && return
   command python -m venv "${PYTHONVENV}"
 }
 
 function pip() {
-  python_pip_setup
+  __pip_setup
   $PYTHONVENV/bin/pip "$@"
 }
+
+pip "$@"

@@ -1,0 +1,17 @@
+#!/usr/bin/zsh
+
+function aws-tunnel() { # 1521:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com:1521 i-0fcd1f120811b7f42
+  local target=$1
+  local instance=$2
+  local profile=$3
+
+  local lport=$(echo $target | cut -d":" -f 1)
+  local host=$(echo $target | cut -d":" -f 2)
+  local port=$(echo $target | cut -d":" -f 3)
+
+  aws ssm start-session --cli-read-timeout 80000 --target ${instance} \
+  --document-name AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters "{\"host\":[\"${host}\"],\"portNumber\":[\"${port}\"],\"localPortNumber\":[\"${lport}\"]}" \
+  --profile demo
+}
+

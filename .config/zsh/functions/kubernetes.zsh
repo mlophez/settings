@@ -1,15 +1,5 @@
 #!/bin/bash
 
-alias k="kubectl --context"
-alias ka="kustomize_menu apply"
-alias ks="kubectl-shell-menu"
-alias kl="kubectl-log-menu"
-alias kp="kubectl-menu port-forward pods"
-alias kt="kubectl-pod"
-alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
-alias k9="k9s -c pods --context"
-
-# KUBERNETES
 function kubectl() {
   local cmd="kubectl"
   local extra_args

@@ -1,0 +1,10 @@
+#!/usr/bin/zsh
+
+function git-create-branch() {
+  echo -n "Branch name?: "
+  read name
+  if [ -n "$name" ]; then
+    git checkout -b $name
+    git push --set-upstream origin $name
+  fi
+}

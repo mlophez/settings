@@ -1,0 +1,13 @@
+#!/usr/bin/zsh
+
+function git-create-random-branch() {
+  local random=$[ $RANDOM % 5000000 + 1000000 ]
+  local username="miguellopez"
+
+  git checkout main
+  git pull
+
+  git checkout -b $username-$random
+  git push --set-upstream origin $username-$random
+}
+

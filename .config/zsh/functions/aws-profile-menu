@@ -1,0 +1,7 @@
+#!/usr/bin/zsh
+
+function aws-profile-menu() {
+  local profile="$(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | fzf)"
+  [ -z "$profile" ] && return 0
+  export AWS_PROFILE="$profile"
+}

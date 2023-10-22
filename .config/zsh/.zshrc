@@ -1,5 +1,7 @@
 #!/usr/bin/zsh
 
+# zmodload zsh/zprof
+
 #### SETTINGS
 HISTSIZE=10000
 SAVEHIST=10000
@@ -64,14 +66,18 @@ bindkey '^R' history-incremental-search-backward
   git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.local/share/zsh/spaceship"
 source ~/.local/share/zsh/spaceship/spaceship.zsh
 
+# ALIASES
+source $HOME/.config/zsh/aliases.zsh
+source $HOME/.config/zsh/config.zsh
+
 # FUNCTIONS
-for file in $(ls ${ZDOTDIR}/functions); do
-  source ${ZDOTDIR}/functions/${file}
-done
+export FPATH=${ZDOTDIR}/functions:${FPATH}
+autoload -Uz ${ZDOTDIR}/functions/*(.:t)
+
+dotinit
 
 # AUTOCOMPLETE
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 #### ENDING
-[ -f $HOME/.xinitrc ] && rm -rf $HOME/.xinitrc 2>/dev/null
 echo > /dev/null
