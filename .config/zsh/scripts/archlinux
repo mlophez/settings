@@ -154,7 +154,7 @@
 #         usermod -a -G flatpak $WST_USER_NAME
 #     fi
 # }
-
+VARIABLE="HOLA"
 function __archlinux_update() {
   sudo reflector --verbose --latest 5 --sort rate --protocol https --save /etc/pacman.d/mirrorlist
 }
@@ -182,3 +182,4 @@ function archlinux() {
 }
 
 archlinux "$@"
+#exec zsh

@@ -1,6 +1,9 @@
 #!/usr/bin/zsh
 
 # ZSH
+export ZDOTDIR=$HOME/.config/zsh
+export PATH=${PATH}:${ZDOTDIR}/scripts
+export FPATH=${FPATH}:${ZDOTDIR}/functions
 export KEYTIMEOUT=1
 
 # SHELL
@@ -54,13 +57,12 @@ export M2_HOME="$HOME/.local/share/maven"
 export GEM_HOME=$HOME/.local/share/ruby
 
 # PATH
-export PATH_DIRS=(
-  "/usr/local/bin"
-  "$HOME/.local/bin"
-  "$GOPATH/bin"
-  "$NPM_CONFIG_PREFIX/bin"
-)
-for pathdir in ${PATH_DIRS}; do ! echo :$PATH: | grep -o "$pathdir" &>/dev/null && export PATH=$PATH:$pathdir; done
+export PATH=${PATH}:/usr/local/bin
+export PATH=${PATH}:${HOME}/.local/bin
+export PATH=${PATH}:${GOPATH}/bin
+export PATH=${PATH}:${NPM_CONFIG_PREFIX}/bin
+typeset -U path
+typeset -U fpath
 
 # LANG
 export LANG=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)

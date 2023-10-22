@@ -15,6 +15,7 @@ autoload -U select-word-style && select-word-style bash
 zstyle 'completion:*' menu select
 #emulate sh
 
+
 # Auto completion options
 setopt autocd			# Imply cd when directory path is supplied
 setopt automenu			# Automatically use menu completion on 2nd tab
@@ -71,9 +72,7 @@ source $HOME/.config/zsh/aliases.zsh
 source $HOME/.config/zsh/config.zsh
 
 # FUNCTIONS
-export FPATH=${ZDOTDIR}/functions:${FPATH}
 autoload -Uz ${ZDOTDIR}/functions/*(.:t)
-
 dotinit
 
 # AUTOCOMPLETE

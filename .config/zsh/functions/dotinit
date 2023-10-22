@@ -1,6 +1,10 @@
 #!/usr/bin/zsh
 
-function __status-get-windows-files() {
+dot() {
+  command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
+}
+
+dot-get-windows-files() {
   local windows_user_home=$(echo $PATH | grep -io -P "/mnt/c/Users/.*?/" | head -1)
 
   [ -z "${windows_user_home}" ] && return 0
@@ -16,14 +20,12 @@ function __status-get-windows-files() {
     $HOME/.config/Windows/terminal-settings.json
 }
 
-function dot() {
-  command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
-}
-
-function status() {
+status() {
   dot restore --staged . &>/dev/null
 
-  __status-get-windows-files
+  # ADD WINDOWS FILE (WSL)
+  dot-get-windows-files
+  ###
 
   [ -e "$KUBECONFIG" ] && \
     sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
@@ -62,12 +64,12 @@ function status() {
   dot status
 }
 
-function save() {
+save() {
   dot commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
   dot push -u origin main
 }
 
-function load() {
+load() {
   dot pull
 }
 
