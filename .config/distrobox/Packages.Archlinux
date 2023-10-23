@@ -60,6 +60,7 @@ extra-cmake-modules
 python
 python-pip
 python-virtualenv
+python-pipenv
 
 # GO
 go

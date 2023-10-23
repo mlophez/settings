@@ -42,7 +42,7 @@ export HELM_CONFIG_HOME="$HOME/.config/helm"
 export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # PYTHON
-export PYTHONVENV="$HOME/.local/share/python"
+export PYTHONVENV="$HOME/.local/share/virtualenvs/local"
 
 # GO
 export GOPATH="$HOME/.local/share/go"

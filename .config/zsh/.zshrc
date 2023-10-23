@@ -82,7 +82,7 @@ dotinit
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
 # PYTHON
-[ ! -d "${PYTHONVENV}" ] && command python -m venv "${PYTHONVENV}"
+[ ! -d "${PYTHONVENV}" ] && echo "-> Creating local virtualenv for python" && command python -m venv "${PYTHONVENV}"
 [ -e ${PYTHONVENV}/bin/activate ] && source ${PYTHONVENV}/bin/activate
 
 #### ENDING

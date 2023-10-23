@@ -54,6 +54,9 @@ alias kt="kubectl-run-pod"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
 alias k9="k9s -c pods --context"
 
+# PYTHON
+alias d="deactivate"
+
 # ZELLIJ
 alias zel="zellij -s $USER"
 
