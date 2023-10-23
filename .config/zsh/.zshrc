@@ -81,5 +81,9 @@ dotinit
 # AUTOCOMPLETE
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
+# PYTHON
+[ ! -d "${PYTHONVENV}" ] && command python -m venv "${PYTHONVENV}"
+[ -e ${PYTHONVENV}/bin/activate ] && source ${PYTHONVENV}/bin/activate
+
 #### ENDING
 echo > /dev/null

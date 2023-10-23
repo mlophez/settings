@@ -43,7 +43,6 @@ export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # PYTHON
 export PYTHONVENV="$HOME/.local/share/python"
-#export VIRTUAL_ENV="${PYTHONVENV}"
 
 # GO
 export GOPATH="$HOME/.local/share/go"

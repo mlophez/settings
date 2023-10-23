@@ -51,7 +51,6 @@ status() {
           $HOME/.config/i3 \
           $HOME/.config/gnupg/gpg.conf \
           $HOME/.config/gnupg/gpg-agent.conf \
-          $HOME/.config/k9s \
           $HOME/.config/Windows \
           $HOME/.config/Code/User/settings.json \
           $HOME/.config/Code/User/keybindings.json \
@@ -61,6 +60,7 @@ status() {
           $HOME/.aws/config \
           $HOME/.bashrc \
           $HOME/.gitignore
+          #$HOME/.config/k9s \
 
   dot status
 }
