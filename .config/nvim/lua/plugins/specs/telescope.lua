@@ -8,9 +8,9 @@ return loader("telescope", {
 		"nvim-tree/nvim-web-devicons",
 
 		-- fzf integration --
-		{ "nvim-telescope/telescope-fzf-native.nvim", name = "telescope-fzf-native", build = "make" },
-		{ "junegunn/fzf.vim", name = "fzf" },
-		{ "tpope/vim-dispatch", name = "vim-dispatch", cmd = { "Make", "Dispatch" } },
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		{ "junegunn/fzf.vim" },
+		{ "tpope/vim-dispatch", cmd = { "Make", "Dispatch" } },
 	},
 
 	keys = {

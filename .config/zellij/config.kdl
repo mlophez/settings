@@ -33,7 +33,8 @@ keybinds clear-defaults=true {
     bind "Alt ," { SwitchToMode "RenameTab"; TabNameInput 0; }
     bind "Alt u" { CloseFocus; }
 
-    bind "Alt j" "Ctrl j" { MoveFocus "Left"; }
+    bind "Ctrl j" { MoveFocus "Left"; }
+    //bind "Alt j" "Ctrl j" { MoveFocus "Left"; }
     bind "Alt k" "Ctrl k" { MoveFocus "Down"; }
     bind "Alt l" "Ctrl l" { MoveFocus "Up"; }
     bind "Alt ñ" "Ctrl ñ" "F6" { MoveFocus "Right"; }

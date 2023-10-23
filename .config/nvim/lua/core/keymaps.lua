@@ -43,6 +43,8 @@ vim.keymap.set("n", "hñ", "A", opts)
 vim.keymap.set("n", "hj", "I", opts)
 
 -- Move
+vim.keymap.set("n", "<C-h>", "<C-w>w", opts)
+
 vim.keymap.set("n", "<C-j>", "<C-w><Left>", opts)
 vim.keymap.set("n", "<C-k>", "<C-w><Down>", opts)
 vim.keymap.set("n", "<C-l>", "<C-w><Up>", opts)

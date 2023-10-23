@@ -1,5 +1,6 @@
 # PROMPT
-SPACESHIP_PROMPT_ORDER=(user host dir git venv aws kubectl async line_sep char)
+#SPACESHIP_PROMPT_ORDER=(user host dir git venv aws kubectl async line_sep char)
+SPACESHIP_PROMPT_ORDER=(user host dir git venv aws async line_sep char)
 
 # TIME
 SPACESHIP_TIME_SHOW=true
@@ -16,8 +17,8 @@ SPACESHIP_DIR_TRUNC=0
 
 # AWS
 SPACESHIP_AWS_SHOW=true
-#SPACESHIP_AWS_PREFIX="using aws "
-SPACESHIP_AWS_SYMBOL="☁️  "
+SPACESHIP_AWS_PREFIX="aws"
+SPACESHIP_AWS_SYMBOL=" "
 
 # K8s
 SPACESHIP_KUBECTL_SHOW=true
@@ -25,5 +26,5 @@ SPACESHIP_KUBECTL_VERSION_SHOW=false
 SPACESHIP_KUBECTL_SYMBOL="☸️  "
 
 # PYTHON
-SPACESHIP_VENV_PREFIX="(venv: "
-SPACESHIP_VENV_SUFFIX=") "
+SPACESHIP_VENV_PREFIX="virtualenv"
+SPACESHIP_VENV_SYMBOL=" "

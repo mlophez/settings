@@ -39,6 +39,7 @@ M.plugins = {
 	"alexghergh/nvim-tmux-navigation",
 	"lukas-reineke/indent-blankline.nvim",
 	"akinsho/toggleterm.nvim",
+	"jackMort/ChatGPT.nvim",
 	-- "xiyaowong/transparent.nvim",
 
 	-- "echasnovski/mini.comment",,
@@ -62,7 +63,7 @@ function M.is(cname)
 end
 
 function M.load(name, spec)
-	spec.name = name
+	--spec.name = name
 	spec.enabled = false
 
 	for _, cname in pairs(M.plugins) do
