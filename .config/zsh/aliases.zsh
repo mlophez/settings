@@ -25,7 +25,7 @@ alias audio-micro="pactl set-card-profile 0 output:analog-stereo+input:analog-st
 # SSH
 alias s="ssh-menu"
 
-alias t="tunnel_menu"
+alias t="tunnel-menu"
 alias sshl="ssh -oKexAlgorithms=+diffie-hellman-group1-sha1"
 
 # ARCHLINUX
@@ -51,7 +51,7 @@ alias ks="kubectl-shell-menu"
 alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
 alias kt="kubectl-run-pod"
-alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --force --context"
+alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --disable-eviction --force --context"
 alias k9="k9s -c pods --context"
 
 # PYTHON

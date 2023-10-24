@@ -12,6 +12,6 @@ function aws-tunnel() { # 1521:oradb01.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com
   aws ssm start-session --cli-read-timeout 80000 --target ${instance} \
   --document-name AWS-StartPortForwardingSessionToRemoteHost \
   --parameters "{\"host\":[\"${host}\"],\"portNumber\":[\"${port}\"],\"localPortNumber\":[\"${lport}\"]}" \
-  --profile demo
+  --profile ${profile}
 }
 

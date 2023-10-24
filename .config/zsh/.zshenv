@@ -59,7 +59,6 @@ export GEM_HOME=$HOME/.local/share/ruby
 # PATH
 export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:${HOME}/.local/bin
-export PATH=${PATH}:${PYTHONVENV}/bin
 export PATH=${PATH}:${GOPATH}/bin
 export PATH=${PATH}:${NPM_CONFIG_PREFIX}/bin
 

@@ -21,6 +21,7 @@ return loader("chatgpt", {
 		api_key_cmd = "pass chatgpt/token",
 		openai_params = {
 			model = "gpt-4",
+			max_tokens = 4096,
 		},
 		openai_edit_params = {
 			model = "gpt-4",
