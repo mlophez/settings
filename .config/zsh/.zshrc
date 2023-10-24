@@ -81,6 +81,9 @@ dotinit
 # AUTOCOMPLETE
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
 
+# TMUX
+[ -n "${TMUX_POPUP}" ] && setopt ignore_eof
+
 # PYTHON
 [ ! -d "${PYTHONVENV}" ] && echo "-> Creating local virtualenv for python" && command python -m venv "${PYTHONVENV}"
 [ -e ${PYTHONVENV}/bin/activate ] && source ${PYTHONVENV}/bin/activate

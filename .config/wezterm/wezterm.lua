@@ -21,6 +21,13 @@ return {
 	window_background_opacity = 1.0,
 	text_background_opacity = 1.0,
 	win32_system_backdrop = "Mica",
+	disable_default_key_bindings = true,
+	keys = {
+		{ key = "C", mods = "CTRL", action = wezterm.action.CopyTo("Clipboard") },
+		{ key = "C", mods = "SHIFT|CTRL", action = wezterm.action.CopyTo("Clipboard") },
+		{ key = "V", mods = "CTRL", action = wezterm.action.PasteFrom("Clipboard") },
+		{ key = "V", mods = "SHIFT|CTRL", action = wezterm.action.PasteFrom("Clipboard") },
+	},
 }
 
 -- local config = {}
