@@ -43,7 +43,13 @@ function kubectl() {
   command $cmd "$@" $extra_args
 }
 
-
+function curl() {
+  if type curlie &>/dev/null; then
+    curlie "$@"
+  else
+    command curl "$@"
+  fi
+}
 
 # function clipboard() {
 #     if [ "$XDG_SESSION_TYPE" = "x11" ]; then

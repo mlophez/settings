@@ -40,6 +40,7 @@ M.plugins = {
 	"lukas-reineke/indent-blankline.nvim",
 	"akinsho/toggleterm.nvim",
 	"jackMort/ChatGPT.nvim",
+	"rest-nvim/rest.nvim",
 	-- "xiyaowong/transparent.nvim",
 
 	-- "echasnovski/mini.comment",,

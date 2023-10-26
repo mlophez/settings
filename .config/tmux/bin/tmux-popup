@@ -37,7 +37,7 @@ popup() {
   fi
 }
 
-[ -z "$1" ] && popup_with_session "$@"
+[ -z "$1" ] && popup "$@"
 [ "$1" = "session" ] && shift && start_session "$@"
 
 exit 0
