@@ -48,7 +48,7 @@ return loader("conform", {
 				timeout_ms = 1000,
 			}
 		end,
-		formatters = require("plugins.lsp.formatters"),
+		formatters = require("plugins.configs.formatters"),
 	},
 
 	config = function(_, opts)

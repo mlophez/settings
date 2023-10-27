@@ -15,7 +15,7 @@ return loader("nvim-lspconfig", {
 
 	config = function(_, opts)
 		vim.opt.completeopt = { "menu", "menuone", "noselect" }
-		require("plugins.lsp.servers")
+		require("plugins.configs.lspservers")
 
 		--local lspconfig = require("lspconfig")
 		--local util = require("lspconfig/util")

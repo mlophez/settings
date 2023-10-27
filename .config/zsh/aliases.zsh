@@ -11,6 +11,8 @@ alias cc="cd \$(find . -type d -print | fzf)"
 alias edit="nvim \$(find . -type f -print | fzf)"
 alias e="editor"
 
+alias nvchad="NVIM_APPNAME='nvchad' nvim"
+
 alias wifi-on="nmcli radio wifi on"
 alias wifi-off="nmcli radio wifi off"
 alias wifi-list="wifi-on && nmcli device wifi list"

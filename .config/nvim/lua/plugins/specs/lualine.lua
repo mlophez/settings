@@ -119,4 +119,8 @@ return loader("lualine", {
 		lualine_y = {},
 		lualine_z = {},
 	},
+
+	init = function()
+		vim.o.laststatus = 3
+	end,
 })
