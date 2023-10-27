@@ -12,10 +12,11 @@ end)
 
 return {
 	default_domain = "WSL:Archlinux",
-	color_scheme = "Dracula (Official)",
+	--color_scheme = "Dracula (Official)",
+	color_scheme = "Catppuccin Mocha",
 	font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Medium", italic = false }),
 	bold_brightens_ansi_colors = "BrightAndBold",
-	font_size = 10.0,
+	font_size = 11.0,
 	window_decorations = "TITLE",
 	hide_tab_bar_if_only_one_tab = true,
 	window_background_opacity = 1.0,
@@ -24,9 +25,10 @@ return {
 	disable_default_key_bindings = true,
 	keys = {
 		{ key = "C", mods = "CTRL", action = wezterm.action.CopyTo("Clipboard") },
-		{ key = "C", mods = "SHIFT|CTRL", action = wezterm.action.CopyTo("Clipboard") },
 		{ key = "V", mods = "CTRL", action = wezterm.action.PasteFrom("Clipboard") },
-		{ key = "V", mods = "SHIFT|CTRL", action = wezterm.action.PasteFrom("Clipboard") },
+		{ key = "+", mods = "CTRL", action = wezterm.action.IncreaseFontSize },
+		{ key = "-", mods = "CTRL", action = wezterm.action.DecreaseFontSize },
+		{ key = "0", mods = "CTRL", action = wezterm.action.ResetFontSize },
 	},
 }
 
