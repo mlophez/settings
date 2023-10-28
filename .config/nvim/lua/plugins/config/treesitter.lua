@@ -1,0 +1,38 @@
+return {
+	sync_install = true,
+	auto_install = true,
+	highlight = {
+		enable = true,
+		use_languagetree = true,
+		disable = { "css" },
+	},
+	autopairs = {
+		enable = true,
+	},
+	indent = {
+		enable = true,
+		disable = { "python", "css" },
+	},
+	ensure_installed = {
+		"bash",
+		"c",
+		"javascript",
+		"json",
+		"lua",
+		"python",
+		"typescript",
+		"tsx",
+		"css",
+		"rust",
+		"java",
+		"yaml",
+		"markdown",
+		"markdown_inline",
+		"hcl",
+		"http",
+		"json",
+		"sql",
+		"terraform",
+	},
+	ignore_install = { "phpdoc" },
+}
