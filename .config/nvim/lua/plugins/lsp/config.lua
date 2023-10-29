@@ -1,12 +1,21 @@
 return function()
 	local cmp = require("cmp")
+	local lspkind = require("plugins.lsp.icons")
+	local luasnip = require("luasnip")
+
+	-- Colors
+	vim.api.nvim_set_hl(0, "CmpSel", { bg = "#abe9b3", fg = "#242633" })
+
 	return {
+		view = {
+			entries = "custom", -- can be "custom", "wildmenu" or "native"
+		},
 		completion = {
 			completeopt = "menu,menuone,noinsert",
 		},
 		snippet = {
 			expand = function(args)
-				require("luasnip").lsp_expand(args.body)
+				luasnip.lsp_expand(args.body)
 			end,
 		},
 		sources = {
@@ -16,18 +25,27 @@ return function()
 			{ name = "luasnip", keyword_length = 2 },
 		},
 		window = {
-			documentation = cmp.config.window.bordered(),
+			completion = cmp.config.window.bordered({
+				side_padding = 1,
+				scrollbar = false,
+				winhighlight = "Normal:Normal,CursorLine:CmpSel,Search:Normal",
+			}),
+			documentation = cmp.config.window.bordered({
+				winhighlight = "Normal:Normal",
+			}),
 		},
 		formatting = {
-			fields = { "menu", "abbr", "kind" },
+			--fields = { "menu", "abbr", "kind" },
+			fields = { "abbr", "kind" },
 			format = function(entry, item)
-				local menu_icon = {
-					nvim_lsp = "λ",
-					luasnip = "⋗",
-					buffer = "Ω",
-					path = "🖫",
-				}
-				item.menu = menu_icon[entry.source.name]
+				item.kind = string.format("  %s %s ", lspkind[item.kind], item.kind)
+				item.menu = ({
+					buffer = "[BUF]",
+					nvim_lsp = "[LSP]",
+					luasnip = "[SNIP]",
+					nvim_lua = "[LUA]",
+					path = "[PATH]",
+				})[entry.source.name]
 				return item
 			end,
 		},
