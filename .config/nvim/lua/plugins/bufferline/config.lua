@@ -1,11 +1,4 @@
-local spec = {
-	"akinsho/bufferline.nvim",
-	name = "bufferline",
-	lazy = false,
-	dependencies = { "nvim-tree/nvim-web-devicons" },
-}
-
-spec.opts = {
+return {
 	options = {
 		numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
 		close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
@@ -165,5 +158,3 @@ spec.opts = {
 		},
 	},
 }
-
-return spec

@@ -1,26 +1,36 @@
 -- plugins list
 
-require("plugins.lazy")({
-	-------------------------------------- UI --------------------------------------
-	require("plugins.colors"),
-	require("plugins.bufferline"),
-	require("plugins.barbecue"),
-	require("plugins.lualine"),
-	--require("lualine"),
-	require("plugins.notify"),
-	require("plugins.noice"),
+local lazy = require("plugins.lazy.lazy")
+local plugin = require("plugins.lazy.loader")
 
-	-- PARSERS
-	require("plugins.treesitter"),
+lazy.setup({
+	---------------------------------------- UI --------------------------------------
+	plugin("colorschemes"),
+	plugin("bufferline"),
+	plugin("barbecue"),
+	plugin("lualine"),
+	plugin("notify"),
+	plugin("noice"),
 
-	-------------------------------------- Files --------------------------------------
-	require("plugins.nvimtree"),
-	require("plugins.telescope"),
+	---- PARSERS
+	plugin("treesitter"),
 
-	-------------------------------------- LSP, FORMAT AND LINT --------------------------------------
-	require("plugins.mason"),
-	require("plugins.lsp"),
-	require("plugins.conform"),
+	---------------------------------------- Files --------------------------------------
+	plugin("nvimtree"),
+	plugin("telescope"),
+
+	---------------------------------------- LSP, FORMAT AND LINT --------------------------------------
+	plugin("mason"),
+	plugin("lsp"),
+	plugin("conform"),
+	plugin("lint"),
+
+	-- utils --
+	plugin("tmux"),
+	plugin("editor"),
+	-- 	"akinsho/toggleterm.nvim",
+	-- 	"jackMort/ChatGPT.nvim",
+	-- 	"rest-nvim/rest.nvim",
 })
 
 -- M.plugins = {
