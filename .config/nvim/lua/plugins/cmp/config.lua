@@ -1,6 +1,6 @@
 return function()
 	local cmp = require("cmp")
-	local lspkind = require("plugins.lsp.icons")
+	local lspkind = require("plugins.cmp.icons")
 	local luasnip = require("luasnip")
 
 	-- Colors

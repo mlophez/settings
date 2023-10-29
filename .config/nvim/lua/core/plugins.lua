@@ -20,8 +20,8 @@ lazy.setup({
 	plugin("telescope"),
 
 	---------------------------------------- LSP, FORMAT AND LINT --------------------------------------
-	plugin("mason"),
 	plugin("lsp"),
+	plugin("mason"),
 	plugin("conform"),
 	plugin("lint"),
 
