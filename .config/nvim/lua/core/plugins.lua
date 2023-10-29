@@ -6,6 +6,7 @@ require("plugins.lazy")({
 	require("plugins.bufferline"),
 	require("plugins.barbecue"),
 	require("plugins.lualine"),
+	--require("lualine"),
 	require("plugins.notify"),
 	require("plugins.noice"),
 
@@ -17,6 +18,8 @@ require("plugins.lazy")({
 	require("plugins.telescope"),
 
 	-------------------------------------- LSP, FORMAT AND LINT --------------------------------------
+	require("plugins.mason"),
+	require("plugins.lsp"),
 	require("plugins.conform"),
 })
 

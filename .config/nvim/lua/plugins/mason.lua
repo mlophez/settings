@@ -1,5 +1,4 @@
-local loader = require("plugins.loader").load
-return loader("mason", {
+return {
 	"williamboman/mason.nvim",
 
 	lazy = false,
@@ -66,4 +65,4 @@ return loader("mason", {
 			end,
 		})
 	end,
-})
+}

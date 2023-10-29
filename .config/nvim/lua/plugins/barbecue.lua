@@ -1,4 +1,4 @@
-local spec = {
+return {
 	"utilyre/barbecue.nvim",
 	name = "barbecue",
 	lazy = false,
@@ -6,8 +6,5 @@ local spec = {
 		"SmiteshP/nvim-navic",
 		"nvim-tree/nvim-web-devicons",
 	},
+	opts = {},
 }
-
-spec.opts = {}
-
-return spec

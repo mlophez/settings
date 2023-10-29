@@ -1,19 +1,5 @@
-local widgets = require("plugins.config.widgets")
-
-local spec = {
-	"nvim-lualine/lualine.nvim",
-	name = "lualine",
-	lazy = false,
-	dependencies = {
-		"nvim-tree/nvim-web-devicons",
-	},
-}
-
-spec.init = function()
-	vim.o.laststatus = 3
-end
-
-spec.opts = {
+local widgets = require("plugins.lualine.widgets")
+return {
 	options = {
 		theme = "auto",
 		icons_enabled = true,
@@ -70,4 +56,4 @@ spec.opts = {
 	},
 }
 
-return spec
+

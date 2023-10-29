@@ -1,5 +1,5 @@
 -- init.lua
---package.path = './lib/?.lua;./lib/?/init.lua;' .. package.path
+require("setup")
 
 require("core.options")
 require("core.mappings")
