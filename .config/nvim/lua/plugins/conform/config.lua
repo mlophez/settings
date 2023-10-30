@@ -38,6 +38,7 @@ return {
 		python = { "isort", "black" },
 		terraform = { "terraform_fmt" },
 		jsonnet = { "jsonnetfmt" },
+		--sql = { "sql_formatter" },
 		-- Use the "*" filetype to run formatters on all filetypes.
 		-- ["*"] = { "codespell" },
 		-- ["*"] = { "trim_whitespace" },

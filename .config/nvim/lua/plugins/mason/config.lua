@@ -16,6 +16,7 @@ return {
 		"prettier",
 		"yamlfmt",
 		"xmlformatter",
+		--"sql-formatter",
 
 		-- linters
 		"pylint",
