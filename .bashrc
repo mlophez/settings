@@ -116,5 +116,3 @@ if ! shopt -oq posix; then
   fi
 fi
 
-export ZDOTDIR=$HOME/.config/zsh
-type zsh &> /dev/null && [ -z "$zsh_is_loaded" ] && [ -n "${WSLENV}" ] && zsh_is_loaded=1 exec zsh

@@ -9,12 +9,7 @@ function tm() {
     if [ -n "$(tmux ls 2>/dev/null | grep $session_name:)" ]; then
         tmux attach-session -t $session_name
     else
-        if [ "$session_name" = "$USER" ]; then
-            #tmux start-server
-            tmux -2 new-session -d -s $session_name -n HOME
-        else
-            tmux -2 new-session -d -s $session_name -n HOME
-        fi
+        tmux -2 new-session -d -s $session_name -n HOME
         tmux attach-session -t $session_name
     fi
 }

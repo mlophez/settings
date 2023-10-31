@@ -11,7 +11,6 @@ wezterm.on("format-window-title", function()
 end)
 
 return {
-	default_domain = "WSL:Archlinux",
 	--color_scheme = "Dracula (Official)",
 	color_scheme = "Catppuccin Mocha",
 	font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Medium", italic = false }),
@@ -23,6 +22,12 @@ return {
 	text_background_opacity = 1.0,
 	win32_system_backdrop = "Mica",
 	disable_default_key_bindings = true,
+	--default_domain = "WSL:Archlinux",
+	default_prog = { "wsl", "--cd", "/home/mlr", "-e", "tmux", "-2", "new-session", "-s", "0", "-n", "HOME" },
+	--default_prog = { "wsl", "--cd", "/home/mlr", "-e", "bash" },
+	set_environment_variables = {
+		ZDOTDIR = "$HOME/.config/zsh",
+	},
 	keys = {
 		{ key = "C", mods = "CTRL", action = wezterm.action.CopyTo("Clipboard") },
 		{ key = "V", mods = "CTRL", action = wezterm.action.PasteFrom("Clipboard") },

@@ -85,8 +85,13 @@ dotinit
 [ -n "${TMUX_POPUP}" ] && setopt ignore_eof
 
 # PYTHON
-[ ! -d "${PYTHONVENV}" ] && echo "-> Creating local virtualenv for python" && command python -m venv "${PYTHONVENV}"
-[ -e ${PYTHONVENV}/bin/activate ] && source ${PYTHONVENV}/bin/activate
+[ -n "${PYTHONVENV}" ] && [ ! -d "${PYTHONVENV}" ] && \
+  echo "-> Creating local virtualenv for python" && command python -m venv "${PYTHONVENV}"
+
+[ -e ${PYTHONVENV}/bin/activate ] && \
+  source ${PYTHONVENV}/bin/activate
+
+[ "$PIPENV_ACTIVE" -eq 1 ] && deactivate
 
 #### ENDING
 echo > /dev/null

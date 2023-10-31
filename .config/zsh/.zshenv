@@ -31,7 +31,7 @@ export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
 export AWS_PROFILE="none"
 
 # TERRAFORM
-export TF_PLUGIN_CACHE_DIR="$HOME/.local/share/terraform/plugins"
+# export TF_PLUGIN_CACHE_DIR="$HOME/.local/share/terraform/plugins"
 
 # KUBERNETES
 export KUBECONFIG="$HOME/.config/kube/config"
@@ -43,6 +43,7 @@ export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # PYTHON
 export PYTHONVENV="$HOME/.local/share/virtualenvs/local"
+export PIPENV_IGNORE_VIRTUALENVS=1
 
 # GO
 export GOPATH="$HOME/.local/share/go"
