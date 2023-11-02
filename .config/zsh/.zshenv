@@ -47,12 +47,23 @@ export PIPENV_IGNORE_VIRTUALENVS=1
 
 # GO
 export GOPATH="$HOME/.local/share/go"
+export PATH=${PATH}:${GOPATH}/bin
 
 # NODEJS
 export NPM_CONFIG_PREFIX="$HOME/.local/share/nodejs"
+export PATH=${PATH}:${NPM_CONFIG_PREFIX}/bin
 
 # JAVA
 export M2_HOME="$HOME/.local/share/maven"
+
+# ANDROID
+export ANDROID_HOME=/opt/android
+export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
+
+# FLUTTER
+export FLUTTER_HOME=/opt/flutter/default
+export PATH=${PATH}:${FLUTTER_HOME}/bin
 
 # RUBY
 export GEM_HOME=$HOME/.local/share/ruby
@@ -60,16 +71,10 @@ export GEM_HOME=$HOME/.local/share/ruby
 # PATH
 export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:${HOME}/.local/bin
-export PATH=${PATH}:${GOPATH}/bin
-export PATH=${PATH}:${NPM_CONFIG_PREFIX}/bin
 
 # LANG
 export LANG=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)
 export LC_ALL=$LANG
-
-# ANDROID
-# export ANDROID_HOME=$HOME/.local/share/android/sdk
-# export ANDROID_SDK_ROOT=$HOME/.local/share/android/sdk
 
 # ODBC
 # export ODBCINI=$HOME/.config/odbc.ini
