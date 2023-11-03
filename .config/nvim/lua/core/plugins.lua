@@ -28,6 +28,7 @@ lazy.setup({
 	-- utils --
 	plugin("tmux"),
 	plugin("editor"),
+	--plugin("flutter"),
 	-- 	"akinsho/toggleterm.nvim",
 	-- 	"jackMort/ChatGPT.nvim",
 	-- 	"rest-nvim/rest.nvim",

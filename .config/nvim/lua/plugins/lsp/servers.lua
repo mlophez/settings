@@ -1,5 +1,7 @@
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig/util")
+local root_pattern = lsputil.root_pattern
 
 local defaults = lspconfig.util.default_config
 local capabilities = defaults.capabilities
@@ -80,3 +82,32 @@ lspconfig.gopls.setup({
 -- 		},
 -- 	},
 -- })
+
+-- dart/flutter --
+require("lspconfig").dartls.setup({
+	capabilities = capabilities,
+	cmd = { "dart", "language-server", "--protocol=lsp" },
+	filetypes = { "dart" },
+	init_options = {
+		closingLabels = true,
+		flutterOutline = true,
+		onlyAnalyzeProjectsWithOpenFiles = true,
+		outline = true,
+		suggestFromUnimportedLibraries = true,
+	},
+	root_dir = root_pattern("pubspec.yaml", ".git"),
+	settings = {
+		dart = {
+			completeFunctionCalls = true,
+			showTodos = false,
+			enableSnippets = true,
+			analysisExcludedFolders = {
+				"android",
+				"ios",
+				"build",
+				".idea",
+				".dart_tool",
+			},
+		},
+	},
+})

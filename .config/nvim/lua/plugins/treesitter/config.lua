@@ -35,6 +35,7 @@ return {
 		"json",
 		"sql",
 		"terraform",
+		"dart",
 	},
 	ignore_install = { "phpdoc" },
 }

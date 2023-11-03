@@ -2,9 +2,9 @@
 
 # ZSH
 export ZDOTDIR=$HOME/.config/zsh
+export KEYTIMEOUT=1
 export PATH=${PATH}:${ZDOTDIR}/scripts
 export FPATH=${FPATH}:${ZDOTDIR}/functions
-export KEYTIMEOUT=1
 
 # SHELL
 export SHELL=/usr/bin/zsh
@@ -50,19 +50,18 @@ export GOPATH="$HOME/.local/share/go"
 export PATH=${PATH}:${GOPATH}/bin
 
 # NODEJS
-export NPM_CONFIG_PREFIX="$HOME/.local/share/nodejs"
-export PATH=${PATH}:${NPM_CONFIG_PREFIX}/bin
+export NPM_CONFIG_PREFIX="$HOME/.local"
 
 # JAVA
 export M2_HOME="$HOME/.local/share/maven"
 
 # ANDROID
-export ANDROID_HOME=/opt/android
+export ANDROID_HOME=${HOME}/.local/share/android
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
 
 # FLUTTER
-export FLUTTER_HOME=/opt/flutter/default
+export FLUTTER_HOME=${HOME}/.local/share/flutter/default
 export PATH=${PATH}:${FLUTTER_HOME}/bin
 
 # RUBY
