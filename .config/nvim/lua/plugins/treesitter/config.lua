@@ -1,18 +1,4 @@
 return {
-	sync_install = true,
-	auto_install = true,
-	highlight = {
-		enable = true,
-		use_languagetree = true,
-		disable = { "css" },
-	},
-	autopairs = {
-		enable = true,
-	},
-	indent = {
-		enable = true,
-		disable = { "python", "css" },
-	},
 	ensure_installed = {
 		"bash",
 		"python",
@@ -33,9 +19,17 @@ return {
 		"hcl",
 		"http",
 		"json",
+		"xml",
 		"sql",
 		"terraform",
 		"dart",
 	},
 	ignore_install = { "phpdoc" },
+	sync_install = true,
+	auto_install = true,
+	highlight = {
+		enable = true,
+		use_languagetree = true,
+		disable = { "css" },
+	},
 }

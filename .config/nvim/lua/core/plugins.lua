@@ -4,7 +4,7 @@ local lazy = require("plugins.lazy.lazy")
 local plugin = require("plugins.lazy.loader")
 
 lazy.setup({
-	---------------------------------------- UI --------------------------------------
+	-- UI --
 	plugin("colorschemes"),
 	plugin("bufferline"),
 	plugin("barbecue"),
@@ -12,16 +12,16 @@ lazy.setup({
 	plugin("notify"),
 	plugin("noice"),
 
-	---- PARSERS
+	-- Parser --
 	plugin("treesitter"),
 
-	---------------------------------------- Files --------------------------------------
+	-- Files
 	plugin("nvimtree"),
 	plugin("telescope"),
 
-	---------------------------------------- LSP, FORMAT AND LINT --------------------------------------
-	plugin("lsp"),
+	-- LSP, FORMAT AND LINT
 	plugin("mason"),
+	plugin("lsp"),
 	plugin("conform"),
 	plugin("lint"),
 

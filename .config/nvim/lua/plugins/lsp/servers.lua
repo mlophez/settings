@@ -1,4 +1,6 @@
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+-- https://linovox.com/configuring-language-server-protocol-lsp-in-neovim/
+
 local lspconfig = require("lspconfig")
 local lsputil = require("lspconfig/util")
 local root_pattern = lsputil.root_pattern
@@ -6,8 +8,24 @@ local root_pattern = lsputil.root_pattern
 local defaults = lspconfig.util.default_config
 local capabilities = defaults.capabilities
 
--- local status, cmp = pcall(require, "cmp_nvim_lsp")
--- defaults.capabilities = vim.tbl_deep_extend("force", defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+local status, cmp = pcall(require, "cmp_nvim_lsp")
+if status then
+	capabilities = cmp.default_capabilities()
+	-- defaults.capabilities = vim.tbl_deep_extend("force", defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
+end
+
+vim.diagnostic.config({
+	update_in_insert = false,
+	underline = true,
+	virtual_text = true,
+})
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+	underline = true,
+	update_in_insert = false,
+	virtual_text = { spacing = 4, prefix = "\u{ea71}" },
+	severity_sort = true,
+})
 
 -- lua --
 lspconfig.lua_ls.setup({
@@ -18,13 +36,15 @@ lspconfig.lua_ls.setup({
 				globals = { "vim" },
 			},
 			workspace = {
-				library = {
-					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-					[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
-				},
-				maxPreload = 100000,
-				preloadFileSize = 10000,
+				library = vim.api.nvim_get_runtime_file("", true),
+				checkThirdParty = false,
+				--library = {
+				--	[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+				--	[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				--	[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
+				--},
+				--maxPreload = 100000,
+				--preloadFileSize = 10000,
 			},
 		},
 	},
@@ -99,15 +119,13 @@ require("lspconfig").dartls.setup({
 	settings = {
 		dart = {
 			completeFunctionCalls = true,
-			showTodos = false,
+			showTodos = true,
 			enableSnippets = true,
-			analysisExcludedFolders = {
-				"android",
-				"ios",
-				"build",
-				".idea",
-				".dart_tool",
-			},
 		},
 	},
 })
+
+-- kotlin --
+--require("lspconfig").kotlin_language_server.setup({
+--	capabilities = capabilities,
+--})
