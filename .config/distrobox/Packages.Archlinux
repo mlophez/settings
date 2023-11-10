@@ -61,6 +61,7 @@ python
 python-pip
 python-virtualenv
 python-pipenv
+python-poetry
 pyenv
 
 # GO

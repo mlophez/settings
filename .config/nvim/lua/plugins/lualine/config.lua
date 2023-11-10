@@ -1,4 +1,4 @@
-local widgets = require("plugins.lualine.widgets")
+--local widgets = require("plugins.lualine.widgets")
 return {
 	options = {
 		theme = "auto",
@@ -39,8 +39,8 @@ return {
 		},
 		lualine_c = {},
 		lualine_x = {
-			{ widgets.lspserver, icon = "lsp:", color = { bg = "#630a4d", fg = "#ffffff", gui = "bold" } },
-			{ widgets.formatter, icon = "formatter:", color = { bg = "#351454", fg = "#ffffff", gui = "bold" } },
+			--{ widgets.lspserver, icon = "lsp:", color = { bg = "#630a4d", fg = "#ffffff", gui = "bold" } },
+			--{ widgets.formatter, icon = "formatter:", color = { bg = "#351454", fg = "#ffffff", gui = "bold" } },
 			{ "filetype" },
 		},
 		lualine_y = { "progress" },
@@ -55,5 +55,3 @@ return {
 		lualine_z = {},
 	},
 }
-
-
