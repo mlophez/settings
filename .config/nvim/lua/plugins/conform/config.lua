@@ -30,7 +30,7 @@ return {
 		css = { "prettier" },
 		html = { "prettier" },
 		json = { { "prettier", "jq" } },
-		xml = { "xmlformat" },
+		--xml = { "xmlformat" },
 		yaml = { { "prettier", "yamlfmt" } },
 		markdown = { "prettier" },
 		graphql = { "prettier" },

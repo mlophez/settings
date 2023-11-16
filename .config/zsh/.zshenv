@@ -75,6 +75,9 @@ export PATH=${PATH}:${HOME}/.local/bin
 export LANG=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)
 export LC_ALL=$LANG
 
+# WSL2
+export ADB_SERVER_SOCKET=tcp:$(ip route | grep default | grep -o '[0-9.]\+' | head -1):5037
+
 # ODBC
 # export ODBCINI=$HOME/.config/odbc.ini
 # export ODBCINSTINI=..$HOME/.config/odbcinst.ini

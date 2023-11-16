@@ -166,12 +166,13 @@ lazy.setup({
 		-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 		"neovim/nvim-lspconfig",
 		version = false,
-		--event = { "BufReadPost", "BufNewFile" },
-		event = { "VeryLazy" },
+		event = { "BufReadPost", "BufNewFile" },
+		--event = { "VeryLazy" },
 		cmd = { "LspInfo", "LspInstall", "LspUninstall" },
 		dependencies = {
-			require("plugins.cmp"),
+			"weilbith/nvim-code-action-menu",
 			--"b0o/SchemaStore.nvim",
+			require("plugins.cmp"),
 		},
 		init = function()
 			vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -179,6 +180,11 @@ lazy.setup({
 		config = function()
 			require("plugins.lsp.setup")
 		end,
+	},
+
+	{
+		"weilbith/nvim-code-action-menu",
+		cmd = "CodeActionMenu",
 	},
 
 	{
@@ -220,6 +226,16 @@ lazy.setup({
 		event = "VeryLazy",
 		opts = { "*" },
 	},
+
+	--{
+	--	"akinsho/flutter-tools.nvim",
+	--	lazy = false,
+	--	dependencies = {
+	--		"nvim-lua/plenary.nvim",
+	--		"stevearc/dressing.nvim", -- optional for vim.ui.select
+	--	},
+	--	config = true,
+	--},
 
 	--plugin("flutter"),
 	-- 	"akinsho/toggleterm.nvim",

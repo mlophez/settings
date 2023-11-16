@@ -51,6 +51,10 @@ function curl() {
   fi
 }
 
+function ssh() {
+  TERM=xterm-256color command ssh "$@"
+}
+
 # function clipboard() {
 #     if [ "$XDG_SESSION_TYPE" = "x11" ]; then
 #         xclip -i -r -sel clip "$@"
