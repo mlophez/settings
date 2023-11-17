@@ -227,6 +227,16 @@ lazy.setup({
 		opts = { "*" },
 	},
 
+	{
+		"akinsho/toggleterm.nvim",
+		version = "*",
+		cmd = "ToggleTerm",
+		keys = {
+			{ "<leader>t", ":ToggleTerm<cr>" },
+		},
+		opts = require("plugins.toggleterm"),
+	},
+
 	--{
 	--	"akinsho/flutter-tools.nvim",
 	--	lazy = false,
