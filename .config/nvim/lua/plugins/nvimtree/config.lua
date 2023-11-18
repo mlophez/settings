@@ -94,7 +94,7 @@ return {
 		},
 	},
 	view = {
-		width = 50,
+		width = 30,
 		side = "left",
 		--mappings = {
 		--  list = {
@@ -108,7 +108,7 @@ return {
 	},
 	actions = {
 		open_file = {
-			quit_on_open = true,
+			quit_on_open = false,
 		},
 	},
 	filters = {
