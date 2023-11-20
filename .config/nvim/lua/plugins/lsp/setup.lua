@@ -153,6 +153,7 @@ require("lspconfig").dartls.setup({
 			completeFunctionCalls = true,
 			showTodos = true,
 			enableSnippets = true,
+			lineLength = 120,
 		},
 	},
 })

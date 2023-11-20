@@ -24,7 +24,13 @@ return {
 	disable_default_key_bindings = true,
 	-- default_domain = "WSL:Archlinux",
 	-- default_prog = { "wsl", "--cd", "/home/mlr", "-e", "/bin/bash" },
-	default_prog = { "wsl", "--cd", "/home/mlr", "-e", "/bin/bash", "-c",
+	default_prog = {
+		"wsl",
+		"--cd",
+		"/home/mlr",
+		"-e",
+		"/bin/bash",
+		"-c",
 		"tmux attach-session -t '0' || tmux -2 new-session -s '0' -n 'HOME'",
 	},
 	set_environment_variables = {
@@ -36,6 +42,7 @@ return {
 		{ key = "+", mods = "CTRL", action = wezterm.action.IncreaseFontSize },
 		{ key = "-", mods = "CTRL", action = wezterm.action.DecreaseFontSize },
 		{ key = "0", mods = "CTRL", action = wezterm.action.ResetFontSize },
+		{ key = "t", mods = "ALT", action = wezterm.action.SpawnTab({ DomainName = "WSL:Archlinux" }) },
 	},
 }
 

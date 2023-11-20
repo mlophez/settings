@@ -61,4 +61,5 @@
         "editor.tabCompletion": "onlySnippets",
         "editor.wordBasedSuggestions": false
     },
+    "dart.lineLength": 120,
 }

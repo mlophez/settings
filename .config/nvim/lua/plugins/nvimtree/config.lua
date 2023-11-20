@@ -94,8 +94,9 @@ return {
 		},
 	},
 	view = {
-		width = 30,
+		adaptive_size = true,
 		side = "left",
+		--width = 30,
 		--mappings = {
 		--  list = {
 		--    { key = { "ñ", "<CR>", "o" }, action = "edit" },
@@ -108,7 +109,7 @@ return {
 	},
 	actions = {
 		open_file = {
-			quit_on_open = false,
+			quit_on_open = true,
 		},
 	},
 	filters = {
