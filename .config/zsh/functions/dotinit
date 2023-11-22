@@ -33,6 +33,7 @@ status() {
   dot add $HOME/.config/zsh \
           $HOME/.config/nvim \
           $HOME/.config/tmux \
+          $HOME/.config/nix \
           $HOME/.config/zellij \
           $HOME/.config/alacritty \
           $HOME/.config/wezterm \
