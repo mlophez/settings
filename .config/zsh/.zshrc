@@ -93,5 +93,9 @@ dotinit
 
 [ "$PIPENV_ACTIVE" -eq 1 ] && deactivate
 
+# NIX
+[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && \
+    source $HOME/.nix-profile/etc/profile.d/nix.sh
+
 #### ENDING
 echo > /dev/null

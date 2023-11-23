@@ -76,7 +76,7 @@ export LANG=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -
 export LC_ALL=$LANG
 
 # WSL2
-export ADB_SERVER_SOCKET=tcp:$(ip route | grep default | grep -o '[0-9.]\+' | head -1):5037
+# export ADB_SERVER_SOCKET=tcp:$(ip route | grep default | grep -o '[0-9.]\+' | head -1):5037
 
 # ODBC
 # export ODBCINI=$HOME/.config/odbc.ini
