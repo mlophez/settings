@@ -73,6 +73,11 @@ contexts:
     cluster: demo
     user: demo-admin
 
+- name: demosign
+  context:
+    cluster: demo
+    user: demo-admin
+
 - name: tools
   context:
     cluster: tools
