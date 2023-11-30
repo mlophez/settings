@@ -1,16 +1,17 @@
 k9s:
-  refreshRate: 2
+  liveViewAutoRefresh: false
+  refreshRate: 5
   maxConnRetry: 5
   enableMouse: false
   headless: false
-  logoless: false
-  crumbsless: false
+  logoless: true
+  crumbsless: true
   readOnly: false
   noExitOnCtrlC: false
   noIcons: false
   skipLatestRevCheck: false
   logger:
-    tail: 100
+    tail: 1000
     buffer: 5000
     sinceSeconds: 300
     fullScreenLogs: false
@@ -22,10 +23,14 @@ k9s:
     demo:
       namespace:
         active: all
-        lockFavorites: false
+        lockFavorites: true
         favorites:
         - all
+        - kube-system
+        - kube-public
+        - kube-node-lease
         - default
+        - ingress
       view:
         active: pods
       featureGates:
@@ -43,11 +48,11 @@ k9s:
     tools:
       namespace:
         active: all
-        lockFavorites: false
+        lockFavorites: true
         favorites:
-        - ingress
         - all
         - default
+        - ingress
       view:
         active: pods
       featureGates:
@@ -65,8 +70,8 @@ k9s:
   thresholds:
     cpu:
       critical: 90
-      warn: 70
+      warn: 80
     memory:
       critical: 90
-      warn: 70
+      warn: 80
   screenDumpDir: /tmp/k9s-screens-mlr

@@ -2,8 +2,8 @@
 hotKey:
   shift-0:
     shortCut: Shift-0
-    description: Viewing pods
-    command: namespace
+    description: Viewing namespaces
+    command: namespaces
 
   shift-1:
     shortCut: Shift-1
