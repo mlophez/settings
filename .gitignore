@@ -4,3 +4,9 @@
 *.zsh.zwc
 *.bak
 .zcompdump
+
+# QTILE
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
