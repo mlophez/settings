@@ -17,11 +17,11 @@ set $right ntilde
 
 set $shell zsh -i -c
 #set $term alacritty --config-file $HOME/.config/alacritty/nord.yml
-set $term alacritty
+set $term foot
 set $wallpaper ~/.config/qtile/wal.jpg
 set $lockbg ~/.config/qtile/wal.jpg
 # set $term alacritty
-# set $wallpaper ~/.local/share/wallpapers/next.png 
+# set $wallpaper ~/.local/share/wallpapers/next.png
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -54,7 +54,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 ### SETTINGS
-xwayland enabled
+xwayland disabled
 font pango:Fira Code, Bold 14
 gaps inner 10
 gaps outer 0
@@ -134,7 +134,7 @@ bindswitch --reload --locked lid:off exec $shell 'monitor'
 #input "1:1:AT_Translated_Set_2_keyboard" {
 input "type:keyboard" {
     xkb_layout es
-    xkb_variant mac
+    #xkb_variant mac
     xkb_options caps:none
     #xkb_options grp:alt_shift_toggle
 }
@@ -148,7 +148,9 @@ input "type:keyboard" {
 # Basics:
 #
     # Start a terminal
-    bindsym $mod+Return exec $term
+    bindsym $mod+Return exec swaycmd terminal
+    # bindsym $mod+Return exec ~/.config/sway/scripts/terminal.sh
+    bindsym $mod+Shift+Return exec foot
 
     # Kill focused window
     bindsym $mod+q kill
@@ -332,7 +334,8 @@ bar {
 exec_always swaycmd monitor
 
 ### AUTOSTART
-exec swaycmd autostart
+# exec swaycmd autostart
+exec ~/.config/sway/scripts/autostart.sh
 
 ### RULES
 # for_window [app_id="menu"] floating enable; resize set 600 1015; move position 0 0

@@ -2,7 +2,7 @@
 
 SWAYPATH="$HOME/.config/sway"
 
-[[ -e $HOME/.config/zsh/.zshenv ]] && source $HOME/.config/zsh/.zshenv
+#[[ -e $HOME/.config/zsh/.zshenv ]] && source $HOME/.config/zsh/.zshenv
 
 function cmd_waybar() {
     export XDG_CURRENT_DESKTOP=Unity
@@ -29,7 +29,7 @@ function cmd_monitor() {
     [ -z "$selected" ] && selected="$default"
 
     echo $selected
-    for screen in $(echo "$screens"); do 
+    for screen in $(echo "$screens"); do
         if [ "$screen" = "$selected" ]; then
             swaymsg output $screen enable
             swaymsg output $screen resolution "1920x1080" position "0,0" scale 1
@@ -102,7 +102,7 @@ function cmd_pass {
     done
 
     set -- "${args[@]}"
-    
+
     if [[ "$1" = "list" ]]; then
         find $PASSWORD_STORE_DIR -type f,l -name \*.gpg | sed "s#$PASSWORD_STORE_DIR/*##g" | sed 's/\.gpg$//g'
     elif [[ "${commands[@]}" =~ "$1" ]]; then
@@ -151,32 +151,32 @@ function cmd_menu-pass() {
 function cmd_autostart() {
     ################### CONFIGURE ###################
     mkdir -p /tmp/$USER 2> /dev/null
-     
+
     # CACHE
     mkdir -p /tmp/$USER/cache 2> /dev/null
     rm -rf "$HOME/.cache" 2> /dev/null
     ln -sf /tmp/$USER/cache $HOME/.cache
-     
+
     # FLATPAK CACHE
     for folder in $(find $HOME/.var/app/ -type d -name cache 2> /dev/null); do
         rm -rf "$folder/*"
     done
-     
+
     # BROWSERS
     rm -rf "$HOME/.mozilla" 2> /dev/null
     #rm -rf "$HOME/.config/chromium" 2> /dev/null
     #rm -rf "$HOME/.config/google-chrome" 2> /dev/null
     #rm -rf "$HOME/.config/opera" 2> /dev/null
-     
+
     # NETWORK MANAGER
     # type nmcli &>/dev/null && nmcli radio wifi off
-     
+
     # BALOOCTL
     type balooctl &>/dev/null && balooctl disable &>/dev/null
-     
+
     # VBOX
     # type VBoxClient &>/dev/null && VBoxClient --clipboard
-     
+
     ################### AUTOSTART ###################
     nohup /usr/lib/xdg-desktop-portal -r &>/dev/null &
     nohup /usr/lib/xdg-desktop-portal-wlr -r &>/dev/null &
@@ -186,8 +186,24 @@ function cmd_autostart() {
     ################### SYSTEMD ###################
     systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     dbus-update-activation-environment --systemd --all
-    
+
     exit 0
+}
+
+cmd_terminal() {
+  if [ -z "${1}" ]; then
+    type alacritty &>/dev/null && exec alacritty -e swaycmd terminal shell
+    type wezterm &>/dev/null && exec wezterm start --always-new-process -- swaycmd terminal shell
+    type foot &>/dev/null && exec foot
+  else
+    # TMUX
+    if type tmux &>/dev/null; then
+      tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'
+    fi
+
+    # ZSH
+    type zsh &>/dev/null && ZDOTDIR=$HOME/.config/zsh exec zsh
+  fi
 }
 
 function main() {

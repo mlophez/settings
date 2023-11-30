@@ -4,6 +4,7 @@
 *.zsh.zwc
 *.bak
 .zcompdump
+.nvimlog
 
 # QTILE
 __pycache__/
