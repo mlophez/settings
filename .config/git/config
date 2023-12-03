@@ -2,6 +2,7 @@
 	defaultBranch = main
 [core]
 	editor = nvim
+	pager = delta
 [credential]
 	helper = store
 [push]

@@ -92,6 +92,7 @@ maven
 ##################### DEV/OPS #####################
 # GIT
 git
+git-delta
 
 # ANSIBLE
 ansible
