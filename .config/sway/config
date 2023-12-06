@@ -332,6 +332,7 @@ bar {
 
 # OUTPUTS
 exec_always swaycmd monitor
+exec_always nm-applet
 
 ### AUTOSTART
 # exec swaycmd autostart
