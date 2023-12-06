@@ -54,6 +54,7 @@ function cmd_locking() {
 }
 
 function cmd_menu() {
+    type rofi &>/dev/null && exec rofi -show drun
     [ -n "$(pidof wofi)" ] && return 0
     exec wofi -i --show drun \
         --no-actions \
@@ -178,9 +179,9 @@ function cmd_autostart() {
     # type VBoxClient &>/dev/null && VBoxClient --clipboard
 
     ################### AUTOSTART ###################
-    nohup /usr/lib/xdg-desktop-portal -r &>/dev/null &
-    nohup /usr/lib/xdg-desktop-portal-wlr -r &>/dev/null &
-    nohup /usr/lib/xdg-desktop-portal-gtk -r &>/dev/null &
+    nohup /usr/libexec/xdg-desktop-portal -r &>/dev/null &
+    nohup /usr/libexec/xdg-desktop-portal-wlr -r &>/dev/null &
+    nohup /usr/libexec/xdg-desktop-portal-gtk -r &>/dev/null &
 
 
     ################### SYSTEMD ###################

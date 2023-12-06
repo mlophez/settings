@@ -135,8 +135,9 @@ bindswitch --reload --locked lid:off exec $shell 'monitor'
 input "type:keyboard" {
     xkb_layout es
     #xkb_variant mac
-    xkb_options caps:none
-    #xkb_options grp:alt_shift_toggle
+    xkb_options ctrl:nocaps
+    # xkb_options caps:none
+    # xkb_options grp:alt_shift_toggle
 }
 
 #
@@ -335,8 +336,8 @@ exec_always swaycmd monitor
 exec_always nm-applet
 
 ### AUTOSTART
-# exec swaycmd autostart
-exec ~/.config/sway/scripts/autostart.sh
+exec swaycmd autostart
+#exec ~/.config/sway/scripts/autostart.sh
 
 ### RULES
 # for_window [app_id="menu"] floating enable; resize set 600 1015; move position 0 0
