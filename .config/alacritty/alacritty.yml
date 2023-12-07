@@ -123,12 +123,16 @@ mouse_bindings:
 key_bindings:
   - { key: Paste, action: Paste }
   - { key: Copy, action: Copy }
-  - { key: 58, chars: "\x01" }
-  - { key: 36, mods: Alt, chars: "\e[D" }
-  - { key: 37, mods: Alt, chars: "\e[B" }
-  - { key: 38, mods: Alt, chars: "\e[A" }
-  - { key: 39, mods: Alt, chars: "\e[C" }
-  - { key: 16, mods: Alt, chars: "\x03\x04" }
+  # Send Ctrl+a with caps
+  # - { key: 58, chars: "\x01" }
+  # Move with Alt+jklñ
+  - { mods: Alt, key: 36, chars: "\e[D" }
+  - { mods: Alt, key: 37, chars: "\e[B" }
+  - { mods: Alt, key: 38, chars: "\e[A" }
+  - { mods: Alt, key: 39, chars: "\e[C" }
+  - { mods: Alt, key: 16, chars: "\x03\x04" }
+  # Send F6 on Ctrl+Ñ
+  - { mods: Control, key: 39, chars: "\x1b[17~" }
 debug:
   render_timer: false
   persistent_logging: false

@@ -129,15 +129,21 @@ bindswitch --reload --locked lid:off exec $shell 'monitor'
 #       middle_emulation enabled
 #   }
 
-#input * xkb_capslock disable
-#input * xkb_numlock enable
-#input "1:1:AT_Translated_Set_2_keyboard" {
 input "type:keyboard" {
     xkb_layout es
     #xkb_variant mac
+
     xkb_options ctrl:nocaps
+    # xkb_options caps:ctrl_modifier
     # xkb_options caps:none
     # xkb_options grp:alt_shift_toggle
+}
+
+input "type:touchpad" {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
 }
 
 #
