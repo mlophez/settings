@@ -1,35 +1,6 @@
-# Default config for sway
-#
-# Copy this to ~/.config/sway/config and edit it to your liking.
-#
-# Read `man 5 sway` for a complete reference.
+include ./themes/catppuccin-mocha
 
-### Variables
-#
-# Logo key. Use Mod1 for Alt.
 set $mod Mod4
-
-# Home row direction keys, like vim
-set $left j
-set $down k
-set $up l
-set $right ntilde
-
-set $shell zsh -i -c
-#set $term alacritty --config-file $HOME/.config/alacritty/nord.yml
-set $term foot
-set $wallpaper ~/.config/qtile/wal.jpg
-set $lockbg ~/.config/qtile/wal.jpg
-# set $term alacritty
-# set $wallpaper ~/.local/share/wallpapers/next.png
-
-# Your preferred application launcher
-# Note: pass the final command to swaymsg so that the resulting window can be opened
-# on the original workspace that the command was run on.
-# set $menu dmenu_path | dmenu | xargs swaymsg exec --
-# set $menu wofi --show drun
-# set $menu $shell 'menu'
-#set $menu $shell 'shell sway-launcher-desktop.sh'
 
 #set $ws1 "1: "
 #set $ws2 "2: "
@@ -53,82 +24,41 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# Home row direction keys, like vim
+set $left j
+set $down k
+set $up l
+set $right ntilde
+
+set $shell zsh -i -c
+set $wallpaper ~/.config/qtile/wal.jpg
+set $lockbg ~/.config/qtile/wal.jpg
+
 ### SETTINGS
 xwayland disabled
 font pango:Fira Code, Bold 14
 gaps inner 10
-gaps outer 0
+gaps outer 10
 workspace_layout default
-#workspace_layout tabbed
 title_align center
 default_border pixel 2
 default_floating_border pixel 2
 hide_edge_borders none
-#titlebar_border_thickness 0
-#titlebar_padding 1
-#hide_edge_borders smart
-
-# BORDER(IN TAB); BGROUND; TEXT; INDICATOR; CHILD_BORDER(REAL BORDER)
-#client.focused          #EDE4E4 #282A36 #FF79C6 #2E9EF4 #FF79C6
-#client.focused_inactive #EDE4E4 #282A36 #FFFFFF #282A36 #EDE4E4
-#client.unfocused        #EDE4E4 #282A36 #FFFFFF #282A36 #EDE4E4
-#client.urgent           #EDE4E4 #282A36 #FC3A3A #FC3A3A #EDE4E4
-#client.placeholder      #EDE4E4 #282A36 #FFFFFF #282A36 #EDE4E4
-#client.background       #282A36
-
-# NORD
-client.focused          #88C0D0 #3B4252 #8FBCBB #88C0D0 #88C0D0
-client.unfocused        #88C0D0 #2E3440 #D8DEE9 #88C0D0 #2E3440
-#client.focused_inactive #88C0D0 #2E3440 #D8DEE9 #88C0D0 #88C0D0
-#client.urgent           #EDE4E4 #282A36 #FC3A3A #FC3A3A #EDE4E4
-#client.placeholder      #EDE4E4 #282A36 #FFFFFF #282A36 #EDE4E4
-#client.background       #282A36
+# titlebar_border_thickness 0
+# titlebar_padding 1
+# hide_edge_borders smart
 
 # CURSORS
 # seat seat0 xcursor_theme my_cursor_theme my_cursor_size
 
 ### Output configuration
-#
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg $wallpaper fill
-#
-# Example configuration:
-#
-#   output HDMI-A-1 resolution 1920x1080 position 1920,0
-#
-# You can get the names of your outputs by running: swaymsg -t get_outputs
-
 output eDP-1 resolution 1920x1080 position 0,0 scale 1
+bindswitch --reload --locked lid:on exec swaycmd monitor
+bindswitch --reload --locked lid:off exec swaycmd monitor
 
-# bindswitch --reload --locked lid:on output $laptop disable
-# bindswitch --reload --locked lid:off output $laptop enable
-bindswitch --reload --locked lid:on exec $shell 'monitor'
-bindswitch --reload --locked lid:off exec $shell 'monitor'
-
-### Idle configuration
-#
-# Example configuration:
-#
-# exec swayidle -w \
-#          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-#          before-sleep 'swaylock -f -c 000000'
-#
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
-
-### Input configuration
-#
-# Example configuration:
-#
-#   input "2:14:SynPS/2_Synaptics_TouchPad" {
-#       dwt enabled
-#       tap enabled
-#       natural_scroll enabled
-#       middle_emulation enabled
-#   }
-
+# INPUT
 input "type:keyboard" {
     xkb_layout es
     #xkb_variant mac
@@ -145,10 +75,6 @@ input "type:touchpad" {
   natural_scroll enabled
   middle_emulation enabled
 }
-
-#
-# You can get the names of your inputs by running: swaymsg -t get_inputs
-# Read `man 5 sway-input` for more information about this section.
 
 ### Key bindings
 #
@@ -196,7 +122,7 @@ input "type:touchpad" {
     bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
     # Outputs
-    ## bindsym $mod+o exec $shell 'monitor'
+    bindsym $mod+o exec swaycmd monitor
 
     # Notifications
     bindsym $mod+m exec makoctl dismiss
@@ -204,10 +130,9 @@ input "type:touchpad" {
     # Reset workspace
     bindsym $mod+u [tiling workspace="__focused__"] move workspace "__reorder__"; [workspace="__reorder__"] move workspace current; focus child
     #bindsym $mod+y move output next
-    bindsym $mod+y exec $shell 'reorder'
-
-    bindsym $mod+i exec $shell 'sway_output_workspace'
-    bindsym $mod+Shift+i exec $shell 'sway_output_workspace_move'
+    bindsym $mod+y exec swaycmd 'reorder'
+    bindsym $mod+i exec swaycmd 'sway_output_workspace'
+    bindsym $mod+Shift+i exec swaycmd 'sway_output_workspace_move'
 #
 # Moving around:
 #
