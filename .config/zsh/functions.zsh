@@ -1,16 +1,16 @@
 #!/usr/bin/zsh
 
-function precmd() {
+precmd() {
   printf "\e[5 q"
 }
 
-function timezsh() {
+timezsh() {
   local shell=${1-$SHELL}
   local i
   for i in $(seq 1 10); do time $shell -i -c exit; done
 }
 
-function ls() {
+ls() {
   local afunctrace=($functrace)
   if [[ ${#afunctrace[@]} -le 1 ]]; then
     if type lsd &>/dev/null; then
@@ -25,7 +25,7 @@ function ls() {
   fi
 }
 
-function cat() {
+cat() {
   if type bat &>/dev/null; then
     bat "$@"
   else
@@ -33,7 +33,7 @@ function cat() {
   fi
 }
 
-function kubectl() {
+kubectl() {
   local cmd="kubectl"
   local extra_args
 
@@ -43,7 +43,7 @@ function kubectl() {
   command $cmd "$@" $extra_args
 }
 
-function curl() {
+curl() {
   if type curlie &>/dev/null; then
     curlie "$@"
   else
@@ -51,7 +51,7 @@ function curl() {
   fi
 }
 
-function ssh() {
+ssh() {
   TERM=xterm-256color command ssh "$@"
 }
 

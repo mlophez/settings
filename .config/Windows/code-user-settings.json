@@ -16,7 +16,11 @@
     },
     "vs-kubernetes": {
         "vscode-kubernetes.helm-path.linux": "/home/mlr/.local/share/state/vs-kubernetes/tools/helm/linux-amd64/helm",
-        "vscode-kubernetes.kubectl-path.linux": "/home/mlr/.local/share/state/vs-kubernetes/tools/kubectl/kubectl"
+        "vscode-kubernetes.kubectl-path.linux": "/home/mlr/.local/share/state/vs-kubernetes/tools/kubectl/kubectl",
+        "vs-kubernetes.kubeconfig": "/home/mlr/.config/kube/config",
+        "vs-kubernetes.knownKubeconfigs": [
+            "/home/mlr/.config/kube/config"
+        ]
     },
     "redhat.telemetry.enabled": false,
     "atlascode.jira.enabled": false,

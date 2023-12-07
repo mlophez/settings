@@ -24,8 +24,13 @@ export PASSWORD_STORE_DIR="$HOME/.local/share/vault"
 export PASSWORD_STORE_CLIP_TIME=8
 
 # FZF
-# export FZF_DEFAULT_COMMAND='fd --type f'
-export FZF_DEFAULT_OPTS="--layout=reverse --inline-info"
+FZF_DEFAULT_OPTS=""
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} -m --ansi --layout=reverse --inline-info --border=sharp"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --prompt='➤ ' --pointer='➤' --marker='➤'"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg:-1,bg:-1,hl:46'"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg+:40,bg+:-1,hl+:46'"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'prompt:166,border:46'"
+export FZF_DEFAULT_OPTS
 
 # AWS
 export AWS_PROFILE="none"

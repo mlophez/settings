@@ -36,9 +36,12 @@ setopt completealiases
 
 #### BINDKEYS
 bindkey -e
-bindkey "\033[1~" beginning-of-line
-bindkey "\033[4~" end-of-line
+bindkey "^[[1~" beginning-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[[3~" delete-char
 bindkey '^R' history-incremental-search-backward
+# bindkey "\033[1~" beginning-of-line
+# bindkey "\033[4~" end-of-line
 
 # Clear screen A-h
 # bindkey '\eh' clear-screen
@@ -72,7 +75,7 @@ source ~/.local/share/zsh/spaceship/spaceship.zsh
 
 # ALIASES
 source $HOME/.config/zsh/aliases.zsh
-source $HOME/.config/zsh/config.zsh
+source $HOME/.config/zsh/functions.zsh
 
 # FUNCTIONS
 autoload -Uz ${ZDOTDIR}/functions/*(.:t)
