@@ -42,8 +42,9 @@ status() {
           $HOME/.config/kube/config \
           $HOME/.config/wsl \
           $HOME/.config/qtile \
-          $HOME/.config/waybar \
           $HOME/.config/sway \
+          $HOME/.config/waybar \
+          $HOME/.config/rofi \
           $HOME/.config/mutt \
           $HOME/.config/systemd \
           $HOME/.config/mako \
