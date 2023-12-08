@@ -36,6 +36,7 @@ status() {
           $HOME/.config/nix \
           $HOME/.config/zellij \
           $HOME/.config/alacritty \
+          $HOME/.config/foot \
           $HOME/.config/wezterm \
           $HOME/.config/git \
           $HOME/.config/kube/config \
