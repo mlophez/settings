@@ -23,14 +23,16 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export ZDOTDIR=$HOME/.config/zsh
 
 # THEME #
-#export QT_QPA_PLATFORMTHEME=qt5ct
-#export SAL_USE_VCLPLUGIN=kf5
+export QT_QPA_PLATFORMTHEME=qt5ct
+export SAL_USE_VCLPLUGIN=kf5
 #export XCURSOR_PATH=$HOME/.local/share/icons
 #export XCURSOR_THEME=volantes-cursors
 #export XCURSOR_SIZE=32
 
+export GTK_THEME=Catppuccin-Mocha-Standard-Peach-Dark:dark
+
 # PORTAL #
-#export GTK_USE_PORTAL=1
+export GTK_USE_PORTAL=1
 
 # export QT_QPA_PLATFORM=xcb
 # export GTK_RC_FILES=/etc/gtk/gtkrc:$HOME/.gtkrc:$HOME/.config/gtkrc
