@@ -6,7 +6,7 @@ SWAYPATH="$HOME/.config/sway"
 
 function cmd_waybar() {
     export XDG_CURRENT_DESKTOP=Unity
-    exec waybar -c $SWAYPATH/waybar.conf -s $SWAYPATH/waybar.css "$@"
+    exec waybar -c $HOME/waybar/waybar.conf -s $HOME/waybar/waybar.css "$@"
     exit 0
 }
 

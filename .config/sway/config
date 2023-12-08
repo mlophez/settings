@@ -5,7 +5,6 @@ include config.d/settings.conf
 include config.d/devices.conf
 include config.d/keybindings.conf
 include config.d/rules.conf
-include config.d/status.conf
 include config.d/autostart.conf
 
 include themes/catppuccin-mocha

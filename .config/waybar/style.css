@@ -1,20 +1,23 @@
+@import "./themes/mocha.css";
+
 * {
-    border: none;
-    border-radius: 0;
-    /* `otf-font-awesome` is required to be installed for icons */
     font-family: FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
+    /*border: none;
     min-height: 0;
+    color: @text;*/
 }
 
 window#waybar {
-    /*background-color: rgba(0, 0, 0, 0.50);*/
-    background-color: rgba(0, 0, 0, 0);
-    /* border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
-    color: #ffffff;
-    transition-property: background-color;
-    transition-duration: .5s;
+  background-color: shade(@base, 0.9);
+  border: 1px solid #000000; /*alpha(@pink, 0.3);*/
+  border-radius: 10px;
+  /* background-color: rgba(0, 0, 0, 0); */
+  /* border-bottom: 3px solid rgba(100, 114, 125, 0.5); */
+  /*color: #ffffff;
+  transition-property: background-color;
+  transition-duration: .5s;*/
 }
 
 window#waybar.hidden {
@@ -42,27 +45,29 @@ window#waybar.chromium {
 */
 
 #workspaces button {
-    /* padding: 0 5px; */
-    padding: 10px;
-    background-color: transparent;
-    color: #ffffff;
-    /* Use box-shadow instead of border so the text isn't offset */
-    box-shadow: inset 0 -3px transparent;
+  color: @text;
+  background-color: transparent;
+  padding: 0px 15px 0px 15px;
 }
 
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 #workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
-    box-shadow: inset 0 -3px #FFFFFF;
+  color: @red;
+}
+
+#workspaces button.visible {
+  color: @peach;
 }
 
 #workspaces button.focused {
-    /* background-color: #64727D; */
-    box-shadow: inset 0 -3px #88C0D0;
+  color: @peach;
 }
 
 #workspaces button.urgent {
-    background-color: #eb4d4b;
+  color: @red;
+}
+
+#workspaces button.persistent {
+  color: shade(@text, 0.4);
 }
 
 #mode {
@@ -94,8 +99,9 @@ window#waybar.chromium {
 #idle_inhibitor,
 #disk,
 #mpd {
-    padding: 0 10px;
-    margin: 0 4px;
+    border-radius: 10px;
+    padding: 0px 15px 0px 10px;
+    margin: 7px 5px 7px 0px;
     color: #ffffff;
 }
 
@@ -115,8 +121,8 @@ window#waybar.chromium {
 }
 
 #clock {
-    background-color: transparent;
-    font-size: 18px;
+    /*background-color: transparent; */
+    background-color: #009978;
 }
 
 #battery {
