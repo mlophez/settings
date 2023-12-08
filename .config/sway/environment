@@ -7,6 +7,7 @@ export XDG_SESSION_TYPE=wayland
 
 ## PATH ##
 export PATH=$PATH:$HOME/.config/sway
+export PATH=$PATH:$HOME/.config/sway/scripts
 export PATH=$PATH:$HOME/.local/bin
 
 # WAYLAND APPS #
@@ -30,96 +31,6 @@ export ZDOTDIR=$HOME/.config/zsh
 
 # PORTAL #
 #export GTK_USE_PORTAL=1
-
-### TRASH ###
-#emulate sh -c 'source /etc/profile'
-
-# LOCKFILE="/tmp/$USER/login"
-#
-# if [ ! -e $LOCKFILE ]; then
-#     mkdir -p /tmp/$USER 2> /dev/null; touch $LOCKFILE
-#
-#     # CACHE
-#     mkdir -p /tmp/$USER/cache 2> /dev/null
-#     rm -rf "$HOME/.cache" 2> /dev/null
-#     ln -sf /tmp/$USER/cache $HOME/.cache
-#
-#     # FLATPAK CACHE
-#     for folder in $(find $HOME/.var/app/ -type d -name cache 2> /dev/null); do
-#         rm -rf "$folder/*"
-#     done
-#
-#     # BROWSERS
-#     #rm -rf "$HOME/.mozilla" 2> /dev/null
-#     #rm -rf "$HOME/.config/chromium" 2> /dev/null
-#     rm -rf "$HOME/.config/google-chrome" 2> /dev/null
-#     rm -rf "$HOME/.config/opera" 2> /dev/null
-#
-#     # NETWORK MANAGER
-#     type nmcli &>/dev/null && nmcli radio wifi off
-#
-#     # BALOOCTL
-#     type balooctl &>/dev/null && balooctl disable &>/dev/null
-#
-#     # VBOX
-#     # type VBoxClient &>/dev/null && VBoxClient --clipboard
-# fi
-#
-# # SESSIONS
-# function __start_sway() {
-#     export XDG_SESSION_TYPE=wayland
-#     export XDG_CURRENT_DESKTOP=sway
-#
-#     # GTK
-#     export MOZ_ENABLE_WAYLAND=1
-#     export GDK_BACKEND=wayland
-#
-#     # QT
-#     export QT_QPA_PLATFORM=wayland-egl
-#     export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-#
-#     # CLUTTER
-#     export CLUTTER_BACKEND=wayland
-#
-#     # SDL
-#     export SDL_VIDEODRIVER=wayland
-#
-#     # JAVA
-#     export _JAVA_AWT_WM_NONREPARENTING=1
-#
-#     exec sway > /tmp/$USER/sway.log 2>&1
-# }
-#
-# function __start_i3() {
-#     export XDG_SESSION_TYPE=x11
-#     export XDG_CURRENT_DESKTOP=i3
-#
-#     export GDK_BACKEND=x11
-#     export QT_QPA_PLATFORM=xcb
-#     export CLUTTER_BACKEND=x11
-#     export SDL_VIDEODRIVER=x11
-#     export WINIT_UNIX_BACKEND=x11
-#
-#     echo "#!/bin/sh" > $HOME/.xinitrc
-#     echo "exec i3" >> $HOME/.xinitrc
-#
-#     #startx -- -keeptty
-#     exec startx
-# }
-
-## COMENTADO, ADAPTAR A PLASMA
-## # START GUI
-## export ORIPATH=$PATH
-## export DEFAULT_TTY_SESSION="__start_sway"
-## [ "$HOSTNAME" = "logalty" ] && DEFAULT_TTY_SESSION="__start_i3"
-
-## if [ "$(tty)" = "/dev/tty1" ]; then
-##    eval "$DEFAULT_TTY_SESSION"
-## elif [ "$(tty)" = "/dev/tty2" ]; then
-##     __start_sway
-## elif [ "$(tty)" = "/dev/tty3" ]; then
-##     __start_i3
-## fi
 
 # export QT_QPA_PLATFORM=xcb
 # export GTK_RC_FILES=/etc/gtk/gtkrc:$HOME/.gtkrc:$HOME/.config/gtkrc
