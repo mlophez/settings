@@ -32,7 +32,7 @@ export SAL_USE_VCLPLUGIN=kf5
 export GTK_THEME=Catppuccin-Mocha-Standard-Peach-Dark:dark
 
 # PORTAL #
-export GTK_USE_PORTAL=1
+# export GTK_USE_PORTAL=1
 
 # export QT_QPA_PLATFORM=xcb
 # export GTK_RC_FILES=/etc/gtk/gtkrc:$HOME/.gtkrc:$HOME/.config/gtkrc

@@ -22,7 +22,6 @@ window#waybar {
 }
 
 #workspaces button:hover {
-  color: @red;
 }
 
 #workspaces button.visible {
