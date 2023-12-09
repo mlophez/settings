@@ -8,4 +8,3 @@ include config.d/rules.conf
 include config.d/autostart.conf
 
 include themes/catppuccin-mocha
-seat seat0 xcursor_theme Bibata-Modern-Ice
