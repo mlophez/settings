@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -e
+
+if [ -z "$(git config user.email)" ]; then
+  echo Your name and email address were configured automatically based
+  echo on your username and hostname. Please check that they are accurate.
+  echo You can suppress this message by setting them explicitly:
+  echo
+  echo     git config --global user.name "Your Name"
+  echo     git config --global user.email you@example.com
+  exit -1
+fi
+
+exit 0

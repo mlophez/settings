@@ -3,6 +3,7 @@
 [core]
 	editor = nvim
 	pager = delta
+	hooksPath = ~/.config/git/hooks
 [credential]
 	helper = store
 [push]
