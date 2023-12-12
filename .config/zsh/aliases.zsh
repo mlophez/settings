@@ -53,6 +53,8 @@ alias git-id-logalty="git config user.name 'Miguel López Ruiz' && git config us
 # KUBERNETES
 alias k="kubectl --context"
 alias ka="kustomize-menu apply"
+alias ke="kubectl-menu edit pod"
+# alias kc="kubectl-menu get -o yaml pod"
 alias kdf="kustomize-menu diff"
 alias kb="kustomize-menu bundle"
 alias ks="kubectl-shell-menu"
