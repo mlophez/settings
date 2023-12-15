@@ -49,6 +49,7 @@ status() {
           $HOME/.config/mutt \
           $HOME/.config/systemd \
           $HOME/.config/mako \
+          $HOME/.config/dunst \
           $HOME/.config/zsh \
           $HOME/.config/containers \
           $HOME/.config/distrobox \
