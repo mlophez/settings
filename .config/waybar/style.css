@@ -1,12 +1,9 @@
 @import "./themes/mocha.css";
 
-* {
-  font-family: FontAwesome, JetBrainsMono Nerd Font, Roboto, Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  font-weight: bold;
-}
-
 window#waybar {
+  font-family: FontAwesome, JetBrainsMono Nerd Font, Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15;
+  font-weight: bold;
   background-color: rgba(0,0,0,0);
 }
 
@@ -27,6 +24,11 @@ window#waybar {
   padding-right: 10px;
 }
 
+#workspaces button {
+  font-size: 24;
+  padding: 0px; 
+}
+
 #workspaces button.active,
 #workspaces button.visible {
   color: @peach;
@@ -37,7 +39,7 @@ window#waybar {
 }
 
 #workspaces button.persistent {
-  color: shade(@text, 0.4);
+  color: shade(@text, 0.5);
 }
 
 #battery.good {
