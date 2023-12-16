@@ -1,0 +1,11 @@
+#!/usr/bin/zsh
+
+# FLUTTER
+flutter-monitor () {
+  while true; do
+    [ ! -e /tmp/flutter.pid ] && echo "[-] NO PID" && return -1
+    [ ! -d lib ] && echo "[-] NO LIB FOLDER FOUND" && return -1
+    find lib/ -name '*.dart' | entr -d -p kill -USR1 $(cat /tmp/flutter.pid)
+    sleep 0.1
+  done
+}

@@ -1,10 +1,16 @@
 @import "./themes/mocha.css";
 
 window#waybar {
-  font-family: FontAwesome, JetBrainsMono Nerd Font, Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    FontAwesome,
+    JetBrainsMono Nerd Font,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 15;
   font-weight: bold;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
 }
 
 #mode,
@@ -14,8 +20,7 @@ window#waybar {
 #pulseaudio,
 #battery,
 #custom-lock,
-#custom-shutdown
-{
+#custom-shutdown {
   background-color: shade(@base, 0.9);
   border-radius: 7px;
   border: 2px solid @lavender;
@@ -26,7 +31,7 @@ window#waybar {
 
 #workspaces button {
   font-size: 24;
-  padding: 0px; 
+  padding: 0px;
 }
 
 #workspaces button.active,
@@ -55,8 +60,6 @@ window#waybar {
 }
 
 #clock {
-  margin-left: 20px;
-  font-size: 16px;
   color: @pink;
 }
 

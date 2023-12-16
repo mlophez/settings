@@ -72,3 +72,4 @@ alias zel="zellij -s $USER"
 
 # SETTINGS
 alias se="settings"
+

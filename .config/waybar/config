@@ -9,17 +9,17 @@
     // "margin-right": 20,
 
     "modules-left": [
-      "clock",
-      "clock#time",
       "sway/mode"
     ],
     "modules-center": [
       "sway/workspaces",
+      "clock#time",
     ],
     "modules-right": [
       "tray",
       "pulseaudio",
       "battery",
+      "clock",
       "custom/lock",
       "custom/shutdown"
     ],
