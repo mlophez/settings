@@ -116,3 +116,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Load zsh
+[ -e "$HOME/.config/zsh/aliases.zsh" ] && \
+  source "$HOME/.config/zsh/aliases.zsh"

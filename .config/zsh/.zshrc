@@ -9,6 +9,8 @@ HISTFILE="$HOME/.zhistory"
 HISTIGNORE='pass *'
 ZSH_AUTOSUGGEST_STRATEGY=(history completion)
 
+umask 077
+
 typeset -U path
 typeset -U fpath
 
