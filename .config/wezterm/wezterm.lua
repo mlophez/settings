@@ -42,6 +42,7 @@ return {
 		{ key = "+", mods = "CTRL", action = wezterm.action.IncreaseFontSize },
 		{ key = "-", mods = "CTRL", action = wezterm.action.DecreaseFontSize },
 		{ key = "0", mods = "CTRL", action = wezterm.action.ResetFontSize },
+		{ key = "X", mods = "CTRL", action = wezterm.action.ActivateCopyMode },
 		{ key = "t", mods = "ALT", action = wezterm.action.SpawnTab({ DomainName = "WSL:Archlinux" }) },
 	},
 }
