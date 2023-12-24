@@ -45,4 +45,8 @@ $HOME/.local/share/fonts/*.ttf
 $HOME/.local/share/fonts/*.otf
 $HOME/.local/share/backgrounds
 
+# Flatpak
+$HOME/.local/share/flatpak/overrides/global
+
+# Browser
 $HOME/.var/app/com.google.Chrome/config/chrome-flags.conf
