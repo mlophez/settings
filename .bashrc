@@ -113,5 +113,11 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Env
 export ZDOTDIR=$HOME/.config/zsh
+
+# Alias
 alias reload="exec bash"
+
+[ -e "$HOME/.config/zsh/aliases.zsh" ] && \
+  source $HOME/.config/zsh/aliases.zsh
