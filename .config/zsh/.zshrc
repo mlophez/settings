@@ -77,11 +77,11 @@ source ~/.local/share/zsh/spaceship/spaceship.zsh
 
 # ALIASES
 source $HOME/.config/zsh/aliases.zsh
-source $HOME/.config/zsh/functions.zsh
 
 # FUNCTIONS
 autoload -Uz ${ZDOTDIR}/functions/*(.:t)
 dotinit
+zshfunctions
 
 # AUTOCOMPLETE
 [[ $commands[kubectl] ]] && source <(kubectl completion zsh)
