@@ -1,12 +1,17 @@
 ## GITIGNORE ##
 .config/systemd/user/default.target.wants
 .config/nvim/plugin
-*.zsh.zwc
-*.bak
+
+# Files
 .zcompdump
 .nvimlog
+*.zsh.zwc
+*.bak
+*.zip
+*.tar
+*.tar.gz
 
-# QTILE
+# Python
 __pycache__/
 *.py[cod]
 *$py.class

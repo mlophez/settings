@@ -1,7 +1,15 @@
 env:
   TERMINAL: alacritty
+  ZDOTDIR: /home/mlr/.config/zsh
 # theme: Dracula
 window:
+  title: Alacritty
+  startup_mode: Windowed
+  decorations: None
+  opacity: 1
+  dynamic_padding: false
+  dynamic_title: false
+  gtk_theme_variant: None
   dimensions:
     columns: 0
     lines: 0
@@ -11,15 +19,9 @@ window:
   padding:
     x: 5
     y: 5
-  opacity: 1
-  dynamic_padding: false
-  startup_mode: Maximized
-  title: Alacritty
-  dynamic_title: false
   class:
     instance: Alacritty
     general: Alacritty
-  gtk_theme_variant: None
 scrolling:
   history: 10000
   multiplier: 3

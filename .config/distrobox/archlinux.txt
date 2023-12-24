@@ -1,0 +1,156 @@
+### ARCHLINUX PACKAGES ###
+# NETWORK
+autossh
+sshpass
+sshuttle
+wol
+curl
+wget
+traceroute
+inetutils
+bind-tools
+dhclient
+nmap
+
+# SHELL
+bash
+sudo
+which
+ripgrep
+fzf
+expect
+pv
+bc
+jq
+yq
+lsd
+colordiff
+bat
+dialog
+tmux
+entr
+
+## ZSH
+zsh
+zsh-completions
+zsh-autosuggestions
+zsh-syntax-highlighting
+
+# FILES
+unrar
+unzip
+tar
+p7zip
+zip
+
+# EDITOR
+nano
+neovim
+python-pynvim
+wl-clipboard
+
+# SECURITY
+gnupg
+paperkey
+zbar
+pass
+pass-otp
+cryfs
+
+# BACKUPS
+borg
+python-llfuse
+rsync
+rclone
+
+# UTILS
+htop
+man
+just
+
+# ARCHLINUX
+arch-install-scripts
+
+# FONTS
+ttf-fira-code
+ttf-dejavu
+ttf-liberation
+ttf-font-awesome
+
+##################### DEVELOPMENT #####################
+# C/C++
+base-devel
+clang
+cmake
+extra-cmake-modules
+
+# PYTHON
+python
+python-pip
+python-virtualenv
+python-pipenv
+python-poetry
+pyenv
+
+# GO
+go
+go-tools
+
+# NODE
+nodejs
+npm
+yarn
+
+# RUST
+rustup
+
+# LUA
+luarocks
+
+# JAVA
+jdk-openjdk
+jdk11-openjdk
+jdk8-openjdk
+maven
+
+# # RUBY
+# ruby
+# rubygems
+
+##################### DEV/OPS #####################
+# GIT
+git
+git-delta
+git-lfs
+
+# ANSIBLE
+ansible
+ansible-lint
+
+# TERRAFORM
+terraform
+terragrunt
+
+## CONTAINERS
+skopeo
+
+# NOMAD
+# nomad
+
+# KUBERNETES
+# helmfile
+# kubeseal
+# aur/kubecolor
+kubectl
+kustomize
+eksctl
+stern
+helm
+kompose
+
+# API
+httpie
+curlie
+
+# AWS
+aws-cli-v2

@@ -74,6 +74,7 @@ alias zel="zellij -s $USER"
 alias se="settings"
 
 # DISTROBOX
+alias ds="distrobox-menu"
 alias system="distrobox-host-exec bash"
 alias system-root="distrobox-host-exec sudo bash"
 

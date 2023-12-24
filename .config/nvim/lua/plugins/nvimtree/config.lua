@@ -114,7 +114,7 @@ return {
 	},
 	filters = {
 		custom = { "^\\.git", "^\\.terraform" },
-		exclude = { ".gitignore" },
+		exclude = { ".gitignore", ".gitinclude" },
 	},
 	on_attach = on_attach,
 }
