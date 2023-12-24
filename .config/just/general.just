@@ -43,40 +43,9 @@ locale:
 	XDG_VIDEOS_DIR="\$HOME/Videos"
 	EOF
 
-distrobox: distrobox-fedora distrobox-archlinux
-distrobox-fedora:
-	echo 'Creating fedora distrobox ...'
-	distrobox-create --nvidia -Y -n fedora --image ghcr.io/ublue-os/fedora-distrobox:latest
-
-	distrobox enter fedora -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
-	distrobox enter fedora -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
-	distrobox enter fedora -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
-
-	distrobox enter fedora -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
-
-distrobox-archlinux:
-	echo 'Creating archlinux distrobox ...'
-	distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
-
-	distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
-	distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
-	distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
-
-	distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
-
-	distrobox enter archlinux -- sudo pacman -Syu
-	distrobox enter archlinux -- sudo pacman --needed -S $(cat distrobox/archlinux.txt | grep -v "^ *#" | tr '\n' ' ')
-	distrobox enter archlinux -- sudo pacman --needed -S alacritty kitty code
-	distrobox enter archlinux -- sudo pacman --needed -S ttf-jetbrains-mono-nerd
-	distrobox enter archlinux -- sudo pacman -Scc
-
-	distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
-	distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
-
 forticlient:
 	sudo dnf config-manager --add-repo https://repo.fortinet.com/repo/7.0/centos/8/os/x86_64/fortinet.repo
 	sudo yum install forticlient
-
 
 projects:
 	#!/usr/bin/env bash
@@ -115,13 +84,6 @@ flatpak:
 
 	flatpak --user override --filesystem=xdg-data/themes
 	flatpak --user override --filesystem=xdg-data/icons
-
-browser:
-	mkdir -p $HOME/.var/app/com.brave.Browser
-	mkdir -p $HOME/.var/app/org.chromium.Chromium
-	echo "--enable-features=UseOzonePlatform --ozone-platform=wayland --force-device-scale-factor=1" > $HOME/.var/app/com.brave.Browser/config/brave-flags.conf
-	echo "--enable-features=UseOzonePlatform --ozone-platform=wayland --force-device-scale-factor=1" > $HOME/.var/app/org.chromium.Chromium/config/chromium-flags.conf
-	echo "--enable-features=UseOzonePlatform --ozone-platform=wayland" > $HOME/.var/app/com.onepassword.OnePassword/config/electron-flags.conf
 
 packages:
 	echo "Implement"

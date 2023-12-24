@@ -1,4 +1,4 @@
-# ft=make
+# vim: ft=make
 
 gnome:
   #!/usr/bin/env bash
