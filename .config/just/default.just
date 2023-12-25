@@ -1,7 +1,9 @@
 # vim: ft=make
-#set shell := ["bash", "-uc"]
+!include ./user/gnome.just
+!include ./user/distrobox.just
+!include ./user/code.just
 
-default:
-	@just --unstable --choose
-	# just -l
+# default:
+# 	@just --unstable --choose
+# 	# just -l
 
