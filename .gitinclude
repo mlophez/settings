@@ -52,3 +52,4 @@ $HOME/.local/share/flatpak/overrides/global
 
 # Browser
 $HOME/.var/app/com.google.Chrome/config/chrome-flags.conf
+$HOME/.var/app/com.brave.Browser/config/brave-flags.conf
