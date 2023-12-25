@@ -2,6 +2,7 @@ $HOME/.gitignore
 $HOME/.gitinclude
 $HOME/.bashrc
 
+$HOME/.config/autostart
 $HOME/.config/zsh
 $HOME/.config/nvim
 $HOME/.config/tmux
