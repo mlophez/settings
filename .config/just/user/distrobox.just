@@ -24,6 +24,10 @@ distrobox-archlinux:
 	distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
 	distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
 
+distrobox-anbox:
+	echo 'Creating anbox distrobox ...'
+	distrobox-create --nvidia -Y -n anbox --image ghcr.io/ublue-os/arch-distrobox:latest
+
 distrobox-host-alias:
 	sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
 	sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
