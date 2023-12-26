@@ -76,7 +76,7 @@ flatpak:
 	flatpak --user install -y flathub org.telegram.desktop
 	flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
 	flatpak --user install -y flathub org.gnome.Builder
-	flatpak --user install --user -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
+	flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
 
 	flatpak --user install flathub com.mattjakeman.ExtensionManager
 	flatpak --user install flathub org.gnome.Extensions

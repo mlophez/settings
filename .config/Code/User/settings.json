@@ -7,5 +7,6 @@
   "git.autofetch": true,
   "git.autofetchPeriod": 60,
   "git.branchPrefix": "miguellopez-",
-  "window.zoomLevel": 1
+  "window.zoomLevel": 1,
+  "editor.linkedEditing": true
 }
