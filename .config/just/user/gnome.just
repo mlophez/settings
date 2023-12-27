@@ -21,3 +21,11 @@ gnome:
 
   dconf load / < $HOME/.config/gnome/settings.ini
 
+gnome-load-themes:
+	#!/usr/bin/env bash
+	echo implement
+
+gnome-save-themes:
+	#!/usr/bin/env bash
+	echo implement
+

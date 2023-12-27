@@ -41,8 +41,8 @@ $HOME/.aws/config
 
 # THEMES
 $HOME/.local/share/themes
-$HOME/.local/share/icons/BeautyLine
-$HOME/.local/share/icons/Bibata-Modern-Ice
+$HOME/.local/share/icons/*icons
+$HOME/.local/share/icons/*cursors
 $HOME/.local/share/fonts/*.ttf
 $HOME/.local/share/fonts/*.otf
 $HOME/.local/share/backgrounds
