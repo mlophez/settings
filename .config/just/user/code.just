@@ -18,6 +18,7 @@ code-extensions:
 	code --install-extension dsznajder.es7-react-js-snippets
 	code --install-extension gruntfuggly.bettercommen
 	code --install-extension glenn2223.live-sass
+	code --install-extension astro-build.astro-vscode
 
 	code --install-extension catppuccin.catppuccin-vsc
 	code --install-extension pkief.material-icon-theme

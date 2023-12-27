@@ -8,5 +8,10 @@
   "git.autofetchPeriod": 60,
   "git.branchPrefix": "miguellopez-",
   "window.zoomLevel": 1,
-  "editor.linkedEditing": true
+  "editor.linkedEditing": true,
+  "editor.formatOnSave": true,
+  "prettier.documentSelectors": ["**/*.astro"],
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }
