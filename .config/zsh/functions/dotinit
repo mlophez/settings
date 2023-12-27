@@ -32,8 +32,9 @@ status() {
 
   # add
   # dot add $(< $HOME/.gitinclude | grep -v -e "^ *#" -e "^ *$" | tr '\n' ' ' | sed "s#\$HOME#$HOME#g")
+  dot add -u
   for pattern in $(< $HOME/.gitinclude | grep -v -e "^ *#" -e "^ *$" | tr '\n' ' ' | sed "s#\$HOME#$HOME#g"); do
-    dot add ${pattern} 2>/dev/null
+    eval dot add ${pattern} 2>/dev/null
   done
 
   # status
