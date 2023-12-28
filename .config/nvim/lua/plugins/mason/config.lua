@@ -8,6 +8,10 @@ return {
 		"terraform-ls", -- terraformls
 		"pyright",
 		"gopls",
+		"emmet-language-server",
+		"typescript-language-server",
+		"astro-language-server",
+		"tailwindcss-language-server",
 
 		-- formatters
 		"stylua",

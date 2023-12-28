@@ -1,4 +1,6 @@
 local format_on_save = function(bufnr)
+	local lsp_fallback_enabled = true
+
 	if vim.g.autoformat == nil then
 		vim.g.autoformat = true
 	end
@@ -11,10 +13,15 @@ local format_on_save = function(bufnr)
 		return nil
 	end
 
+	-- Check if lsp fallback --
+	if vim.bo[bufnr].filetype == "astro" then
+		lsp_fallback_enabled = false
+	end
+
 	return {
-		lsp_fallback = true,
+		lsp_fallback = lsp_fallback_enabled,
 		async = false,
-		timeout_ms = 1000,
+		timeout_ms = 2000,
 	}
 end
 
@@ -22,13 +29,14 @@ return {
 	formatters = require("plugins.conform.formatters"),
 	format_on_save = format_on_save,
 	formatters_by_ft = {
-		javascript = { "prettier" },
-		typescript = { "prettier" },
-		javascriptreact = { "prettier" },
-		typescriptreact = { "prettier" },
-		svelte = { "prettier" },
-		css = { "prettier" },
 		html = { "prettier" },
+		css = { "prettier" },
+		javascript = { "prettier" },
+		javascriptreact = { "prettier" },
+		typescript = { "prettier" },
+		typescriptreact = { "prettier" },
+		astro = {},
+		svelte = { "prettier" },
 		json = { { "prettier", "jq" } },
 		--xml = { "xmlformat" },
 		yaml = { { "prettier", "yamlfmt" } },

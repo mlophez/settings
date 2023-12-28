@@ -109,6 +109,28 @@ lspconfig.gopls.setup({
 	},
 })
 
+-- html --
+lspconfig.emmet_language_server.setup({})
+
+-- css --
+lspconfig.tailwindcss.setup({})
+
+-- typescript --
+lspconfig.tsserver.setup({})
+
+-- astro --
+lspconfig.astro.setup({
+	--on_attach = function(client)
+	--	client.resolved_capabilities.document_formatting = false
+	--	client.server_capabilities.documentFormattingProvider = false
+	--end,
+	init_options = {
+		typescript = {
+			tsdk = vim.fs.normalize("/usr/lib/node_modules/typescript/lib"),
+		},
+	},
+})
+
 -- yamls --
 -- lspconfig.yamlls.setup({
 -- 	settings = {
