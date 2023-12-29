@@ -1,4 +1,5 @@
 # vim: ft=make
+!include ./system/logind.just
 !include ./user/gnome.just
 !include ./user/distrobox.just
 !include ./user/code.just
