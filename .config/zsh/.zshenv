@@ -54,6 +54,9 @@ export PIPENV_IGNORE_VIRTUALENVS=1
 export GOPATH="$HOME/.local/share/go"
 export PATH=${PATH}:${GOPATH}/bin
 
+# RUST
+export RUSTUP_HOME="$HOME/.local/share/rustup"
+
 # NODEJS
 export NPM_CONFIG_PREFIX="$HOME/.local"
 

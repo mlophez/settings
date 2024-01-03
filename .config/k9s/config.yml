@@ -22,7 +22,7 @@ k9s:
   clusters:
     demo:
       namespace:
-        active: all
+        active: monitoring
         lockFavorites: true
         favorites:
         - all
