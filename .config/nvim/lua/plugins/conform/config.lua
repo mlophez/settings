@@ -46,6 +46,7 @@ return {
 		python = { "isort", "black" },
 		terraform = { "terraform_fmt" },
 		jsonnet = { "jsonnetfmt" },
+		rust = { "rustfmt" },
 		--sql = { "sql_formatter" },
 		-- Use the "*" filetype to run formatters on all filetypes.
 		-- ["*"] = { "codespell" },

@@ -104,6 +104,7 @@ yarn
 
 # RUST
 rustup
+rust-analyzer
 
 # LUA
 luarocks
