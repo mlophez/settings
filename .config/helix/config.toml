@@ -11,3 +11,17 @@ select = "underline"
 
 [editor.file-picker]
 hidden = false
+
+[keys.normal]
+j = "move_char_left"
+k = "move_line_down"
+l = "move_line_up"
+"ñ" = "move_char_right"
+
+#space = { q = ":q!" }
+space = { w = ":wq!" }
+
+
+
+[keys.insert]
+j = { k = "normal_mode" }

@@ -26,7 +26,6 @@ $HOME/.config/systemd
 $HOME/.config/mako
 $HOME/.config/dunst
 $HOME/.config/zsh
-$HOME/.config/just
 $HOME/.config/containers
 $HOME/.config/distrobox
 $HOME/.config/i3
