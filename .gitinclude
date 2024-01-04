@@ -5,6 +5,7 @@ $HOME/.bashrc
 $HOME/.config/autostart
 $HOME/.config/zsh
 $HOME/.config/nvim
+$HOME/.config/helix
 $HOME/.config/tmux
 $HOME/.config/nix
 $HOME/.config/zellij
