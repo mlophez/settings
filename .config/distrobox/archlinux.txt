@@ -28,6 +28,7 @@ colordiff
 bat
 dialog
 tmux
+zellij
 entr
 
 ## ZSH
@@ -65,6 +66,7 @@ rclone
 
 # UTILS
 htop
+btop
 man
 just
 
