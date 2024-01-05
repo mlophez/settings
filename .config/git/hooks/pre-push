@@ -1,4 +1,19 @@
 #!/usr/bin/env bash
 set -e
 
-git pull
+# Primero, definimos el nombre de la rama actual
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+# Luego, traemos los últimos cambios del repositorio remoto sin cambiar nuestros archivos locales
+if git show-ref --verify --quiet refs/remotes/origin/$current_branch; then
+  git fetch
+
+  # Comprobamos si hay diferencias entre la rama actual y su contraparte remota
+  if ! git diff --quiet HEAD origin/$current_branch; then
+      echo "Hay commits pendientes en la rama remota. "
+      echo "Por favor, haz primero un pull."
+      exit -1
+  fi
+fi
+
+exit 0

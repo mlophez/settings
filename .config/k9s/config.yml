@@ -3,12 +3,19 @@ k9s:
   refreshRate: 5
   maxConnRetry: 5
   enableMouse: false
+  enableImageScan: false
   headless: false
   logoless: true
   crumbsless: true
   readOnly: false
   noExitOnCtrlC: false
   noIcons: false
+  shellPod:
+    image: busybox:1.35.0
+    namespace: default
+    limits:
+      cpu: 100m
+      memory: 100Mi
   skipLatestRevCheck: false
   logger:
     tail: 1000
@@ -17,12 +24,13 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: demo
-  currentCluster: demo
+  currentContext: tools
+  currentCluster: tools
+  keepMissingClusters: false
   clusters:
     demo:
       namespace:
-        active: monitoring
+        active: all
         lockFavorites: true
         favorites:
         - all
@@ -35,15 +43,6 @@ k9s:
         active: pods
       featureGates:
         nodeShell: false
-      shellPod:
-        image: busybox:1.35.0
-        command: []
-        args: []
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-        labels: {}
       portForwardAddress: localhost
     tools:
       namespace:
@@ -57,15 +56,6 @@ k9s:
         active: pods
       featureGates:
         nodeShell: false
-      shellPod:
-        image: busybox:1.35.0
-        command: []
-        args: []
-        namespace: default
-        limits:
-          cpu: 100m
-          memory: 100Mi
-        labels: {}
       portForwardAddress: localhost
   thresholds:
     cpu:
@@ -75,3 +65,4 @@ k9s:
       critical: 90
       warn: 80
   screenDumpDir: /tmp/k9s-screens-mlr
+  disablePodCounting: false
