@@ -19,7 +19,7 @@ if git show-ref --verify --quiet refs/remotes/origin/$current_branch; then
   git fetch
 
   # Comprobamos si hay diferencias entre la rama actual y su contraparte remota
-  if git diff --quiet HEAD origin/$current_branch; then
+  if ! git diff --quiet HEAD origin/$current_branch; then
       echo "Hay commits pendientes en la rama remota. "
       echo "Por favor, haz primero un pull."
       exit -1
