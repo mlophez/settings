@@ -5,14 +5,14 @@
     "position": "top",
     "height": 40,
     "margin-top": 10,
-    // "margin-left": 20,
+    "margin-left": 13,
     // "margin-right": 20,
 
     "modules-left": [
+      "sway/workspaces",
       "sway/mode"
     ],
     "modules-center": [
-      "sway/workspaces",
       "clock#time",
     ],
     "modules-right": [
