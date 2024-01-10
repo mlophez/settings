@@ -1,15 +1,21 @@
 // config.kdl
 
-theme_dir ".config/zellij/themes"
-layout_dir ".config/zellij/layouts"
+//theme_dir ".config/zellij/themes"
+//layout_dir ".config/zellij/layouts"
 
-theme "dracula"
+theme "catppuccin-mocha"
 default_layout "main"
 default_mode "normal"
+default_shell "zsh"
 pane_frames false
 auto_layout true
 copy_on_select true
 mouse_mode false
+session_serialization false
+
+//env {
+//  ZDOTDIR "~/.config/zsh"
+//}
 
 ui {
   pane_frames {
@@ -83,3 +89,4 @@ plugins {
   compact-bar { path "compact-bar"; }
   session-manager { path "session-manager"; }
 }
+

@@ -13,10 +13,10 @@ timezsh() {
 ls() {
   local afunctrace=($functrace)
   if [[ ${#afunctrace[@]} -le 1 ]]; then
-    if type lsd &>/dev/null; then
-      command lsd -v --group-directories-first "$@"
-    elif type exa &>/dev/null; then
+    if type exa &>/dev/null; then
       command exa --group-directories-first "$@"
+    elif type lsd &>/dev/null; then
+      command lsd -v --group-directories-first "$@"
     else
       command ls -v --group-directories-first --color "$@"
     fi

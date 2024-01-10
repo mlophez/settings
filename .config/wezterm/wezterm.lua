@@ -31,7 +31,8 @@ return {
 		"-e",
 		"/bin/bash",
 		"-c",
-		"tmux attach-session -t '0' || tmux -2 new-session -s '0' -n 'HOME'",
+		"export ZDOTDIR=$HOME/.config/zsh; { zellij attach '0' || zellij -s '0'; }",
+		--	"tmux attach-session -t '0' || tmux -2 new-session -s '0' -n 'HOME'",
 	},
 	set_environment_variables = {
 		ZDOTDIR = "$HOME/.config/zsh",

@@ -15,9 +15,8 @@ layout {
     pane cwd="$HOME"
   }
   tab name="#1 LOCAL"
-  //tab name="#3 TERRAFORM" cwd="Documents/Projects/terraform"
-  //tab name="#4 KUBERNETES" cwd="Documents/Projects/kubernetes"
 }
+
 //keybinds {
 //  shared {
 //    bind "Alt 1" { Run "git" "status"; }
@@ -25,3 +24,4 @@ layout {
 //    bind "Alt 3" { Run "exa" "--color" "always"; }
 //  }
 //}
+

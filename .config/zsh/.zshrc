@@ -71,9 +71,10 @@ bindkey '^R' history-incremental-search-backward
     source $HOME/.config/zsh/plugins/fzf-history-search.zsh
 
 # PROMPT
-[ ! -d "$HOME/.local/share/zsh/spaceship" ] && \
-  git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.local/share/zsh/spaceship"
-source ~/.local/share/zsh/spaceship/spaceship.zsh
+#[ ! -d "$HOME/.local/share/zsh/spaceship" ] && \
+#  git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.local/share/zsh/spaceship"
+#source ~/.local/share/zsh/spaceship/spaceship.zsh
+eval "$(starship init zsh)"
 
 # ALIASES
 source $HOME/.config/zsh/aliases.zsh

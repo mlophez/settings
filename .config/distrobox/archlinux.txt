@@ -20,6 +20,7 @@ ripgrep
 fzf
 expect
 pv
+exa
 bc
 jq
 yq
@@ -30,12 +31,16 @@ dialog
 tmux
 zellij
 entr
+ripgrep
+fd
+nushell
 
 ## ZSH
 zsh
 zsh-completions
 zsh-autosuggestions
 zsh-syntax-highlighting
+starship
 
 # FILES
 unrar
