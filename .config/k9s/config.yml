@@ -24,7 +24,7 @@ k9s:
     fullScreenLogs: false
     textWrap: false
     showTime: false
-  currentContext: demo
+  currentContext: --version
   currentCluster: demo
   keepMissingClusters: false
   clusters:
@@ -40,7 +40,7 @@ k9s:
         - default
         - ingress
       view:
-        active: pods
+        active: context
       featureGates:
         nodeShell: false
       portForwardAddress: localhost
