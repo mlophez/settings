@@ -121,3 +121,5 @@ alias reload="exec bash"
 
 [ -e "$HOME/.config/zsh/aliases.zsh" ] && \
   source $HOME/.config/zsh/aliases.zsh
+
+type starship &>/dev/null && eval "$(starship init bash)"

@@ -110,7 +110,7 @@ lspconfig.gopls.setup({
 })
 
 -- rust --
-require("lspconfig").rust_analyzer.setup({})
+--require("lspconfig").rust_analyzer.setup({})
 
 -- html --
 lspconfig.emmet_language_server.setup({})

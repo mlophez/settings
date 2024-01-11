@@ -3,25 +3,17 @@ layout {
     pane size=1 borderless=true {
       plugin location="zellij:compact-bar"
     }
-    //floating_panes {
-    //  //pane command="zellij action toggle-floating-panes" close_on_exit=true
-    //  pane {
-    //    x "1%"
-    //    y "5%"
-    //    width "98%"
-    //    height "90%"
-    //  }
-    //}
-    pane cwd="$HOME"
+    children
   }
-  tab name="#1 LOCAL"
+  swap_floating_layout {
+    floating_panes max_panes=1 {
+      pane {
+        x "5%"
+        y "10%"
+        width "90%"
+        height "80%"
+      }
+    }
+  }
+  tab name="1# LOCAL"
 }
-
-//keybinds {
-//  shared {
-//    bind "Alt 1" { Run "git" "status"; }
-//    bind "Alt 2" { Run "git" "diff"; }
-//    bind "Alt 3" { Run "exa" "--color" "always"; }
-//  }
-//}
-

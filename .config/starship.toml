@@ -4,18 +4,21 @@
 format = """
 $username\
 $hostname\
-$directory\
-$python\
-$kubernetes\
-$aws\
 $shell\
+$directory\
+$line_break\
+$character"""
+
+right_format = """
 $git_branch\
 $git_commit\
 $git_state\
 $git_metrics\
 $git_status\
-$line_break\
-$character"""
+$kubernetes\
+$aws\
+$python\
+"""
 
 # Inserts a blank line between shell prompts
 add_newline = true
@@ -30,7 +33,7 @@ error_symbol = '[➜](bold red)' # The 'success_symbol' segment is being set to 
 disabled = true
 
 [username]
-style_user = "bold dimmed blue"
+style_user = "bold blue"
 show_always = true
 
 [hostname]
@@ -39,8 +42,15 @@ format = '[$hostname](bold red) '
 trim_at = '.companyname.com'
 disabled = false
 
+[shell]
+disabled = false
+format='via [$indicator]($style) '
+style="yellow bold"
+
 [directory]
 format = "on [$path]($style)[$read_only]($read_only_style) "
+truncation_length = 5
+truncate_to_repo = false
 
 [git_branch]
 format = " [$symbol$branch]($style) "
