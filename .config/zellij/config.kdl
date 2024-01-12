@@ -39,8 +39,7 @@ keybinds clear-defaults=true {
     bind "Alt ," { SwitchToMode "RenameTab"; TabNameInput 0; }
     bind "Alt u" { CloseFocus; }
 
-    bind "Ctrl j" { MoveFocus "Left"; }
-    //bind "Alt j" "Ctrl j" { MoveFocus "Left"; }
+    bind "Alt j" "Ctrl j" { MoveFocus "Left"; }
     bind "Alt k" "Ctrl k" { MoveFocus "Down"; }
     bind "Alt l" "Ctrl l" { MoveFocus "Up"; }
     bind "Alt ñ" "Ctrl ñ" "F6" { MoveFocus "Right"; }
@@ -50,7 +49,7 @@ keybinds clear-defaults=true {
     bind "Alt L" "Alt Up"    { Resize "Increase Up"; }
     bind "Alt Ñ" "Alt Right" { Resize "Increase Right"; }
 
-    //bind "Alt s" { GoToPreviousTab; }
+    //bind "Ctrl " { GoToPreviousTab; }
     //bind "Alt d" { GoToNextTab; }
 
     bind "Alt 1" { GoToTab  1; }
