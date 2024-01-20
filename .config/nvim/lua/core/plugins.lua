@@ -100,6 +100,18 @@ lazy.setup({
 		opts = require("plugins.treesitter.config"),
 	},
 
+	{
+		"IndianBoy42/tree-sitter-just",
+		build = ":TSInstall just",
+		--lazy = false,
+		config = function()
+			require("tree-sitter-just").setup()
+		end,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
+
 	-- Files
 	{
 		"kyazdani42/nvim-tree.lua",
