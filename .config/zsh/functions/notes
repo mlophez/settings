@@ -3,8 +3,25 @@
 function notes() {
   cd $HOME/Documents/Notes
   [ -n "$TMUX" ]   && tmux rename-window "NOTES"
-  [ -n "$ZELLIJ" ] && zellij action rename-tab "2# NOTES"
-  nvim inbox.md
+  [ -n "$ZELLIJ" ] && zellij action rename-tab "NOTES"
+
+  if [ -d ".git/" ]; then
+    # Download changes
+    git remote | grep -q '.' && git pull
+
+    nvim inbox.md
+
+    # Upload changes
+    if git status | grep -q 'modified\|untracked'; then
+      echo "Guardando y subiendo cambios..."
+      git add .
+      git commit -m "Saved at $(date '+%Y-%m-%d %H:%M:%S')"
+      git push
+    fi
+  else
+    nvim inbox.md
+  fi
+
 }
 
 # NOTES
