@@ -13,6 +13,11 @@ clusters:
     server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
     certificate-authority: tools.crt
 
+- name: dev
+  cluster:
+    server: https://25DC26DA3402D9AFCE9AC61C86A367E4.yl4.eu-south-2.eks.amazonaws.com
+    insecure-skip-tls-verify: true
+
 - name: biiddev
   cluster:
     server: https://54.74.163.210:6443
@@ -42,6 +47,13 @@ users:
       apiVersion: client.authentication.k8s.io/v1beta1
       command: aws
       args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo"]
+
+- name: dev-admin
+  user:
+    exec:
+      apiVersion: client.authentication.k8s.io/v1beta1
+      command: aws
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--profile", "terraform-dev"]
 
 - name: demo-viewer
   user:
@@ -82,6 +94,11 @@ contexts:
   context:
     cluster: demo
     user: demo-admin
+
+- name: dev
+  context:
+    cluster: dev
+    user: dev-admin
 
 - name: tools
   context:

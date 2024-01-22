@@ -73,6 +73,8 @@ lazy.setup({
 		lazy = false,
 		keys = {
 			{ "<cr>", ":NotifyDismiss<cr>", silent = true },
+			{ "<s-cr>", ":NotifyDismiss<cr>", silent = true },
+			{ ",", ":NotifyDismiss<cr>", silent = true },
 		},
 		config = function()
 			require("plugins.notify")
@@ -120,12 +122,12 @@ lazy.setup({
 			"nvim-tree/nvim-web-devicons",
 		},
 		keys = {
-			{ "m", ":NvimTreeToggle<cr>", silent = true },
+			{ "m", "<cmd>NvimTreeFocusToggle<cr>", silent = true },
 			{ "<leader>e", ":NvimTreeFocusToggle<cr>", silent = true },
 			{ "<C-e>", ":NvimTreeFocusToggle<cr>", silent = true },
 			{ "<leader>b", ":NvimTreeClose<cr>", silent = true },
 			-- { "m", ":NvimTreeOpen<cr>", silent = true },
-			-- { "m", "<cmd>NvimTreeFocusToggle<cr>", silent = true },
+			-- { "m", ":NvimTreeToggle<cr>", silent = true },
 		},
 		config = function()
 			require("plugins.nvimtree.setup")
@@ -272,6 +274,9 @@ lazy.setup({
 			})
 		end,
 	},
+
+	require("plugins.obsidian"),
+	require("plugins.bufdelete"),
 
 	--{
 	--	"akinsho/flutter-tools.nvim",
