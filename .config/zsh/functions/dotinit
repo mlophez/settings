@@ -31,11 +31,11 @@ status() {
     sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
 
   # add
-  # dot add $(< $HOME/.gitinclude | grep -v -e "^ *#" -e "^ *$" | tr '\n' ' ' | sed "s#\$HOME#$HOME#g")
   dot add -u
-  for pattern in $(< $HOME/.gitinclude | grep -v -e "^ *#" -e "^ *$" | tr '\n' ' ' | sed "s#\$HOME#$HOME#g"); do
-    eval dot add ${pattern} 2>/dev/null
-  done
+  cat $HOME/.gitinclude \
+    | grep -v -e "^ *#" -e "^ *$" \
+    | tr '\n' ' ' | sed "s#\$HOME#$HOME#g" \
+    | xargs -I@ eval dot add @
 
   # status
   dot status

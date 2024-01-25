@@ -6,10 +6,13 @@ return {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
-	init = function()
-		vim.opt.conceallevel = 1
-	end,
+	--init = function()
+	--	vim.opt.conceallevel = 1
+	--end,
 	opts = {
+		ui = {
+			enable = false,
+		},
 		notes_subdir = "pkm",
 		disable_frontmatter = true,
 		workspaces = {

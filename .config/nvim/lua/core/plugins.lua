@@ -122,12 +122,10 @@ lazy.setup({
 			"nvim-tree/nvim-web-devicons",
 		},
 		keys = {
-			{ "m", "<cmd>NvimTreeFocusToggle<cr>", silent = true },
-			{ "<leader>e", ":NvimTreeFocusToggle<cr>", silent = true },
+			{ "m", ":NvimTreeToggle<cr>", silent = true },
+			{ "<leader>e", ":NvimTreeToggle<cr>", silent = true },
 			{ "<C-e>", ":NvimTreeFocusToggle<cr>", silent = true },
 			{ "<leader>b", ":NvimTreeClose<cr>", silent = true },
-			-- { "m", ":NvimTreeOpen<cr>", silent = true },
-			-- { "m", ":NvimTreeToggle<cr>", silent = true },
 		},
 		config = function()
 			require("plugins.nvimtree.setup")
