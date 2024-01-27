@@ -23,9 +23,11 @@ return {
 		"sql",
 		"terraform",
 		"dart",
+		"query",
+		"astro",
 	},
 	ignore_install = { "phpdoc" },
-	sync_install = true,
+	sync_install = false,
 	auto_install = true,
 	highlight = {
 		enable = true,

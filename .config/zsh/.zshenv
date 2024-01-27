@@ -3,7 +3,8 @@
 # ZSH
 export ZDOTDIR=$HOME/.config/zsh
 export KEYTIMEOUT=1
-export PATH=${PATH}:${ZDOTDIR}/scripts
+
+export PATH=${PATH}:${HOME}/.config/scripts
 export FPATH=${FPATH}:${ZDOTDIR}/functions
 
 # SHELL

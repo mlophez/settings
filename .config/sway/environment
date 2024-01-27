@@ -8,6 +8,7 @@ export XDG_SESSION_TYPE=wayland
 ## PATH ##
 export PATH=$PATH:$HOME/.config/sway
 export PATH=$PATH:$HOME/.config/sway/scripts
+export PATH=$PATH:$HOME/.config/scripts
 export PATH=$PATH:$HOME/.local/bin
 
 # WAYLAND APPS #
