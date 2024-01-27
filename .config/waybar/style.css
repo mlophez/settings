@@ -20,6 +20,7 @@ window#waybar {
 #pulseaudio,
 #battery,
 #custom-lock,
+#custom-wallpaper,
 #custom-shutdown {
   background-color: shade(@base, 0.9);
   border-radius: 7px;

@@ -17,6 +17,7 @@
     ],
     "modules-right": [
       "tray",
+      "custom/wallpaper",
       "pulseaudio",
       "battery",
       "clock",
@@ -83,6 +84,11 @@
     "custom/shutdown": {
       "on-click": "loginctl kill-session ${XDG_SESSION_ID}",
       "format": "  "
+    },
+
+    "custom/wallpaper": {
+      "format": " 󰸉 ",
+      "on-click": "desktop wallpaper"
     },
 
     "pulseaudio": {
