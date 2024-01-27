@@ -1,0 +1,103 @@
+#!/usr/bin/zsh
+
+dot() {
+  command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
+}
+
+dot-get-windows-files() {
+  local windows_user_home=$(echo $PATH | grep -io -P "/mnt/c/Users/.*?/" | head -1)
+
+  [ -z "${windows_user_home}" ] && return 0
+  [ ! -d "$HOME/.config/Windows" ] && mkdir -p $HOME/.config/Windows
+
+  cp $windows_user_home/AppData/Roaming/Code/User/settings.json \
+    $HOME/.config/Windows/code-user-settings.json
+
+  cp $windows_user_home/AppData/Roaming/Code/User/keybindings.json \
+    $HOME/.config/Windows/code-user-keybindings.json
+
+  cp $windows_user_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+    $HOME/.config/Windows/terminal-settings.json
+}
+
+status() {
+  dot restore --staged . &>/dev/null
+
+  # ADD WINDOWS FILE (WSL)
+  dot-get-windows-files
+  ###
+
+  [ -e "$KUBECONFIG" ] && \
+    sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
+
+  # add
+  dot add -u
+
+  dot add \
+    $HOME/.gitignore \
+    $HOME/.config/autostart \
+    $HOME/.config/zsh \
+    $HOME/.config/nvim \
+    $HOME/.config/helix \
+    $HOME/.config/tmux \
+    $HOME/.config/nix \
+    $HOME/.config/zellij \
+    $HOME/.config/alacritty \
+    $HOME/.config/kitty \
+    $HOME/.config/foot \
+    $HOME/.config/wezterm \
+    $HOME/.config/git \
+    $HOME/.config/kube/config \
+    $HOME/.config/wsl \
+    $HOME/.config/qtile \
+    $HOME/.config/sway \
+    $HOME/.config/gnome \
+    $HOME/.config/waybar \
+    $HOME/.config/rofi \
+    $HOME/.config/mutt \
+    $HOME/.config/systemd \
+    $HOME/.config/mako \
+    $HOME/.config/dunst \
+    $HOME/.config/zsh \
+    $HOME/.config/scripts \
+    $HOME/.config/starship.toml \
+    $HOME/.config/containers \
+    $HOME/.config/distrobox \
+    $HOME/.config/i3 \
+    $HOME/.config/gnupg/gpg.conf \
+    $HOME/.config/gnupg/gpg-agent.conf \
+    $HOME/.config/Windows \
+    $HOME/.config/Code/User/settings.json \
+    $HOME/.ssh/config \
+    $HOME/.aws/config \
+    $HOME/.config/k9s \
+    $HOME/.local/share/themes \
+    $HOME/.local/share/backgrounds \
+    $HOME/.local/share/flatpak/overrides/global \
+    $HOME/.var/app/com.google.Chrome/config/chrome-flags.conf \
+    $HOME/.var/app/com.brave.Browser/config/brave-flags.conf \
+    $HOME/.bashrc
+    #$HOME/.config/Code/User/keybindings.json \
+    #$HOME/.local/share/icons/*icons \
+    #$HOME/.local/share/icons/*cursors \
+    #$HOME/.local/share/fonts/*.ttf \
+    #$HOME/.local/share/fonts/*.otf \
+
+  # status
+  dot status
+}
+
+save() {
+  dot commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
+  dot push -u origin main
+}
+
+load() {
+  dot pull
+}
+
+[ "$1" = "changes" ] && exec status
+[ "$1" = "save" ] && exec save
+[ "$1" = "load" ] && exec load
+exec dot "$@"
+
