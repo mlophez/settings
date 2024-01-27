@@ -1,27 +1,31 @@
 #!/usr/bin/zsh
 
 function notes() {
-  cd $HOME/Documents/Notes
+  local notedir="$HOME/Documents/Notes"
+  local remote="https://gitlab.com/MLR96/notes.git"
+
+  ! type git &>/dev/null && return -1
+  ! type nvim &>/dev/null && return -1
+
+  [ ! -d "${notedir}" ] && \
+    git clone ${remote} ${notedir}
+
+  cd ${notedir}
+
+  [ ! -d ".git" ] && return
+  git remote | grep -q . || return
+
   [ -n "$TMUX" ]   && tmux rename-window "NOTES"
   [ -n "$ZELLIJ" ] && zellij action rename-tab "NOTES"
 
-  if [ -d ".git/" ]; then
-    # Download changes
-    git remote | grep -q '.' && git pull
-
-    nvim inbox.md
-
-    # Upload changes
-    if git status | grep -q 'modified\|untracked'; then
-      echo "Guardando y subiendo cambios..."
-      git add .
-      git commit -m "Saved at $(date '+%Y-%m-%d %H:%M:%S')"
-      git push
-    fi
-  else
-    nvim inbox.md
+  git pull
+  nvim home.md tasks.md inbox.md
+  if git status | grep -q 'modified\|untracked'; then
+    echo "Guardando y subiendo cambios..."
+    git add .
+    git commit -m "Saved at $(date '+%Y-%m-%d %H:%M:%S')"
+    git push
   fi
-
 }
 
 # NOTES
