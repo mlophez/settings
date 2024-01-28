@@ -241,6 +241,11 @@ ssh() {
   TERM=xterm-256color command ssh "$@"
 }
 
+fkill () {
+  local pid=$(ps -ef | sed 1d | fzf | awk '{print $2}')
+  [ "x$pid" != "x" ] && kill -${1:-9} $pid
+}
+
 # function clipboard() {
 #     if [ "$XDG_SESSION_TYPE" = "x11" ]; then
 #         xclip -i -r -sel clip "$@"

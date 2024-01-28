@@ -1,6 +1,0 @@
-#!/usr/bin/zsh
-
-fkill () {
-  local pid=$(ps -ef | sed 1d | fzf | awk '{print $2}')
-  [ "x$pid" != "x" ] && kill -${1:-9} $pid
-}
