@@ -1,6 +1,0 @@
-#!/usr/bin/env zsh
-
-distrobox-menu () {
-  local container_name=$(distrobox list --no-color | awk -F'|' '{print $2}' | grep -v "NAME" | fzf)
-  [ "x$container_name" != "x" ] && eval distrobox enter $container_name
-}
