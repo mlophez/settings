@@ -188,10 +188,7 @@ function cmd_autostart() {
     systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     dbus-update-activation-environment --systemd --all
 
-    #${SELF} wallpaper
-    if type swww &>/dev/null; then
-      swww init &>/dev/null
-    fi
+    ${SELF} wallpaper
 
     exit 0
 }
