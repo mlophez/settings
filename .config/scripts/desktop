@@ -212,7 +212,7 @@ cmd_terminal() {
 cmd_wallpaper() {
   local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
   if type swww &>/dev/null; then
-    #swww init &>/dev/null
+    swww init &>/dev/null
     swww img $HOME/.local/share/backgrounds/${image} \
       --transition-type center \
       --transition-fps 60 \
