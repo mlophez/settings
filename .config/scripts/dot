@@ -31,57 +31,59 @@ status() {
     sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
 
   # add
-  dot add -u
-
-  dot add \
-    $HOME/.gitignore \
-    $HOME/.config/autostart \
-    $HOME/.config/zsh \
-    $HOME/.config/nvim \
-    $HOME/.config/helix \
-    $HOME/.config/tmux \
-    $HOME/.config/nix \
-    $HOME/.config/zellij \
-    $HOME/.config/alacritty \
-    $HOME/.config/kitty \
-    $HOME/.config/foot \
-    $HOME/.config/wezterm \
-    $HOME/.config/git \
-    $HOME/.config/kube/config \
-    $HOME/.config/wsl \
-    $HOME/.config/qtile \
-    $HOME/.config/sway \
-    $HOME/.config/gnome \
-    $HOME/.config/waybar \
-    $HOME/.config/rofi \
-    $HOME/.config/mutt \
-    $HOME/.config/systemd \
-    $HOME/.config/mako \
-    $HOME/.config/dunst \
-    $HOME/.config/zsh \
-    $HOME/.config/scripts \
-    $HOME/.config/starship.toml \
-    $HOME/.config/containers \
-    $HOME/.config/distrobox \
-    $HOME/.config/i3 \
-    $HOME/.config/gnupg/gpg.conf \
-    $HOME/.config/gnupg/gpg-agent.conf \
-    $HOME/.config/Windows \
-    $HOME/.config/Code/User/settings.json \
-    $HOME/.ssh/config \
-    $HOME/.aws/config \
-    $HOME/.config/k9s \
-    $HOME/.local/share/themes \
-    $HOME/.local/share/backgrounds \
-    $HOME/.local/share/flatpak/overrides/global \
-    $HOME/.var/app/com.google.Chrome/config/chrome-flags.conf \
-    $HOME/.var/app/com.brave.Browser/config/brave-flags.conf \
-    $HOME/.bashrc
-    #$HOME/.config/Code/User/keybindings.json \
-    #$HOME/.local/share/icons/*icons \
-    #$HOME/.local/share/icons/*cursors \
-    #$HOME/.local/share/fonts/*.ttf \
-    #$HOME/.local/share/fonts/*.otf \
+  set +e
+  {
+    dot add -u
+    dot add $HOME/.bashrc
+    dot add $HOME/.gitignore
+    dot add $HOME/.config/autostart
+    dot add $HOME/.config/zsh
+    dot add $HOME/.config/nvim
+    dot add $HOME/.config/helix
+    dot add $HOME/.config/tmux
+    dot add $HOME/.config/nix
+    dot add $HOME/.config/zellij
+    dot add $HOME/.config/alacritty
+    dot add $HOME/.config/kitty
+    dot add $HOME/.config/foot
+    dot add $HOME/.config/wezterm
+    dot add $HOME/.config/git
+    dot add $HOME/.config/kube/config
+    dot add $HOME/.config/wsl
+    dot add $HOME/.config/qtile
+    dot add $HOME/.config/sway
+    dot add $HOME/.config/gnome
+    dot add $HOME/.config/waybar
+    dot add $HOME/.config/rofi
+    dot add $HOME/.config/mutt
+    dot add $HOME/.config/systemd
+    dot add $HOME/.config/mako
+    dot add $HOME/.config/dunst
+    dot add $HOME/.config/zsh
+    dot add $HOME/.config/scripts
+    dot add $HOME/.config/starship.toml
+    dot add $HOME/.config/containers
+    dot add $HOME/.config/distrobox
+    dot add $HOME/.config/i3
+    dot add $HOME/.config/gnupg/gpg.conf
+    dot add $HOME/.config/gnupg/gpg-agent.conf
+    dot add $HOME/.config/Windows
+    dot add $HOME/.config/Code/User/settings.json
+    dot add $HOME/.config/Code/User/keybindings.json
+    dot add $HOME/.ssh/config
+    dot add $HOME/.aws/config
+    dot add $HOME/.config/k9s
+    dot add $HOME/.var/app/com.google.Chrome/config/chrome-flags.conf
+    dot add $HOME/.var/app/com.brave.Browser/config/brave-flags.conf
+    dot add $HOME/.local/share/flatpak/overrides/global
+    dot add $HOME/.local/share/themes
+    dot add $HOME/.local/share/backgrounds
+    dot add $HOME/.local/share/icons/*icons
+    dot add $HOME/.local/share/icons/*cursors
+    dot add $HOME/.local/share/fonts/*.ttf
+    #dot add $HOME/.local/share/fonts/*.otf
+  } &>/dev/null
+  set -e
 
   # status
   dot status

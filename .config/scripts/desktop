@@ -225,7 +225,7 @@ cmd_wallpaper() {
   fi
 }
 
-function main() {
+main() {
     local args="$@"
     local command="$1"
 

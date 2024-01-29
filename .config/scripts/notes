@@ -1,6 +1,6 @@
 #!/usr/bin/zsh
 
-function notes() {
+main() {
   local notedir="$HOME/Documents/Notes"
   local remote="https://gitlab.com/MLR96/notes.git"
 
@@ -28,3 +28,4 @@ function notes() {
   fi
 }
 
+main "$@"

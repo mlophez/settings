@@ -109,6 +109,7 @@ alias edit="nvim \$(find . -type f -print | fzf)"
 alias e="editor"
 
 # DOT
+alias config="cd $HOME/.config && nvim"
 alias status="dot changes"
 alias save="dot save"
 alias load="dot load"
@@ -169,6 +170,9 @@ alias k9="k9s -c pods --context"
 # HELM
 alias helm-list="helm ls -A --kube-context"
 
+# KUBESEAL
+alias kubeseal="command kubeseal --controller-namespace kube-system --controller-name sealed-secrets --scope cluster-wide"
+
 # PYTHON
 alias d="deactivate"
 
@@ -180,8 +184,8 @@ alias se="settings"
 
 # DISTROBOX
 alias ds="distrobox-menu"
-alias system="distrobox-host-exec bash"
-alias system-root="distrobox-host-exec sudo bash"
+alias sys="distrobox-host-exec bash"
+alias sysadmin="distrobox-host-exec sudo bash"
 
 # FUNCTIONS
 precmd() {

@@ -115,6 +115,7 @@ rust-analyzer
 
 # LUA
 luarocks
+lua-language-server
 
 # JAVA
 jdk-openjdk

@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+
+cmd_setup() {
+	sudo pacman -Syu --noconfirm
+	sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
+}
+
+main() {
+  local command="$1"; shift
+
+  if type cmd_$command &>/dev/null; then
+    cmd_$command "$@"
+  else
+    echo "Command ${command} do not exists"
+    exit 1
+  fi
+}
+
+main "$@"
+
