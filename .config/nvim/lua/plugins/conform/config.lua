@@ -39,7 +39,7 @@ return {
 		svelte = { "prettier" },
 		json = { { "prettier", "jq" } },
 		--xml = { "xmlformat" },
-		yaml = { { "prettier", "yamlfmt" } },
+		-- yaml = { { "prettier", "yamlfmt" } },
 		markdown = { "prettier" },
 		graphql = { "prettier" },
 		lua = { "stylua" },
