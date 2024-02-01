@@ -276,6 +276,7 @@ aws-inventory() {
   # INVENTORY FILE
   cat /dev/null > $HOME/.aws/inventory
   for profile in $profiles; do
+    echo "[+] Profile: ${profile}"
     for region in $regions; do
       aws ec2 describe-instances --region $region --profile $profile | \
         jq --arg region "$region" --arg profile "$profile" -r "$query" >> $HOME/.aws/inventory
