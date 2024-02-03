@@ -26,7 +26,15 @@ lazy.setup({
 		lazy = false,
 		priority = 10000,
 		config = function()
-			vim.cmd.colorscheme("catppuccin-mocha")
+			require("catppuccin").setup({
+				flavour = "mocha",
+				background = {
+					light = "latte",
+					dark = "mocha",
+				},
+				transparent_background = false,
+			})
+			vim.cmd.colorscheme("catppuccin")
 		end,
 	},
 

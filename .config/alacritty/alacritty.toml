@@ -201,7 +201,7 @@ decorations = "None"
 dynamic_padding = false
 dynamic_title = false
 #gtk_theme_variant = "None"
-opacity = 1
+opacity = 0.9
 startup_mode = "Windowed"
 title = "Alacritty"
 
@@ -214,8 +214,8 @@ columns = 0
 lines = 0
 
 [window.padding]
-x = 5
-y = 5
+x = 10
+y = 10
 
 [window.position]
 x = 0
