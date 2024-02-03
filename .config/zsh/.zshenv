@@ -91,4 +91,9 @@ export LC_ALL=$LANG
 # export ODBCINI=$HOME/.config/odbc.ini
 # export ODBCINSTINI=..$HOME/.config/odbcinst.ini
 
+if [ -n "$CONTAINER_ID" ]; then
+  export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/run/dbus/system_bus_socket
+else
+  unset DBUS_SYSTEM_BUS_ADDRESS
+fi
 

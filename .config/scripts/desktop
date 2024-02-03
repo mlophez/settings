@@ -5,43 +5,83 @@ SWAYPATH="$HOME/.config/sway"
 
 #[[ -e $HOME/.config/zsh/.zshenv ]] && source $HOME/.config/zsh/.zshenv
 
-function cmd_waybar() {
-    export XDG_CURRENT_DESKTOP=Unity
-    exec waybar -c $HOME/waybar/waybar.conf -s $HOME/waybar/waybar.css "$@"
+cmd_init() {
+    # PORTALS
+    pkill -f "xdg-desktop-portal"
+    nohup /usr/libexec/xdg-desktop-portal -r &>/dev/null &
+    nohup /usr/libexec/xdg-desktop-portal-wlr -r &>/dev/null &
+    nohup /usr/libexec/xdg-desktop-portal-gtk -r &>/dev/null &
+    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    dbus-update-activation-environment --systemd --all
+
+    # BALOOCTL
+    type balooctl &>/dev/null && balooctl disable &>/dev/null
+
+    # NETWORK MANAGER
+    # type nmcli &>/dev/null && nmcli radio wifi off
+    type nm-applet &>/dev/null && nohup nm-applet &>/dev/null &
+
+    # WALLPAPER
+    type nm-applet &>/dev/null && nohup swww init &>/dev/null &
+    desktop wallpaper
+
+    # VBOX
+    # type VBoxClient &>/dev/null && VBoxClient --clipboard
+
     exit 0
 }
 
-function cmd_monitor() {
-    local screens external internal
-    local selected default
+cmd_panel() {
+    export XDG_CURRENT_DESKTOP=Unity
+    pkill waybar
+    exec waybar -c $HOME/.config/waybar/config -s $HOME/.config/waybar/style.css "$@"
+}
 
-    screens=$(swaymsg -t get_outputs | jq -r '.[].name' | sort)
-    default="$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)"
+cmd_wallpaper() {
+  local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
+  if type swww &>/dev/null; then
+    swww img $HOME/.local/share/backgrounds/${image} \
+      --transition-type center \
+      --transition-fps 60 \
+      --transition-step 50 \
+      --transition-duration 1
+    # swww img $HOME/.local/share/backgrounds/sunset-synthwave-sports-car-city-palm-trees.jpg
+  else
+    swaymsg output '*' bg $HOME/.local/share/backgrounds/${image} fill
+    # swaymsg output * bg #1e1e2e solid_color
+  fi
+}
 
-    # Criteria one
-    #external=$(swaymsg -t get_outputs | jq -r '.[].name' | grep "HDMI" | head 0)
-    #internal=$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)
 
-    #[ -n "$external" ] && selected="$external"
-    #[ -z "$external" ] && selected="$internal"
+cmd_monitor() {
+  local screens external internal
+  local selected default
 
-    # Criteria two
-    selected="$(swaymsg -t get_outputs | jq -r '.[].name' | sort | grep -v "eDP" | head -1)"
-    [ -z "$selected" ] && selected="$default"
+  screens=$(swaymsg -t get_outputs | jq -r '.[].name' | sort)
+  default="$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)"
 
-    echo $selected
-    for screen in $(echo "$screens"); do
-        if [ "$screen" = "$selected" ]; then
-            swaymsg output $screen enable
-            swaymsg output $screen resolution "1920x1080" position "0,0" scale 1
-        else
-            swaymsg output $screen disable
-        fi
-    done
+  # Criteria one
+  #external=$(swaymsg -t get_outputs | jq -r '.[].name' | grep "HDMI" | head 0)
+  #internal=$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)
 
-    #daemonize /usr/lib/xdg-desktop-portal-wlr -r -o $monitor
-    #killall waybar &>/dev/null
-    #cmd_waybar
+  #[ -n "$external" ] && selected="$external"
+  #[ -z "$external" ] && selected="$internal"
+
+  # Criteria two
+  selected="$(swaymsg -t get_outputs | jq -r '.[].name' | sort | grep -v "eDP" | head -1)"
+  [ -z "$selected" ] && selected="$default"
+
+  echo $selected
+  for screen in $(echo "$screens"); do
+    if [ "$screen" = "$selected" ]; then
+      swaymsg output $screen enable
+      swaymsg output $screen resolution "1920x1080" position "0,0" scale 1
+    else
+      swaymsg output $screen disable
+    fi
+  done
+
+  desktop wallpaper
 }
 
 function cmd_locking() {
@@ -150,49 +190,6 @@ function cmd_menu-pass() {
     fi
 }
 
-function cmd_autostart() {
-    ################### CONFIGURE ###################
-    mkdir -p /tmp/$USER 2> /dev/null
-
-    # CACHE
-    mkdir -p /tmp/$USER/cache 2> /dev/null
-    rm -rf "$HOME/.cache" 2> /dev/null
-    ln -sf /tmp/$USER/cache $HOME/.cache
-
-    # FLATPAK CACHE
-    for folder in $(find $HOME/.var/app/ -type d -name cache 2> /dev/null); do
-        rm -rf "$folder/*"
-    done
-
-    # BROWSERS
-    rm -rf "$HOME/.mozilla" 2> /dev/null
-    #rm -rf "$HOME/.config/chromium" 2> /dev/null
-    #rm -rf "$HOME/.config/google-chrome" 2> /dev/null
-    #rm -rf "$HOME/.config/opera" 2> /dev/null
-
-    # NETWORK MANAGER
-    # type nmcli &>/dev/null && nmcli radio wifi off
-
-    # BALOOCTL
-    type balooctl &>/dev/null && balooctl disable &>/dev/null
-
-    # VBOX
-    # type VBoxClient &>/dev/null && VBoxClient --clipboard
-
-    ################### AUTOSTART ###################
-    nohup /usr/libexec/xdg-desktop-portal -r &>/dev/null &
-    nohup /usr/libexec/xdg-desktop-portal-wlr -r &>/dev/null &
-    nohup /usr/libexec/xdg-desktop-portal-gtk -r &>/dev/null &
-
-    ################### SYSTEMD ###################
-    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    dbus-update-activation-environment --systemd --all
-
-    ${SELF} wallpaper
-
-    exit 0
-}
-
 cmd_terminal() {
   if [ -z "${1}" ]; then
     type alacritty &>/dev/null && exec alacritty -e ${SELF} terminal shell
@@ -206,22 +203,6 @@ cmd_terminal() {
 
     # ZSH
     type zsh &>/dev/null && ZDOTDIR=$HOME/.config/zsh exec zsh
-  fi
-}
-
-cmd_wallpaper() {
-  local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
-  if type swww &>/dev/null; then
-    swww init &>/dev/null
-    swww img $HOME/.local/share/backgrounds/${image} \
-      --transition-type center \
-      --transition-fps 60 \
-      --transition-step 50 \
-      --transition-duration 1
-    # swww img $HOME/.local/share/backgrounds/sunset-synthwave-sports-car-city-palm-trees.jpg
-  else
-    swaymsg output '*' bg $HOME/.local/share/backgrounds/${image} fill
-    # swaymsg output * bg #1e1e2e solid_color
   fi
 }
 

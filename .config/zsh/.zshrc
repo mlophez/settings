@@ -186,6 +186,7 @@ alias se="settings"
 alias ds="distrobox-menu"
 alias sys="distrobox-host-exec bash"
 alias sysadmin="distrobox-host-exec sudo bash"
+alias root="distrobox-host-exec sudo bash"
 
 # FUNCTIONS
 precmd() {
