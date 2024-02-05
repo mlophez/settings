@@ -59,6 +59,7 @@ python-pynvim
 
 # FORMATTERS
 stylua
+prettier
 
 # SECURITY
 gnupg

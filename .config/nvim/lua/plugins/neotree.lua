@@ -45,7 +45,7 @@ return {
 					["y"] = "copy_to_clipboard",
 					["x"] = "cut_to_clipboard",
 					["p"] = "paste_from_clipboard",
-					["c"] = "copy",
+					-- ["c"] = "copy",
 					["q"] = "close_window",
 					["R"] = "refresh",
 					["i"] = "show_file_details",
