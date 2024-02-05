@@ -1,15 +1,26 @@
-require("notify").setup({
-	timeout = 5000,
-	max_height = function()
-		return math.floor(vim.o.lines * 0.75)
-	end,
-	max_width = function()
-		return math.floor(vim.o.columns * 0.75)
-	end,
-})
+return {
+	"rcarriga/nvim-notify",
+	lazy = false,
+	keys = {
+		{ "<cr>", ":NotifyDismiss<cr>", silent = true },
+		{ "<s-cr>", ":NotifyDismiss<cr>", silent = true },
+		{ ",", ":NotifyDismiss<cr>", silent = true },
+	},
+	config = function()
+		require("notify").setup({
+			timeout = 5000,
+			max_height = function()
+				return math.floor(vim.o.lines * 0.75)
+			end,
+			max_width = function()
+				return math.floor(vim.o.columns * 0.75)
+			end,
+		})
 
-vim.notify = require("notify")
+		vim.notify = require("notify")
 
-vim.api.nvim_create_user_command("NotifyDismiss", function()
-	require("notify").dismiss({ silent = true, pending = true })
-end, {})
+		vim.api.nvim_create_user_command("NotifyDismiss", function()
+			require("notify").dismiss({ silent = true, pending = true })
+		end, {})
+	end,
+}

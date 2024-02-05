@@ -51,9 +51,14 @@ zip
 
 # EDITOR
 nano
+wl-clipboard
+
+## NEOVIM
 neovim
 python-pynvim
-wl-clipboard
+
+# FORMATTERS
+stylua
 
 # SECURITY
 gnupg
