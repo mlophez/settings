@@ -1,5 +1,6 @@
 return {
 	"f-person/git-blame.nvim",
+	enabled = false,
 	lazy = false,
 	--event = { "BufWritePre" },
 	config = function()
