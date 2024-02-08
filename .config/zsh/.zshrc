@@ -256,13 +256,11 @@ kustomize-menu() {
   local context=$(basename $(echo ${entry} | grep -o ".*overlays/[a-zA-Z0-9]*"))
 
   if [ "${1}" = "apply" ]; then
-    #print -z kubectl --context $(basename $entry) apply --server-side --force-conflicts -k ${entry}
-    #print -z "kustomize build --enable-alpha-plugins ${entry} | kubectl --context $(basename $entry) apply --server-side --force-conflicts -f -"
-    print -z "kustomize build --enable-helm ${entry} | kubectl --context ${context} apply --server-side --force-conflicts -f -"
+    print -z "kustomize build --enable-helm --load-restrictor LoadRestrictionsNone ${entry} | kubectl --context ${context} apply --server-side --force-conflicts -f -"
   elif [ "${1}" = "diff" ]; then
-    print -z "kustomize build --enable-helm ${entry} | kubectl --context ${context} diff --server-side --force-conflicts -f -"
+    print -z "kustomize build --enable-helm --load-restrictor LoadRestrictionsNone ${entry} | kubectl --context ${context} diff --server-side --force-conflicts -f -"
   elif [ "${1}" = "bundle" ]; then
-    print -z "kustomize build --enable-helm ${entry} | tee ${entry}/bundle.yaml"
+    print -z "kustomize build --enable-helm --load-restrictor LoadRestrictionsNone ${entry} | tee ${entry}/bundle.yaml"
   fi
 }
 
