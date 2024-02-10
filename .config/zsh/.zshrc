@@ -239,6 +239,14 @@ curl() {
   fi
 }
 
+function pip() {
+  if [ "${1}" = "install" ]; then
+    command pip "$@" --break-system-packages
+  else
+    command pip "$@"
+  fi
+}
+
 ssh() {
   TERM=xterm-256color command ssh "$@"
 }

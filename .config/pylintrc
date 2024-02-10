@@ -1,0 +1,8 @@
+[FORMAT]
+max-line-length = 120
+
+[TYPECHECK]
+enable = annotations,unannotated-variable
+
+[MESSAGES CONTROL]
+disable = C0111

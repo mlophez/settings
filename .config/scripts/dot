@@ -65,6 +65,7 @@ status() {
     dot add $HOME/.config/containers
     dot add $HOME/.config/distrobox
     dot add $HOME/.config/i3
+    dot add $HOME/.config/pylintrc
     dot add $HOME/.config/gnupg/gpg.conf
     dot add $HOME/.config/gnupg/gpg-agent.conf
     dot add $HOME/.config/Windows

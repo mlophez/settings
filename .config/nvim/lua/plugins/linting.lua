@@ -1,13 +1,12 @@
 return {
 	"mfussenegger/nvim-lint",
-	enabled = false,
 	event = { "BufReadPost", "BufNewFile" },
 	cmd = { "Lint" },
 	config = function()
 		local lint = require("lint")
 
 		lint.linters_by_ft = {
-			python = { "pylint" },
+			python = { "pylint", "mypy" },
 			terraform = { "tflint", "tfsec" },
 		}
 

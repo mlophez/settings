@@ -51,6 +51,7 @@ export HELM_CONFIG_HOME="$HOME/.config/helm"
 export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # PYTHON
+export PYLINTRC="$HOME/.config/pylintrc"
 #export PYTHON_VENV_PATH="$HOME/.local/share/python/virtualenvs/local"
 #export PIPENV_IGNORE_VIRTUALENVS=1
 

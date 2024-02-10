@@ -9,10 +9,6 @@ return {
 	dependencies = {
 		"weilbith/nvim-code-action-menu",
 		--"b0o/SchemaStore.nvim",
-
-		-- Autocomplete
-		"hrsh7th/nvim-cmp",
-		"hrsh7th/cmp-nvim-lsp", -- Required
 	},
 	init = function()
 		vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -80,137 +76,160 @@ return {
 		})
 
 		-- lua --
-		lspconfig.lua_ls.setup({
-			capabilities = capabilities,
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { "vim" },
-					},
-					workspace = {
-						library = vim.api.nvim_get_runtime_file("", true),
-						checkThirdParty = false,
-						--library = {
-						--	[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-						--	[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
-						--	[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
-						--},
-						--maxPreload = 100000,
-						--preloadFileSize = 10000,
+		if vim.fn.executable("lua-language-server") == 1 then
+			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
+				settings = {
+					Lua = {
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							library = vim.api.nvim_get_runtime_file("", true),
+							checkThirdParty = false,
+							--library = {
+							--	[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+							--	[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+							--	[vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy"] = true,
+							--},
+							--maxPreload = 100000,
+							--preloadFileSize = 10000,
+						},
 					},
 				},
-			},
-		})
+			})
+		end
 
 		-- python --
-		lspconfig.pyright.setup({
-			capabilities = capabilities,
-			settings = {
-				python = {
-					-- venvPath = vim.fn.expand("$HOME/.local/share/nvim/pyenv"),
-					analysis = {
-						autoSearchPaths = true,
-						diagnosticMode = "openFilesOnly",
-						useLibraryCodeForTypes = true,
+		if vim.fn.executable("pyright") == 1 then
+			lspconfig.pyright.setup({
+				capabilities = capabilities,
+				settings = {
+					python = {
+						analysis = {
+							autoSearchPaths = true,
+							diagnosticMode = "openFilesOnly",
+							useLibraryCodeForTypes = true,
+						},
 					},
 				},
-			},
-		})
+			})
+		end
 
 		-- terraform --
-		lspconfig.terraformls.setup({
-			capabilities = capabilities,
-		})
+		if vim.fn.executable("terraform-ls") == 1 then
+			lspconfig.terraformls.setup({
+				capabilities = capabilities,
+			})
+		end
 
 		-- go --
-		lspconfig.gopls.setup({
-			capabilities = capabilities,
-			cmd = { "gopls" },
-			filetypes = { "go", "gomod", "gowork", "gotmpl" },
-			root_dir = lsputil.root_pattern("go.work", "go.mod", ".git"),
-			settings = {
-				gopls = {
-					completeUnimported = true,
-					usePlaceholders = true,
-					analyses = {
-						unusedparams = true,
+		if vim.fn.executable("gopls") == 1 then
+			lspconfig.gopls.setup({
+				capabilities = capabilities,
+				cmd = { "gopls" },
+				filetypes = { "go", "gomod", "gowork", "gotmpl" },
+				root_dir = lsputil.root_pattern("go.work", "go.mod", ".git"),
+				settings = {
+					gopls = {
+						completeUnimported = true,
+						usePlaceholders = true,
+						analyses = {
+							unusedparams = true,
+						},
 					},
 				},
-			},
-		})
+			})
+		end
 
 		-- rust --
-		--require("lspconfig").rust_analyzer.setup({})
+		if vim.fn.executable("rust-analyzer") == 1 then
+			lspconfig.rust_analyzer.setup({})
+		end
 
 		-- html --
-		lspconfig.emmet_language_server.setup({})
+		if vim.fn.executable("emmet-language-server") == 1 then
+			lspconfig.emmet_language_server.setup({})
+		end
 
 		-- css --
-		lspconfig.tailwindcss.setup({})
+		if vim.fn.executable("tailwindcss-language-server") == 1 then
+			lspconfig.tailwindcss.setup({
+				filetypes = { "astro", "django-html", "htmldjango", "html" },
+			})
+		end
 
 		-- typescript --
-		lspconfig.tsserver.setup({})
+		if vim.fn.executable("typescript-language-server") == 1 then
+			lspconfig.tsserver.setup({})
+		end
 
 		-- astro --
-		lspconfig.astro.setup({
-			--on_attach = function(client)
-			--	client.resolved_capabilities.document_formatting = false
-			--	client.server_capabilities.documentFormattingProvider = false
-			--end,
-			init_options = {
-				typescript = {
-					tsdk = vim.fs.normalize("/usr/lib/node_modules/typescript/lib"),
+		if vim.fn.executable("astro-ls") == 1 then
+			lspconfig.astro.setup({
+				--on_attach = function(client)
+				--	client.resolved_capabilities.document_formatting = false
+				--	client.server_capabilities.documentFormattingProvider = false
+				--end,
+				init_options = {
+					typescript = {
+						tsdk = vim.fs.normalize("/usr/lib/node_modules/typescript/lib"),
+					},
 				},
-			},
-		})
+			})
+		end
 
 		-- yamls --
-		lspconfig.yamlls.setup({
-			settings = {
-				yaml = {
-					trace = {
-						server = "verbose",
-					},
-					schemas = {
-						["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-						["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-						["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-						["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
-						["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-						["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
-						["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-						["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
-						["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
-						["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*compose*.{yml,yaml}",
-						["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
-						["kubernetes"] = "*.{yml,yaml}",
+		if vim.fn.executable("yaml-language-server") == 1 then
+			lspconfig.yamlls.setup({
+				settings = {
+					yaml = {
+						trace = {
+							server = "verbose",
+						},
+						schemas = {
+							["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+							["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+							["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+							["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/*.{yml,yaml}",
+							["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+							["http://json.schemastore.org/ansible-playbook"] = "*play*.{yml,yaml}",
+							["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+							["https://json.schemastore.org/dependabot-v2"] = ".github/dependabot.{yml,yaml}",
+							["https://json.schemastore.org/gitlab-ci"] = "*gitlab-ci*.{yml,yaml}",
+							["https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json"] = "*compose*.{yml,yaml}",
+							["https://raw.githubusercontent.com/argoproj/argo-workflows/master/api/jsonschema/schema.json"] = "*flow*.{yml,yaml}",
+							["kubernetes"] = "*.{yml,yaml}",
+						},
 					},
 				},
-			},
-		})
+			})
+		end
 
 		-- dart/flutter --
-		require("lspconfig").dartls.setup({
-			capabilities = capabilities,
-			cmd = { "dart", "language-server", "--protocol=lsp" },
-			filetypes = { "dart" },
-			init_options = {
-				closingLabels = true,
-				flutterOutline = true,
-				onlyAnalyzeProjectsWithOpenFiles = true,
-				outline = true,
-				suggestFromUnimportedLibraries = true,
-			},
-			root_dir = root_pattern("pubspec.yaml", ".git"),
-			settings = {
-				dart = {
-					completeFunctionCalls = true,
-					showTodos = true,
-					enableSnippets = true,
-					lineLength = 120,
+		if vim.fn.executable("dart") == 1 then
+			lspconfig.dartls.setup({
+				capabilities = capabilities,
+				cmd = { "dart", "language-server", "--protocol=lsp" },
+				filetypes = { "dart" },
+				init_options = {
+					closingLabels = true,
+					flutterOutline = true,
+					onlyAnalyzeProjectsWithOpenFiles = true,
+					outline = true,
+					suggestFromUnimportedLibraries = true,
 				},
-			},
-		})
+				root_dir = root_pattern("pubspec.yaml", ".git"),
+				settings = {
+					dart = {
+						completeFunctionCalls = true,
+						showTodos = true,
+						enableSnippets = true,
+						lineLength = 120,
+					},
+				},
+			})
+		end
 
 		-- kotlin --
 		--require("lspconfig").kotlin_language_server.setup({

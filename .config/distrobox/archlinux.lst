@@ -55,10 +55,6 @@ wl-clipboard
 
 ## NEOVIM
 neovim
-python-pynvim
-
-# FORMATTERS
-stylua
 prettier
 
 # SECURITY
@@ -98,16 +94,23 @@ cmake
 extra-cmake-modules
 
 # PYTHON
+pyright
 python
 python-pip
 python-virtualenv
 python-pipenv
 python-poetry
+python-pynvim
+python-pylint
+python-black
+python-isort
 pyenv
+mypy
 
 # GO
 go
 go-tools
+gopls
 
 # NODE
 nodejs
@@ -121,6 +124,7 @@ rust-analyzer
 
 # LUA
 luarocks
+stylua
 lua-language-server
 
 # JAVA

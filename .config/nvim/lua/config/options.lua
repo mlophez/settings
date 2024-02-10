@@ -63,7 +63,3 @@ vim.g.maplocalleader = ","
 
 -- Theme
 vim.g.theme = "catppuccin-mocha"
-
--- Python
--- vim.fn.setenv("PATH", vim.fn.expand("$HOME/.local/share/nvim/pyenv/bin") .. ";" .. vim.env.PATH)
--- vim.fn.setenv("VIRTUAL_ENV", vim.fn.expand("$HOME/.local/share/nvim/pyenv"))

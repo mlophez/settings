@@ -89,8 +89,7 @@ return {
 				--sql = { "sql_formatter" },
 				-- Use the "*" filetype to run formatters on all filetypes.
 				-- ["*"] = { "codespell" },
-				-- ["*"] = { "trim_whitespace" },
-				-- Use the "_" filetype to run formatters on filetypes that don't have other formatters configured.
+				["*"] = { "trim_whitespace" },
 				["_"] = { "trim_whitespace" },
 			},
 		})

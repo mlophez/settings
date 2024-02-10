@@ -1,5 +1,6 @@
 return {
 	"hrsh7th/nvim-cmp",
+	lazy = false,
 	version = false,
 	event = "InsertEnter",
 	dependencies = {
@@ -8,12 +9,12 @@ return {
 		"hrsh7th/cmp-buffer", -- Optional
 		"hrsh7th/cmp-path", -- Optional
 		"hrsh7th/cmp-nvim-lua", -- Optional
-
 		-- Snippets
 		"L3MON4D3/LuaSnip", -- Required
-		-- 'rafamadriz/friendly-snippets', -- Optional
+		"saadparwaiz1/cmp_luasnip",
+		"rafamadriz/friendly-snippets", -- Optional
 	},
-	opts = function()
+	config = function()
 		local lspkind = {
 			Namespace = "󰌗",
 			Text = "󰉿",
@@ -59,26 +60,31 @@ return {
 		local cmp = require("cmp")
 		local luasnip = require("luasnip")
 
-		-- Colors
+		-- Colors --
 		vim.api.nvim_set_hl(0, "CmpSel", { bg = "#abe9b3", fg = "#242633" })
 
-		return {
+		-- Snippets --
+		require("luasnip.loaders.from_vscode").lazy_load()
+
+		-- Autocompletion Setup --
+		require("cmp").setup({
+			snippet = {
+				expand = function(args)
+					require("luasnip").lsp_expand(args.body)
+				end,
+			},
+			sources = {
+				{ name = "path" },
+				{ name = "buffer" },
+				{ name = "nvim_lsp" },
+				{ name = "nvim_lua" },
+				{ name = "luasnip" },
+			},
 			view = {
 				entries = "custom", -- can be "custom", "wildmenu" or "native"
 			},
 			completion = {
 				completeopt = "menu,menuone,noinsert",
-			},
-			snippet = {
-				expand = function(args)
-					luasnip.lsp_expand(args.body)
-				end,
-			},
-			sources = {
-				{ name = "path" },
-				{ name = "nvim_lsp", keyword_length = 1 },
-				{ name = "buffer", keyword_length = 3 },
-				{ name = "luasnip", keyword_length = 2 },
 			},
 			window = {
 				completion = cmp.config.window.bordered({
@@ -112,25 +118,49 @@ return {
 				["<CR>"] = cmp.mapping.confirm({ select = false }),
 
 				["<Tab>"] = cmp.mapping(function(fallback)
-					local col = vim.fn.col(".") - 1
-
 					if cmp.visible() then
-						cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-					elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
-						fallback()
-					else
+						cmp.select_next_item()
+					-- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
+					-- that way you will only jump inside the snippet region
+					elseif luasnip.expand_or_jumpable() then
+						luasnip.expand_or_jump()
+					elseif has_words_before() then
 						cmp.complete()
+					else
+						fallback()
 					end
 				end, { "i", "s" }),
 
 				["<S-Tab>"] = cmp.mapping(function(fallback)
 					if cmp.visible() then
-						cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+						cmp.select_prev_item()
+					elseif luasnip.jumpable(-1) then
+						luasnip.jump(-1)
 					else
 						fallback()
 					end
 				end, { "i", "s" }),
+
+				--["<Tab>"] = cmp.mapping(function(fallback)
+				--	local col = vim.fn.col(".") - 1
+
+				--	if cmp.visible() then
+				--		cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+				--	elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+				--		fallback()
+				--	else
+				--		cmp.complete()
+				--	end
+				--end, { "i", "s" }),
+
+				--["<S-Tab>"] = cmp.mapping(function(fallback)
+				--	if cmp.visible() then
+				--		cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+				--	else
+				--		fallback()
+				--	end
+				--end, { "i", "s" }),
 			},
-		}
+		})
 	end,
 }
