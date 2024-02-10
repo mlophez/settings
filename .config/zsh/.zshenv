@@ -7,6 +7,9 @@ export KEYTIMEOUT=1
 export PATH=${PATH}:${HOME}/.config/scripts
 export FPATH=${FPATH}:${ZDOTDIR}/functions
 
+# PATH
+# echo $SHLVL
+
 # SHELL
 export SHELL=/usr/bin/zsh
 export HOSTNAME=$(hostname)
@@ -48,8 +51,8 @@ export HELM_CONFIG_HOME="$HOME/.config/helm"
 export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # PYTHON
-export PYTHONVENV="$HOME/.local/share/virtualenvs/local"
-export PIPENV_IGNORE_VIRTUALENVS=1
+#export PYTHON_VENV_PATH="$HOME/.local/share/python/virtualenvs/local"
+#export PIPENV_IGNORE_VIRTUALENVS=1
 
 # GO
 export GOPATH="$HOME/.local/share/go"

@@ -105,6 +105,16 @@ return {
 		-- python --
 		lspconfig.pyright.setup({
 			capabilities = capabilities,
+			settings = {
+				python = {
+					-- venvPath = vim.fn.expand("$HOME/.local/share/nvim/pyenv"),
+					analysis = {
+						autoSearchPaths = true,
+						diagnosticMode = "openFilesOnly",
+						useLibraryCodeForTypes = true,
+					},
+				},
+			},
 		})
 
 		-- terraform --

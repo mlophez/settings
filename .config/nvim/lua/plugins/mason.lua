@@ -31,7 +31,7 @@ return {
 				"tflint",
 				"tfsec",
 				"luacheck",
-				--"sonarlint-language-server",
+				"sonarlint-language-server",
 			},
 
 			ui = {

@@ -1,5 +1,6 @@
 return {
 	"mfussenegger/nvim-lint",
+	enabled = false,
 	event = { "BufReadPost", "BufNewFile" },
 	cmd = { "Lint" },
 	config = function()

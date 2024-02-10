@@ -106,7 +106,6 @@ alias vi="nvim"
 alias vim="nvim"
 alias cc="cd \$(find . -type d -print | fzf)"
 alias edit="nvim \$(find . -type f -print | fzf)"
-alias e="editor"
 
 # DOT
 alias config="cd $HOME/.config && nvim"
