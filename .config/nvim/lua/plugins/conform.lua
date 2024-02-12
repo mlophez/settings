@@ -64,6 +64,9 @@ return {
 					inherit = true,
 					exit_codes = { 0 },
 				},
+				black = {
+					prepend_args = { "--line-length=120" },
+				},
 			},
 			format_on_save = format_on_save,
 			formatters_by_ft = {
@@ -81,7 +84,6 @@ return {
 				-- yaml = { { "prettier", "yamlfmt" } },
 				markdown = { "prettier" },
 				graphql = { "prettier" },
-				lua = { "stylua" },
 				python = { "isort", "black" },
 				terraform = { "terraform_fmt" },
 				jsonnet = { "jsonnetfmt" },
