@@ -172,6 +172,13 @@ alias helm-list="helm ls -A --kube-context"
 # KUBESEAL
 alias kubeseal="command kubeseal --controller-namespace kube-system --controller-name sealed-secrets --scope cluster-wide"
 
+# TERRAFORM
+alias ti="terraform init"
+alias tv="terraform validate"
+alias tp="terraform plan"
+alias ta="terraform apply"
+alias tmv="terraform state mv"
+
 # PYTHON
 alias d="deactivate"
 
@@ -818,6 +825,26 @@ workspace() {
 #         eval "sudo rsync $options / $dst/"
 #     fi
 # }
-#
+
+terraform-mv() {
+  local module_name="$1"
+  local module_path="$2"
+  local module=""
+
+  [ "${module_name}" != "main" ] && module="module.${module_name}."
+  [ -d "${module_path}" ] && module_path="${module_path}/*.tf"
+
+  eval "cat ${module_path}" | grep 'resource "' | cut -d" " -f 2,3 | sed 's/" "/./g' | tr -d '"' \
+     | xargs -I@ echo terraform state mv ${module}@ ${module}@
+}
+
+terraform-modulizer() {
+  local module_path="$1"
+  local module_name="$2"
+
+  cat ${module_path}/*.tf | grep 'resource "' | cut -d" " -f 2,3 | sed 's/" "/./g' | tr -d '"' \
+     | xargs -I@ echo terraform state mv @ module.${module_name}.@
+}
 
 echo > /dev/null
+
