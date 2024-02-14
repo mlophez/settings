@@ -53,6 +53,10 @@ return {
 				},
 			},
 			filesystem = {
+				follow_current_file = {
+					enabled = true,
+					leave_dirs_open = false,
+				},
 				window = {
 					mappings = {
 						["<bs>"] = "navigate_up",
