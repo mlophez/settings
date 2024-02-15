@@ -29,28 +29,17 @@ keybinds clear-defaults=true {
     //bind "Esc" { Detach; }
   }
   normal {
-    bind "Alt o" { SwitchToMode "Scroll"; }
+    // Zellij no admite Alt+Space, Alt+Space = F11 en alacritty y wezterm
+    bind "F11" "Ctrl s" { SwitchToMode "tmux"; }
+    bind "Alt o"  { SwitchToMode "scroll"; }
+    bind "Alt ,"  { SwitchToMode "renametab"; TabNameInput 0; }
 
     bind "Alt n" { NewTab; }
     bind "Alt v" { NewPane "Down"; }
     bind "Alt h" { NewPane "Right"; }
     bind "Alt f" { ToggleFocusFullscreen; }
     bind "Alt t" "Alt m" { ToggleFloatingPanes; }
-    bind "Alt ," { SwitchToMode "RenameTab"; TabNameInput 0; }
     bind "Alt u" { CloseFocus; }
-
-    bind "Alt j" "Ctrl j" { MoveFocus "Left"; }
-    bind "Alt k" "Ctrl k" { MoveFocus "Down"; }
-    bind "Alt l" "Ctrl l" { MoveFocus "Up"; }
-    bind "Alt ñ" "Ctrl ñ" "F6" { MoveFocus "Right"; }
-
-    bind "Alt J" "Alt Left"  { Resize "Increase Left"; }
-    bind "Alt K" "Alt Down"  { Resize "Increase Down"; }
-    bind "Alt L" "Alt Up"    { Resize "Increase Up"; }
-    bind "Alt Ñ" "Alt Right" { Resize "Increase Right"; }
-
-    //bind "Ctrl " { GoToPreviousTab; }
-    //bind "Alt d" { GoToNextTab; }
 
     bind "Alt 1" { GoToTab  1; }
     bind "Alt 2" { GoToTab  2; }
@@ -63,6 +52,44 @@ keybinds clear-defaults=true {
     bind "Alt 9" { GoToTab  9; }
     bind "Alt 0" { GoToTab 10; }
   }
+  tmux {
+    bind "Esc" "q" "Enter" { SwitchToMode "normal"; }
+
+    bind "o"  { SwitchToMode "scroll"; }
+    bind ","  { SwitchToMode "renametab"; TabNameInput 0; }
+
+    bind "j" "Left"  { MoveFocus "Left"; SwitchToMode "normal"; }
+    bind "k" "Down"  { MoveFocus "Down"; SwitchToMode "normal"; }
+    bind "l" "Up"    { MoveFocus "Up"; SwitchToMode "normal"; }
+    bind "ñ" "Right" { MoveFocus "Right"; SwitchToMode "normal"; }
+    //bind "j" "Left" { MoveFocus "Left"; }
+    //bind "k" "Down" { MoveFocus "Down"; }
+    //bind "l" "Up" { MoveFocus "Up"; }
+    //bind "ñ" "Right" { MoveFocus "Right"; }
+
+    bind "J" { Resize "Increase Left"; }
+    bind "K" { Resize "Increase Down"; }
+    bind "L" { Resize "Increase Up"; }
+    bind "Ñ" { Resize "Increase Right"; }
+
+    bind "n" { NewTab; SwitchToMode "normal"; }
+    bind "v" { NewPane "Down"; SwitchToMode "normal"; }
+    bind "h" { NewPane "Right"; SwitchToMode "normal"; }
+    bind "f" { ToggleFocusFullscreen; SwitchToMode "normal"; }
+    bind "t" "m" { ToggleFloatingPanes; SwitchToMode "normal"; }
+    bind "u" { CloseFocus; SwitchToMode "normal"; }
+
+    bind "1" { GoToTab  1; SwitchToMode "normal"; }
+    bind "2" { GoToTab  2; SwitchToMode "normal"; }
+    bind "3" { GoToTab  3; SwitchToMode "normal"; }
+    bind "4" { GoToTab  4; SwitchToMode "normal"; }
+    bind "5" { GoToTab  5; SwitchToMode "normal"; }
+    bind "6" { GoToTab  6; SwitchToMode "normal"; }
+    bind "7" { GoToTab  7; SwitchToMode "normal"; }
+    bind "8" { GoToTab  8; SwitchToMode "normal"; }
+    bind "9" { GoToTab  9; SwitchToMode "normal"; }
+    bind "0" { GoToTab 10; SwitchToMode "normal"; }
+  }
   renametab {
     bind "Enter" { SwitchToMode "normal"; }
     bind "Esc" "Ctrl c" { UndoRenameTab; SwitchToMode "normal"; }
@@ -73,8 +100,8 @@ keybinds clear-defaults=true {
 
     bind "k" "Down" { ScrollDown; }
     bind "l" "Up" { ScrollUp; }
-    bind "Ctrl f" "PageDown" "Right" "ñ" { PageScrollDown; }
     bind "Ctrl b" "PageUp" "Left" "j" { PageScrollUp; }
+    bind "Ctrl f" "PageDown" "Right" "ñ" { PageScrollDown; }
   }
   search {
     bind "Esc" "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }

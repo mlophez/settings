@@ -146,7 +146,12 @@ alias am="aws-profile-menu"
 
 # GIT
 alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gd="git diff"
 alias gm="git-menu"
+alias gi="git-identity"
 alias wk="workspace"
 alias ck="workspace move"
 alias git-id-personal="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lr96@gmail.com'"
@@ -422,6 +427,14 @@ git-menu() {
 
   echo "-> $cmd"
   eval "$(echo $cmd | cut -d ":" -f 2-100000000 | sed 's/^ *//g')"
+}
+
+git-identity() {
+  select email in "miguel.lr96@gmail.com" "miguel.lopez@logalty.com"; do
+    git config user.name "Miguel López Ruiz"
+    git config user.email $email
+    break
+  done
 }
 
 java-menu() {

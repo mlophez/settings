@@ -45,6 +45,9 @@ return {
 		{ key = "0", mods = "CTRL", action = wezterm.action.ResetFontSize },
 		{ key = "X", mods = "CTRL", action = wezterm.action.ActivateCopyMode },
 		{ key = "t", mods = "ALT", action = wezterm.action.SpawnTab({ DomainName = "WSL:Archlinux" }) },
+		-- Adapter for zellij prefix
+		{ mods = "CTRL", key = "Space", action = wezterm.action.SendKey({ key = "F11" }) },
+		{ mods = "ALT", key = "Space", action = wezterm.action.SendKey({ key = "F11" }) },
 	},
 }
 
