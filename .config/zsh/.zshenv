@@ -29,11 +29,13 @@ export PASSWORD_STORE_CLIP_TIME=8
 
 # FZF
 FZF_DEFAULT_OPTS=""
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} -m --ansi --layout=reverse --inline-info --border=sharp"
+#FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} -m --ansi --layout=reverse --inline-info --border=sharp"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} -m --ansi --layout=reverse --inline-info"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --prompt='➤ ' --pointer='➤' --marker='➤'"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg:-1,bg:-1,hl:#fab387'"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg+:#b4befe,bg+:-1,hl+:#fab387'"
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'prompt:166,border:#b4befe'"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'prompt:166'"
+# FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'prompt:166,border:#b4befe'"
 export FZF_DEFAULT_OPTS
 
 # AWS
