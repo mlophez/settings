@@ -32,7 +32,7 @@ cmd_init() {
 }
 
 cmd_panel() {
-    export XDG_CURRENT_DESKTOP=Unity
+    #export XDG_CURRENT_DESKTOP=Unity
     pkill waybar
     exec waybar -c $HOME/.config/waybar/config -s $HOME/.config/waybar/style.css "$@"
 }
