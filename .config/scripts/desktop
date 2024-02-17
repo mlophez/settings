@@ -9,8 +9,8 @@ cmd_init() {
     # PORTALS
     pkill -f "xdg-desktop-portal"
     nohup /usr/libexec/xdg-desktop-portal -r &>/dev/null &
-    nohup /usr/libexec/xdg-desktop-portal-wlr -r &>/dev/null &
     nohup /usr/libexec/xdg-desktop-portal-gtk -r &>/dev/null &
+    nohup /usr/libexec/xdg-desktop-portal-wlr -r &>/dev/null &
     systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     dbus-update-activation-environment --systemd --all
 
@@ -52,8 +52,16 @@ cmd_wallpaper() {
   fi
 }
 
+cmd_hyprland_monitor_menu() {
+  local monitors=$(hyprctl monitors all -j | jq -r '.[].name')
+  local monitor=$(hyprctl monitors all -j | jq -r '.[].name' | rofi -dmenu)
+  hyprctl keyword monitor ${monitor},preferred,auto,1
+  for m in ${monitors}; do
+    hyprctl keyword monitor ${m},disable
+  done
+}
 
-cmd_monitor() {
+cmd_monitors() {
   local screens external internal
   local selected default
 
@@ -84,6 +92,33 @@ cmd_monitor() {
   desktop wallpaper
 }
 
+cmd_hyprland_settheme() {
+  local gnome_schema="org.gnome.desktop.interface"
+  local cursor_theme="bibata-modern-ice-cursors"
+  local gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
+  local icon_theme="cupertino-sonoma-icons"
+  local font_theme="JetBrainsMono Nerd Font 14"
+
+  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+    hyprctl setcursor "${cursor_theme}" 24 \
+
+  ! type gsettings &>/dev/null && exit 0
+
+  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+    gsettings set ${gnome_schema} cursor-theme "${cursor_theme}"
+
+  [ -d "$HOME/.local/share/themes/${gtk_theme}" ] && \
+    gsettings set ${gnome_schema} gtk-theme "${gtk_theme}"
+    gsettings set ${gnome_schema} color-scheme 'prefer-dark'
+
+  [ -d "$HOME/.local/share/themes/icons/${icon_theme}" ] && \
+    gsettings set ${gnome_schema} icon-theme "${icon_theme}"
+
+  gsettings set ${gnome_schema} font-name "${font_theme}"
+
+  exit 0
+}
+
 function cmd_locking() {
     local image=$1
 
@@ -92,6 +127,12 @@ function cmd_locking() {
     --show-failed-attempts \
     --indicator-radius 50 \
     -f -i $image -s fill
+}
+
+menu() {
+  local cmd="wofi"
+  type rofi &>/dev/null && cmd="rofi"
+  exec wofi -i --dmenu --no-actions --normal-window --allow-images -s $HOME/.config/sway/wofi.css
 }
 
 function cmd_menu() {
@@ -108,9 +149,6 @@ function cmd_menu() {
         #--matching=fuzzy \
 }
 
-function menu() {
-    exec wofi -i --dmenu --no-actions --normal-window --allow-images -s $HOME/.config/sway/wofi.css
-}
 
 function cmd_menu-power() {
     swaymsg exit
@@ -191,29 +229,43 @@ function cmd_menu-pass() {
 }
 
 cmd_terminal() {
+  export ZDOTDIR=$HOME/.config/zsh
   if [ -z "${1}" ]; then
     type alacritty &>/dev/null && exec alacritty -e ${SELF} terminal shell
     type wezterm &>/dev/null && exec wezterm start --always-new-process -- ${SELF} terminal shell
     type foot &>/dev/null && exec foot
   else
+    # ZELLIJ
+    if type zellij &>/dev/null; then
+      { zellij attach '0' || exec zellij -s '0'; }; exit 0
+    fi
+
     # TMUX
     if type tmux &>/dev/null; then
-      tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'
+      { tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'; }; exit 0
     fi
 
     # ZSH
-    type zsh &>/dev/null && ZDOTDIR=$HOME/.config/zsh exec zsh
+    type zsh &>/dev/null && exec zsh
   fi
 }
 
 main() {
     local args="$@"
     local command="$1"
+    local desktop=${XDG_CURRENT_DESKTOP,,}
 
     [ "$args" = "-b bar-0" ] && cmd_waybar "$@"
 
     shift
-    cmd_$command "$@"
+    if type cmd_${desktop}_${command} &>/dev/null; then
+      cmd_${desktop}_${command} "$@"
+    elif type cmd_$command &>/dev/null; then
+      cmd_${command} "$@"
+    else
+      echo "Command ${command} do not exists"
+      exit 1
+    fi
 }
 
 main "$@"

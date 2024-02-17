@@ -168,6 +168,17 @@ chars = "\u001B[17~"
 key = 39
 mods = "Control"
 
+# Zellij no admite Alt+Space, Alt+Space = F10 en alacritty y wezterm
+[[keyboard.bindings]]
+mods = "Alt"
+key = "Space"
+chars = "\u001b\u005b\u0032\u0031\u007e"
+
+[[keyboard.bindings]]
+mods = "Control"
+key = "Space"
+chars = "\u001b\u005b\u0032\u0031\u007e"
+
 [mouse]
 hide_when_typing = false
 

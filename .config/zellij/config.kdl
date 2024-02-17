@@ -29,8 +29,8 @@ keybinds clear-defaults=true {
     //bind "Esc" { Detach; }
   }
   normal {
-    // Zellij no admite Alt+Space, Alt+Space = F11 en alacritty y wezterm
-    bind "F11" "Ctrl s" { SwitchToMode "tmux"; }
+    // Zellij no admite Alt+Space, Alt+Space = F10 en alacritty y wezterm
+    bind "F10" "Ctrl s" { SwitchToMode "tmux"; }
     bind "Alt o"  { SwitchToMode "scroll"; }
     bind "Alt ,"  { SwitchToMode "renametab"; TabNameInput 0; }
 

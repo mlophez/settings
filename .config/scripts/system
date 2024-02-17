@@ -5,6 +5,20 @@ cmd_setup() {
 	sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 }
 
+cmd_greetd() {
+  echo "for implement"
+}
+
+cmd_configure() {
+  sudo sed 's/^.*KillUserProcesses *=.*$/KillUserProcesses=yes/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandlePowerKey *=.*$/HandlePowerKey=suspend/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleSuspendKey *=.*$/HandleSuspendKey=suspend/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleHibernateKey *=.*$/HandleHibernateKey=hibernate/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleLidSwitch *=.*$/HandleLidSwitch=ignore/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleLidSwitchExternalPower *=.*$/HandleLidSwitchExternalPower=ignore/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleLidSwitchDocked *=.*$/HandleLidSwitchDocked=ignore/g' -i /etc/systemd/logind.conf
+}
+
 main() {
   local command="$1"; shift
 
