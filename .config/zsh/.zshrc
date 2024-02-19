@@ -169,7 +169,7 @@ alias kl="kubectl-log-menu"
 alias kp="kubectl-menu port-forward pods"
 alias kt="kubectl-run-pod"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --disable-eviction --force --context"
-alias k9="k9s -c pods --context"
+alias k9="k9s -c pods --all-namespaces --readonly --context"
 
 # HELM
 alias helm-list="helm ls -A --kube-context"

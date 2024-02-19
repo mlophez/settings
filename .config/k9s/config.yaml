@@ -1,10 +1,13 @@
+---
 k9s:
   liveViewAutoRefresh: false
   screenDumpDir: /home/mlr/.local/share/state/k9s/screen-dumps
-  refreshRate: 2
+  refreshRate: 5
   maxConnRetry: 5
   readOnly: false
   noExitOnCtrlC: false
+  skipLatestRevCheck: false
+  disablePodCounting: false
   ui:
     enableMouse: false
     headless: false
@@ -12,8 +15,7 @@ k9s:
     crumbsless: false
     reactive: false
     noIcons: false
-  skipLatestRevCheck: false
-  disablePodCounting: false
+    skin: catppuccin-mocha-transparent
   shellPod:
     image: busybox:1.35.0
     namespace: default
