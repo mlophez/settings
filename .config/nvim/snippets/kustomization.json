@@ -1,0 +1,69 @@
+{
+  "kustomization": {
+    "prefix": "kustomization",
+    "description": "Kustomization YAML file",
+    "body": [
+      "---",
+      "apiVersion: kustomize.config.k8s.io/v1beta1",
+      "kind: Kustomization",
+      "",
+      "namespace: namespace",
+      "resources:",
+      "  - deployment.yaml",
+      ""
+    ]
+  },
+  "component": {
+    "prefix": "component",
+    "description": "Kustomization YAML component",
+    "body": [
+      "---",
+      "apiVersion: kustomize.config.k8s.io/v1alpha1",
+      "kind: Component",
+      "",
+      "namespace: namespace",
+      "resources:",
+      "  - deployment.yaml",
+      ""
+    ]
+  },
+  "patches": {
+    "prefix": "patches",
+    "description": "Kustomization YAML patches",
+    "body": [
+      "patches:",
+      "  - target:",
+      "      kind: CronJob",
+      "    patch: |-",
+      "      - op: replace",
+      "        path: /spec/schedule",
+      "        value: '0 3 * * *'",
+      "      - op: replace",
+      "        path: /spec/jobTemplate/spec/template/spec/containers/0/resources/requests",
+      "        value:",
+      "          cpu: 256m",
+      "          memory: 256Mi",
+      ""
+    ]
+  },
+  "helmCharts": {
+    "prefix": "helmCharts",
+    "body": [
+      "helmGlobals:",
+      "  chartHome: /tmp/kustomize/tools/charts",
+      "helmCharts:",
+      "  - name: reloader",
+      "    releaseName: reloader",
+      "    version: 1.0.65",
+      "    repo: https://stakater.github.io/stakater-charts",
+      "    namespace: kube-system",
+      "    includeCRDs: false",
+      "    skipHooks: true",
+      "    skipTests: true",
+      "    valuesFile: ../../base/values.yaml",
+      "    additionalValuesFiles: [\"values.yaml\"]",
+      ""
+    ],
+    "description": "kustomization"
+  }
+}

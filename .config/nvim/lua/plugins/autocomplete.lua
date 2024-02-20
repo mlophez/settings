@@ -58,13 +58,15 @@ return {
 			TabNine = "",
 		}
 		local cmp = require("cmp")
-		local luasnip = require("luasnip")
 
 		-- Colors --
 		vim.api.nvim_set_hl(0, "CmpSel", { bg = "#abe9b3", fg = "#242633" })
 
 		-- Snippets --
 		require("luasnip.loaders.from_vscode").lazy_load()
+
+		-- Custom Snippets --
+		require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.fn.stdpath("config") .. "/snippets" })
 
 		-- Autocompletion Setup --
 		require("cmp").setup({
