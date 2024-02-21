@@ -101,7 +101,7 @@
     },
 
     "custom/shutdown": {
-      "on-click": "systemctl poweroff",
+      "on-click": "systemctl poweroff -i",
       "format": "  "
     },
 
