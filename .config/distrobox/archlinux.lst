@@ -167,6 +167,7 @@ eksctl
 stern
 helm
 kompose
+k9s
 
 # API
 httpie

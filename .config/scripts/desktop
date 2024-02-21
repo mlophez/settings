@@ -6,13 +6,14 @@ SWAYPATH="$HOME/.config/sway"
 #[[ -e $HOME/.config/zsh/.zshenv ]] && source $HOME/.config/zsh/.zshenv
 
 cmd_init() {
+    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+    dbus-update-activation-environment --systemd --all
+
     # PORTALS
     pkill -f "xdg-desktop-portal"
     nohup /usr/libexec/xdg-desktop-portal -r &>/dev/null &
     nohup /usr/libexec/xdg-desktop-portal-gtk -r &>/dev/null &
     nohup /usr/libexec/xdg-desktop-portal-wlr -r &>/dev/null &
-    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    dbus-update-activation-environment --systemd --all
 
     # BALOOCTL
     type balooctl &>/dev/null && balooctl disable &>/dev/null
@@ -22,12 +23,11 @@ cmd_init() {
     type nm-applet &>/dev/null && nohup nm-applet &>/dev/null &
 
     # WALLPAPER
-    type nm-applet &>/dev/null && nohup swww init &>/dev/null &
-    desktop wallpaper
+    type swww &>/dev/null && nohup swww init &>/dev/null &
+    nohup desktop wallpaper &>/dev/null &
 
     # VBOX
     # type VBoxClient &>/dev/null && VBoxClient --clipboard
-
     exit 0
 }
 
@@ -119,14 +119,14 @@ cmd_hyprland_settheme() {
   exit 0
 }
 
-function cmd_locking() {
-    local image=$1
+function cmd_lock() {
+  local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
 
-    swaylock \
-    --ignore-empty-password \
-    --show-failed-attempts \
-    --indicator-radius 50 \
-    -f -i $image -s fill
+  swaylock \
+  --ignore-empty-password \
+  --show-failed-attempts \
+  --indicator-radius 50 \
+  -f -i ~/.local/share/backgrounds/${image} -s fill
 }
 
 menu() {
