@@ -97,10 +97,11 @@
 
     "custom/lock": {
       "format": "  "
+      "on-click": "desktop lock",
     },
 
     "custom/shutdown": {
-      "on-click": "loginctl kill-session ${XDG_SESSION_ID}",
+      "on-click": "systemctl poweroff",
       "format": "  "
     },
 
