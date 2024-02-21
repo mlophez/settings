@@ -96,8 +96,8 @@
     },
 
     "custom/lock": {
-      "format": "  "
       "on-click": "desktop lock",
+      "format": "  "
     },
 
     "custom/shutdown": {
@@ -106,8 +106,8 @@
     },
 
     "custom/wallpaper": {
-      "format": " 󰸉 ",
-      "on-click": "desktop wallpaper"
+      "on-click": "desktop wallpaper",
+      "format": " 󰸉 "
     },
 
     "pulseaudio": {
