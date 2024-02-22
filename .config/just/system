@@ -1,25 +1,24 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env -S just --working-directory . --justfile
 
-cmd_setup() {
-	sudo pacman -Syu --noconfirm
-	sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
-}
+[private]
+help:
+  @system -u -l
 
-cmd_greetd() {
-  echo "for implement"
-}
+setup:
+  #!/usr/bin/env bash
+  sudo pacman -Syu --noconfirm
+  sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 
-cmd_distrobox() {
+distrobox:
+  #!/usr/bin/env bash
   echo 'Creating archlinux distrobox ...'
   distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
-
   distrobox enter archlinux -- sudo pacman-key --init
   distrobox enter archlinux -- sudo pacman -Syu --noconfirm
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.txt | grep -v "^ *#" | tr '\n' ' ')
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S alacritty kitty code
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd
   distrobox enter archlinux -- sudo pacman -Scc --noconfirm
-
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
@@ -27,38 +26,36 @@ cmd_distrobox() {
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/hyprctl
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/makoctl
   distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
-
   distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
   distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
-}
 
-cmd_flatpak() {
-	flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak --user install -y flathub com.brave.Browser
-	flatpak --user install -y flathub com.google.Chrome
-	flatpak --user install -y flathub com.microsoft.Edge
-	flatpak --user install -y flathub org.chromium.Chromium
-	flatpak --user install -y flathub org.freedesktop.Platform.ffmpeg-full
-	flatpak --user install -y flathub org.keepassxc.KeePassXC
-	flatpak --user install -y flathub com.github.tchx84.Flatseal
-	flatpak --user install -y flathub org.mozilla.Thunderbird
-	flatpak --user install -y flathub org.mozilla.firefox
-	flatpak --user install -y flathub org.pulseaudio.pavucontrol
-	flatpak --user install -y flathub com.calibre_ebook.calibre
-	flatpak --user install -y flathub com.spotify.Client
-	flatpak --user install -y flathub org.libreoffice.LibreOffice
-	flatpak --user install -y flathub org.videolan.VLC
-	flatpak --user install -y flathub org.gnome.Boxes
-	flatpak --user install -y flathub com.usebottles.bottles
-	flatpak --user install -y flathub org.telegram.desktop
-	flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
-	flatpak --user install -y flathub dev.k8slens.OpenLens
-	flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
+flatpak:
+  #!/usr/bin/env bash
+  flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak --user install -y flathub com.brave.Browser
+  flatpak --user install -y flathub com.google.Chrome
+  flatpak --user install -y flathub com.microsoft.Edge
+  flatpak --user install -y flathub org.chromium.Chromium
+  flatpak --user install -y flathub org.freedesktop.Platform.ffmpeg-full
+  flatpak --user install -y flathub org.keepassxc.KeePassXC
+  flatpak --user install -y flathub com.github.tchx84.Flatseal
+  flatpak --user install -y flathub org.mozilla.Thunderbird
+  flatpak --user install -y flathub org.mozilla.firefox
+  flatpak --user install -y flathub org.pulseaudio.pavucontrol
+  flatpak --user install -y flathub com.calibre_ebook.calibre
+  flatpak --user install -y flathub com.spotify.Client
+  flatpak --user install -y flathub org.libreoffice.LibreOffice
+  flatpak --user install -y flathub org.videolan.VLC
+  flatpak --user install -y flathub org.gnome.Boxes
+  flatpak --user install -y flathub com.usebottles.bottles
+  flatpak --user install -y flathub org.telegram.desktop
+  flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
+  flatpak --user install -y flathub dev.k8slens.OpenLens
+  flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
+  flatpak --user install -y flathub org.gnome.dspy
 
-	flatpak --user install -y flathub org.gnome.dspy
-}
-
-cmd_configure() {
+configure:
+  #!/usr/bin/env bash
   sudo sed 's/^.*KillUserProcesses *=.*$/KillUserProcesses=yes/g' -i /etc/systemd/logind.conf
   sudo sed 's/^.*HandlePowerKey *=.*$/HandlePowerKey=suspend/g' -i /etc/systemd/logind.conf
   sudo sed 's/^.*HandleSuspendKey *=.*$/HandleSuspendKey=suspend/g' -i /etc/systemd/logind.conf
@@ -66,18 +63,3 @@ cmd_configure() {
   sudo sed 's/^.*HandleLidSwitch *=.*$/HandleLidSwitch=ignore/g' -i /etc/systemd/logind.conf
   sudo sed 's/^.*HandleLidSwitchExternalPower *=.*$/HandleLidSwitchExternalPower=ignore/g' -i /etc/systemd/logind.conf
   sudo sed 's/^.*HandleLidSwitchDocked *=.*$/HandleLidSwitchDocked=ignore/g' -i /etc/systemd/logind.conf
-}
-
-main() {
-  local command="$1"; shift
-
-  if type cmd_$command &>/dev/null; then
-    cmd_$command "$@"
-  else
-    echo "Command ${command} do not exists"
-    exit 1
-  fi
-}
-
-main "$@"
-

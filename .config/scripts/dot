@@ -62,6 +62,7 @@ status() {
     dot add $HOME/.config/dunst
     dot add $HOME/.config/zsh
     dot add $HOME/.config/scripts
+    dot add $HOME/.config/just
     dot add $HOME/.config/starship.toml
     dot add $HOME/.config/containers
     dot add $HOME/.config/distrobox
