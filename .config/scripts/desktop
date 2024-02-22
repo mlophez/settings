@@ -5,36 +5,40 @@ SWAYPATH="$HOME/.config/sway"
 
 #[[ -e $HOME/.config/zsh/.zshenv ]] && source $HOME/.config/zsh/.zshenv
 
+cmd_run() {
+  hyprctl dispatch exec "${@}"
+}
+
 cmd_init() {
-    systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    dbus-update-activation-environment --systemd --all
+  dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+  systemctl --user import-environment XDG_SESSION_TYPE XDG_CURRENT_DESKTOP WAYLAND_DISPLAY QT_QPA_PLATFORMTHEME
 
-    # PORTALS
-    pkill -f "xdg-desktop-portal"
-    nohup /usr/libexec/xdg-desktop-portal -r &>/dev/null &
-    nohup /usr/libexec/xdg-desktop-portal-gtk -r &>/dev/null &
-    nohup /usr/libexec/xdg-desktop-portal-wlr -r &>/dev/null &
+  cmd_start_desktop_portal
 
-    # BALOOCTL
-    type balooctl &>/dev/null && balooctl disable &>/dev/null
+  # BALOOCTL
+  type balooctl &>/dev/null && \
+    balooctl disable &>/dev/null
 
-    # NETWORK MANAGER
-    # type nmcli &>/dev/null && nmcli radio wifi off
-    type nm-applet &>/dev/null && nohup nm-applet &>/dev/null &
+  # NETWORK MANAGER
+  # type nmcli &>/dev/null && nmcli radio wifi off
 
-    # WALLPAPER
-    type swww &>/dev/null && nohup swww init &>/dev/null &
-    nohup desktop wallpaper &>/dev/null &
+  # VBOX
+  # type VBoxClient &>/dev/null && VBoxClient --clipboard
+  exit 0
+}
 
-    # VBOX
-    # type VBoxClient &>/dev/null && VBoxClient --clipboard
-    exit 0
+cmd_start_desktop_portal() {
+  pkill -f "xdg-desktop-portal"
+  hyprctl dispatch exec '/usr/lib/xdg-desktop-portal -r'
+  hyprctl dispatch exec '/usr/lib/xdg-desktop-portal-gtk -r'
+  hyprctl dispatch exec '/usr/lib/xdg-desktop-portal-hyprland'
 }
 
 cmd_panel() {
-    #export XDG_CURRENT_DESKTOP=Unity
-    pkill waybar
-    exec waybar -c $HOME/.config/waybar/config -s $HOME/.config/waybar/style.css "$@"
+  #export XDG_CURRENT_DESKTOP=Unity
+  pkill waybar
+  hyprctl dispatch exec "waybar -c $HOME/.config/waybar/config -s $HOME/.config/waybar/style.css"
+  #exec waybar -c $HOME/.config/waybar/config -s $HOME/.config/waybar/style.css "$@"
 }
 
 cmd_wallpaper() {
@@ -248,6 +252,10 @@ cmd_terminal() {
     # ZSH
     type zsh &>/dev/null && exec zsh
   fi
+}
+
+cmd_screenshot() {
+  slurp | grim -g - - | wl-copy
 }
 
 main() {

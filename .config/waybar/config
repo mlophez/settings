@@ -1,4 +1,4 @@
-// vim: ft=cjson
+// vim: ft=json
 [
   {
     "layer": "top",
@@ -10,20 +10,19 @@
 
     "modules-left": [
       "hyprland/workspaces",
-      "sway/workspaces",
-      "sway/mode"
+      "custom/wallpaper"
+      //"sway/workspaces",
+      //"sway/mode"
     ],
     "modules-center": [
-      "clock#time",
+      "clock",
     ],
     "modules-right": [
       "tray",
-      "custom/wallpaper",
       "pulseaudio",
       "battery",
-      "clock",
       "custom/lock",
-      "custom/shutdown"
+      "custom/shutdown",
     ],
 
     "hyprland/workspaces": {
@@ -88,7 +87,7 @@
     },
 
     "clock": {
-      "format": "{:%Y-%m-%d}",
+      "format": "{:%Y-%m-%d   %H:%M}",
     },
 
     "clock#time": {

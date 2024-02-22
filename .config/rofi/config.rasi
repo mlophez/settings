@@ -12,6 +12,11 @@ configuration {
     display-window: "   Window";
     display-Network: " 󰤨  Network";
     sidebar-mode: true;
+
+    kb-row-left: "Alt+j";
+    kb-row-right: "Alt+ntilde";
+    kb-row-up: "Up,Alt+l";
+    kb-row-down: "Down,Alt+k";
 }
 
 @theme "catppuccin-mocha"

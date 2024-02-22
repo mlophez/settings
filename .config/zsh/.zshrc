@@ -285,7 +285,8 @@ kustomize-menu() {
 
 aws-inventory() {
   local regions=("eu-west-1" "eu-south-2")
-  local profiles=($(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | grep -v root |tr "\n" ' '))
+  #local profiles=($(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | grep -v root |tr "\n" ' '))
+  local profiles=("ireland" "production" "tools" "demo" "qa" "dev" "shared")
   local query='.Reservations[] | .Instances[] | select(.State.Name != "terminated") | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
   local region profile
 
@@ -806,16 +807,17 @@ workspace() {
 # }
 #
 # # BLUETOOTH
-# function bluetooth_menu() {
-#     [ "$(systemctl is-active bluetooth.service)" = "inactive" ] && sudo systemctl start bluetooth.service
-#
-#     device=$(bluetoothctl devices | fzf)
-#     [ -z "$device" ] && return -1
-#
-#     bluetoothctl power on
-#     bluetoothctl connect "$(echo $device | cut -d' ' -f 2)"
-# }
-#
+bluetooth_menu() {
+    [ "$(systemctl is-active bluetooth.service)" = "inactive" ] \
+      && sudo systemctl start bluetooth.service
+
+    device=$(bluetoothctl devices | fzf)
+    [ -z "$device" ] && return -1
+
+    bluetoothctl power on
+    bluetoothctl connect "$(echo $device | cut -d' ' -f 2)"
+}
+
 # # BACKUPS
 # function copysec() {
 #     local commands=("rsync" "borg")

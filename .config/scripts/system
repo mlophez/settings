@@ -23,6 +23,9 @@ cmd_distrobox() {
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/swaymsg
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/hyprctl
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/makoctl
   distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
 
   distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
@@ -51,6 +54,8 @@ cmd_flatpak() {
 	flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
 	flatpak --user install -y flathub dev.k8slens.OpenLens
 	flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
+
+	flatpak --user install -y flathub org.gnome.dspy
 }
 
 cmd_configure() {
