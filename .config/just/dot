@@ -52,6 +52,7 @@ status() {
     dot add $HOME/.config/wsl
     dot add $HOME/.config/qtile
     dot add $HOME/.config/sway
+    dot add $HOME/.config/swaylock
     dot add $HOME/.config/hypr
     dot add $HOME/.config/gnome
     dot add $HOME/.config/waybar

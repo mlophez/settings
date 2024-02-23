@@ -1,0 +1,116 @@
+#!/usr/bin/env -S just --working-directory . --justfile
+
+[private]
+help:
+  @desktop -u -l
+
+init: init-first init-portals init-wallpaper init-panel
+
+[private]
+init-first:
+  #!/usr/bin/env bash
+  systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
+  dbus-update-activation-environment --systemd --all
+  # BALOOCTL
+  type balooctl &>/dev/null && \
+    balooctl disable &>/dev/null
+  # NETWORK MANAGER
+  # type nmcli &>/dev/null && nmcli radio wifi off
+  # VBOX
+  # type VBoxClient &>/dev/null && VBoxClient --clipboard
+  exit 0
+
+init-portals:
+  #!/usr/bin/env bash
+  pkill -f "xdg-desktop-portal"
+  hyprctl dispatch exec '/usr/lib/xdg-desktop-portal -r'
+  hyprctl dispatch exec '/usr/lib/xdg-desktop-portal-gtk -r'
+  hyprctl dispatch exec '/usr/lib/xdg-desktop-portal-hyprland'
+  exit 0
+
+init-panel:
+  #!/usr/bin/env bash
+  if type waybar &>/dev/null; then
+    pkill waybar
+    hyprctl dispatch exec "waybar -c $HOME/.config/waybar/config -s $HOME/.config/waybar/style.css"
+  fi
+  if type nm-applet &>/dev/null; then
+    pkill nm-applet
+    hyprctl dispatch exec "nm-applet"
+  fi
+  exit 0
+
+init-wallpaper:
+  #!/usr/bin/env bash
+  image=$(ls ~/.local/share/backgrounds | shuf -n 1)
+  if type swww &>/dev/null; then
+    pkill swww
+    hyprctl dispatch exec "swww init"
+    swww img $HOME/.local/share/backgrounds/${image}
+  fi
+  exit 0
+
+wallpaper:
+  #!/usr/bin/env bash
+  image=$(ls ~/.local/share/backgrounds | shuf -n 1)
+  if type swww &>/dev/null; then
+    swww img $HOME/.local/share/backgrounds/${image} \
+      --transition-type center \
+      --transition-fps 60 \
+      --transition-step 50 \
+      --transition-duration 1
+  elif [ "${XDG_CURRENT_DESKTOP,,}" = "sway" ]; then
+    swaymsg output '*' bg $HOME/.local/share/backgrounds/${image} fill
+    # swaymsg output * bg #1e1e2e solid_color
+  fi
+
+menu:
+  #!/usr/bin/env bash
+  type rofi &>/dev/null && exec rofi -show drun
+  [ -n "$(pidof wofi)" ] && return 0
+  exec wofi -i --show drun \
+      --no-actions \
+      --normal-window \
+      --allow-images \
+      --sort-order=alphabetical \
+      --parse-search \
+      --lines=10 --columns=10 \
+      -s $HOME/.config/sway/wofi.css
+      #--matching=fuzzy \
+  exit 0
+
+
+lock:
+  #!/usr/bin/env bash
+  image=$(ls ~/.local/share/backgrounds | shuf -n 1)
+  [ -n "$(pacman -Q swaylock | grep effects-git)" ] && \
+    exec swaylock -c $HOME/.local/swaylock/config
+  swaylock \
+    --ignore-empty-password \
+    --show-failed-attempts \
+    --indicator-radius 200 \
+    -f -i ~/.local/share/backgrounds/${image} -s fill
+  exit 0
+
+screenshot:
+  slurp | grim -g - - | wl-copy
+
+terminal:
+  #!/usr/bin/env bash
+  type alacritty &>/dev/null && exec alacritty -e desktop shell
+  type wezterm &>/dev/null && exec wezterm start --always-new-process -- desktop shell
+  type foot &>/dev/null && exec foot
+  exit 0
+
+shell:
+  #!/usr/bin/env bash
+  export ZDOTDIR=$HOME/.config/zsh
+  if type zellij &>/dev/null; then
+    { zellij attach '0' || exec zellij -s '0'; }; exit 0
+  fi
+  if type tmux &>/dev/null; then
+    { tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'; }; exit 0
+  fi
+  type zsh &>/dev/null && exec zsh
+  exit 0
+

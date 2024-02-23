@@ -106,7 +106,7 @@
 
     "custom/wallpaper": {
       "on-click": "desktop wallpaper",
-      "format": " 󰸉 "
+      "format": " "
     },
 
     "pulseaudio": {

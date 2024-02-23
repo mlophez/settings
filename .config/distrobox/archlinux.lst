@@ -168,6 +168,7 @@ stern
 helm
 kompose
 k9s
+trivy
 
 # API
 httpie
