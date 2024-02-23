@@ -4,10 +4,8 @@
 help:
   @desktop -u -l
 
-#init: init-first init-portals init-wallpaper init-panel
-
 # Initialize desktop environment
-init: && portals wallpaper panel theme
+init: && portals wallpaper panel theme distrobox
   #!/usr/bin/env bash
   systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
   dbus-update-activation-environment --systemd --all
@@ -83,6 +81,16 @@ theme:
   [ -d "$HOME/.local/share/themes/icons/${icon_theme}" ] && \
     gsettings set ${gnome_schema} icon-theme "${icon_theme}"
   gsettings set ${gnome_schema} font-name "${font_theme}"
+  exit 0
+
+[private]
+distrobox:
+  #!/usr/bin/env bash
+  if type distrobox &>/dev/null; then
+    for name in $(distrobox list --no-color | awk -F'|' '{print $2}' | grep -v "NAME" ); do
+      distrobox enter ${name} -- echo
+    done
+  fi
   exit 0
 
 # App launcher menu
