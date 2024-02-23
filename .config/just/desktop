@@ -4,10 +4,10 @@
 help:
   @desktop -u -l
 
-init: init-first init-portals init-wallpaper init-panel
+#init: init-first init-portals init-wallpaper init-panel
 
-[private]
-init-first:
+# Initialize desktop environment
+init: && portals wallpaper panel theme
   #!/usr/bin/env bash
   systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
   dbus-update-activation-environment --systemd --all
@@ -20,7 +20,8 @@ init-first:
   # type VBoxClient &>/dev/null && VBoxClient --clipboard
   exit 0
 
-init-portals:
+# Start xdg-desktop-portals
+portals:
   #!/usr/bin/env bash
   pkill -f "xdg-desktop-portal"
   hyprctl dispatch exec '/usr/lib/xdg-desktop-portal -r'
@@ -28,7 +29,8 @@ init-portals:
   hyprctl dispatch exec '/usr/lib/xdg-desktop-portal-hyprland'
   exit 0
 
-init-panel:
+# Start desktop panel
+panel:
   #!/usr/bin/env bash
   if type waybar &>/dev/null; then
     pkill waybar
@@ -40,30 +42,50 @@ init-panel:
   fi
   exit 0
 
-init-wallpaper:
-  #!/usr/bin/env bash
-  image=$(ls ~/.local/share/backgrounds | shuf -n 1)
-  if type swww &>/dev/null; then
-    pkill swww
-    hyprctl dispatch exec "swww init"
-    swww img $HOME/.local/share/backgrounds/${image}
-  fi
-  exit 0
-
+# Rotate/Set wallpaper
 wallpaper:
   #!/usr/bin/env bash
   image=$(ls ~/.local/share/backgrounds | shuf -n 1)
   if type swww &>/dev/null; then
-    swww img $HOME/.local/share/backgrounds/${image} \
-      --transition-type center \
-      --transition-fps 60 \
-      --transition-step 50 \
-      --transition-duration 1
+    if ! pgrep -x "swww-daemon" > /dev/null; then
+      pkill swww
+      hyprctl dispatch exec "swww init"
+      swww img $HOME/.local/share/backgrounds/${image}
+    else
+      swww img $HOME/.local/share/backgrounds/${image} \
+        --transition-type center \
+        --transition-fps 60 \
+        --transition-step 50 \
+        --transition-duration 1
+    fi
   elif [ "${XDG_CURRENT_DESKTOP,,}" = "sway" ]; then
     swaymsg output '*' bg $HOME/.local/share/backgrounds/${image} fill
     # swaymsg output * bg #1e1e2e solid_color
   fi
+  exit 0
 
+[private]
+theme:
+  #!/usr/bin/env bash
+  local gnome_schema="org.gnome.desktop.interface"
+  local cursor_theme="bibata-modern-ice-cursors"
+  local gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
+  local icon_theme="cupertino-sonoma-icons"
+  local font_theme="JetBrainsMono Nerd Font 14"
+  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+    hyprctl setcursor "${cursor_theme}" 24 \
+  ! type gsettings &>/dev/null && exit 0
+  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+    gsettings set ${gnome_schema} cursor-theme "${cursor_theme}"
+  [ -d "$HOME/.local/share/themes/${gtk_theme}" ] && \
+    gsettings set ${gnome_schema} gtk-theme "${gtk_theme}"
+    gsettings set ${gnome_schema} color-scheme 'prefer-dark'
+  [ -d "$HOME/.local/share/themes/icons/${icon_theme}" ] && \
+    gsettings set ${gnome_schema} icon-theme "${icon_theme}"
+  gsettings set ${gnome_schema} font-name "${font_theme}"
+  exit 0
+
+# App launcher menu
 menu:
   #!/usr/bin/env bash
   type rofi &>/dev/null && exec rofi -show drun
@@ -79,22 +101,24 @@ menu:
       #--matching=fuzzy \
   exit 0
 
-
+# Lock screen
 lock:
   #!/usr/bin/env bash
   image=$(ls ~/.local/share/backgrounds | shuf -n 1)
   [ -n "$(pacman -Q swaylock | grep effects-git)" ] && \
-    exec swaylock -c $HOME/.local/swaylock/config
-  swaylock \
+    exec swaylock
+  swaylock swaylock -C /dev/null \
     --ignore-empty-password \
     --show-failed-attempts \
     --indicator-radius 200 \
     -f -i ~/.local/share/backgrounds/${image} -s fill
   exit 0
 
+# Take a screenshot
 screenshot:
   slurp | grim -g - - | wl-copy
 
+# Start terminal
 terminal:
   #!/usr/bin/env bash
   type alacritty &>/dev/null && exec alacritty -e desktop shell
@@ -102,6 +126,7 @@ terminal:
   type foot &>/dev/null && exec foot
   exit 0
 
+[private]
 shell:
   #!/usr/bin/env bash
   export ZDOTDIR=$HOME/.config/zsh
