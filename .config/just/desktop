@@ -179,7 +179,7 @@ menu-power:
   echo ${choice,,}
   [ "${choice,,}" = "lock" ] && desktop lock
   [ "${choice,,}" = "reboot" ] && systemctl reboot
-  [ "${choice,,}" = "poweroff" ] && systemctl poweroff
+  [ "${choice,,}" = "poweroff" ] && systemctl poweroff -i
   exit 0
 
 # Exit from desktop
