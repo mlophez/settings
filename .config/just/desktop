@@ -7,8 +7,8 @@ help:
 # Initialize desktop environment
 init: && portals wallpaper panel theme distrobox
   #!/usr/bin/env bash
-  systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
   dbus-update-activation-environment --systemd --all
+  # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
   # BALOOCTL
   type balooctl &>/dev/null && \
     balooctl disable &>/dev/null
@@ -186,7 +186,7 @@ menu-power:
 exit:
   #!/usr/bin/env bash
   rm -rf /tmp/hypr &> /dev/null
-  loginctl kill-user $(whoami)
+  loginctl terminate-user $(whoami)
   # killall -u $USER
   exit 0
 
