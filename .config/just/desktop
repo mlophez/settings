@@ -116,9 +116,9 @@ terminal command='start':
   if [ "{{command}}" = "toggle" ]; then
     exec desktop terminal-toggle
   elif [ "{{command}}" = "start" ]; then
-    type alacritty &>/dev/null && exec alacritty -e desktop shell
-    type wezterm &>/dev/null && exec wezterm start --always-new-process -- desktop shell
-    type foot &>/dev/null && exec foot
+    type alacritty &>/dev/null && exec alacritty -e desktop terminal-shell
+    type wezterm &>/dev/null && exec wezterm start --always-new-process -- desktop terminal-shell
+    type foot &>/dev/null && exec foot -- desktop terminal-shell false
   fi
   exit 0
 
@@ -133,14 +133,16 @@ terminal-toggle:
   exit 0
 
 [private]
-shell:
+terminal-shell multiplexer="true":
   #!/usr/bin/env bash
   export ZDOTDIR=$HOME/.config/zsh
-  if type zellij &>/dev/null; then
-    { zellij attach '0' || exec zellij -s '0'; }; exit 0
-  fi
-  if type tmux &>/dev/null; then
-    { tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'; }; exit 0
+  if [ "{{multiplexer}}" = "true" ]; then
+    if type zellij &>/dev/null; then
+      { zellij attach '0' || exec zellij -s '0'; }; exit 0
+    fi
+    if type tmux &>/dev/null; then
+      { tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'; }; exit 0
+    fi
   fi
   type zsh &>/dev/null && exec zsh
   exit 0
