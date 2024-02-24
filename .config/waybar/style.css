@@ -18,10 +18,11 @@ window#waybar {
 #tray,
 #clock,
 #pulseaudio,
+#backlight,
 #battery,
 #custom-lock,
 #custom-wallpaper,
-#custom-shutdown {
+#custom-power {
   background-color: shade(@base, 0.9);
   border-radius: 7px;
   border: 2px solid @lavender;
@@ -70,7 +71,7 @@ window#waybar {
   color: @yellow;
 }
 
-#custom-shutdown {
+#custom-power {
   color: @red;
   margin-right: 20px;
 }

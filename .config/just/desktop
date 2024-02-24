@@ -65,11 +65,11 @@ wallpaper:
 [private]
 theme:
   #!/usr/bin/env bash
-  local gnome_schema="org.gnome.desktop.interface"
-  local cursor_theme="bibata-modern-ice-cursors"
-  local gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
-  local icon_theme="cupertino-sonoma-icons"
-  local font_theme="JetBrainsMono Nerd Font 14"
+  gnome_schema="org.gnome.desktop.interface"
+  cursor_theme="bibata-modern-ice-cursors"
+  gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
+  icon_theme="cupertino-sonoma-icons"
+  font_theme="JetBrainsMono Nerd Font 14"
   [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
     hyprctl setcursor "${cursor_theme}" 24 \
   ! type gsettings &>/dev/null && exit 0
@@ -93,22 +93,6 @@ distrobox:
   fi
   exit 0
 
-# App launcher menu
-menu:
-  #!/usr/bin/env bash
-  type rofi &>/dev/null && exec rofi -show drun
-  [ -n "$(pidof wofi)" ] && return 0
-  exec wofi -i --show drun \
-      --no-actions \
-      --normal-window \
-      --allow-images \
-      --sort-order=alphabetical \
-      --parse-search \
-      --lines=10 --columns=10 \
-      -s $HOME/.config/sway/wofi.css
-      #--matching=fuzzy \
-  exit 0
-
 # Lock screen
 lock:
   #!/usr/bin/env bash
@@ -127,11 +111,25 @@ screenshot:
   slurp | grim -g - - | wl-copy
 
 # Start terminal
-terminal:
+terminal command='start':
   #!/usr/bin/env bash
-  type alacritty &>/dev/null && exec alacritty -e desktop shell
-  type wezterm &>/dev/null && exec wezterm start --always-new-process -- desktop shell
-  type foot &>/dev/null && exec foot
+  if [ "{{command}}" = "toggle" ]; then
+    exec desktop terminal-toggle
+  elif [ "{{command}}" = "start" ]; then
+    type alacritty &>/dev/null && exec alacritty -e desktop shell
+    type wezterm &>/dev/null && exec wezterm start --always-new-process -- desktop shell
+    type foot &>/dev/null && exec foot
+  fi
+  exit 0
+
+[private]
+terminal-toggle:
+  #!/usr/bin/env bash
+  namespace="terminal"
+  window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
+  [ -z "${window}" ] && \
+    exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1200x600"
+  hyprctl dispatch togglespecialworkspace "${namespace}"
   exit 0
 
 [private]
@@ -145,5 +143,48 @@ shell:
     { tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'; }; exit 0
   fi
   type zsh &>/dev/null && exec zsh
+  exit 0
+
+# audio
+# echo 0 | sudo tee /sys/class/leds/platform::micmute/brightness
+# echo 0 | sudo tee /sys/class/leds/tpacpi::kbd_backlight/brightness
+# brightnessctl --device=''
+
+# App launcher menu
+menu type='app':
+  exec desktop menu-{{type}}
+
+[private]
+menu-app:
+  #!/usr/bin/env bash
+  type rofi &>/dev/null && exec rofi -show drun
+  [ -n "$(pidof wofi)" ] && return 0
+  exec wofi -i --show drun \
+      --no-actions \
+      --normal-window \
+      --allow-images \
+      --sort-order=alphabetical \
+      --parse-search \
+      --lines=10 --columns=10 \
+      -s $HOME/.config/sway/wofi.css
+      #--matching=fuzzy \
+  exit 0
+
+[private]
+menu-power:
+  #!/usr/bin/env bash
+  choice=$(echo -e "Lock|Reboot|Poweroff" | rofi -dmenu -sep '|' -p "Option" -only-match -i)
+  echo ${choice,,}
+  [ "${choice,,}" = "lock" ] && desktop lock
+  [ "${choice,,}" = "reboot" ] && systemctl reboot
+  [ "${choice,,}" = "poweroff" ] && systemctl poweroff
+  exit 0
+
+# Exit from desktop
+exit:
+  #!/usr/bin/env bash
+  rm -rf /tmp/hypr &> /dev/null
+  loginctl kill-user $(whoami)
+  # killall -u $USER
   exit 0
 

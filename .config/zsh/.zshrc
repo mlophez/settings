@@ -71,14 +71,13 @@ bindkey '^R' history-incremental-search-backward
     source $HOME/.config/zsh/plugins/fzf-history-search.zsh
 
 # PROMPT
-#[ ! -d "$HOME/.local/share/zsh/spaceship" ] && \
-#  git clone --depth=1 https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.local/share/zsh/spaceship"
-#source ~/.local/share/zsh/spaceship/spaceship.zsh
 prompt redhat
-type starship &>/dev/null && eval "$(starship init zsh)"
+type starship &>/dev/null && \
+  eval "$(starship init zsh)"
 
 # AUTOCOMPLETE
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+[[ $commands[kubectl] ]] && \
+  source <(kubectl completion zsh)
 
 # TMUX
 #[ -n "${TMUX_POPUP}" ] && setopt ignore_eof

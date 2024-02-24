@@ -20,9 +20,9 @@
     "modules-right": [
       "tray",
       "pulseaudio",
+      "backlight",
       "battery",
-      "custom/lock",
-      "custom/shutdown",
+      "custom/power",
     ],
 
     "hyprland/workspaces": {
@@ -99,9 +99,9 @@
       "format": "  "
     },
 
-    "custom/shutdown": {
-      "on-click": "systemctl poweroff -i",
-      "format": "  "
+    "custom/power": {
+      "format": "  ",
+      "on-click": "desktop menu power"
     },
 
     "custom/wallpaper": {
@@ -130,5 +130,11 @@
       "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
       "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     },
+
+    "backlight": {
+        "device": "intel_backlight",
+        "format": "{percent}% {icon}",
+        "format-icons": ["", ""]
+    }
   }
 ]
