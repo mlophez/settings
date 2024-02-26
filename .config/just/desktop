@@ -43,21 +43,27 @@ panel:
 # Rotate/Set wallpaper
 wallpaper:
   #!/usr/bin/env bash
-  image=$(ls ~/.local/share/backgrounds | shuf -n 1)
+  cache_file="$HOME/.cache/wallpaper"
+  cached="$(cat ${cache_file})"
+  wallpapers_path="$HOME/.local/share/backgrounds"
+  wallpaper="${wallpapers_path}/$(ls ${wallpapers_path} | shuf -n 1)"
   if type swww &>/dev/null; then
     if ! pgrep -x "swww-daemon" > /dev/null; then
       pkill swww
       hyprctl dispatch exec "swww init"
-      swww img $HOME/.local/share/backgrounds/${image}
+      [ -e "${cached}" ] && wallpaper=${cached}
+      swww img ${wallpaper}
     else
-      swww img $HOME/.local/share/backgrounds/${image} \
+      swww img ${wallpaper} \
         --transition-type center \
         --transition-fps 60 \
         --transition-step 50 \
         --transition-duration 1
+      echo "${wallpaper}" > ${cache_file}
     fi
   elif [ "${XDG_CURRENT_DESKTOP,,}" = "sway" ]; then
-    swaymsg output '*' bg $HOME/.local/share/backgrounds/${image} fill
+    swaymsg output '*' bg ${wallpaper} fill
+    echo "${wallpaper}" > ${cache_file}
     # swaymsg output * bg #1e1e2e solid_color
   fi
   exit 0
