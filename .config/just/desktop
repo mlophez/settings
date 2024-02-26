@@ -5,7 +5,7 @@ help:
   @desktop -u -l
 
 # Initialize desktop environment
-init: && portals wallpaper panel theme distrobox
+init: && portals wallpaper panel distrobox
   #!/usr/bin/env bash
   dbus-update-activation-environment --systemd --all
   # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
@@ -69,7 +69,7 @@ theme:
   cursor_theme="bibata-modern-ice-cursors"
   gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
   icon_theme="cupertino-sonoma-icons"
-  font_theme="JetBrainsMono Nerd Font 14"
+  font_theme="JetBrainsMono Nerd Font 12"
   [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
     hyprctl setcursor "${cursor_theme}" 24 \
   ! type gsettings &>/dev/null && exit 0
