@@ -285,7 +285,7 @@ kustomize-menu() {
 aws-inventory() {
   local regions=("eu-west-1" "eu-south-2")
   #local profiles=($(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | grep -v root |tr "\n" ' '))
-  local profiles=("ireland" "production" "tools" "demo" "qa" "dev" "shared")
+  local profiles=("ireland" "production" "tools" "demo" "qa" "dev" "shared" "mutua")
   local query='.Reservations[] | .Instances[] | select(.State.Name != "terminated") | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
   local region profile
 
@@ -868,16 +868,18 @@ notes() {
   fi
 }
 
+# ./terraform-mv from_module to_module resources
 terraform-mv() {
-  local module_name="$1"
-  local module_path="$2"
-  local module=""
+  local from_module="$1"
+  local to_module="$2"
+  local resources="$3"
 
-  [ "${module_name}" != "main" ] && module="module.${module_name}."
-  [ -d "${module_path}" ] && module_path="${module_path}/*.tf"
+  [ "${from_module}" != "root" ] && from_module="module.${from_module}." || from_module=""
+  [ "${to_module}" != "root" ] && to_module="module.${to_module}." || to_module=""
+  [ -d "${resources}" ] && resources="${resources}/*.tf"
 
-  eval "cat ${module_path}" | grep 'resource "' | cut -d" " -f 2,3 | sed 's/" "/./g' | tr -d '"' \
-     | xargs -I@ echo terraform state mv ${module}@ ${module}@
+  eval "cat ${resources}" | grep -v "^ *#" | grep 'resource "' | cut -d" " -f 2,3 | sed 's/" "/./g' | tr -d '"' \
+     | xargs -I@ echo terraform state mv ${from_module}@ ${to_module}@
 }
 
 terraform-modulizer() {
