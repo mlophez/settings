@@ -6,6 +6,7 @@ help:
 
 setup:
   #!/usr/bin/env bash
+  ln -sf /usr/bin/podman ~/.local/bin/docker
   sudo pacman -Syu --noconfirm
   sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 
