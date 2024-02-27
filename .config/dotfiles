@@ -39,6 +39,8 @@
 ~/.config/Windows
 ~/.config/Code/User/settings.json
 ~/.config/Code/User/keybindings.json
+~/.config/user-dirs.dirs
+~/.config/user-dirs.locale
 ~/.ssh/config
 ~/.aws/config
 ~/.var/app/com.google.Chrome/config/chrome-flags.conf
