@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+function-menu () {
+  local func=$(ls $HOME/.config/zsh/functions/ | fzf)
+  [ -z "${func}" ] && return 0
+  print -z "${func}"
+}
+

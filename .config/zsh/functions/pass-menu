@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+
+pass-menu() {
+    local entries=$(pass list)
+    local entry=$(printf "$entries" | fzf)
+    [ -z "$entry" ] && return
+
+    if [ -z "${1}" ]; then
+      eval "pass $entry"
+    else
+      eval "pass edit $entry"
+    fi
+}
+
+

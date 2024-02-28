@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+kubectl-menu() {
+  local verb="$1"
+  local objects="$2"
+  local context="$3"
+  local datafile=$(mktemp)
+  local instance object namespace
+
+  [ -z "$context" ] && echo "kubectl-menu <context> <verb> <objects>" && return -1
+
+  kubectl --context $context get ${objects} -A -o template --template='{{range .items}}{{.metadata.name}}{{";"}}{{.metadata.namespace}}{{"\n"}}{{end}}' > $datafile
+
+  instance=$(cat $datafile | column -s ';' -t | fzf)
+  [ -z "$instance" ] && return 0
+
+  object=$(echo "$instance" | awk '{print $1 }')
+  namespace=$(echo "$instance" | awk '{print $2 }')
+
+  print -z "kubectl --context ${context} -n ${namespace} ${verb} ${objects}/${object}"
+}
+
+

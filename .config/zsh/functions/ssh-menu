@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+
+ssh-menu() {
+    local entries entry
+    local profile hook
+
+    entries=$(cat $HOME/.ssh/config | grep -i "^Host" | grep -v "*" | sed 's/ \+/ /g' | cut -d" " -f2-100000 | sort)
+    entry=$(printf "$entries" | fzf)
+    [ -z "$entry" ] && return
+
+    # Password
+    if [ -e $HOME/.ssh/credentials ]; then
+      profile=$(cat $HOME/.ssh/credentials | cut -d'|' -f 1 | fzf)
+      if [ -n "$profile" -a "${profile}" != "NONE" ];  then
+        hook="sshpass -p'$(cat $HOME/.ssh/credentials | grep ^$profile | cut -d'|' -f 2)'"
+      fi
+    fi
+
+    echo "[+] Connect to '$(echo $entry | cut -d" " -f1)'"
+
+    #printf "\e[?2004l"
+    eval "$hook ssh $(echo $entry | cut -d" " -f1)"
+}
+
+

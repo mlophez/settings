@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+menu() {
+  local connection=$(nmcli -g name connection show | grep -v "^lo" | fzf)
+  [ -z "${connection}" ] && return 0
+  nmcli connection up ${connection} --ask
+}

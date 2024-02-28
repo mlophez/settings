@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+
+kubernetes-clean-terminated-pods() {
+  local context="$1"
+  local namespace
+  local pod
+
+  [ -z "$context" ] && echo "$0 <context>" && return -1
+
+  for i in $(kubectl --context ${context} get pods -A | grep 'Terminating' | awk '{print $1 ":" $2}'); do
+    pod=$(echo $i | cut -d":" -f2)
+    namespace=$(echo $i | cut -d":" -f1)
+    kubectl --context ${context} -n ${namespace} delete pod --force --grace-period=0 ${pod}
+  done
+
+}
+
+

@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+kubectl-shell-menu() {
+  local context="$1"
+  local instance pod namespace
+  local datafile=$(mktemp)
+
+  [ -z "$context" ] && echo "kubectl-shell-menu <context>" && return -1
+
+  kubectl --context $context get pods -A -o template --template='{{range .items}}{{.metadata.name}}{{";"}}{{.metadata.namespace}}{{"\n"}}{{end}}' > $datafile
+
+  instance=$(cat $datafile | column -s ';' -t | fzf)
+  [ -z "$instance" ] && return 0
+
+  pod=$(echo "$instance" | awk '{print $1 }')
+  namespace=$(echo "$instance" | awk '{print $2 }')
+
+  #kubectl --context $context -n $namespace exec -it $pod -- sh -c "(bash || ash || sh)"
+  print -z kubectl --context $context -n $namespace exec -it $pod -- sh -c "'(bash || ash || sh)'"
+}
+
+

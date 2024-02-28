@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+
+aws-inventory() {
+  local regions=("eu-west-1" "eu-south-2")
+  #local profiles=($(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | grep -v root |tr "\n" ' '))
+  local profiles=("ireland" "production" "tools" "demo" "qa" "dev" "shared" "mutua")
+  local query='.Reservations[] | .Instances[] | select(.State.Name != "terminated") | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
+  local region profile
+
+  [ ! -d "$HOME/.aws" ] && mkdir -p $HOME/.aws
+
+  # INVENTORY FILE
+  cat /dev/null > $HOME/.aws/inventory
+  for profile in $profiles; do
+    echo "[+] Profile: ${profile}"
+    for region in $regions; do
+      aws ec2 describe-instances --region $region --profile $profile | \
+        jq --arg region "$region" --arg profile "$profile" -r "$query" >> $HOME/.aws/inventory
+    done
+  done
+}
+
+

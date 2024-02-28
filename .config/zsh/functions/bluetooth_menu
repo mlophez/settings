@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+bluetooth_menu() {
+    [ "$(systemctl is-active bluetooth.service)" = "inactive" ] \
+      && sudo systemctl start bluetooth.service
+
+    device=$(bluetoothctl devices | fzf)
+    [ -z "$device" ] && return -1
+
+    bluetoothctl power on
+    bluetoothctl connect "$(echo $device | cut -d' ' -f 2)"
+}
