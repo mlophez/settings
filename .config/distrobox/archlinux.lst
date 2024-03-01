@@ -169,6 +169,7 @@ helm
 kompose
 k9s
 trivy
+kubeseal
 
 # API
 httpie

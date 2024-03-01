@@ -1,5 +1,30 @@
 {
-  "kustomization": {
+  "SealedSecret": {
+    "prefix": "sealedsecret",
+    "body": [
+      "---",
+      "apiVersion: bitnami.com/v1alpha1",
+      "kind: SealedSecret",
+      "metadata:",
+      "  name: repo-3748405909",
+      "  namespace: argocd",
+      "  annotations:",
+      "    sealedsecrets.bitnami.com/cluster-wide: \"true\"",
+      "spec:",
+      "  template:",
+      "    type: Opaque",
+      "    metadata:",
+      "      labels:",
+      "        \"jenkins.io/credentials-type\": usernamePassword",
+      "      annotations:",
+      "        \"jenkins.io/credentials-description\": credentials from Kubernetes",
+      "  encryptedData:",
+      "    username: \"AgB2Pusa5eGrIC+\"",
+      ""
+    ],
+    "description": "SealedSecret"
+  },
+  "Deployment": {
     "prefix": "deployment",
     "description": "Kubernetes Deployment",
     "body": [

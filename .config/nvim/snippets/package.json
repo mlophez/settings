@@ -8,6 +8,10 @@
       {
         "language": "yaml",
         "path": "./kustomization.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./kubernetes.json"
       }
     ]
   }

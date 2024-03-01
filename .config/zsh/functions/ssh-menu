@@ -19,7 +19,7 @@ ssh-menu() {
     echo "[+] Connect to '$(echo $entry | cut -d" " -f1)'"
 
     #printf "\e[?2004l"
-    eval "$hook ssh $(echo $entry | cut -d" " -f1)"
+    eval "TERM='xterm-256color' $hook ssh $(echo $entry | cut -d" " -f1)"
 }
 
 
