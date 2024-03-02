@@ -11,8 +11,8 @@ return {
 	},
 	keys = {
 		{ "<C-p>", ":Telescope find_files<cr>", silent = true },
-		{ "<leader>f", ":Telescope find_files<cr>", silent = true },
-		{ "<leader>fr", ":Telescope live_grep<cr>", silent = true },
+		--{ "<leader>f", ":Telescope find_files<cr>", silent = true },
+		{ "<leader>f", ":Telescope live_grep<cr>", silent = true },
 	},
 	opts = {
 		defaults = {
