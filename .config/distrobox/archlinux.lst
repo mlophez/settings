@@ -90,8 +90,8 @@ ttf-font-awesome
 # C/C++
 base-devel
 clang
-cmake
-extra-cmake-modules
+#cmake
+#extra-cmake-modules
 
 # PYTHON
 pyright
