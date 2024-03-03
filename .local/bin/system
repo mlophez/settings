@@ -21,6 +21,8 @@ distrobox:
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd
   distrobox enter archlinux -- sudo pacman -Scc --noconfirm
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
+  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/sudo /usr/bin/csudo
+  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/sudo
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/swaymsg
