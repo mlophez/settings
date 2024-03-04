@@ -10,15 +10,12 @@
   "include": ["~/.config/waybar/modules.json"],
 
   "modules-left": [
-    "hyprland/workspaces",
     "sway/workspaces",
     "custom/wallpaper",
+    "custom/screenshot",
     "sway/mode"
   ],
-  "modules-center": [
-    "clock#time",
-    "clock#date"
-  ],
+  "modules-center": ["clock#time", "clock#date"],
   "modules-right": [
     "tray",
     "pulseaudio",

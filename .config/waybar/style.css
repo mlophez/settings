@@ -48,6 +48,11 @@ window#waybar {
   color: @peach;
 }
 
+/* Only for sway */
+#workspaces button.focused {
+  color: @peach;
+}
+
 #workspaces button.urgent {
   color: @red;
 }

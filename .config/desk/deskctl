@@ -16,8 +16,12 @@ help() {
     wallpaper                    # Rotate/Set wallpaper
     lock                         # Lock screen
     screenshot                   # Take a screenshot
-    terminal command='start'     # Start terminal
-    menu type='app'              # App launcher menu
+    terminal [start|shell|toggle]
+    menu [app|power]
+    volume [inc|dec|mute]
+    micro [inc|dec|mute]
+    flatpak install
+    distrobox install
     exit                         # Exit from desktop
 EOF
 }
@@ -57,7 +61,9 @@ init() {
   wallpaper
   panel
   distrobox
-  exit 0
+  outputs
+
+  return 0
 }
 
 # command
@@ -73,7 +79,7 @@ portals() {
   [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
     run '/usr/lib/xdg-desktop-portal-wlr -r'
 
-  exit 0
+  return 0
 }
 
 panel() {
@@ -87,7 +93,7 @@ panel() {
     run "nm-applet"
   fi
 
-  exit 0
+  return 0
 }
 
 wallpaper() {
@@ -98,8 +104,8 @@ wallpaper() {
 
   if type swww &>/dev/null; then
     if ! pgrep -x "swww-daemon" > /dev/null; then
-      pkill swww
-      hyprctl dispatch exec "swww init"
+      pkill swww || /bin/true
+      run "swww init"
       [ -e "${cached}" ] && wallpaper=${cached}
       swww img ${wallpaper}
     else
@@ -116,7 +122,7 @@ wallpaper() {
     # swaymsg output * bg #1e1e2e solid_color
   fi
 
-  exit 0
+  return 0
 }
 
 distrobox() {
@@ -125,7 +131,32 @@ distrobox() {
       distrobox enter ${name} -- echo
     done
   fi
-  exit 0
+  return 0
+}
+
+outputs() {
+  [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && return 0
+
+  local screens external internal
+  local selected default
+
+  screens=$(swaymsg -t get_outputs | jq -r '.[].name' | sort)
+  default="$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)"
+
+  # Criteria two
+  selected="$(swaymsg -t get_outputs | jq -r '.[].name' | sort | grep -v "eDP" | head -1)"
+  [ -z "$selected" ] && selected="$default"
+
+  echo $selected
+  for screen in $(echo "$screens"); do
+    if [ "$screen" = "$selected" ]; then
+      swaymsg output $screen enable
+      #swaymsg output $screen resolution 1920x1080 position 0,0 scale 1
+      swaymsg output $screen resolution 1920x1080 scale 1
+    else
+      swaymsg output $screen disable
+    fi
+  done
 }
 
 lock() {
@@ -141,7 +172,7 @@ lock() {
     --indicator-radius 200 \
     -f -i ~/.local/share/backgrounds/${image} -s fill
 
-  exit 0
+  return 0
 }
 
 screenshot() {
@@ -150,12 +181,13 @@ screenshot() {
 }
 
 terminal_scratchpad_toggle() {
+  [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && return 0
   namespace="terminal"
   window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
   [ -z "${window}" ] && \
     exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
   hyprctl dispatch togglespecialworkspace "${namespace}"
-  exit 0
+  return 0
 }
 
 terminal_shell() {
@@ -174,7 +206,7 @@ terminal_shell() {
 
   type zsh &>/dev/null && exec zsh
 
-  exit 0
+  return 0
 }
 
 terminal() {
@@ -195,7 +227,7 @@ terminal() {
       && exec foot -- ${DESKCTL} terminal shell false
   fi
 
-  exit 0
+  return 0
 }
 
 menu_launcher() {
@@ -213,7 +245,7 @@ menu_launcher() {
     -s $HOME/.config/sway/wofi.css
     #--matching=fuzzy \
 
-  exit 0
+  return 0
 }
 
 menu_power() {
@@ -224,7 +256,7 @@ menu_power() {
   [ "${choice,,}" = "reboot" ] && systemctl reboot
   [ "${choice,,}" = "poweroff" ] && systemctl poweroff -i
 
-  exit 0
+  return 0
 }
 
 menu() {
@@ -257,7 +289,7 @@ theme() {
 
   gsettings set ${gnome_schema} font-name "${font_theme}"
 
-  exit 0
+  return 0
 }
 
 volume() {
@@ -271,7 +303,7 @@ volume() {
   [[ "${cmd}" == "dec" ]] && \
     wpctl set-volume @DEFAULT_AUDIO_SINK@ $(($volume-$volume%5-5))%
 
-  exit 0
+  return 0
 }
 
 # close desktop
@@ -339,12 +371,15 @@ main() {
     lock) lock;;
     terminal) terminal "${@}";;
     menu) menu "${@}";;
+    screenshot) screenshot;;
     volume) volume "${@}";;
+    micro) volume "${@}";;
+    output) outputs;;
     exit) close;;
     *) help;;
   esac
 
-  exit 0
+  return 0
 }
 
 trap 'fail ${LINENO} "${BASH_COMMAND}"' ERR

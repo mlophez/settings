@@ -3,7 +3,7 @@ include themes/catppuccin-mocha
 
 # Monitors
 output eDP-1 resolution 1920x1080 position 0,0 scale 1
-output * bg #1e1e2e solid_color
+#output * bg #1e1e2e solid_color
 
 # Autostart
 exec ~/.config/sway/deskctl init
@@ -11,7 +11,7 @@ exec ~/.config/sway/deskctl init
 # Inputs
 input "type:keyboard" {
   xkb_layout es
-  xkb_model = thinkpad
+  #xkb_model = thinkpad
   xkb_options ctrl:nocaps
 }
 
@@ -31,7 +31,7 @@ default_border pixel 3
 default_floating_border pixel 3
 hide_edge_borders none
 gaps inner 5
-gaps outer 20
+gaps outer 10
 # titlebar_border_thickness 0
 # titlebar_padding 1
 # hide_edge_borders smart
@@ -90,7 +90,7 @@ bindsym $mod+n exec deskctl menu
 bindsym $mod+w exec deskctl wallpaper
 #bindsym $mod+p exec swaycmd menu-pass
 bindsym $mod+z exec deskctl lock
-bindsym $mod+i exec mako dismiss
+bindsym $mod+i exec makoctl dismiss
 bindsym $mod+h splitv
 bindsym $mod+v splith
 bindsym $mod+f fullscreen
