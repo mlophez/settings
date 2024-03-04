@@ -45,7 +45,7 @@ run() {
 }
 
 # command
-init() {
+cmd_init() {
   dbus-update-activation-environment --systemd --all
   # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
   [[ -e $HOME/.config/desk/deskctl ]] && \
@@ -57,17 +57,17 @@ init() {
   # type nmcli &>/dev/null && nmcli radio wifi off
   # VBOX
   # type VBoxClient &>/dev/null && VBoxClient --clipboard
-  portals
-  wallpaper
-  panel
-  outputs
-  distrobox
+  cmd_portals
+  cmd_wallpaper
+  cmd_panel
+  cmd_outputs
+  _distroboxes
 
   return 0
 }
 
 # command
-portals() {
+cmd_portals() {
   pkill -f "xdg-desktop-portal" || /bin/true
 
   run '/usr/lib/xdg-desktop-portal -r'
@@ -82,10 +82,10 @@ portals() {
   return 0
 }
 
-panel() {
+cmd_panel() {
   if type waybar &>/dev/null; then
     pkill waybar || /bin/true
-    run "waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/style.css"
+    run "waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css"
   fi
 
   if type nm-applet &>/dev/null; then
@@ -96,7 +96,7 @@ panel() {
   return 0
 }
 
-wallpaper() {
+cmd_wallpaper() {
   local cache_file="$HOME/.cache/wallpaper"
   local cached="$(cat ${cache_file})"
   local wallpapers_path="$HOME/.local/share/backgrounds"
@@ -125,16 +125,17 @@ wallpaper() {
   return 0
 }
 
-distrobox() {
+_distroboxes() {
   if type distrobox &>/dev/null; then
     for name in $(distrobox list --no-color | awk -F'|' '{print $2}' | grep -v "NAME" ); do
-      run "distrobox enter ${name} -- echo"
+      distrobox enter ${name} -- echo
     done
   fi
+
   return 0
 }
 
-outputs() {
+cmd_outputs() {
   [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && return 0
 
   local screens external internal
@@ -157,9 +158,11 @@ outputs() {
       swaymsg output $screen disable
     fi
   done
+
+  return 0
 }
 
-lock() {
+cmd_lock() {
   local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
 
   type pacman &>/dev/null && \
@@ -175,7 +178,7 @@ lock() {
   return 0
 }
 
-screenshot() {
+cmd_screenshot() {
   sleep 0.2
   slurp | grim -g - - | wl-copy
 }
@@ -320,7 +323,7 @@ close() {
   # killall -u $USER
 }
 
-distrobox_create_archlinux() {
+ctl_distrobox_create_archlinux() {
   echo 'Creating archlinux distrobox ...'
   distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
   distrobox enter archlinux -- sudo pacman-key --init
@@ -342,7 +345,7 @@ distrobox_create_archlinux() {
   distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
 }
 
-flatpak_install_apps() {
+ctl_flatpak_install_apps() {
   flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
   flatpak --user install -y flathub com.brave.Browser
   flatpak --user install -y flathub com.google.Chrome
@@ -371,17 +374,17 @@ main() {
   local command="${1-help}"; shift || /bin/true
 
   case "${command}" in
-    init) init;;
-    portals) portals;;
-    panel) panel;;
-    wallpaper) wallpaper;;
-    lock) lock;;
+    init) cmd_init;;
+    portals) cmd_portals;;
+    panel) cmd_panel;;
+    wallpaper) cmd_wallpaper;;
+    lock) cmd_lock;;
     terminal) terminal "${@}";;
     menu) menu "${@}";;
     screenshot) screenshot;;
     volume) volume "${@}";;
     micro) volume "${@}";;
-    output) outputs;;
+    output) cmd_outputs;;
     exit) close;;
     *) help;;
   esac
