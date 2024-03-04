@@ -6,7 +6,7 @@ output eDP-1 resolution 1920x1080 position 0,0 scale 1
 #output * bg #1e1e2e solid_color
 
 # Autostart
-exec ~/.config/sway/deskctl init
+exec ~/.config/desk/deskctl init
 
 # Inputs
 input "type:keyboard" {

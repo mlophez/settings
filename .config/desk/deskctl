@@ -60,8 +60,8 @@ init() {
   portals
   wallpaper
   panel
-  distrobox
   outputs
+  distrobox
 
   return 0
 }
@@ -128,7 +128,7 @@ wallpaper() {
 distrobox() {
   if type distrobox &>/dev/null; then
     for name in $(distrobox list --no-color | awk -F'|' '{print $2}' | grep -v "NAME" ); do
-      distrobox enter ${name} -- echo
+      run "distrobox enter ${name} -- echo"
     done
   fi
   return 0
