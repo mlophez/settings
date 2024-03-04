@@ -1,17 +1,10 @@
 #!/bin/bash
 
-## SESSION ##
+export PATH=$PATH:$HOME/.local/bin
 export XDG_CURRENT_DESKTOP=sway
 export XDG_SESSION_DESKTOP=sway
 export XDG_SESSION_TYPE=wayland
-
-## PATH ##
-export PATH=$PATH:$HOME/.config/sway
-export PATH=$PATH:$HOME/.config/sway/scripts
-export PATH=$PATH:$HOME/.config/scripts
-export PATH=$PATH:$HOME/.local/bin
-
-# WAYLAND APPS #
+export XCURSOR_SIZE=24
 export MOZ_ENABLE_WAYLAND=1
 export GDK_BACKEND=wayland
 export QT_QPA_PLATFORM=wayland-egl
@@ -19,10 +12,8 @@ export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
 export CLUTTER_BACKEND=wayland
 export SDL_VIDEODRIVER=wayland
 export _JAVA_AWT_WM_NONREPARENTING=1
-
-# THEME #
 export QT_QPA_PLATFORMTHEME=qt5ct
 export SAL_USE_VCLPLUGIN=kf5
-
-# ZSH
 export ZDOTDIR=$HOME/.config/zsh
+
+export BROWSER=org.mozilla.firefox

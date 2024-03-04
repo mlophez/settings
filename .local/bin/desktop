@@ -32,7 +32,7 @@ panel:
   #!/usr/bin/env bash
   if type waybar &>/dev/null; then
     pkill waybar
-    hyprctl dispatch exec "waybar -c $HOME/.config/waybar/config -s $HOME/.config/waybar/style.css"
+    hyprctl dispatch exec "waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/style.css"
   fi
   if type nm-applet &>/dev/null; then
     pkill nm-applet
@@ -114,7 +114,7 @@ lock:
 
 # Take a screenshot
 screenshot:
-  slurp | grim -g - - | wl-copy
+  sleep 0.2; slurp | grim -g - - | wl-copy
 
 # Start terminal
 terminal command='start':

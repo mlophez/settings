@@ -1,0 +1,133 @@
+{
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "active-only": true,
+    "all-outputs": true,
+    "persistent-workspaces": { "*": 10 },
+    "format-icons": {
+      "default": "",
+      "1": "󰲠",
+      "2": "󰲢",
+      "3": "󰲤",
+      "4": "󰲦",
+      "5": "󰲨",
+      "6": "󰲪",
+      "7": "󰲬",
+      "8": "󰲮",
+      "9": "󰲰",
+      "10": "󰿬"
+    }
+  },
+
+  "sway/mode": {
+    "format": "<span>{}</span>"
+  },
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{icon}",
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": [],
+      "6": [],
+      "7": [],
+      "8": [],
+      "9": [],
+      "10": []
+    },
+    "format-icons": {
+      "default": "",
+      "1": "󰲠",
+      "2": "󰲢",
+      "3": "󰲤",
+      "4": "󰲦",
+      "5": "󰲨",
+      "6": "󰲪",
+      "7": "󰲬",
+      "8": "󰲮",
+      "9": "󰲰",
+      "10": "󰿬"
+    }
+  },
+
+  "tray": {
+    "icon-size": 24,
+    "spacing": 10
+  },
+
+  "battery": {
+    "states": {
+      "good": 95,
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-icons": ["󰁺", "󰁻", "󰁾", "󰁿", "󰂀", "󰁹"],
+    "interval": 10
+  },
+
+  "clock": {
+    "format": "{:%Y-%m-%d   %H:%M}"
+  },
+
+  "clock#date": {
+    "format": "{:%d-%m-%Y}"
+  },
+
+  "clock#time": {
+    "format": "{:%H:%M}"
+  },
+
+  "custom/lock": {
+    "on-click": "deskctl lock",
+    "format": "  "
+  },
+
+  "custom/power": {
+    "format": "  ",
+    "on-click": "deskctl menu power"
+  },
+
+  "custom/wallpaper": {
+    "on-click": "deskctl wallpaper",
+    "format": " "
+  },
+
+  "custom/screenshot": {
+    "on-click": "deskctl screenshot",
+    "format": "󰨵"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}% {format_source}",
+    "format-muted": " {volume}% {format_source}",
+    "format-source": " {volume}% ",
+    "format-source-muted": " {volume}%",
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "pavucontrol",
+    "on-click-right": "pactl set-sink-volume @DEFAULT_SINK@ 80% && pactl set-source-volume @DEFAULT_SOURCE@ 80%",
+    //"on-click-right": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+    "on-click-middle": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+    "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+  },
+
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{percent}% {icon}",
+    "format-icons": ["", ""]
+  }
+}

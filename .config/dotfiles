@@ -20,6 +20,7 @@
 ~/.config/sway
 ~/.config/swaylock
 ~/.config/hypr
+~/.config/desk
 ~/.config/gnome
 ~/.config/waybar
 ~/.config/rofi

@@ -1,10 +1,186 @@
 # vim: ft=swayconfig
-
-include config.d/variables.conf
-include config.d/settings.conf
-include config.d/devices.conf
-include config.d/keybindings.conf
-include config.d/rules.conf
-include config.d/autostart.conf
-
 include themes/catppuccin-mocha
+
+# Monitors
+output eDP-1 resolution 1920x1080 position 0,0 scale 1
+output * bg #1e1e2e solid_color
+
+# Autostart
+exec ~/.config/sway/deskctl init
+
+# Inputs
+input "type:keyboard" {
+  xkb_layout es
+  xkb_model = thinkpad
+  xkb_options ctrl:nocaps
+}
+
+input "type:touchpad" {
+  dwt enabled
+  tap enabled
+  natural_scroll enabled
+  middle_emulation enabled
+}
+
+# Settings
+xwayland enabled
+font pango:Fira Code, Bold 14
+workspace_layout default
+title_align center
+default_border pixel 3
+default_floating_border pixel 3
+hide_edge_borders none
+gaps inner 5
+gaps outer 20
+# titlebar_border_thickness 0
+# titlebar_padding 1
+# hide_edge_borders smart
+
+# Rules
+for_window [app_id="menu"] floating enable; resize set 600 800; move position center
+for_window [app_id="pinentry-qt"] floating enable
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable; resize set 1500 800; move position center
+for_window [app_id="imv"] floating enable; move position center
+for_window [app_id="mpv"] floating enable; move position center
+for_window [app_id="nm-connection-editor"] floating enable; resize set 1000 800; move position center
+for_window [app_id="pavucontrol"] floating enable; resize set 1500 800; move position center
+for_window [app_id="brave-browser"] move to workspace $ws2
+for_window [app_id="google-chrome"] move to workspace $ws3
+for_window [app_id="org.keepassxc.KeePassXC"] move to workspace $ws7
+# for_window [app_id="menu"] floating enable; resize set 600 1015; move position 0 0
+# for_window [app_id="menu"] floating enable; resize set 1000 600; move position center
+# for_window [title="^Ajustes de Vivaldi:.*$"] floating enable
+# for_window [class="Vivaldi-stable"] move to workspace $ws2
+# for_window [class="Chromium"] move to workspace $ws2
+# for_window [app_id="telegramdesktop"] move to workspace $ws3
+# for_window [class="TelegramDesktop"] move to workspace $ws3
+# for_window [app_id="thunderbird"] move to workspace $ws3
+# for_window [instance="teams.microsoft.com"] move to workspace $ws3
+# for_window [instance="web.whatsapp.com"] move to workspace $ws3
+# for_window [instance="join.zoom.us"] move to workspace $ws3
+# for_window [class="xfreerdp"] move to workspace $ws8
+# for_window [name="FreeRDP"] move to workspace $ws8
+# for_window [instance="open.spotify.com"] move to workspace $ws9
+# for_window [instance="ticktick.com"] move to workspace $ws10
+# for_window [instance="www.notion.so.*"] move to workspace $ws10
+# for_window [class="obsidian"] move to workspace $ws10
+
+# Binds
+set $mod Mod4
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+set $left j
+set $down k
+set $up l
+set $right ntilde
+
+floating_modifier $mod normal
+
+bindsym $mod+q kill
+bindsym $mod+Return exec deskctl terminal
+bindsym $mod+n exec deskctl menu
+bindsym $mod+w exec deskctl wallpaper
+#bindsym $mod+p exec swaycmd menu-pass
+bindsym $mod+z exec deskctl lock
+bindsym $mod+i exec mako dismiss
+bindsym $mod+h splitv
+bindsym $mod+v splith
+bindsym $mod+f fullscreen
+bindsym $mod+t layout toggle tabbed split
+bindsym $mod+space floating toggle
+bindsym $mod+o exec deskctl monitor
+bindsym $mod+a focus parent
+bindsym $mod+c focus child
+bindsym $mod+r mode "resize"
+bindsym $mod+m exec deskctl terminal toggle
+bindsym Print exec deskctl screenshot
+# bindsym $mod+Shift+minus move scratchpad
+# bindsym $mod+minus scratchpad show
+
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+Return exec foot
+bindsym $mod+Shift+p exec deskctl menu power
+bindsym $mod+Shift+e exec deskctl exit
+bindsym $mod+Shift+space focus mode_toggle
+
+# bindsym mod1+space exec deskctl terminal toggle
+
+# Audio
+bindsym XF86AudioRaiseVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindsym XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+
+# Move your focus around
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# Reset workspace
+#bindsym $mod+u [tiling workspace="__focused__"] move workspace "__reorder__"; [workspace="__reorder__"] move workspace current; focus child
+#bindsym $mod+y move output next
+#bindsym $mod+y exec swaycmd 'reorder'
+#bindsym $mod+i exec swaycmd 'sway_output_workspace'
+#bindsym $mod+Shift+i exec swaycmd 'sway_output_workspace_move'

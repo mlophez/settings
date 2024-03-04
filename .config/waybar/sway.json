@@ -1,0 +1,29 @@
+// vim: ft=json
+{
+  "layer": "top",
+  "position": "top",
+  "height": 40,
+  "margin-top": 10,
+  "margin-left": 13,
+  // "margin-right": 20,
+
+  "include": ["~/.config/waybar/modules.json"],
+
+  "modules-left": [
+    "hyprland/workspaces",
+    "sway/workspaces",
+    "custom/wallpaper",
+    "sway/mode"
+  ],
+  "modules-center": [
+    "clock#time",
+    "clock#date"
+  ],
+  "modules-right": [
+    "tray",
+    "pulseaudio",
+    "backlight",
+    "battery",
+    "custom/power"
+  ]
+}
