@@ -181,12 +181,19 @@ screenshot() {
 }
 
 terminal_scratchpad_toggle() {
-  [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && return 0
-  namespace="terminal"
-  window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
-  [ -z "${window}" ] && \
-    exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
-  hyprctl dispatch togglespecialworkspace "${namespace}"
+  if [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]]; then
+    if ! swaymsg scratchpad show; then
+      swaymsg exec "foot"; sleep 0.3
+      swaymsg move scratchpad
+      swaymsg scratchpad show
+    fi
+  elif [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
+    local namespace="terminal"
+    local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
+    [ -z "${window}" ] && \
+      exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
+    hyprctl dispatch togglespecialworkspace "${namespace}"
+  fi
   return 0
 }
 

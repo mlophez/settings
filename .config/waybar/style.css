@@ -48,13 +48,17 @@ window#waybar {
   color: @peach;
 }
 
-/* Only for sway */
-#workspaces button.focused {
-  color: @peach;
-}
-
 #workspaces button.urgent {
   color: @red;
+}
+
+/* Only for sway */
+#workspaces button.persistent {
+  color: shade(@text, 0.5);
+}
+
+#workspaces button.focused {
+  color: @peach;
 }
 
 #battery.good {
