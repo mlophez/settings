@@ -178,7 +178,7 @@ cmd_lock() {
   return 0
 }
 
-cmd_screenshot() {
+f:screenshot() {
   sleep 0.2
   slurp | grim -g - - | wl-copy
 }
@@ -381,7 +381,7 @@ main() {
     lock) cmd_lock;;
     terminal) terminal "${@}";;
     menu) menu "${@}";;
-    screenshot) screenshot;;
+    screenshot) f:screenshot;;
     volume) volume "${@}";;
     micro) volume "${@}";;
     output) cmd_outputs;;
