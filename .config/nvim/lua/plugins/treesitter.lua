@@ -45,4 +45,16 @@ return {
 			disable = { "css" },
 		},
 	},
+	--init = function()
+	--	vim.opt.foldmethod = "expr"
+	--	vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+
+	--	local treesitterau = vim.api.nvim_create_augroup("treesitter", { clear = true })
+	--	vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, {
+	--		group = treesitterau,
+	--		callback = function()
+	--			vim.cmd("normal zR")
+	--		end,
+	--	})
+	--end,
 }
