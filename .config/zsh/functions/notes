@@ -19,7 +19,7 @@ notes() {
   [ -n "$ZELLIJ" ] && zellij action rename-tab "NOTES"
 
   git pull
-  nvim home.md
+  nvim index.md
   if git status | grep -q 'modified\|untracked'; then
     echo "Guardando y subiendo cambios..."
     git add .

@@ -10,6 +10,7 @@ return {
 	},
 	keys = {
 		{ "m", ":Neotree toggle filesystem reveal float<cr>", silent = true },
+		{ "<leader>e", ":Neotree toggle filesystem reveal float<cr>", silent = true },
 	},
 	config = function()
 		require("neo-tree").setup({
