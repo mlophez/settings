@@ -1,6 +1,6 @@
 return {
 	"jakewvincent/mkdnflow.nvim",
-	enabled = false,
+	ft = { "markdown" },
 	opts = {
 		perspective = {
 			priority = "root",
@@ -12,7 +12,11 @@ return {
 			transform_implicit = function(text)
 				text = text:gsub(" ", "-")
 				text = text:lower()
-				return ("pkm/" .. text)
+				if vim.fn.filereadable(text) == 1 then
+					return text
+				else
+					return ("pkm/" .. text)
+				end
 			end,
 			transform_explicit = function(text)
 				text = text:gsub(" ", "-")

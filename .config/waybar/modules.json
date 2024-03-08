@@ -129,5 +129,10 @@
     "device": "intel_backlight",
     "format": "{percent}% {icon}",
     "format-icons": ["", ""]
+  },
+
+  "memory": {
+    "interval": 15,
+    "format": " {used:0.1f}G/{total:0.1f}G"
   }
 }

@@ -72,6 +72,7 @@ return {
 			formatters_by_ft = {
 				lua = { "stylua" },
 				html = { "prettier" },
+				htmldjango = { "prettier" },
 				css = { "prettier" },
 				javascript = { "prettier" },
 				javascriptreact = { "prettier" },

@@ -12,6 +12,8 @@ return {
 	},
 	init = function()
 		vim.opt.completeopt = { "menu", "menuone", "noselect" }
+		vim.env.PATH = os.getenv("PWD") .. "/node_modules/.bin:" .. vim.env.PATH
+		vim.env.PATH = os.getenv("PWD") .. "/.venv/bin:" .. vim.env.PATH
 	end,
 	config = function()
 		-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md

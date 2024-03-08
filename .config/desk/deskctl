@@ -70,10 +70,11 @@ cmd_init() {
 cmd_portals() {
   pkill -f "xdg-desktop-portal" || /bin/true
 
-  run '/usr/lib/xdg-desktop-portal -r'
-  run '/usr/lib/xdg-desktop-portal-gtk -r'
+  run '/usr/lib/xdg-desktop-portal -r'; sleep 0.3
+  run '/usr/lib/xdg-desktop-portal-gtk -r'; sleep 0.3
 
   [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && \
+    systemctl --user mask xdg-desktop-portal-hyprland; \
     run '/usr/lib/xdg-desktop-portal-hyprland'
 
   [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
@@ -167,7 +168,7 @@ cmd_lock() {
 
   type pacman &>/dev/null && \
   [[ -n "$(pacman -Q swaylock | grep effects-git)" ]] && \
-    exec swaylock
+    exec swaylock -i ~/.local/share/backgrounds/${image}
 
   swaylock -C /dev/null \
     --ignore-empty-password \
@@ -366,6 +367,7 @@ ctl_flatpak_install_apps() {
   flatpak --user install -y flathub org.telegram.desktop
   flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
   flatpak --user install -y flathub dev.k8slens.OpenLens
+  flatpak --user install -y flathub md.obsidian.Obsidian
   flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
   flatpak --user install -y flathub org.gnome.dspy
 }

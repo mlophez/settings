@@ -236,34 +236,6 @@ java-menu() {
 #     fi
 # }
 
-notes() {
-  local notedir="$HOME/Documents/Notes"
-  local remote="https://gitlab.com/MLR96/notes.git"
-
-  ! type git &>/dev/null && return -1
-  ! type nvim &>/dev/null && return -1
-
-  [ ! -d "${notedir}" ] && \
-    git clone ${remote} ${notedir}
-
-  cd ${notedir}
-
-  [ ! -d ".git" ] && return
-  git remote | grep -q . || return
-
-  [ -n "$TMUX" ]   && tmux rename-window "NOTES"
-  [ -n "$ZELLIJ" ] && zellij action rename-tab "NOTES"
-
-  git pull
-  nvim home.md tasks.md inbox.md
-  if git status | grep -q 'modified\|untracked'; then
-    echo "Guardando y subiendo cambios..."
-    git add .
-    git commit -m "Saved at $(date '+%Y-%m-%d %H:%M:%S')"
-    git push
-  fi
-}
-
 # ./terraform-mv from_module to_module resources
 terraform-mv() {
   local from_module="$1"

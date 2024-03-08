@@ -14,15 +14,13 @@
     "custom/wallpaper",
     "custom/screenshot"
   ],
-  "modules-center": [
-    "clock#time",
-    "clock#date"
-  ],
+  "modules-center": ["clock#time", "clock#date"],
   "modules-right": [
     "tray",
+    "memory",
     "pulseaudio",
     "backlight",
     "battery",
-    "custom/power",
+    "custom/power"
   ]
 }
