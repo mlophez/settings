@@ -91,11 +91,13 @@ type starship &>/dev/null && \
 
 #[ "$PIPENV_ACTIVE" -eq 1 ] && deactivate
 
-# NIX
-#[ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && \
-#    source $HOME/.nix-profile/etc/profile.d/nix.sh
 
 # ALIASES
 source $HOME/.config/zsh/aliases.zsh
 autoload -Uz $HOME/.config/zsh/functions/*(.:t); all.zsh
 
+# FIX nixGL
+unset LD_LIBRARY_PATH
+unset LIBGL_DRIVERS_PATH
+unset LIBVA_DRIVERS_PATH
+unset __EGL_VENDOR_LIBRARY_FILENAMES

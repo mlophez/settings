@@ -14,7 +14,7 @@ export FPATH=${FPATH}:${ZDOTDIR}/functions
 export SHELL=/usr/bin/zsh
 export HOSTNAME=$(hostname)
 export EDITOR=nvim
-# export TERM=xterm-256color
+export TERM=xterm-256color
 
 # XDG
 export XDG_STATE_HOME=$HOME/.local/share/state
@@ -103,3 +103,4 @@ else
   unset DBUS_SYSTEM_BUS_ADDRESS
 fi
 
+# export LOCALE_ARCHIVE="$(nix-env --installed --no-name --out-path --query glibc-locales)/lib/locale/locale-archive"

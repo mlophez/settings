@@ -7,6 +7,12 @@ readonly SCRIPT_NAME=$(basename $0)
 readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
 # readonly ARGS="${@}"
 
+# FIX nixGL
+unset LD_LIBRARY_PATH
+unset LIBGL_DRIVERS_PATH
+unset LIBVA_DRIVERS_PATH
+unset __EGL_VENDOR_LIBRARY_FILENAMES
+
 help() {
   cat <<- EOF
   Commands:
@@ -57,7 +63,8 @@ cmd_init() {
   # type nmcli &>/dev/null && nmcli radio wifi off
   # VBOX
   # type VBoxClient &>/dev/null && VBoxClient --clipboard
-  cmd_portals
+
+  # cmd_portals
   cmd_wallpaper
   cmd_panel
   cmd_outputs
@@ -70,15 +77,22 @@ cmd_init() {
 cmd_portals() {
   pkill -f "xdg-desktop-portal" || /bin/true
 
-  run '/usr/lib/xdg-desktop-portal -r'; sleep 0.3
-  run '/usr/lib/xdg-desktop-portal-gtk -r'; sleep 0.3
+  if [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
+    run "$HOME/.nix-profile/libexec/xdg-desktop-portal-hyprland"
+    # run "$HOME/.nix-profile/libexec/xdg-desktop-portal -r"; sleep 0.3
+    # run "$HOME/.nix-profile/libexec/xdg-desktop-portal-gtk -r"; sleep 0.3
+  fi
 
-  [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && \
-    systemctl --user mask xdg-desktop-portal-hyprland; \
-    run '/usr/lib/xdg-desktop-portal-hyprland'
+  # local location="/usr/lib"
+  # [ -e /usr/libexec/xdg-desktop-portal ] && location="/usr/libexec"
+  # run "${location}/xdg-desktop-portal -r"; sleep 0.3
+  # run "${location}/xdg-desktop-portal-gtk -r"; sleep 0.3
 
-  [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
-    run '/usr/lib/xdg-desktop-portal-wlr -r'
+    #systemctl --user mask xdg-desktop-portal-hyprland && \
+    #run "${location}/xdg-desktop-portal-hyprland"
+
+  #[[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
+  #  run "${location}/xdg-desktop-portal-wlr -r"
 
   return 0
 }
@@ -92,6 +106,11 @@ cmd_panel() {
   if type nm-applet &>/dev/null; then
     pkill nm-applet || /bin/true
     run "nm-applet"
+  fi
+
+  if type mako &>/dev/null; then
+    pkill mako || /bin/true
+    run "mako"
   fi
 
   return 0
