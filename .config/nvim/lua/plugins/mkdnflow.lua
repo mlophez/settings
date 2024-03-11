@@ -28,20 +28,20 @@ return {
 			MkdnNextLink = { "n", "n" },
 			MkdnPrevLink = { "n", "b" },
 			MkdnGoBack = false,
-			MkdnEnter = { { "i", "n", "v" }, "<CR>" },
+			MkdnEnter = { { "n" }, "gf" },
 			MkdnFoldSection = false,
 			MkdnUnfoldSection = false,
 		},
 	},
-	init = function()
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "markdown",
-			callback = function()
-				local opts = { noremap = true, silent = true, buffer = tonumber(vim.fn.expand("<abuf>", 10)) }
-				vim.keymap.set("n", "m", "$v0<cr>", opts)
-			end,
-		})
-	end,
+	--init = function()
+	--	vim.api.nvim_create_autocmd("FileType", {
+	--		pattern = "markdown",
+	--		callback = function()
+	--			local opts = { noremap = true, silent = true, buffer = tonumber(vim.fn.expand("<abuf>", 10)) }
+	--			vim.keymap.set("n", "m", "$v0<cr>", opts)
+	--		end,
+	--	})
+	--end,
 }
 
 -- require('mkdnflow').setup({
