@@ -200,7 +200,8 @@ cmd_lock() {
 
 f:screenshot() {
   sleep 0.2
-  slurp | grim -g - - | wl-copy
+  # slurp | grim -g - - | wl-copy
+  grim -g "$(slurp)" - | wl-copy -t image/png
 }
 
 terminal_scratchpad_toggle() {
