@@ -184,18 +184,16 @@ cmd_outputs() {
 
 cmd_lock() {
   local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
-
-  type pacman &>/dev/null && \
-  [[ -n "$(pacman -Q swaylock | grep effects-git)" ]] && \
-    exec swaylock -i ~/.local/share/backgrounds/${image}
-
-  swaylock -C /dev/null \
-    --ignore-empty-password \
-    --show-failed-attempts \
-    --indicator-radius 200 \
-    -f -i ~/.local/share/backgrounds/${image} -s fill
-
+  exec swaylock -i ~/.local/share/backgrounds/${image}
   return 0
+  # type pacman &>/dev/null && \
+  # [[ -n "$(pacman -Q swaylock | grep effects-git)" ]] && \
+  # swaylock -C /dev/null \
+  #   --ignore-empty-password \
+  #   --show-failed-attempts \
+  #   --indicator-radius 200 \
+  #   -f -i ~/.local/share/backgrounds/${image} -s fill
+  # return 0
 }
 
 f:screenshot() {
