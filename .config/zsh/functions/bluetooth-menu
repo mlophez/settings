@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-bluetooth_menu() {
+bluetooth-menu() {
     [ "$(systemctl is-active bluetooth.service)" = "inactive" ] \
       && sudo systemctl start bluetooth.service
 

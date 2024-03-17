@@ -100,6 +100,11 @@ contexts:
     cluster: dev
     user: dev
 
+- name: testing
+  context:
+    cluster: dev
+    user: dev
+
 - name: tools
   context:
     cluster: tools

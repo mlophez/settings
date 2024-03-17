@@ -116,6 +116,16 @@ fi
 # Env
 export ZDOTDIR=$HOME/.config/zsh
 
+# Nix
+[ -f "/usr/lib/locale/locale-archive" ] && \
+  export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
+
+# FIX nixGL
+unset LD_LIBRARY_PATH
+unset LIBGL_DRIVERS_PATH
+unset LIBVA_DRIVERS_PATH
+unset __EGL_VENDOR_LIBRARY_FILENAMES
+
 # Alias
 [ -e "$HOME/.config/zsh/aliases.zsh" ] && \
   source $HOME/.config/zsh/aliases.zsh
