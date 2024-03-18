@@ -3,6 +3,7 @@
 ~/.config/dotfiles
 ~/.config/autostart
 ~/.config/zsh
+~/.config/just
 ~/.config/nvim
 ~/.config/helix
 ~/.config/tmux
@@ -28,7 +29,6 @@
 ~/.config/mako
 ~/.config/xdg-desktop-portal
 ~/.config/dunst
-~/.config/zsh
 ~/.config/scripts
 ~/.config/starship.toml
 ~/.config/containers

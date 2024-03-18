@@ -33,13 +33,10 @@ alias audio-micro="pactl set-card-profile 0 output:analog-stereo+input:analog-st
 
 # SSH
 alias s="ssh-menu"
-
-alias t="tunnel-menu"
 alias sshl="ssh -oKexAlgorithms=+diffie-hellman-group1-sha1"
 
 # JUST
 alias j="just"
-alias just="just --unstable"
 
 # ARCHLINUX
 alias arch="archlinux"

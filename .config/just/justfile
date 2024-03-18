@@ -1,0 +1,46 @@
+
+[private]
+default:
+  echo nothing
+
+tunnel-db-demosign:
+  kubectl --context demo -n default port-forward pods/forward-0 5432:5432
+  #aws ssm start-session --cli-read-timeout 8000 \
+  #--target i-01acfa654c4bee359 \
+  #--document-name AWS-StartPortForwardingSessionToRemoteHost \
+  #--parameters '{"host":["demosign.cmu2qzz9znmw.eu-south-2.rds.amazonaws.com"],"portNumber":["5432"],"localPortNumber":["5432"]}' \
+  #--profile demo
+
+tunnel-db-demo:
+  kubectl --context demo -n default port-forward pods/forward-0 1522:1521
+
+tunnel-db-test:
+  aws ssm start-session --cli-read-timeout 8000 \
+  --target i-04a7f8ed6a1c77a37 \
+  --document-name AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters '{"host":["logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com"],"portNumber":["1521"],"localPortNumber":["1523"]}' \
+  --profile qa
+
+tunnel-db-releases:
+  kubectl --context tools -n logalty port-forward pods/mysql-0 3306:3306
+
+tunnel-db-mongodb:
+  echo kubectl --context demo -n mongodb port-forward pods/mongo-0 27017
+  echo kubectl --context demo -n mongodb port-forward pods/mongo-1 27017
+  echo kubectl --context demo -n mongodb port-forward pods/mongo-2 27017
+
+demo-mongodb-0:
+  kubectl --context demo -n mongodb exec -it pod/mongo-0 -c mongo -- bash -c 'mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD'
+
+demo-mongodb-1:
+  kubectl --context demo -n mongodb exec -it pod/mongo-1 -c mongo -- bash -c 'mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD'
+
+demo-mongodb-2:
+  kubectl --context demo -n mongodb exec -it pod/mongo-2 -c mongo -- bash -c 'mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD'
+
+vpn-globalprotect:
+  sudo openconnect --protocol=gp \
+    -u miguellopez \
+    -c $HOME/Downloads/globalprotect.pem \
+    --servercert pin-sha256:uVIL06unCSCi4j3jo++6DUfCTO2Zyow5uHcclgko51E= \
+    194.140.17.69

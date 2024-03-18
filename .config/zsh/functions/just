@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+just() {
+  local opts=()
+  [[ $# -eq 0 ]] && opts=(-u --choose)
+
+  if [[ "$(pwd)" == "$HOME" ]]; then
+    command just $opts --unstable --justfile $HOME/.config/just/justfile --working-directory . "${@}"
+  else
+    command just $opts --unstable "${@}"
+  fi
+}
