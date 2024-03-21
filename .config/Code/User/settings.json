@@ -1,8 +1,11 @@
 {
   "workbench.colorTheme": "Catppuccin Mocha",
   "workbench.iconTheme": "material-icon-theme",
+  "window.restoreWindows": "none",
   "editor.tabSize": 2,
+  "editor.fontSize": 16,
   "editor.fontFamily": "'JetBrainsMono Nerd Font'",
+  "explorer.compactFolders": false,
   "window.restoreWindows": "none",
   "git.autofetch": true,
   "git.autofetchPeriod": 60,
@@ -13,5 +16,6 @@
   "prettier.documentSelectors": ["**/*.astro"],
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "workbench.sideBar.location": "right"
 }

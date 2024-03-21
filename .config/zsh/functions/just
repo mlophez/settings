@@ -7,6 +7,6 @@ just() {
   if [[ "$(pwd)" == "$HOME" ]]; then
     command just $opts --unstable --justfile $HOME/.config/just/justfile --working-directory . "${@}"
   else
-    command just $opts --unstable "${@}"
+    command just --unstable "${@}"
   fi
 }
