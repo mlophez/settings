@@ -64,8 +64,8 @@ vim.keymap.set("i", "<C-s>", ":w<cr>", opts)
 vim.keymap.set("i", "<C-x>", ":x<cr>", opts)
 
 --vim.keymap.set("n", "<leader>q", ":qa<cr>", opts)
-vim.keymap.set("n", "<leader>q", quit, opts)
-vim.keymap.set("n", "<leader>Q", ":qa<cr>", opts)
+vim.keymap.set("n", "<leader>q", "<cmd>confirm q<cr>", opts)
+vim.keymap.set("n", "<leader>Q", "<cmd>confirm qall<cr>", opts)
 vim.keymap.set("n", "<leader>w", ":silent w<cr>", opts)
 vim.keymap.set("n", "<leader>x", ":silent x<cr>", opts)
 

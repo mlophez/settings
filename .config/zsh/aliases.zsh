@@ -19,6 +19,7 @@ alias save="dot save"
 alias load="dot load"
 
 alias nvchad="NVIM_APPNAME='nvchad' nvim"
+alias astrovim="NVIM_APPNAME='astrovim' nvim"
 
 alias wifi-on="nmcli radio wifi on"
 alias wifi-off="nmcli radio wifi off"

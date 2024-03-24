@@ -1,0 +1,89 @@
+#!/usr/bin/env -S just --working-directory . --justfile
+
+[private]
+help:
+  @system -u -l
+
+setup:
+  #!/usr/bin/env bash
+  ln -sf /usr/bin/podman ~/.local/bin/docker
+  sudo pacman -Syu --noconfirm
+  sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
+
+distrobox:
+  #!/usr/bin/env bash
+  echo 'Creating archlinux distrobox ...'
+  distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
+  distrobox enter archlinux -- sudo pacman-key --init
+  distrobox enter archlinux -- sudo pacman -Syu --noconfirm
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S alacritty kitty code
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd
+  distrobox enter archlinux -- sudo pacman -Scc --noconfirm
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
+  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/sudo /usr/bin/csudo
+  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/sudo
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/swaymsg
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/hyprctl
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/makoctl
+  distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
+  distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
+  distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
+
+flatpak:
+  #!/usr/bin/env bash
+  flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak --user install -y flathub com.brave.Browser
+  flatpak --user install -y flathub com.google.Chrome
+  flatpak --user install -y flathub com.microsoft.Edge
+  flatpak --user install -y flathub org.chromium.Chromium
+  flatpak --user install -y flathub org.freedesktop.Platform.ffmpeg-full
+  flatpak --user install -y flathub org.keepassxc.KeePassXC
+  flatpak --user install -y flathub com.github.tchx84.Flatseal
+  flatpak --user install -y flathub org.mozilla.Thunderbird
+  flatpak --user install -y flathub org.mozilla.firefox
+  flatpak --user install -y flathub org.pulseaudio.pavucontrol
+  flatpak --user install -y flathub com.calibre_ebook.calibre
+  flatpak --user install -y flathub com.spotify.Client
+  flatpak --user install -y flathub org.libreoffice.LibreOffice
+  flatpak --user install -y flathub org.videolan.VLC
+  flatpak --user install -y flathub org.gnome.Boxes
+  flatpak --user install -y flathub com.usebottles.bottles
+  flatpak --user install -y flathub org.telegram.desktop
+  flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
+  flatpak --user install -y flathub dev.k8slens.OpenLens
+  flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
+  flatpak --user install -y flathub org.gnome.dspy
+
+configure: && config-hyprland
+  #!/usr/bin/env bash
+  sudo sed 's/^.*KillUserProcesses *=.*$/KillUserProcesses=yes/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandlePowerKey *=.*$/HandlePowerKey=suspend/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleSuspendKey *=.*$/HandleSuspendKey=suspend/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleHibernateKey *=.*$/HandleHibernateKey=hibernate/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleLidSwitch *=.*$/HandleLidSwitch=ignore/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleLidSwitchExternalPower *=.*$/HandleLidSwitchExternalPower=ignore/g' -i /etc/systemd/logind.conf
+  sudo sed 's/^.*HandleLidSwitchDocked *=.*$/HandleLidSwitchDocked=ignore/g' -i /etc/systemd/logind.conf
+
+[private]
+config-hyprland:
+  #!/usr/bin/env bash
+  ! type sway &>/dev/null && exit 0
+  cat << EOF | sudo tee /usr/share/wayland-sessions/hyprland-custom.desktop
+  [Desktop Entry]
+  Name=Hyprland (Custom)
+  Comment=An intelligent dynamic tiling Wayland compositor with bus
+  # Exec=dbus-run-session -- Hyprland
+  Exec=/bin/bash -c "dbus-run-session -- sleep 3 && exec Hyprland"
+  Type=Application
+  EOF
+  exit 0
+
+[private]
+greetd:
+  #!/usr/bin/env bash
+  sudo install -m 644 ~/.config/system/greetd.toml /etc/greetd/config.toml
+  sudo install -m 644 ~/.config/system/greetd-regreet.toml /etc/greetd/regreet.toml
+  sudo install -m 644 ~/.local/share/backgrounds/dark_purple_kimono.png /etc/greetd/greeter.png

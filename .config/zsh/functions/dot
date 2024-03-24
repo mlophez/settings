@@ -1,0 +1,64 @@
+#!/usr/bin/zsh
+
+dot@git() {
+  command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
+}
+
+dot@dot-get-windows-files() {
+  local windows_user_home=$(echo $PATH | grep -io -P "/mnt/c/Users/.*?/" | head -1)
+
+  [ -z "${windows_user_home}" ] && return 0
+  [ ! -d "$HOME/.config/Windows" ] && mkdir -p $HOME/.config/Windows
+
+  cp $windows_user_home/AppData/Roaming/Code/User/settings.json \
+    $HOME/.config/Windows/code-user-settings.json
+
+  cp $windows_user_home/AppData/Roaming/Code/User/keybindings.json \
+    $HOME/.config/Windows/code-user-keybindings.json
+
+  cp $windows_user_home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json \
+    $HOME/.config/Windows/terminal-settings.json
+}
+
+dot@status() {
+  dot@git restore --staged . &>/dev/null
+
+  # ADD WINDOWS FILE (WSL)
+  # dot-get-windows-files
+  ###
+
+  [ -e "$KUBECONFIG" ] && \
+    sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
+
+  # add
+  set +e
+  dot@git add -u
+  while read -r line; do
+    eval dot@git add $line &>/dev/null
+  done < $HOME/.config/dotfiles
+  set -e
+
+  # status
+  dot@git status
+}
+
+dot@save() {
+  dot@git commit -m "Commit on '$(date '+%Y-%m-%d %H:%M:%S')'"
+  dot@git push -u origin main
+}
+
+load() {
+  dot@git pull
+}
+
+dot() {
+  case "${1}" in
+    changes) dot@status;;
+    save) dot@save;;
+    load) dot@load;;
+    *) dot@git "$@";;
+  esac
+  return 0
+}
+
+dot "$@"

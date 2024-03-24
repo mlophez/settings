@@ -1,0 +1,418 @@
+#!/bin/bash
+set -eE -o functrace
+#set -euxo pipefail
+
+readonly DESKCTL=$0
+readonly SCRIPT_NAME=$(basename $0)
+readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
+# readonly ARGS="${@}"
+
+# FIX nixGL
+unset LD_LIBRARY_PATH
+unset LIBGL_DRIVERS_PATH
+unset LIBVA_DRIVERS_PATH
+unset __EGL_VENDOR_LIBRARY_FILENAMES
+
+help() {
+  cat <<- EOF
+  Commands:
+    init                         # Initialize desktop environment
+    portals                      # Start/Restart xdg-desktop-portals
+    panel                        # Start desktop panel
+    wallpaper                    # Rotate/Set wallpaper
+    lock                         # Lock screen
+    screenshot                   # Take a screenshot
+    terminal [start|shell|toggle]
+    menu [app|power]
+    volume [inc|dec|mute]
+    micro [inc|dec|mute]
+    flatpak install
+    distrobox install
+    exit                         # Exit from desktop
+EOF
+}
+
+fail() {
+  echo "Failed at $1: $2"
+  notify-send -u "critical" -a "deskctl" "deskctl: failed code at line $1: $2"
+}
+
+err() {
+  echo "$1"
+}
+
+run() {
+  local cmd="$@"
+  echo "Exec: $cmd"
+  [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && \
+    hyprctl dispatch exec "$cmd" || /bin/true
+  [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
+    swaymsg exec "$cmd" || /bin/true
+}
+
+# command
+cmd_init() {
+  ln -sf $HOME/.config/hypr/deskctl.sh $HOME/.local/bin/deskctl
+  dbus-update-activation-environment --systemd --all
+  # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
+
+  # BALOOCTL
+  type balooctl &>/dev/null && \
+    balooctl disable &>/dev/null
+
+  # NETWORK MANAGER
+  # type nmcli &>/dev/null && nmcli radio wifi off
+
+  # VBOX
+  # type VBoxClient &>/dev/null && VBoxClient --clipboard
+
+  # cmd_portals
+  cmd_wallpaper
+  cmd_panel
+  cmd_outputs
+  _distroboxes
+
+  return 0
+}
+
+# command
+cmd_portals() {
+  pkill -f "xdg-desktop-portal" || /bin/true
+
+  if [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
+    run "$HOME/.nix-profile/libexec/xdg-desktop-portal-hyprland"
+    # run "$HOME/.nix-profile/libexec/xdg-desktop-portal -r"; sleep 0.3
+    # run "$HOME/.nix-profile/libexec/xdg-desktop-portal-gtk -r"; sleep 0.3
+  fi
+
+  # local location="/usr/lib"
+  # [ -e /usr/libexec/xdg-desktop-portal ] && location="/usr/libexec"
+  # run "${location}/xdg-desktop-portal -r"; sleep 0.3
+  # run "${location}/xdg-desktop-portal-gtk -r"; sleep 0.3
+
+    #systemctl --user mask xdg-desktop-portal-hyprland && \
+    #run "${location}/xdg-desktop-portal-hyprland"
+
+  #[[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
+  #  run "${location}/xdg-desktop-portal-wlr -r"
+
+  return 0
+}
+
+cmd_panel() {
+  if type waybar &>/dev/null; then
+    pkill waybar || /bin/true
+    run "waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css"
+  fi
+
+  if type nm-applet &>/dev/null; then
+    pkill nm-applet || /bin/true
+    run "nm-applet"
+  fi
+
+  if type mako &>/dev/null; then
+    pkill mako || /bin/true
+    run "mako"
+  fi
+
+  return 0
+}
+
+cmd_wallpaper() {
+  local cache_file="$HOME/.cache/wallpaper"
+  local cached="$(cat ${cache_file})"
+  local wallpapers_path="$HOME/.local/share/backgrounds"
+  local wallpaper="${wallpapers_path}/$(ls ${wallpapers_path} | shuf -n 1)"
+
+  if type swww &>/dev/null; then
+    if ! pgrep -x "swww-daemon" > /dev/null; then
+      pkill swww || /bin/true
+      run "swww init"
+      [ -e "${cached}" ] && wallpaper=${cached}
+      swww img ${wallpaper}
+    else
+      swww img ${wallpaper} \
+        --transition-type center \
+        --transition-fps 60 \
+        --transition-step 50 \
+        --transition-duration 1
+      echo "${wallpaper}" > ${cache_file}
+    fi
+  elif [ "${XDG_CURRENT_DESKTOP,,}" = "sway" ]; then
+    swaymsg output '*' bg ${wallpaper} fill
+    echo "${wallpaper}" > ${cache_file}
+    # swaymsg output * bg #1e1e2e solid_color
+  fi
+
+  return 0
+}
+
+_distroboxes() {
+  if type distrobox &>/dev/null; then
+    for name in $(distrobox list --no-color | awk -F'|' '{print $2}' | grep -v "NAME" ); do
+      distrobox enter ${name} -- echo
+    done
+  fi
+
+  return 0
+}
+
+cmd_outputs() {
+  [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && return 0
+
+  local screens external internal
+  local selected default
+
+  screens=$(swaymsg -t get_outputs | jq -r '.[].name' | sort)
+  default="$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)"
+
+  # Criteria two
+  selected="$(swaymsg -t get_outputs | jq -r '.[].name' | sort | grep -v "eDP" | head -1)"
+  [ -z "$selected" ] && selected="$default"
+
+  echo $selected
+  for screen in $(echo "$screens"); do
+    if [ "$screen" = "$selected" ]; then
+      swaymsg output $screen enable
+      #swaymsg output $screen resolution 1920x1080 position 0,0 scale 1
+      swaymsg output $screen resolution 1920x1080 scale 1
+    else
+      swaymsg output $screen disable
+    fi
+  done
+
+  return 0
+}
+
+cmd_lock() {
+  local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
+  exec swaylock -i ~/.local/share/backgrounds/${image}
+  return 0
+  # type pacman &>/dev/null && \
+  # [[ -n "$(pacman -Q swaylock | grep effects-git)" ]] && \
+  # swaylock -C /dev/null \
+  #   --ignore-empty-password \
+  #   --show-failed-attempts \
+  #   --indicator-radius 200 \
+  #   -f -i ~/.local/share/backgrounds/${image} -s fill
+  # return 0
+}
+
+f:screenshot() {
+  sleep 0.2
+  # slurp | grim -g - - | wl-copy
+  grim -g "$(slurp)" - | wl-copy -t image/png
+}
+
+terminal_scratchpad_toggle() {
+  if [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]]; then
+    if ! swaymsg scratchpad show; then
+      swaymsg exec "foot"; sleep 0.3
+      swaymsg move scratchpad
+      swaymsg scratchpad show
+    fi
+  elif [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
+    local namespace="terminal"
+    local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
+    [ -z "${window}" ] && \
+      exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
+    hyprctl dispatch togglespecialworkspace "${namespace}"
+  fi
+  return 0
+}
+
+terminal_shell() {
+  local multiplexer="${1-true}"
+
+  export ZDOTDIR=$HOME/.config/zsh
+
+  if [ "${multiplexer}" = "true" ]; then
+    if type zellij &>/dev/null; then
+      { zellij attach '0' || exec zellij -s '0'; }; exit 0
+    fi
+    if type tmux &>/dev/null; then
+      { tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'; }; exit 0
+    fi
+  fi
+
+  type zsh &>/dev/null && exec zsh
+
+  return 0
+}
+
+terminal() {
+  local command="${1-start}"; shift || /bin/true
+
+  if [ "${command}" = "toggle" ]; then
+    terminal_scratchpad_toggle
+  elif [ "${command}" = "shell" ]; then
+    terminal_shell "$@"
+  elif [ "${command}" = "start" ]; then
+    type alacritty &>/dev/null \
+      && exec alacritty -e ${DESKCTL} terminal shell
+
+    type wezterm &>/dev/null \
+      && exec wezterm start --always-new-process -- ${DESKCTL} terminal shell
+
+    type foot &>/dev/null \
+      && exec foot -- ${DESKCTL} terminal shell false
+  fi
+
+  return 0
+}
+
+menu_launcher() {
+  type rofi &>/dev/null && exec rofi -show drun
+
+  [ -n "$(pidof wofi)" ] && return 0
+
+  exec wofi -i --show drun \
+    --no-actions \
+    --normal-window \
+    --allow-images \
+    --sort-order=alphabetical \
+    --parse-search \
+    --lines=10 --columns=10 \
+    -s $HOME/.config/sway/wofi.css
+    #--matching=fuzzy \
+
+  return 0
+}
+
+menu_power() {
+  local choice=$(echo -e "Lock|Reboot|Poweroff" | rofi -dmenu -sep '|' -p "Option" -only-match -i)
+  echo ${choice,,}
+
+  [ "${choice,,}" = "lock" ] && desktop lock
+  [ "${choice,,}" = "reboot" ] && systemctl reboot
+  [ "${choice,,}" = "poweroff" ] && systemctl poweroff -i
+
+  return 0
+}
+
+menu() {
+  local menu="${1-launcher}"; shift || /bin/true
+  [[ "${menu}" == "launcher" ]] && menu_launcher
+  [[ "${menu}" == "power" ]] && menu_power
+}
+
+theme() {
+  local gnome_schema="org.gnome.desktop.interface"
+  local cursor_theme="bibata-modern-ice-cursors"
+  local gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
+  local icon_theme="cupertino-sonoma-icons"
+  local font_theme="JetBrainsMono Nerd Font 12"
+
+  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+    hyprctl setcursor "${cursor_theme}" 24 \
+
+  ! type gsettings &>/dev/null && exit 0
+
+  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+    gsettings set ${gnome_schema} cursor-theme "${cursor_theme}"
+
+  [ -d "$HOME/.local/share/themes/${gtk_theme}" ] && \
+    gsettings set ${gnome_schema} gtk-theme "${gtk_theme}" && \
+    gsettings set ${gnome_schema} color-scheme 'prefer-dark'
+
+  [ -d "$HOME/.local/share/themes/icons/${icon_theme}" ] && \
+    gsettings set ${gnome_schema} icon-theme "${icon_theme}"
+
+  gsettings set ${gnome_schema} font-name "${font_theme}"
+
+  return 0
+}
+
+volume() {
+  local cmd="${1}"
+
+  local volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr -d '.' | grep -o "[0-9]\+" | sed 's/^0*//g')
+
+  [[ "${cmd}" == "inc" ]] && \
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ $(($volume-$volume%5+5))%
+
+  [[ "${cmd}" == "dec" ]] && \
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ $(($volume-$volume%5-5))%
+
+  return 0
+}
+
+# close desktop
+close() {
+  rm -rf /tmp/hypr &> /dev/null
+  loginctl terminate-user $(whoami)
+  # killall -u $USER
+}
+
+ctl_distrobox_create_archlinux() {
+  echo 'Creating archlinux distrobox ...'
+  distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
+  distrobox enter archlinux -- sudo pacman-key --init
+  distrobox enter archlinux -- sudo pacman -Syu --noconfirm
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S alacritty kitty code
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd
+  distrobox enter archlinux -- sudo pacman -Scc --noconfirm
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
+  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/sudo /usr/bin/csudo
+  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/sudo
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/swaymsg
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/hyprctl
+  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/makoctl
+  distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
+  distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
+  distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
+}
+
+ctl_flatpak_install_apps() {
+  flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+  flatpak --user install -y flathub com.brave.Browser
+  flatpak --user install -y flathub com.google.Chrome
+  flatpak --user install -y flathub com.microsoft.Edge
+  flatpak --user install -y flathub org.chromium.Chromium
+  flatpak --user install -y flathub org.freedesktop.Platform.ffmpeg-full
+  flatpak --user install -y flathub org.keepassxc.KeePassXC
+  flatpak --user install -y flathub com.github.tchx84.Flatseal
+  flatpak --user install -y flathub org.mozilla.Thunderbird
+  flatpak --user install -y flathub org.mozilla.firefox
+  flatpak --user install -y flathub org.pulseaudio.pavucontrol
+  flatpak --user install -y flathub com.calibre_ebook.calibre
+  flatpak --user install -y flathub com.spotify.Client
+  flatpak --user install -y flathub org.libreoffice.LibreOffice
+  flatpak --user install -y flathub org.videolan.VLC
+  flatpak --user install -y flathub org.gnome.Boxes
+  flatpak --user install -y flathub com.usebottles.bottles
+  flatpak --user install -y flathub org.telegram.desktop
+  flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
+  flatpak --user install -y flathub dev.k8slens.OpenLens
+  flatpak --user install -y flathub md.obsidian.Obsidian
+  flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
+  flatpak --user install -y flathub org.gnome.dspy
+}
+
+main() {
+  local command="${1-help}"; shift || /bin/true
+
+  case "${command}" in
+    init) cmd_init;;
+    portals) cmd_portals;;
+    panel) cmd_panel;;
+    wallpaper) cmd_wallpaper;;
+    lock) cmd_lock;;
+    terminal) terminal "${@}";;
+    menu) menu "${@}";;
+    screenshot) f:screenshot;;
+    volume) volume "${@}";;
+    micro) volume "${@}";;
+    output) cmd_outputs;;
+    exit) close;;
+    *) help;;
+  esac
+
+  return 0
+}
+
+trap 'fail ${LINENO} "${BASH_COMMAND}"' ERR
+main "$@"

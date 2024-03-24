@@ -25,8 +25,8 @@ return {
 			end,
 		},
 		mappings = {
-			MkdnNextLink = { "n", "n" },
-			MkdnPrevLink = { "n", "b" },
+			MkdnNextLink = { "n", "C-n" },
+			MkdnPrevLink = { "n", "C-b" },
 			MkdnGoBack = false,
 			MkdnEnter = { { "n" }, "gf" },
 			MkdnFoldSection = false,
