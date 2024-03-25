@@ -47,7 +47,7 @@ dot@save() {
   dot@git push -u origin main
 }
 
-load() {
+dot::load() {
   dot@git pull
 }
 
@@ -55,7 +55,7 @@ dot() {
   case "${1}" in
     changes) dot@status;;
     save) dot@save;;
-    load) dot@load;;
+    load) dot::load;;
     *) dot@git "$@";;
   esac
   return 0
