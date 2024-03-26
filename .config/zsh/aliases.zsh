@@ -43,7 +43,8 @@ alias j="just"
 alias arch="archlinux"
 
 # AWS
-alias a="aws-ssm-connect"
+alias a="aws --profile"
+alias ac="aws-ssm-connect"
 alias as="aws-ssm-connect ssh"
 alias am="aws-profile-menu"
 
