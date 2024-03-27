@@ -1,6 +1,6 @@
 [Context]
 devices=!all;dri
-filesystems=/usr/share/icons:ro;xdg-desktop;xdg-download;xdg-data/icons:ro;xdg-data/themes:ro;~/.local/share/applications;!home;!host-etc;!host-os;!host
+filesystems=xdg-documents;~/.local/share/applications;xdg-data/themes:ro;xdg-data/icons:ro;xdg-download;xdg-desktop;/usr/share/icons:ro;!home;!host-etc;!host-os;!host
 
 [Session Bus Policy]
 org.freedesktop.Notifications=talk

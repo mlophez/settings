@@ -338,9 +338,10 @@ volume() {
 }
 
 # close desktop
-close() {
-  rm -rf /tmp/hypr &> /dev/null
-  loginctl terminate-user $(whoami)
+ctl_exit() {
+  hyprctl dispatch exit 0
+  # loginctl terminate-user $(whoami)
+  # rm -rf /tmp/hypr &> /dev/null
   # killall -u $USER
 }
 
@@ -407,7 +408,7 @@ main() {
     volume) volume "${@}";;
     micro) volume "${@}";;
     output) cmd_outputs;;
-    exit) close;;
+    exit) ctl_exit;;
     *) help;;
   esac
 

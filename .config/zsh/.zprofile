@@ -14,4 +14,4 @@
 
 # LOGIN
 [[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && \
-  nixGL Hyprland
+  exec nixGL Hyprland
