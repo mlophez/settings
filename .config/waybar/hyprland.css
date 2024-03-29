@@ -72,7 +72,3 @@ window#waybar {
 #pulseaudio {
   color: @yellow;
 }
-
-#battery {
-  color: @red;
-}
