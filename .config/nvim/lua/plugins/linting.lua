@@ -6,7 +6,7 @@ return {
 		local lint = require("lint")
 
 		lint.linters_by_ft = {
-			python = { "pylint" },
+			--python = { "pylint" },
 			--python = { "pylint", "mypy" },
 			-- terraform = { "tflint", "trivy" },
 		}
