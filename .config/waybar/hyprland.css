@@ -73,7 +73,7 @@ window#waybar {
   color: @yellow;
 }
 
-#custom-power {
+#battery {
   color: @red;
   margin-right: 20px;
 }
