@@ -3,16 +3,15 @@
   "layer": "top",
   "position": "top",
   "height": 40,
-  "margin-top": 10,
-  "margin-left": 13,
-  // "margin-right": 20,
+  "margin-top": 15,
+  "margin-left": 15,
+  "margin-right": 25,
 
   "include": ["~/.config/waybar/modules.json"],
 
   "modules-left": [
     "hyprland/workspaces",
-    "custom/wallpaper",
-    "custom/screenshot"
+    "custom/wallpaper"
   ],
   "modules-center": ["clock#time", "clock#date"],
   "modules-right": [

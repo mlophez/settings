@@ -100,7 +100,7 @@
 
   "custom/screenshot": {
     "on-click": "deskctl screenshot",
-    "format": "󰨵"
+    "format": "󰹑 "
   },
 
   "pulseaudio": {
