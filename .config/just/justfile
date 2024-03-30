@@ -44,3 +44,6 @@ vpn-globalprotect:
     -c $HOME/Downloads/globalprotect.pem \
     --servercert pin-sha256:uVIL06unCSCi4j3jo++6DUfCTO2Zyow5uHcclgko51E= \
     194.140.17.69
+
+argocd-demo:
+  kubectl --context demo -n argocd port-forward svc/argocd-server 8080:80
