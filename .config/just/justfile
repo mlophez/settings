@@ -47,3 +47,9 @@ vpn-globalprotect:
 
 argocd-demo:
   kubectl --context demo -n argocd port-forward svc/argocd-server 8080:80
+
+argocd-prod:
+  kubectl --context prod -n argocd port-forward svc/argocd-server 8080:80
+
+prometheus-demo:
+  kubectl --context demo -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
