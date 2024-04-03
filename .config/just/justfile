@@ -41,8 +41,8 @@ demo-mongodb-2:
 vpn-globalprotect:
   sudo openconnect --protocol=gp \
     -u miguellopez \
-    -c $HOME/Downloads/globalprotect.pem \
-    --servercert pin-sha256:uVIL06unCSCi4j3jo++6DUfCTO2Zyow5uHcclgko51E= \
+    -c $HOME/Documents/Certificates/globalprotect.pem \
+    --servercert pin-sha256:o5uZ5Kl+5Cg/tDzWHiIOPHR8Y7rq7wXc7IuX9lLbnkM= \
     194.140.17.69
 
 argocd-dev:
@@ -53,6 +53,9 @@ argocd-demo:
 
 argocd-prod:
   kubectl --context prod -n argocd port-forward svc/argocd-server 8080:80
+
+argocd-tools:
+  kubectl --context tools -n argocd port-forward svc/argocd-server 8080:80
 
 prometheus-demo:
   kubectl --context demo -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
