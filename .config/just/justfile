@@ -14,6 +14,9 @@ tunnel-db-demosign:
 tunnel-db-demo:
   kubectl --context demo -n default port-forward pods/forward-0 1522:1521
 
+tunnel-db-new-test:
+  kubectl --context dev -n testing port-forward pods/forward-0 1523:1521
+
 tunnel-db-test:
   aws ssm start-session --cli-read-timeout 8000 \
   --target i-04a7f8ed6a1c77a37 \
