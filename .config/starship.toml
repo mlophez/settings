@@ -1,8 +1,8 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$username $hostname $directory $python $line_break$shell $character"
-right_format = "$git_status $git_branch"
+format = "$username$hostname$directory$python${custom.devbox}$line_break$shell$character"
+right_format = "$git_status$git_branch"
 # Inserts a blank line between shell prompts
 add_newline = true
 
@@ -12,28 +12,28 @@ success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set
 error_symbol = '[➜](bold red)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
 
 [username]
-format = "[$user]($style)"
+format = "[$user]($style) "
 style_user = "bold blue"
 show_always = true
 
 [hostname]
 ssh_only = false
-format = '[$hostname](bold red)'
+format = '[$hostname](bold red) '
 trim_at = '.companyname.com'
 disabled = false
 
 [shell]
 disabled = false
-format='[$indicator]($style)'
+format='[$indicator]($style) '
 style="bold purple"
 
 [directory]
-format = "[$path]($style)[$read_only]($read_only_style)"
+format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_length = 5
 truncate_to_repo = false
 
 [python]
-format = "[$symbol $virtualenv \\($version\\)]($style)"
+format = "[$symbol $virtualenv \\($version\\)]($style) "
 symbol = "󰌠"
 style = "bold green"
 
@@ -43,9 +43,14 @@ symbol = ""
 style = "bold purple"
 
 [git_status]
-format = "$staged $deleted $modified $untracked"
+format = "$staged $deleted $modified $untracked  "
 style = "bold white"
 staged = "[${count} ](bold green)"
 deleted = "[${count} ](bold red)"
 modified = "[${count} ](bold blue)"
 untracked = "[${count} ](bold yellow)"
+
+[custom.devbox]
+format = '[\(in devbox\)]($style) '
+when = ''' test "$DEVBOX_SHELL_ENABLED" = "1" '''
+style = "bold yellow"
