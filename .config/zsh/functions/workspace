@@ -3,9 +3,12 @@
 workspace() {
   local wpath selected
 
+  [ -d "$HOME/Code" ] && wpath="$HOME/Code"
+  [ -d "$HOME/Documents/Code" ] && wpath="$HOME/Documents/Code"
+
   if [ -z "$1" ]; then
     #wpath=($(find $HOME -maxdepth 2 -iname Code -type d -print | tr '\n' ' '))
-    selected=$(find $HOME/Code -mindepth 1 -maxdepth 1 -type d,l -print | fzf)
+    selected=$(find ${wpath} -mindepth 1 -maxdepth 1 -type d,l -print | fzf)
     [ -z "$selected" ] && return 0
     cd $selected
 
