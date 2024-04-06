@@ -12,10 +12,11 @@
   "modules-left": [
     "hyprland/workspaces"
   ],
-  "modules-center": ["clock#time", "clock#date"],
+  "modules-center": ["clock#date", "clock#time"],
   "modules-right": [
     "tray",
     "memory",
+    "disk",
     "pulseaudio",
     "backlight",
     "battery"

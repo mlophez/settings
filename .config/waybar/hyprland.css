@@ -21,6 +21,7 @@ window#waybar {
 #backlight,
 #battery,
 #memory,
+#disk,
 #custom-lock,
 #custom-wallpaper,
 #custom-screenshot,
@@ -65,10 +66,22 @@ window#waybar {
   color: @red;
 }
 
+#battery {
+  color: @green;
+}
+
 #clock {
   color: @pink;
 }
 
 #pulseaudio {
   color: @yellow;
+}
+
+#disk {
+  color: @maroon;
+}
+
+#memory {
+  color: @pink;
 }
