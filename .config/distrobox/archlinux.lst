@@ -171,6 +171,9 @@ k9s
 trivy
 kubeseal
 
+# CI/CD
+dagger
+
 # API
 httpie
 curlie
