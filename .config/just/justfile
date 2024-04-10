@@ -41,6 +41,12 @@ demo-mongodb-1:
 demo-mongodb-2:
   kubectl --context demo -n mongodb exec -it pod/mongo-2 -c mongo -- bash -c 'mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD'
 
+demo-boidas-db:
+  kubectl --context demo -n boidas port-forward pods/postgresql-0 5432:5432
+
+boidas-prod:
+  aws ssm start-session --cli-read-timeout 8000 --target i-02147036908fa4347 --document-name AWS-StartPortForwardingSessionToRemoteHost  --parameters '{"host":["lgt-pg-prod.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com"],"portNumber":["5432"],"localPortNumber":["5436"]}'  --profile ireland
+
 vpn-globalprotect:
   sudo openconnect --protocol=gp \
     -u miguellopez \
