@@ -35,6 +35,8 @@
 ~/.config/distrobox
 ~/.config/i3
 ~/.config/pylintrc
+~/.config/systemd/user/*.timer
+~/.config/systemd/user/*.service
 ~/.config/gnupg/gpg.conf
 ~/.config/gnupg/gpg-agent.conf
 ~/.config/Windows

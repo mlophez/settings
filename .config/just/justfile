@@ -68,3 +68,19 @@ argocd-tools:
 
 prometheus-demo:
   kubectl --context demo -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
+
+sqlline-install:
+  #!/bin/bash
+  ver=1.12.0
+  cd $HOME/.local/bin/
+  wget https://repo1.maven.org/maven2/sqlline/sqlline/$ver/sqlline-$ver-jar-with-dependencies.jar
+  wget https://download.oracle.com/otn-pub/otn_software/jdbc/233/ojdbc11.jar
+
+connect-secure-bus:
+  #!/bin/bash
+  trap 'kill $(jobs -p)' EXIT
+  cd $HOME/.local/bin/
+  #java -cp "*" sqlline.SqlLine -n COREBUS -p "dOn90Brick#" -u "jdbc:oracle:thin:@//logteca.cdl88pofwdpb.eu-west-1.rds.amazonaws.com:1521/LOGTECA"
+  ssh -N -L 15342:logteca.cdl88pofwdpb.eu-west-1.rds.amazonaws.com:1521 secure-bastion &
+  sleep 3
+  java -cp "*" sqlline.SqlLine -n COREBUS -p "dOn90Brick#" -u "jdbc:oracle:thin:@//localhost:15342/LOGTECA"
