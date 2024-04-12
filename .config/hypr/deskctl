@@ -394,6 +394,14 @@ ctl_flatpak_install_apps() {
   flatpak --user install -y flathub org.gnome.dspy
 }
 
+desk_wallpaper_timer() {
+  local timer="${1-30}"
+  while true; do
+    sleep $timer
+    cmd_wallpaper
+  done
+}
+
 main() {
   local command="${1-help}"; shift || /bin/true
 
@@ -402,6 +410,7 @@ main() {
     portals) cmd_portals;;
     panel) cmd_panel;;
     wallpaper) cmd_wallpaper;;
+    wallpaper-timer) desk_wallpaper_timer "${@}";;
     lock) cmd_lock;;
     terminal) terminal "${@}";;
     menu) menu "${@}";;
