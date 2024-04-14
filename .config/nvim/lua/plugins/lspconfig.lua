@@ -107,15 +107,6 @@ return {
     if vim.fn.executable("pyright") == 1 then
       lspconfig.pyright.setup({
         capabilities = capabilities,
-        settings = {
-          python = {
-            analysis = {
-              autoSearchPaths = true,
-              diagnosticMode = "openFilesOnly",
-              useLibraryCodeForTypes = true,
-            },
-          },
-        },
       })
     end
 
