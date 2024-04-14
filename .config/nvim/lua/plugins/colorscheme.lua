@@ -43,6 +43,7 @@ return {
 
   {
     "xiyaowong/transparent.nvim",
+    enabled = false,
     lazy = false,
     priority = 10000,
 
