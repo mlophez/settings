@@ -85,7 +85,7 @@ return {
         -- yaml = { { "prettier", "yamlfmt" } },
         markdown = { "prettier" },
         --graphql = { "prettier" },
-        --python = { "isort", "black" },
+        python = { "isort", "black" },
         terraform = { "terraform_fmt" },
         jsonnet = { "jsonnetfmt" },
         rust = { "rustfmt" },

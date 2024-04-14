@@ -2,6 +2,10 @@ live_config_reload = true
 #winpty_backend = false
 working_directory = "None"
 
+[env]
+TERMINAL = "alacritty"
+#ZDOTDIR = "/home/mlr/.config/zsh"
+
 [bell]
 animation = "EaseOutExpo"
 color = "#ffffff"
@@ -98,10 +102,6 @@ persistent_logging = false
 print_events = false
 render_timer = false
 
-[env]
-TERMINAL = "alacritty"
-ZDOTDIR = "/home/mlr/.config/zsh"
-
 [font]
 #AppleFontSmoothing = false
 size = 14.0
@@ -174,10 +174,10 @@ mods = "Alt"
 key = "Space"
 chars = "\u001b\u005b\u0032\u0031\u007e"
 
-[[keyboard.bindings]]
-mods = "Control"
-key = "Space"
-chars = "\u001b\u005b\u0032\u0031\u007e"
+#[[keyboard.bindings]]
+#mods = "Control"
+#key = "Space"
+#chars = "\u001b\u005b\u0032\u0031\u007e"
 
 [mouse]
 hide_when_typing = false
