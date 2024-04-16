@@ -128,7 +128,7 @@ cmd_wallpaper() {
     if ! pgrep -x "swww-daemon" > /dev/null; then
       pkill swww || /bin/true
       # run "swww init"
-      # run "swww-daemon --format 'xrgb'"
+      run "swww-daemon --format 'xrgb'"
       [ -e "${cached}" ] && wallpaper=${cached}
       swww img ${wallpaper}
     else
