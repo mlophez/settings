@@ -84,3 +84,6 @@ connect-secure-bus:
   ssh -N -L 15342:logteca.cdl88pofwdpb.eu-west-1.rds.amazonaws.com:1521 secure-bastion &
   sleep 3
   java -cp "*" sqlline.SqlLine -n COREBUS -p "dOn90Brick#" -u "jdbc:oracle:thin:@//localhost:15342/LOGTECA"
+
+ecr-login:
+ aws ecr get-login-password --profile production | docker login --username AWS --password-stdin 234166862235.dkr.ecr.eu-south-2.amazonaws.com
