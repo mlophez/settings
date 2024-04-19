@@ -119,6 +119,11 @@ contexts:
     cluster: demo
     user: demo-admin
 
+- name: test
+  context:
+    cluster: dev
+    user: dev
+
 - name: dev
   context:
     cluster: dev
