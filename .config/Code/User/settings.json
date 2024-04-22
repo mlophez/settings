@@ -13,10 +13,14 @@
   "window.zoomLevel": 1,
   "editor.linkedEditing": true,
   "editor.formatOnSave": true,
-  "prettier.documentSelectors": ["**/*.astro"],
+  "prettier.documentSelectors": [
+    "**/*.astro"
+  ],
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.sideBar.location": "right",
-  "window.dialogStyle": "custom"
+  "window.dialogStyle": "custom",
+  "extensions.ignoreRecommendations": true,
+  "diffEditor.hideUnchangedRegions.enabled": true
 }
