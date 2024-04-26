@@ -24,6 +24,9 @@ tunnel-db-test:
   --parameters '{"host":["logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com"],"portNumber":["1521"],"localPortNumber":["1523"]}' \
   --profile qa
 
+tunnel-db-connect-demo:
+  kubectl --context demo -n default port-forward pods/forward-0 5433:5433
+
 tunnel-db-releases:
   kubectl --context tools -n logalty port-forward pods/mysql-0 3306:3306
 
@@ -50,7 +53,7 @@ boidas-prod:
 vpn-globalprotect:
   sudo openconnect --protocol=gp \
     -u miguellopez \
-    -c $HOME/Documents/Certificates/globalprotect.pem \
+    -c $HOME/Documents/Certificates/logalty.vpn.cliente.sistemas.pem \
     --servercert pin-sha256:o5uZ5Kl+5Cg/tDzWHiIOPHR8Y7rq7wXc7IuX9lLbnkM= \
     194.140.17.69
 
