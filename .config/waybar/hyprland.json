@@ -1,4 +1,3 @@
-// vim: ft=json
 {
   "layer": "top",
   "position": "top",
@@ -6,13 +5,16 @@
   "margin-top": 15,
   "margin-left": 15,
   "margin-right": 25,
-
-  "include": ["~/.config/waybar/modules.json"],
-
+  "include": [
+    "$HOME/.config/waybar/modules.json"
+  ],
   "modules-left": [
     "hyprland/workspaces"
   ],
-  "modules-center": ["clock#date", "clock#time"],
+  "modules-center": [
+    "clock#date",
+    "clock#time"
+  ],
   "modules-right": [
     "tray",
     "memory",

@@ -133,11 +133,11 @@ git-create-random-branch() {
   local random=$[ $RANDOM % 5000000 + 1000000 ]
   local username="miguellopez"
 
-  git checkout main
+  git switch main
   git pull
 
-  git checkout -b $username-$random
-  git push --set-upstream origin $username-$random
+  git switch -c $username-$random
+  #git push --set-upstream origin $username-$random
 }
 
 git-menu() {
