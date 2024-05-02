@@ -10,15 +10,16 @@ return {
     { "tpope/vim-dispatch",                       cmd = { "Make", "Dispatch" } },
   },
   keys = {
-    { "<C-p>",      ":Telescope find_files<cr>", silent = true },
-    { "<leader>f",  ":Telescope find_files<cr>", silent = true },
-    { "<leader>fh", ":Telescope help_tags<cr>",  silent = true },
-    { "<leader>s",  ":Telescope live_grep<cr>",  silent = true },
-    { "<leader>b",  ":Telescope buffers<cr>",    silent = true },
-    { "<TAB>",      ":Telescope buffers<cr>",    silent = true },
-    { "<leader>c",  ":Telescope commands<cr>",   silent = true },
-    { "<leader>gf", ":Telescope git_files<cr>",  silent = true },
-    { "<leader>gs", ":Telescope git_status<cr>", silent = true },
+    { "<C-p>",      ":Telescope find_files<cr>",   silent = true },
+    { "<leader>f",  ":Telescope find_files<cr>",   silent = true },
+    { "<leader>fh", ":Telescope help_tags<cr>",    silent = true },
+    { "<leader>s",  ":Telescope live_grep<cr>",    silent = true },
+    { "<leader>b",  ":Telescope buffers<cr>",      silent = true },
+    { "<TAB>",      ":Telescope buffers<cr>",      silent = true },
+    { "<leader>c",  ":Telescope commands<cr>",     silent = true },
+    { "<leader>gf", ":Telescope git_files<cr>",    silent = true },
+    { "<leader>gs", ":Telescope git_status<cr>",   silent = true },
+    { "<leader>gb", ":Telescope git_branches<cr>", silent = true },
   },
   opts = {
     defaults = {
@@ -32,9 +33,12 @@ return {
         i = {
           ["<esc>"] = "close",
           ["<C-c>"] = "close",
+          ["<TAB>"] = "close",
         },
         n = {
           ["<esc>"] = "close",
+          ["<BS>"] = "close",
+          ["<TAB>"] = "close",
           ["<C-c>"] = "close",
           ["q"] = "close",
         },
