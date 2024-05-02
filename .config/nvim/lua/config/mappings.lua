@@ -3,9 +3,9 @@ local opts = { noremap = true, silent = true }
 local term_opts = { silent = true }
 
 local quit = function()
-	if vim.fn.confirm("Do you want to quit?", "&Yes\n&No", 2, "Question") == 1 then
-		vim.cmd.quitall()
-	end
+  if vim.fn.confirm("Do you want to quit?", "&Yes\n&No", 2, "Question") == 1 then
+    vim.cmd.quitall()
+  end
 end
 vim.api.nvim_create_user_command("Quit", quit, {})
 
@@ -53,9 +53,9 @@ vim.keymap.set("n", "<leader>ñ", "<C-w><Right>", opts)
 -- Buffers
 vim.keymap.set("n", "<BS>", ":bd<cr>", opts)
 vim.keymap.set("n", "<leader>n", ":enew<cr>", opts)
---vim.keymap.set("n", "<BS>", ":bp<bar>sp<bar>bn<bar>bd<cr>", opts)
-vim.keymap.set("n", "<TAB>", ":bnext<cr>", opts)
-vim.keymap.set("n", "<S-TAB>", ":bprev<cr>", opts)
+-- vim.keymap.set("n", "<BS>", ":bp<bar>sp<bar>bn<bar>bd<cr>", opts)
+-- vim.keymap.set("n", "<TAB>", ":bnext<cr>", opts)
+-- vim.keymap.set("n", "<S-TAB>", ":bprev<cr>", opts)
 
 -- Save files
 vim.keymap.set("n", "<C-s>", ":w<cr>", opts)
