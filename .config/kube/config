@@ -1,3 +1,5 @@
+# vim: ft=yaml
+---
 apiVersion: v1
 kind: Config
 current-context: none
@@ -22,6 +24,11 @@ clusters:
   cluster:
     server: https://FCBE9AE34C7C2008F26995832DACA5F0.yl4.eu-south-2.eks.amazonaws.com
     insecure-skip-tls-verify: true
+    extensions:
+    - name: telepresence.io
+      extension:
+        manager:
+          namespace: telepresence
 
 - name: biiddev
   cluster:
