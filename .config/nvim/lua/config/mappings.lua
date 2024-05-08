@@ -54,8 +54,6 @@ vim.keymap.set("n", "<leader>ñ", "<C-w><Right>", opts)
 vim.keymap.set("n", "<BS>", ":bd<cr>", opts)
 vim.keymap.set("n", "<leader>n", ":enew<cr>", opts)
 -- vim.keymap.set("n", "<BS>", ":bp<bar>sp<bar>bn<bar>bd<cr>", opts)
--- vim.keymap.set("n", "<TAB>", ":bnext<cr>", opts)
--- vim.keymap.set("n", "<S-TAB>", ":bprev<cr>", opts)
 
 -- Save files
 vim.keymap.set("n", "<C-s>", ":w<cr>", opts)

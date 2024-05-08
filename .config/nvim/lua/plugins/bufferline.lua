@@ -1,8 +1,11 @@
 return {
   "akinsho/bufferline.nvim",
-  enabled = false,
   lazy = false,
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  keys = {
+    { "<TAB>",   ":bnext<cr>", silent = true },
+    { "<S-TAB>", ":bprev<cr>", silent = true }
+  },
   opts = {
     options = {
       numbers = "none",                    -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,

@@ -15,7 +15,7 @@ return {
     { "<leader>fh", ":Telescope help_tags<cr>",    silent = true },
     { "<leader>s",  ":Telescope live_grep<cr>",    silent = true },
     { "<leader>b",  ":Telescope buffers<cr>",      silent = true },
-    { "<TAB>",      ":Telescope buffers<cr>",      silent = true },
+    --{ "<TAB>",      ":Telescope buffers<cr>",      silent = true },
     { "<leader>c",  ":Telescope commands<cr>",     silent = true },
     { "<leader>gf", ":Telescope git_files<cr>",    silent = true },
     { "<leader>gs", ":Telescope git_status<cr>",   silent = true },
