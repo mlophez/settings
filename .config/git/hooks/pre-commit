@@ -2,7 +2,7 @@
 set -e
 
 # Primero, definimos el nombre de la rama actual
-current_branch=$(git rev-parse --abbrev-ref HEAD)
+#current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [ -z "$(git config user.email)" ]; then
   echo Your name and email address were configured automatically based
