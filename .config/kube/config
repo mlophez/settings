@@ -22,7 +22,7 @@ clusters:
 
 - name: dev
   cluster:
-    server: https://FCBE9AE34C7C2008F26995832DACA5F0.yl4.eu-south-2.eks.amazonaws.com
+    server: https://F81371C297F2A64DE99B63FABD708517.gr7.eu-south-2.eks.amazonaws.com
     insecure-skip-tls-verify: true
     extensions:
     - name: telepresence.io
@@ -79,7 +79,7 @@ users:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--profile", "dev"]
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--profile", "terraform-dev"]
 
 - name: demo-viewer
   user:
