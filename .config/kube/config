@@ -79,7 +79,7 @@ users:
     exec:
       apiVersion: client.authentication.k8s.io/v1beta1
       command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--profile", "terraform-dev"]
+      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--profile", "dev"]
 
 - name: demo-viewer
   user:
