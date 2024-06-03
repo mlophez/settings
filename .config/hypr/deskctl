@@ -78,12 +78,14 @@ cmd_init() {
 # command
 cmd_portals() {
   pkill -f "xdg-desktop-portal" || /bin/true
+  systemctl --user restart xdg-desktop-portal
+  return 0
 
-  if [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
-    run "$HOME/.nix-profile/libexec/xdg-desktop-portal-hyprland"
-    # run "$HOME/.nix-profile/libexec/xdg-desktop-portal -r"; sleep 0.3
-    # run "$HOME/.nix-profile/libexec/xdg-desktop-portal-gtk -r"; sleep 0.3
-  fi
+  # if [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
+  #   run "$HOME/.nix-profile/libexec/xdg-desktop-portal-hyprland"
+  #   # run "$HOME/.nix-profile/libexec/xdg-desktop-portal -r"; sleep 0.3
+  #   # run "$HOME/.nix-profile/libexec/xdg-desktop-portal-gtk -r"; sleep 0.3
+  # fi
 
   # local location="/usr/lib"
   # [ -e /usr/libexec/xdg-desktop-portal ] && location="/usr/libexec"
