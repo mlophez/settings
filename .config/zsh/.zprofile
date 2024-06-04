@@ -13,5 +13,8 @@
   export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
 # LOGIN
-[[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && \
+[[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty2 ]] && \
   exec nixGL Hyprland
+
+[[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty3 ]] && \
+  exec /usr/bin/start-cosmic
