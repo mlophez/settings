@@ -3,6 +3,7 @@
 ~/.config/dotfiles
 ~/.config/autostart
 ~/.config/zsh
+~/.config/home-manager
 ~/.config/just
 ~/.config/nvim
 ~/.config/helix

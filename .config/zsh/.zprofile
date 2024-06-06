@@ -12,9 +12,13 @@
 [ -f "/usr/lib/locale/locale-archive" ] && \
   export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
+# HOME MANAGER
+[ -f "~/.nix-profile/etc/profile.d/hm-session-vars.sh" ] && \
+  source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+
 # LOGIN
-[[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty2 ]] && \
+[[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && \
   exec nixGL Hyprland
 
-[[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty3 ]] && \
+[[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty2 ]] && \
   exec /usr/bin/start-cosmic
