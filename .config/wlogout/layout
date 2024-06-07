@@ -1,0 +1,24 @@
+{
+    "label" : "lock",
+    "action" : "deskcmd lock",
+    "text" : "Lock",
+    "keybind" : "l"
+}
+{
+    "label" : "shutdown",
+    "action" : "deskcmd shutdown",
+    "text" : "Shutdown",
+    "keybind" : "s"
+}
+{
+    "label" : "logout",
+    "action" : "deskcmd exit",
+    "text" : "Exit",
+    "keybind" : "e"
+}
+{
+    "label" : "reboot",
+    "action" : "deskcmd reboot",
+    "text" : "Reboot",
+    "keybind" : "r"
+}

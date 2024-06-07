@@ -13,6 +13,33 @@ unset LIBGL_DRIVERS_PATH
 unset LIBVA_DRIVERS_PATH
 unset __EGL_VENDOR_LIBRARY_FILENAMES
 
+main() {
+  local command="${1-help}"; shift || /bin/true
+
+  case "${command}" in
+    init) cmd_init;;
+    panel) cmd_panel;;
+    notify-daemon) cmd_notify_daemon;;
+    wallpaper) cmd_wallpaper;;
+    wallpaper-timer) desk_wallpaper_timer "${@}";;
+    #portals) cmd_portals;;
+    terminal) terminal "${@}";;
+    menu) menu "${@}";;
+    screenshot) f:screenshot;;
+    volume) volume "${@}";;
+    micro) volume "${@}";;
+    distrobox) _distroboxes "${@}";;
+    output) cmd_outputs;;
+    lock) cmd_lock;;
+    exit) ctl_exit;;
+    shutdown) systemctl poweroff -i;;
+    reboot) systemctl reboot;;
+    *) help;;
+  esac
+
+  return 0
+}
+
 help() {
   cat <<- EOF
   Commands:
@@ -31,6 +58,8 @@ help() {
     exit                         # Exit from desktop
 EOF
 }
+
+
 
 fail() {
   echo "Failed at $1: $2"
@@ -52,25 +81,14 @@ run() {
 
 # command
 cmd_init() {
-  ln -sf $HOME/.config/hypr/deskctl.sh $HOME/.local/bin/deskctl
   dbus-update-activation-environment --systemd --all
   # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
+
+  ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
 
   # BALOOCTL
   type balooctl &>/dev/null && \
     balooctl disable &>/dev/null
-
-  # NETWORK MANAGER
-  # type nmcli &>/dev/null && nmcli radio wifi off
-
-  # VBOX
-  # type VBoxClient &>/dev/null && VBoxClient --clipboard
-
-  # cmd_portals
-  cmd_wallpaper
-  cmd_panel
-  cmd_outputs
-  _distroboxes
 
   return 0
 }
@@ -104,6 +122,7 @@ cmd_portals() {
 cmd_panel() {
   if type waybar &>/dev/null; then
     pkill waybar || /bin/true
+    ln -sf $XDG_RUNTIME_DIR/hypr /tmp
     run "waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css"
   fi
 
@@ -112,12 +131,14 @@ cmd_panel() {
     run "nm-applet"
   fi
 
+  return 0
+}
+
+cmd_notify_daemon() {
   if type mako &>/dev/null; then
     pkill mako || /bin/true
     run "mako"
   fi
-
-  return 0
 }
 
 cmd_wallpaper() {
@@ -283,20 +304,24 @@ menu_launcher() {
 }
 
 menu_power() {
+  if type wlogout &>/dev/null; then
+    pkill wlogout || /bin/true
+    exec wlogout -b 2 -c 20 -r 20 -m 100
+  fi
+
   local choice=$(echo -e "Lock|Reboot|Poweroff" | rofi -dmenu -sep '|' -p "Option" -only-match -i)
   echo ${choice,,}
 
   [ "${choice,,}" = "lock" ] && desktop lock
   [ "${choice,,}" = "reboot" ] && systemctl reboot
   [ "${choice,,}" = "poweroff" ] && systemctl poweroff -i
-
-  return 0
 }
 
 menu() {
   local menu="${1-launcher}"; shift || /bin/true
   [[ "${menu}" == "launcher" ]] && menu_launcher
   [[ "${menu}" == "power" ]] && menu_power
+  [[ "${menu}" == "exit" ]] && menu_power
 }
 
 theme() {
@@ -403,30 +428,6 @@ desk_wallpaper_timer() {
     sleep $timer
     cmd_wallpaper
   done
-}
-
-main() {
-  local command="${1-help}"; shift || /bin/true
-
-  case "${command}" in
-    init) cmd_init;;
-    portals) cmd_portals;;
-    panel) cmd_panel;;
-    wallpaper) cmd_wallpaper;;
-    wallpaper-timer) desk_wallpaper_timer "${@}";;
-    lock) cmd_lock;;
-    terminal) terminal "${@}";;
-    menu) menu "${@}";;
-    screenshot) f:screenshot;;
-    volume) volume "${@}";;
-    micro) volume "${@}";;
-    distrobox) _distroboxes "${@}";;
-    output) cmd_outputs;;
-    exit) ctl_exit;;
-    *) help;;
-  esac
-
-  return 0
 }
 
 trap 'fail ${LINENO} "${BASH_COMMAND}"' ERR

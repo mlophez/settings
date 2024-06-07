@@ -23,13 +23,18 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    pkgs.hyprland
     nixGL.auto.nixGLDefault
+    pkgs.hyprland
+    pkgs.hyprlock
+    pkgs.hyprpaper
+    pkgs.hypridle
     pkgs.waybar
     pkgs.swww
+    pkgs.pywal
     pkgs.wofi
     pkgs.rofi-wayland
     pkgs.mako
+    pkgs.wlogout
     pkgs.foot
     pkgs.just
     pkgs.brightnessctl
