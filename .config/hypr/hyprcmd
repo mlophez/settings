@@ -168,6 +168,10 @@ cmd_wallpaper() {
     # swaymsg output * bg #1e1e2e solid_color
   fi
 
+  if type wal &>/dev/null; then
+    wal -i ${wallpaper}
+  fi
+
   return 0
 }
 
