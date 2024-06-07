@@ -85,19 +85,19 @@
     "format": "{:%H:%M}"
   },
   "custom/lock": {
-    "on-click": "deskctl lock",
+    "on-click": "deskcmd lock",
     "format": "  "
   },
   "custom/power": {
     "format": "  ",
-    "on-click": "deskctl menu power"
+    "on-click": "deskcmd menu power"
   },
   "custom/wallpaper": {
-    "on-click": "deskctl wallpaper",
+    "on-click": "deskcmd wallpaper",
     "format": " "
   },
   "custom/screenshot": {
-    "on-click": "deskctl screenshot",
+    "on-click": "deskcmd screenshot",
     "format": "󰹑 "
   },
   "pulseaudio": {
