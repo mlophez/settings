@@ -22,6 +22,9 @@ in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
+
+  # install -m 644 -o root -g root ~/.nix-profile/etc/pam.d/hyprlock /etc/pam.d/hyprlock
+
   home.packages = [
     nixGL.auto.nixGLDefault
     pkgs.hyprland
@@ -47,6 +50,7 @@ in
     pkgs.networkmanagerapplet
     pkgs.devbox
     pkgs.ranger
+    pkgs.fira-code-nerdfont
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

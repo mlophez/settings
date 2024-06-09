@@ -1,13 +1,7 @@
 @import "./colors/mocha.css";
 
 window#waybar {
-  font-family:
-    FontAwesome,
-    JetBrainsMono Nerd Font,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
+  font-family: JetBrainsMono Nerd Font;
   font-size: 15px;
   font-weight: bold;
   background-color: rgba(0, 0, 0, 0);
