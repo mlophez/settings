@@ -2,6 +2,9 @@
 set -eE -o functrace
 #set -euxo pipefail
 
+renice -n 10 -p $$
+# ionice -c 2 -n 4 -p $$
+
 readonly DESKCTL=$0
 readonly SCRIPT_NAME=$(basename $0)
 readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
@@ -58,8 +61,6 @@ help() {
     exit                         # Exit from desktop
 EOF
 }
-
-
 
 fail() {
   echo "Failed at $1: $2"
