@@ -49,7 +49,7 @@ return {
           ["p"] = "paste_from_clipboard",
           -- ["/"] = "filter_on_submit", --"fuzzy_finder",
           ["f"] = "filter_on_submit",
-          ["<c-f>"] = "clear_filter",
+          ["F"] = "clear_filter",
           -- ["c"] = "copy",
           ["q"] = "close_window",
           ["R"] = "refresh",

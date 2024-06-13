@@ -23,7 +23,8 @@ clusters:
 - name: dev
   cluster:
     server: https://F81371C297F2A64DE99B63FABD708517.gr7.eu-south-2.eks.amazonaws.com
-    insecure-skip-tls-verify: true
+    certificate-authority: dev.crt
+    #insecure-skip-tls-verify: true
     extensions:
     - name: telepresence.io
       extension:

@@ -4,12 +4,16 @@ views:
     # Overrides default sort column
     sortColumn: AGE:desc
     columns:
+      - PF
       - NAMESPACE
       - NAME
       - READY
+      - RESTARTS
+      #- CPU
+      - MEM
+      - "%MEM/R"
+      - "%MEM/L"
       - IP
       - NODE
-      - AGE
-      - RESTARTS
       - STATUS
-      - PF
+      - AGE
