@@ -3,7 +3,8 @@ set -eE -o functrace
 #set -euxo pipefail
 
 renice -n 10 -p $$
-# ionice -c 2 -n 4 -p $$
+ionice -c 2 -n 7 -p $$
+# ionice -p $(pidof Hyprland)
 
 readonly DESKCTL=$0
 readonly SCRIPT_NAME=$(basename $0)
@@ -84,13 +85,12 @@ run() {
 cmd_init() {
   dbus-update-activation-environment --systemd --all
   # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
-
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
-
+  ionice -c 2 -n 0 -p $(pidof Hyprland)
+  type powerprofilesctl &>/dev/null && powerprofilesctl set power-saver
   # BALOOCTL
   type balooctl &>/dev/null && \
     balooctl disable &>/dev/null
-
   return 0
 }
 
