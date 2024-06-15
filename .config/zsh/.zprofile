@@ -18,7 +18,7 @@
 
 # LOGIN
 [[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && \
-  exec nice -n 0 nixGL Hyprland
+  exec nixGL Hyprland
   # exec nice -n 0 ionice -c 2 -n 0 nixGL Hyprland
 
 [[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty2 ]] && \
