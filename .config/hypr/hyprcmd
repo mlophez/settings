@@ -7,6 +7,8 @@ readonly SCRIPT_NAME=$(basename $0)
 readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
 # readonly ARGS="${@}"
 
+readonly CPU_NUMBER=$(grep -c ^processor /proc/cpuinfo)
+
 # FIX nixGL
 unset LD_LIBRARY_PATH
 unset LIBGL_DRIVERS_PATH
@@ -16,17 +18,17 @@ unset __EGL_VENDOR_LIBRARY_FILENAMES
 main() {
   local command="${1-help}"; shift || /bin/true
 
-  # Set priorioties
-  case "${command}" in
-    terminal)
-        renice -n 15 -p $$
-        ionice -c 2 -n 7 -p $$
-	;;
-    *)
-        renice -n 5 -p $$
-        ionice -c 2 -n 5 -p $$
-	;;
-  esac
+  # # Set priorioties
+  # case "${command}" in
+  #   terminal)
+  #       renice -n 15 -p $$
+  #       ionice -c 2 -n 7 -p $$
+	# ;;
+  #   *)
+  #       renice -n 5 -p $$
+  #       ionice -c 2 -n 5 -p $$
+	# ;;
+  # esac
 
   # Commands
   case "${command}" in
@@ -35,13 +37,14 @@ main() {
     notify-daemon) cmd_notify_daemon;;
     wallpaper) cmd_wallpaper;;
     wallpaper-timer) desk_wallpaper_timer "${@}";;
+    resource-monitor) cmd_resource_monitor;;
     #portals) cmd_portals;;
     terminal) terminal "${@}";;
     menu) menu "${@}";;
     screenshot) f:screenshot;;
     volume) volume "${@}";;
     micro) volume "${@}";;
-    distrobox) _distroboxes "${@}";;
+    distrobox) cmd_distroboxes "${@}";;
     output) cmd_outputs;;
     lock) cmd_lock;;
     exit) ctl_exit;;
@@ -68,6 +71,7 @@ help() {
     micro [inc|dec|mute]
     flatpak install
     distrobox install
+    resource-monitor
     exit                         # Exit from desktop
 EOF
 }
@@ -185,16 +189,12 @@ cmd_wallpaper() {
   return 0
 }
 
-_distroboxes() {
+cmd_distroboxes() {
   if type distrobox &>/dev/null; then
     for name in $(distrobox list --no-color | awk -F'|' '{print $2}' | grep -v "NAME" ); do
       distrobox enter ${name} -- echo
     done
 
-    # Limit resources
-    for uuid in $(podman ps --all --no-trunc --format "{{.Names}} {{.ID}} {{.Labels}}" | grep "manager:distrobox" | cut -d " " -f2 | column -t); do
-      systemctl --user set-property libpod-${uuid}.scope CPUQuota=80% IOWeight=1
-    done
   fi
 
   return 0
@@ -447,6 +447,28 @@ desk_wallpaper_timer() {
   while true; do
     sleep $timer
     cmd_wallpaper
+  done
+}
+
+cmd_resource_monitor() {
+  systemctl --user set-property --runtime app.slice CPUShares=512
+
+  while true; do
+    # Limit resources for distroboxes
+    for uuid in $(podman ps --all --no-trunc --format "{{.Names}} {{.ID}} {{.Labels}}" | grep "manager:distrobox" | cut -d " " -f2); do
+      [ $(ls /run/user/${UID}/systemd/transient/libpod-${uuid}.scope.d/ | wc -l) -ne 0 ] && continue
+      systemctl --user set-property --runtime libpod-${uuid}.scope CPUQuota="$((80 * ${CPU_NUMBER}))%"
+      systemctl --user set-property --runtime libpod-${uuid}.scope CPUShares=256
+    done
+
+    # Limit build container resources
+    for scope in $(systemctl --user list-units --type=scope --all | grep 'crun-buildah' | awk '{print $1}'); do
+      [ $(ls /run/user/${UID}/systemd/transient/${scope}.d/ | wc -l) -ne 0 ] && continue
+      systemctl --user set-property --runtime ${scope} CPUQuota="$((50 * ${CPU_NUMBER}))%"
+      systemctl --user set-property --runtime ${scope} CPUShares=256
+    done
+
+    sleep 5
   done
 }
 
