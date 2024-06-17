@@ -1,10 +1,10 @@
 #anchor=bottom-right
-anchor=top-right
+anchor=top-center
 layer=overlay
-font=Roboto Mono 14
+font=Roboto Mono 16
 width=1000
-height=600
-outer-margin=20
+height=700
+outer-margin=15
 padding=10
 
 default-timeout=1200000
