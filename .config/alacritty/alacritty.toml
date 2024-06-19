@@ -212,7 +212,7 @@ decorations = "None"
 dynamic_padding = false
 dynamic_title = false
 #gtk_theme_variant = "None"
-opacity = 0.9
+opacity = 1.0
 startup_mode = "Windowed"
 title = "Alacritty"
 
