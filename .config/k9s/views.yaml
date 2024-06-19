@@ -9,7 +9,7 @@ views:
       - NAME
       - READY
       - RESTARTS
-      #- CPU
+      - CPU
       - MEM
       - "%MEM/R"
       - "%MEM/L"
