@@ -451,7 +451,7 @@ desk_wallpaper_timer() {
 }
 
 cmd_resource_monitor() {
-  systemctl --user set-property --runtime app.slice CPUShares=512
+  systemctl --user set-property --runtime app.slice CPUShares=256
   # systemctl --user set-property --runtime app-flatpak-com.jetbrains.DataGrip-84387.scope CPUShares=256
   # systemctl --user set-property --runtime app-flatpak-io.dbeaver.DBeaverCommunity-20315.scope CPUShares=256
 
@@ -468,6 +468,11 @@ cmd_resource_monitor() {
       [ $(ls /run/user/${UID}/systemd/transient/${scope}.d/ | wc -l) -ne 0 ] && continue
       systemctl --user set-property --runtime ${scope} CPUQuota="$((50 * ${CPU_NUMBER}))%"
       systemctl --user set-property --runtime ${scope} CPUShares=256
+    done
+
+    # Privileged apps
+    for scope in $(systemctl --user list-units --type=scope --all | grep -i -e 'org.mozilla.firefox' -e 'com.microsoft.edge' | awk '{print $1}'); do
+      systemctl --user set-property --runtime ${scope} CPUShares=512
     done
 
     sleep 5
