@@ -452,6 +452,8 @@ desk_wallpaper_timer() {
 
 cmd_resource_monitor() {
   systemctl --user set-property --runtime app.slice CPUShares=512
+  # systemctl --user set-property --runtime app-flatpak-com.jetbrains.DataGrip-84387.scope CPUShares=256
+  # systemctl --user set-property --runtime app-flatpak-io.dbeaver.DBeaverCommunity-20315.scope CPUShares=256
 
   while true; do
     # Limit resources for distroboxes
