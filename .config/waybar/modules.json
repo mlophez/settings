@@ -134,7 +134,7 @@
   },
   "memory": {
     "interval": 15,
-    "format": "M {percentage}%"
+    "format": "M{percentage}%"
   },
   "disk": {
     "interval": 30,
