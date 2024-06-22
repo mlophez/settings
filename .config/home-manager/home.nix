@@ -59,6 +59,7 @@ in
     pkgs.networkmanagerapplet
     pkgs.devbox
     pkgs.ranger
+    pkgs.nwg-look
     pkgs.fira-code-nerdfont
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
