@@ -37,7 +37,7 @@ main() {
     notify-daemon) cmd_notify_daemon;;
     wallpaper) cmd_wallpaper;;
     wallpaper-timer) desk_wallpaper_timer "${@}";;
-    resource-monitor) cmd_resource_monitor;;
+    resources) cmd_resource_monitor;;
     #portals) cmd_portals;;
     terminal) terminal "${@}";;
     menu) menu "${@}";;
@@ -71,7 +71,8 @@ help() {
     micro [inc|dec|mute]
     flatpak install
     distrobox install
-    resource-monitor
+    resources
+    notify-daemon
     exit                         # Exit from desktop
 EOF
 }
@@ -451,27 +452,41 @@ desk_wallpaper_timer() {
 }
 
 cmd_resource_monitor() {
-  systemctl --user set-property --runtime app.slice CPUShares=256
+  echo "[+] Starting resource monitor..."
+  sleep 2
+
+  echo "[+] Setting global resources..."
+  systemctl --user set-property --runtime desktop.slice CPUShares=2048 IOWeight=400
+  systemctl --user set-property --runtime session.slice CPUShares=2048
+  # systemctl --user set-property --runtime user.slice CPUShares=1024
+  # systemctl --user set-property --runtime app.slice CPUShares=1024
+
   # systemctl --user set-property --runtime app-flatpak-com.jetbrains.DataGrip-84387.scope CPUShares=256
   # systemctl --user set-property --runtime app-flatpak-io.dbeaver.DBeaverCommunity-20315.scope CPUShares=256
 
   while true; do
     # Limit resources for distroboxes
     for uuid in $(podman ps --all --no-trunc --format "{{.Names}} {{.ID}} {{.Labels}}" | grep "manager:distrobox" | cut -d " " -f2); do
-      [ $(ls /run/user/${UID}/systemd/transient/libpod-${uuid}.scope.d/ | wc -l) -ne 0 ] && continue
-      systemctl --user set-property --runtime libpod-${uuid}.scope CPUQuota="$((80 * ${CPU_NUMBER}))%"
+      # [[ $(ls /run/user/${UID}/systemd/transient/libpod-${uuid}.scope.d/ | wc -l) -ne 0 ]] && continue
+      [[ -d /run/user/${UID}/systemd/transient/libpod-${uuid}.scope.d/ ]] && continue
+      echo "[+] Set resources for distrobox libpod-${uuid}"
+      systemctl --user set-property --runtime libpod-${uuid}.scope CPUQuota="$((75 * ${CPU_NUMBER}))%"
       systemctl --user set-property --runtime libpod-${uuid}.scope CPUShares=256
     done
 
     # Limit build container resources
     for scope in $(systemctl --user list-units --type=scope --all | grep 'crun-buildah' | awk '{print $1}'); do
-      [ $(ls /run/user/${UID}/systemd/transient/${scope}.d/ | wc -l) -ne 0 ] && continue
-      systemctl --user set-property --runtime ${scope} CPUQuota="$((50 * ${CPU_NUMBER}))%"
+      # [ $(ls /run/user/${UID}/systemd/transient/${scope}.d/ | wc -l) -ne 0 ] && continue
+      [[ -d /run/user/${UID}/systemd/transient/${scope}.d/ ]] && continue
+      echo "[+] Set resources for scope ${scope}"
+      systemctl --user set-property --runtime ${scope} CPUQuota="$((75 * ${CPU_NUMBER}))%"
       systemctl --user set-property --runtime ${scope} CPUShares=256
     done
 
     # Privileged apps
     for scope in $(systemctl --user list-units --type=scope --all | grep -i -e 'org.mozilla.firefox' -e 'com.microsoft.edge' | awk '{print $1}'); do
+      [[ -d /run/user/${UID}/systemd/transient/${scope}.d/ ]] && continue
+      echo "[+] Set resources for scope ${scope}"
       systemctl --user set-property --runtime ${scope} CPUShares=512
     done
 

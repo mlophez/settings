@@ -51,6 +51,7 @@ in
     pkgs.brightnessctl
     pkgs.wl-clipboard
     pkgs.xclip
+    pkgs.libnotify
     pkgs.wev
     pkgs.grim
     pkgs.slurp

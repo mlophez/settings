@@ -1,20 +1,23 @@
-#anchor=bottom-right
-anchor=top-center
+font=Roboto Mono 14
 layer=overlay
-font=Roboto Mono 16
-width=1000
-height=700
-outer-margin=15
-padding=10
+anchor=top-right
+width=600
+height=600
+margin=7,20
+padding=20
 
 default-timeout=1200000
 ignore-timeout=1
 max-visible=5
 
 background-color=#1e1e2e
-text-color=#cdd6f4
-border-color=#89b4fa
+text-color=#b4befe
+border-size=3
+border-radius=15
+border-color=#fab387
 progress-color=over #313244
 
 [urgency=high]
-border-color=#fab387
+anchor=center
+border-color=#f38ba8
+default-timeout=0
