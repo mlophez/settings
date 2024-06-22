@@ -1,7 +1,10 @@
 { config, pkgs, ... }:
 
 let
-  nixGL = import <nixgl> {};
+  pkgsNixGL = import <nixgl> {}; # https://github.com/nix-community/nixGL/archive/main.tar.gz
+  pkgs2405 = import (fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/archive/24.05.tar.gz"; # Reemplaza con la versión deseada
+  }) {};
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -26,11 +29,16 @@ in
   # install -m 644 -o root -g root ~/.nix-profile/etc/pam.d/hyprlock /etc/pam.d/hyprlock
 
   home.packages = [
-    nixGL.auto.nixGLDefault
-    pkgs.hyprland
-    pkgs.hyprlock
-    pkgs.hyprpaper
-    pkgs.hypridle
+    pkgsNixGL.auto.nixGLDefault
+    pkgs2405.hyprland
+    pkgs2405.hyprlock
+    pkgs2405.hyprpaper
+    pkgs2405.hypridle
+    # pkgs.hyprland
+    # pkgs.hyprlock
+    # pkgs.hyprpaper
+    # pkgs.hypridle
+    # pkgs.xwayland
     pkgs.waybar
     pkgs.swww
     pkgs.pywal
@@ -42,6 +50,7 @@ in
     pkgs.just
     pkgs.brightnessctl
     pkgs.wl-clipboard
+    pkgs.xclip
     pkgs.wev
     pkgs.grim
     pkgs.slurp
