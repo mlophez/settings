@@ -7,9 +7,6 @@ export KEYTIMEOUT=1
 export PATH=${PATH}:${HOME}/.config/scripts
 export FPATH=${FPATH}:${ZDOTDIR}/functions
 
-# PATH
-# echo $SHLVL
-
 # SHELL
 export SHELL=/usr/bin/zsh
 export HOSTNAME=$(hostname)
@@ -29,20 +26,15 @@ export PASSWORD_STORE_CLIP_TIME=8
 
 # FZF
 FZF_DEFAULT_OPTS=""
-#FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} -m --ansi --layout=reverse --inline-info --border=sharp"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} -m --ansi --layout=reverse --inline-info"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --prompt='➤ ' --pointer='➤' --marker='➤'"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg:-1,bg:-1,hl:#fab387'"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg+:#b4befe,bg+:-1,hl+:#fab387'"
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'prompt:166'"
-# FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'prompt:166,border:#b4befe'"
 export FZF_DEFAULT_OPTS
 
 # AWS
 export AWS_PROFILE="none"
-
-# TERRAFORM
-# export TF_PLUGIN_CACHE_DIR="$HOME/.local/share/terraform/plugins"
 
 # KUBERNETES
 export KUBECONFIG="$HOME/.config/kube/config"
@@ -54,8 +46,6 @@ export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # PYTHON
 export PYLINTRC="$HOME/.config/pylintrc"
-#export PYTHON_VENV_PATH="$HOME/.local/share/python/virtualenvs/local"
-#export PIPENV_IGNORE_VIRTUALENVS=1
 
 # GO
 export GOPATH="$HOME/.local/share/go"
@@ -86,19 +76,8 @@ export GEM_HOME=$HOME/.local/share/ruby
 export PATH=${PATH}:/usr/local/bin
 export PATH=${PATH}:${HOME}/.local/bin
 
-# LANG
-export LANG=$(cat /etc/locale.conf &> /dev/null | grep -i "^LANG=" | cut -d"=" -f 2)
-export LC_ALL=$LANG
-
 # PODMAN
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
-
-# WSL2
-# export ADB_SERVER_SOCKET=tcp:$(ip route | grep default | grep -o '[0-9.]\+' | head -1):5037
-
-# ODBC
-# export ODBCINI=$HOME/.config/odbc.ini
-# export ODBCINSTINI=..$HOME/.config/odbcinst.ini
 
 if [ -n "$CONTAINER_ID" ]; then
   export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/run/dbus/system_bus_socket
