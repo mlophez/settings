@@ -39,6 +39,8 @@
 ~/.config/pylintrc
 ~/.config/systemd/user/*.timer
 ~/.config/systemd/user/*.service
+~/.config/systemd/user/*.slice
+~/.config/systemd/user/*.d
 ~/.config/gnupg/gpg.conf
 ~/.config/gnupg/gpg-agent.conf
 ~/.config/Windows
