@@ -5,7 +5,7 @@ export ZDOTDIR=$HOME/.config/zsh
 export KEYTIMEOUT=1
 
 export PATH=${PATH}:${HOME}/.config/scripts
-export FPATH=${FPATH}:${ZDOTDIR}/functions
+#export FPATH=${FPATH}:${ZDOTDIR}/functions
 
 # SHELL
 export SHELL=/usr/bin/zsh
