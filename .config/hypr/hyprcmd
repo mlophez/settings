@@ -288,8 +288,9 @@ terminal() {
     terminal_shell "$@"
   elif [ "${command}" = "start" ]; then
     type alacritty &>/dev/null \
-      && exec alacritty -e ${DESKCTL} terminal shell
-      #&& exec systemd-run --user --scope -p CPUQuota=50% -- alacritty -e ${DESKCTL} terminal shell
+      && exec systemd-run --user --scope --unit=terminal.scope --slice=app.slice -- alacritty -e deskcmd terminal shell
+      # && exec alacritty -e ${DESKCTL} terminal shell
+      # && exec systemd-run --user --scope -p CPUQuota=50% -- alacritty -e ${DESKCTL} terminal shell
 
     type wezterm &>/dev/null \
       && exec wezterm start --always-new-process -- ${DESKCTL} terminal shell
@@ -308,7 +309,7 @@ menu_launcher() {
   unset LIBVA_DRIVERS_PATH
   unset __EGL_VENDOR_LIBRARY_FILENAMES
 
-  type rofi &>/dev/null && exec rofi -show drun
+  type rofi &>/dev/null && exec systemd-run --user --scope --slice=app.slice -- rofi -show drun
 
   [ -n "$(pidof wofi)" ] && return 0
 
