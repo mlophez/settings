@@ -9,12 +9,6 @@ readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
 
 readonly CPU_NUMBER=$(grep -c ^processor /proc/cpuinfo)
 
-# FIX nixGL
-unset LD_LIBRARY_PATH
-unset LIBGL_DRIVERS_PATH
-unset LIBVA_DRIVERS_PATH
-unset __EGL_VENDOR_LIBRARY_FILENAMES
-
 main() {
   local command="${1-help}"; shift || /bin/true
 
@@ -183,9 +177,9 @@ cmd_wallpaper() {
     # swaymsg output * bg #1e1e2e solid_color
   fi
 
-  if type wal &>/dev/null; then
-    wal -i ${wallpaper}
-  fi
+  #if type wal &>/dev/null; then
+  #  wal -i ${wallpaper}
+  #fi
 
   return 0
 }
@@ -259,7 +253,8 @@ terminal_scratchpad_toggle() {
     local namespace="terminal"
     local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
     [ -z "${window}" ] && \
-      exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
+      exec hyprctl dispatch exec "[floating;size 1400 600;workspace special:${namespace}] alacritty -e zsh"
+      # exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
     hyprctl dispatch togglespecialworkspace "${namespace}"
   fi
   return 0
@@ -307,6 +302,12 @@ terminal() {
 }
 
 menu_launcher() {
+  # FIX nixGL
+  unset LD_LIBRARY_PATH
+  unset LIBGL_DRIVERS_PATH
+  unset LIBVA_DRIVERS_PATH
+  unset __EGL_VENDOR_LIBRARY_FILENAMES
+
   type rofi &>/dev/null && exec rofi -show drun
 
   [ -n "$(pidof wofi)" ] && return 0

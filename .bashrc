@@ -132,4 +132,4 @@ unset __EGL_VENDOR_LIBRARY_FILENAMES
 
 alias reload="exec bash"
 
-type starship &>/dev/null && eval "$(starship init bash)"
+# type starship &>/dev/null && eval "$(starship init bash)"
