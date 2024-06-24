@@ -21,6 +21,5 @@
   },
   "workbench.sideBar.location": "right",
   "window.dialogStyle": "custom",
-  "extensions.ignoreRecommendations": true,
-  "diffEditor.hideUnchangedRegions.enabled": true
+  "extensions.ignoreRecommendations": true
 }

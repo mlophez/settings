@@ -55,18 +55,28 @@ bindkey '^R' history-incremental-search-backward
 #  bindkey -s '\el' '^[[A'
 
 #### PLUGINS
+# Ubuntu
 [ -e /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
     source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 [ -e /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && \
     source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+# Archlinux
 [ -e /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh ] && \
     source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
 [ -e /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ] && \
     source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
 
+# Nix
+[ -e ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
+    source ~/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+[ -e ~/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && \
+    source ~/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Dotfiles
 [ -e "$HOME/.config/zsh/plugins/fzf-history-search.zsh" ] && \
     source $HOME/.config/zsh/plugins/fzf-history-search.zsh
 
