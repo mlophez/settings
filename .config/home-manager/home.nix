@@ -1,11 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, hypr, ... }:
 
-let
-  pkgsNixGL = import <nixgl> {}; # https://github.com/nix-community/nixGL/archive/main.tar.gz
-  pkgs2405 = import (fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/24.05.tar.gz"; # Reemplaza con la versión deseada
-  }) {};
-in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -29,16 +23,13 @@ in
   # install -m 644 -o root -g root ~/.nix-profile/etc/pam.d/hyprlock /etc/pam.d/hyprlock
 
   home.packages = [
-    pkgsNixGL.auto.nixGLDefault
-    pkgs2405.hyprland
-    pkgs2405.hyprlock
-    pkgs2405.hyprpaper
-    pkgs2405.hypridle
-    # pkgs.hyprland
-    # pkgs.hyprlock
-    # pkgs.hyprpaper
-    # pkgs.hypridle
-    # pkgs.xwayland
+    # Desktop Enviroment
+    pkgs.nixgl.auto.nixGLDefault
+    hypr.hyprland
+    hypr.hyprlock
+    hypr.hyprpaper
+    hypr.hypridle
+    hypr.xwayland
     pkgs.waybar
     pkgs.swww
     pkgs.pywal
@@ -47,6 +38,7 @@ in
     pkgs.mako
     pkgs.wlogout
     pkgs.foot
+    pkgs.alacritty
     pkgs.just
     pkgs.brightnessctl
     pkgs.wl-clipboard
@@ -62,23 +54,121 @@ in
     pkgs.ranger
     pkgs.nwg-look
     pkgs.fira-code-nerdfont
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+    pkgs.vscode
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    # NETWORK
+    pkgs.autossh
+    pkgs.sshpass
+    pkgs.wol
+    pkgs.curl
+    pkgs.wget
+    pkgs.traceroute
+    pkgs.inetutils
+    pkgs.dnsutils
+    pkgs.nmap
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
+    # SHELL
+    # pkgs.bash
+    pkgs.fzf
+    pkgs.expect
+    pkgs.bc
+    pkgs.jq
+    pkgs.yq
+    pkgs.eza
+    pkgs.lsd
+    pkgs.colordiff
+    pkgs.bat
+    pkgs.dialog
+    pkgs.tmux
+    pkgs.zellij
+    pkgs.entr
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.xdg-ninja
+
+    # ZSH
+    pkgs.zsh
+    pkgs.zsh-completions
+    pkgs.zsh-autosuggestions
+    pkgs.zsh-syntax-highlighting
+    pkgs.starship
+
+    #pkgs.unrar
+    pkgs.unzip
+    pkgs.gnutar
+    pkgs.p7zip
+    pkgs.zip
+
+    pkgs.nano
+    hypr.neovim
+    pkgs.neovide
+    # pkgs.prettier
+
+    pkgs.gnupg
+    pkgs.paperkey
+    pkgs.zbar
+    pkgs.pass
+    pkgs.passExtensions.pass-otp
+    pkgs.cryfs
+
+    # BACKUPS
+    pkgs.borgbackup
+    pkgs.rsync
+    pkgs.rclone
+
+    # UTILS
+    pkgs.htop
+    pkgs.btop
+    pkgs.man
+    pkgs.just
+
+    ##################### DEV/OPS #####################
+    # GIT
+    pkgs.git
+    pkgs.git-lfs
+    pkgs.delta
+
+    # ANSIBLE
+    pkgs.ansible
+    pkgs.ansible-lint
+
+    # TERRAFORM
+    pkgs.terraform
+    pkgs.terragrunt
+
+    ## CONTAINERS
+    pkgs.skopeo
+
+    # NOMAD
+    # nomad
+
+    # KUBERNETES
+    pkgs.kubectl
+    pkgs.kubecolor
+    pkgs.kustomize
+    pkgs.stern
+    pkgs.helm
+    pkgs.kompose
+    pkgs.k9s
+    pkgs.trivy
+    pkgs.kubeseal
+
+    # CI/CD
+    # dagger
+
+    # API
+    pkgs.httpie
+    pkgs.curlie
+
+    # AWS
+    # pkgs.eksctl
+    pkgs.awscli2
+    pkgs.ssm-session-manager-plugin
   ];
+
+  #home.packages = lib.mkAfter (with pkgs; [
+  #  kubectl
+  #]);
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -92,6 +182,8 @@ in
     # ".gradle/gradle.properties".text = ''
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
+    # '';
+    # ".bash_profile".text = ''
     # '';
   };
 
@@ -112,8 +204,36 @@ in
   #  /etc/profiles/per-user/mlr/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    ZDOTDIR = "${config.home.homeDirectory}/.config/zsh";
+    EDITOR = "nvim";
   };
+
+  #home.pointerCursor = {
+  #  gtk.enable = true;
+  #  # x11.enable = true;
+  #  package = pkgs.bibata-cursors;
+  #  name = "Bibata-Modern-Classic";
+  #  size = 16;
+  #};
+
+  #gtk = {
+  #  enable = true;
+
+  #  theme = {
+  #    package = pkgs.flat-remix-gtk;
+  #    name = "Flat-Remix-GTK-Grey-Darkest";
+  #  };
+
+  #  iconTheme = {
+  #    package = pkgs.gnome.adwaita-icon-theme;
+  #    name = "Adwaita";
+  #  };
+
+  #  #font = {
+  #  #  name = "Sans";
+  #  #  size = 11;
+  #  #};
+  #};
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
