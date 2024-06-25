@@ -106,3 +106,6 @@ alias root="distrobox-host-exec sudo bash"
 
 # SYSTEMD
 alias systemctl="systemctl --user"
+
+# HOME-MANAGER
+alias switch="home-manager switch --impure"

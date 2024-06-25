@@ -21,6 +21,11 @@
   # environment.
 
   # install -m 644 -o root -g root ~/.nix-profile/etc/pam.d/hyprlock /etc/pam.d/hyprlock
+  home.activation = {
+    postActivation = ''
+      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/icons/ .local/share/icons/
+    '';
+  };
 
   home.packages = [
     # Desktop Enviroment
@@ -50,11 +55,18 @@
     pkgs.swappy
     pkgs.swaylock-effects
     pkgs.networkmanagerapplet
-    pkgs.devbox
     pkgs.ranger
     pkgs.nwg-look
     pkgs.fira-code-nerdfont
     pkgs.vscode
+
+    # Fonts
+    (pkgs.nerdfonts.override { fonts = ["JetBrainsMono"]; })
+    # Themes
+    pkgs.bibata-cursors
+    # pkgs.catppuccin
+    (pkgs.catppuccin-gtk.override { variant = "mocha"; accents = ["peach"]; })
+    pkgs.catppuccin-qt5ct
 
     # NETWORK
     pkgs.autossh
@@ -127,6 +139,7 @@
     pkgs.git
     pkgs.git-lfs
     pkgs.delta
+    pkgs.devbox
 
     # ANSIBLE
     pkgs.ansible

@@ -359,7 +359,7 @@ theme() {
   local font_theme="JetBrainsMono Nerd Font 12"
 
   [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
-    hyprctl setcursor "${cursor_theme}" 24 \
+    hyprctl setcursor "${cursor_theme}" 32 \
 
   ! type gsettings &>/dev/null && exit 0
 

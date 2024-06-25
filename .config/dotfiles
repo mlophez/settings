@@ -58,9 +58,5 @@
 ~/.local/bin/dot
 ~/.local/bin/archlinux
 ~/.local/share/flatpak/overrides/global
-~/.local/share/themes
 ~/.local/share/backgrounds
-~/.local/share/icons/*icons
-~/.local/share/icons/*cursors
-~/.local/share/fonts/*.ttf
 
