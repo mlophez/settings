@@ -101,10 +101,10 @@
     "format": "󰹑 "
   },
   "pulseaudio": {
-    "format": "{icon} {volume}% {format_source}",
-    "format-muted": " {volume}% {format_source}",
+    "format": "{icon}  {volume}% {format_source}",
+    "format-muted": "󰝟 {volume}% {format_source}",
     "format-source": " {volume}% ",
-    "format-source-muted": " {volume}%",
+    "format-source-muted": "  {volume}% ",
     "format-icons": {
       "headphone": "",
       "hands-free": "",
@@ -134,7 +134,7 @@
   },
   "memory": {
     "interval": 15,
-    "format": "{percentage}% M"
+    "format": " {percentage}%"
   },
   "disk": {
     "interval": 30,
