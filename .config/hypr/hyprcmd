@@ -287,8 +287,12 @@ terminal() {
   elif [ "${command}" = "shell" ]; then
     terminal_shell "$@"
   elif [ "${command}" = "start" ]; then
+    local scope_pid=$(systemctl --user show -p MainPID --value terminal.scope)
+    local opts="--unit=terminal.scope"
+    [ -n "${scope_pid}" ] && opts=""
+
     type alacritty &>/dev/null \
-      && exec systemd-run --user --scope --unit=terminal.scope --slice=app.slice -- alacritty -e deskcmd terminal shell
+      && exec systemd-run --user --scope ${scope_pid} --slice=app.slice -- alacritty -e deskcmd terminal shell
       # && exec alacritty -e ${DESKCTL} terminal shell
       # && exec systemd-run --user --scope -p CPUQuota=50% -- alacritty -e ${DESKCTL} terminal shell
 

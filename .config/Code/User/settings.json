@@ -19,7 +19,6 @@
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "workbench.sideBar.location": "right",
   "window.dialogStyle": "custom",
   "extensions.ignoreRecommendations": true
 }
