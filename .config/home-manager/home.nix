@@ -25,6 +25,8 @@
     postActivation = ''
       ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/icons/ .local/share/icons/
       ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/fonts/ .local/share/fonts/
+      # nix-collect-garbage --delete-older-than 7d
+      # nix-collect-garbage --delete-old
     '';
   };
 
