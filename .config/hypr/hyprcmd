@@ -99,6 +99,8 @@ cmd_init() {
   # BALOOCTL
   type balooctl &>/dev/null && \
     balooctl disable &>/dev/null
+  # THEME
+  hyprctl setcursor "Bibata-Modern-Ice" 28
   return 0
 }
 
