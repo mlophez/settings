@@ -91,15 +91,18 @@ run() {
 
 # command
 cmd_init() {
-  #local gnome_schema="org.gnome.desktop.interface"
-  local cursor_theme="Bibata-Modern-Ice"
-  #local gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
-  #local icon_theme="cupertino-sonoma-icons"
-  #local font_theme="JetBrainsMono Nerd Font 12"
-
   dbus-update-activation-environment --systemd --all
-  # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
+
+  # INSTALL
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
+
+  # RESOURCES
+  # systemctl set-property system.slice CPUShares=4096 IOWeight=400
+  systemctl --user set-property --runtime session.slice CPUShares=8192 MemoryMin=1G MemoryLow=2G IOWeight=400
+  systemctl --user set-property --runtime app.slice MemoryMax=12G
+  # mkdir -p /run/user/${UID}/systemd/user.control/app-flatpak-org.mozilla.firefox-.scope.d && \
+
+
 
   # ionice -c 2 -n 0 -p $(pidof Hyprland)
 
@@ -115,17 +118,6 @@ cmd_init() {
   [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
     hyprctl setcursor "Bibata-Modern-Ice" 28
 
-  #! type gsettings &>/dev/null && exit 0
-
-  #[ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
-  #  gsettings set ${gnome_schema} cursor-theme "${cursor_theme}"
-
-  #  [ -d "$HOME/.local/share/themes/${gtk_theme}" ] && \
-  #    gsettings set ${gnome_schema} gtk-theme "${gtk_theme}" && \
-  #    gsettings set ${gnome_schema} color-scheme 'prefer-dark'
-  #  [ -d "$HOME/.local/share/themes/icons/${icon_theme}" ] && \
-  #    gsettings set ${gnome_schema} icon-theme "${icon_theme}"
-  #  gsettings set ${gnome_schema} font-name "${font_theme}"
   return 0
 }
 

@@ -1,5 +1,0 @@
-[Unit]
-Description=Desktop Slice
-
-[Slice]
-CPUShares=2048

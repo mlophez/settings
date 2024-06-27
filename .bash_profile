@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # FLATPAK
-#[ -e "/etc/profile.d/flatpak.sh" ] && \
-#  source /etc/profile.d/flatpak.sh
+# [ -e "/etc/profile.d/flatpak.sh" ] && \
+#   source /etc/profile.d/flatpak.sh
 
 # NIX
 [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && \
@@ -18,4 +18,4 @@
 
 # DESKTOP
 [[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && \
-  exec systemd-run --user --scope --unit=hyprland.scope --slice=desktop.slice -- nixGL Hyprland
+  exec systemd-run --user --scope --unit=hyprland.scope --slice=session.slice -- nixGL Hyprland
