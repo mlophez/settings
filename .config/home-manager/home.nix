@@ -138,6 +138,20 @@
     pkgs.man
     pkgs.just
 
+    ##################### DEV #####################
+    pkgs.go
+    pkgs.gotools
+    pkgs.gopls
+
+    pkgs.rustup
+    #pkgs.rust-analyzer
+
+    pkgs.nodejs
+    pkgs.typescript
+
+    pkgs.jdk
+    pkgs.maven
+
     ##################### DEV/OPS #####################
     # GIT
     pkgs.git

@@ -91,16 +91,41 @@ run() {
 
 # command
 cmd_init() {
+  #local gnome_schema="org.gnome.desktop.interface"
+  local cursor_theme="Bibata-Modern-Ice"
+  #local gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
+  #local icon_theme="cupertino-sonoma-icons"
+  #local font_theme="JetBrainsMono Nerd Font 12"
+
   dbus-update-activation-environment --systemd --all
   # systemctl --user import-environment XDG_CURRENT_DESKTOP WAYLAND_DISPLAY
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
-  ionice -c 2 -n 0 -p $(pidof Hyprland)
-  type powerprofilesctl &>/dev/null && powerprofilesctl set power-saver
+
+  # ionice -c 2 -n 0 -p $(pidof Hyprland)
+
+  # POWERPROFILE
+  type powerprofilesctl &>/dev/null && \
+    powerprofilesctl set power-saver
+
   # BALOOCTL
   type balooctl &>/dev/null && \
     balooctl disable &>/dev/null
+
   # THEME
-  hyprctl setcursor "Bibata-Modern-Ice" 28
+  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+    hyprctl setcursor "Bibata-Modern-Ice" 28
+
+  #! type gsettings &>/dev/null && exit 0
+
+  #[ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
+  #  gsettings set ${gnome_schema} cursor-theme "${cursor_theme}"
+
+  #  [ -d "$HOME/.local/share/themes/${gtk_theme}" ] && \
+  #    gsettings set ${gnome_schema} gtk-theme "${gtk_theme}" && \
+  #    gsettings set ${gnome_schema} color-scheme 'prefer-dark'
+  #  [ -d "$HOME/.local/share/themes/icons/${icon_theme}" ] && \
+  #    gsettings set ${gnome_schema} icon-theme "${icon_theme}"
+  #  gsettings set ${gnome_schema} font-name "${font_theme}"
   return 0
 }
 
@@ -255,7 +280,7 @@ terminal_scratchpad_toggle() {
     local namespace="terminal"
     local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
     [ -z "${window}" ] && \
-      exec hyprctl dispatch exec "[floating;size 1400 600;workspace special:${namespace}] alacritty -e zsh"
+      exec hyprctl dispatch exec "[floating;size 1400 600;workspace special:${namespace}] alacritty -e deskcmd terminal shell true 1"
       # exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
     hyprctl dispatch togglespecialworkspace "${namespace}"
   fi
@@ -264,15 +289,16 @@ terminal_scratchpad_toggle() {
 
 terminal_shell() {
   local multiplexer="${1-true}"
+  local session="${2-0}"
 
   export ZDOTDIR=$HOME/.config/zsh
 
   if [ "${multiplexer}" = "true" ]; then
     if type zellij &>/dev/null; then
-      { zellij attach '0' || exec zellij -s '0'; }; exit 0
+      { zellij attach "${session}" || exec zellij -s "${session}"; }; exit 0
     fi
     if type tmux &>/dev/null; then
-      { tmux attach-session -t '0' || exec tmux -2 new-session -s '0' -n 'HOME'; }; exit 0
+      { tmux attach-session -t "${session}" || exec tmux -2 new-session -s "${session}" -n 'HOME'; }; exit 0
     fi
   fi
 
