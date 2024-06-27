@@ -116,7 +116,7 @@
     pkgs.zip
 
     pkgs.nano
-    hypr.neovim
+    pkgs.neovim
     pkgs.neovide
     # pkgs.prettier
 

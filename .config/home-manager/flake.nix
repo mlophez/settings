@@ -6,8 +6,7 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
     hyprland = {
-      #url = "github:nixos/nixpkgs?rev=10a9d8c7283e555d54dd7fcb35bc21e215aae297"; # 0.40.0
-      url = "github:nixos/nixpkgs?rev=25cb8f71c487dd288cd29a7a6715fb7dde9fa461"; # 0.41.2
+      url = "github:nixos/nixpkgs?rev=89c49874fb15f4124bf71ca5f42a04f2ee5825fd"; # 0.41.2
     };
     home-manager = {
       url = "github:nix-community/home-manager";
