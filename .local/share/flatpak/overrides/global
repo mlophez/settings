@@ -1,6 +1,6 @@
 [Context]
 devices=all;dri
-filesystems=xdg-config/qt5ct:ro;xdg-documents;xdg-data/applications;xdg-data/themes:ro;xdg-data/icons:ro;xdg-download;xdg-desktop;/usr/share/icons:ro;xdg-config/Kvantum:ro;!home;!host-etc;!host
+filesystems=xdg-config/Kvantum:ro;/usr/share/icons:ro;xdg-desktop;xdg-download;xdg-data/icons;xdg-data/themes;xdg-data/applications;xdg-documents;xdg-config/qt5ct:ro;!home;!host-etc;!host
 
 [Environment]
 QT_STYLE_OVERRIDE=kvantum
