@@ -98,11 +98,9 @@ cmd_init() {
 
   # RESOURCES
   # systemctl set-property system.slice CPUShares=4096 IOWeight=400
-  systemctl --user set-property --runtime session.slice CPUShares=8192 MemoryMin=1G MemoryLow=2G IOWeight=400
-  systemctl --user set-property --runtime app.slice MemoryHigh=10G MemoryMax=12G
+  systemctl --user set-property --runtime session.slice CPUShares=8192 MemoryMin=1G MemoryLow=2G ManagedOOMPreference=omit IOWeight=400
+  systemctl --user set-property --runtime app.slice MemoryHigh=10G MemoryMax=12G ManagedOOMMemoryPressureLimit=50%
   # mkdir -p /run/user/${UID}/systemd/user.control/app-flatpak-org.mozilla.firefox-.scope.d && \
-
-
 
   # ionice -c 2 -n 0 -p $(pidof Hyprland)
 
