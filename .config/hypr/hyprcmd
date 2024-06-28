@@ -52,9 +52,10 @@ cmd_init() {
 
 cmd_daemon() {
   set +e
-  echo "[+] Starting desktop daemon"
+  echo "[+] Starting desktop daemon..."
   while true; do
     battery=$(cat /sys/class/power_supply/BAT0/capacity)
+    [[ ! $battery =~ ^[0-9]+$ ]] && battery=100
     [[ $battery -lt 20 ]] && \
       notify-send -u critical -t 0 "Low Battery" "Battery level is ${battery}%."
     sleep 5
