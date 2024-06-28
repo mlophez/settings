@@ -63,6 +63,7 @@
     pkgs.nwg-look
     pkgs.fira-code-nerdfont
     pkgs.vscode
+    pkgs.openlens
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = ["JetBrainsMono"]; })
