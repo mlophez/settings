@@ -5,75 +5,13 @@ set -eE -o functrace
 readonly DESKCTL=$0
 readonly SCRIPT_NAME=$(basename $0)
 readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
+readonly CPU_NUMBER=$(grep -c ^processor /proc/cpuinfo)
 # readonly ARGS="${@}"
 
-readonly CPU_NUMBER=$(grep -c ^processor /proc/cpuinfo)
-
-main() {
-  local command="${1-help}"; shift || /bin/true
-
-  # # Set priorioties
-  # case "${command}" in
-  #   terminal)
-  #       renice -n 15 -p $$
-  #       ionice -c 2 -n 7 -p $$
-	# ;;
-  #   *)
-  #       renice -n 5 -p $$
-  #       ionice -c 2 -n 5 -p $$
-	# ;;
-  # esac
-
-  # Commands
-  case "${command}" in
-    init) cmd_init;;
-    panel) cmd_panel;;
-    notify-daemon) cmd_notify_daemon;;
-    wallpaper) cmd_wallpaper;;
-    wallpaper-timer) desk_wallpaper_timer "${@}";;
-    resources) cmd_resource_monitor;;
-    #portals) cmd_portals;;
-    terminal) terminal "${@}";;
-    menu) menu "${@}";;
-    screenshot) f:screenshot;;
-    volume) volume "${@}";;
-    micro) volume "${@}";;
-    distrobox) cmd_distroboxes "${@}";;
-    output) cmd_outputs;;
-    lock) cmd_lock;;
-    exit) ctl_exit;;
-    shutdown) systemctl poweroff -i;;
-    reboot) systemctl reboot;;
-    *) help;;
-  esac
-
-  return 0
-}
-
-help() {
-  cat <<- EOF
-  Commands:
-    init                         # Initialize desktop environment
-    portals                      # Start/Restart xdg-desktop-portals
-    panel                        # Start desktop panel
-    wallpaper                    # Rotate/Set wallpaper
-    lock                         # Lock screen
-    screenshot                   # Take a screenshot
-    terminal [start|shell|toggle]
-    menu [app|power]
-    volume [inc|dec|mute]
-    micro [inc|dec|mute]
-    flatpak install
-    distrobox install
-    resources
-    notify-daemon
-    exit                         # Exit from desktop
-EOF
-}
 
 fail() {
   echo "Failed at $1: $2"
-  notify-send -u "critical" -a "deskctl" "deskctl: failed code at line $1: $2"
+  notify-send -t 0 "Hyprland Desktop" "hyprcmd: failed code at line $1: $2"
 }
 
 err() {
@@ -97,16 +35,9 @@ cmd_init() {
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
 
   # RESOURCES
-  # systemctl set-property system.slice CPUShares=4096 IOWeight=400
-  systemctl --user set-property --runtime session.slice CPUShares=8192 MemoryMin=1G MemoryLow=2G ManagedOOMPreference=omit IOWeight=400
-  systemctl --user set-property --runtime app.slice MemoryHigh=10G MemoryMax=12G ManagedOOMMemoryPressureLimit=50%
-  # mkdir -p /run/user/${UID}/systemd/user.control/app-flatpak-org.mozilla.firefox-.scope.d && \
+  cmd_set_resources
 
   # ionice -c 2 -n 0 -p $(pidof Hyprland)
-
-  # POWERPROFILE
-  type powerprofilesctl &>/dev/null && \
-    powerprofilesctl set power-saver
 
   # BALOOCTL
   type balooctl &>/dev/null && \
@@ -117,6 +48,17 @@ cmd_init() {
     hyprctl setcursor "Bibata-Modern-Ice" 28
 
   return 0
+}
+
+cmd_daemon() {
+  set +e
+  echo "[+] Starting desktop daemon"
+  while true; do
+    battery=$(cat /sys/class/power_supply/BAT0/capacity)
+    [[ $battery -lt 20 ]] && \
+      notify-send -u critical -t 0 "Low Battery" "Battery level is ${battery}%."
+    sleep 5
+  done
 }
 
 # command
@@ -475,6 +417,36 @@ desk_wallpaper_timer() {
   done
 }
 
+cmd_set_resources() {
+  echo "[+] Setting resources.."
+
+  # POWERPROFILE
+  type powerprofilesctl &>/dev/null && \
+    powerprofilesctl set balanced # power-saver performance
+
+  # systemctl set-property system.slice CPUShares=4096 IOWeight=400
+  systemctl --user set-property --runtime session.slice CPUShares=8192 MemoryMin=1G MemoryLow=2G ManagedOOMPreference=omit IOWeight=400
+  systemctl --user set-property --runtime app.slice MemoryHigh=10G MemoryMax=12G ManagedOOMMemoryPressureLimit=50%
+
+  set_scope_resources() {
+    local scope=$1; shift
+    mkdir -p /run/user/${UID}/systemd/user.control/${scope}.d
+    # rm -r /run/user/${UID}/systemd/user.control/${scope}.d/*
+    echo "[Scope]" > /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf
+    for property in ${@}; do
+      echo "${property}" >> /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf
+    done
+  }
+
+  # Falta el terminal?
+  set_scope_resources "app-flatpak-org.mozilla.firefox-.scope" CPUShares=4096
+  set_scope_resources "app-flatpak-com.microsoft.Edge-.scope" CPUShares=2048
+  set_scope_resources "crun-buildah-.scope" CPUShares=256 CPUQuota="$((50 * ${CPU_NUMBER}))%"
+  set_scope_resources "libpod-.scope" CPUShares=256 CPUQuota="$((50 * ${CPU_NUMBER}))%"
+
+  systemctl --user daemon-reload
+}
+
 cmd_resource_monitor() {
   echo "[+] Starting resource monitor..."
   sleep 2
@@ -516,6 +488,63 @@ cmd_resource_monitor() {
 
     sleep 5
   done
+}
+
+help() {
+  cat <<- EOF
+  Commands:
+    init                         # Initialize desktop environment
+    portals                      # Start/Restart xdg-desktop-portals
+    panel                        # Start desktop panel
+    wallpaper                    # Rotate/Set wallpaper
+    lock                         # Lock screen
+    screenshot                   # Take a screenshot
+    terminal [start|shell|toggle]
+    menu [app|power]
+    volume [inc|dec|mute]
+    micro [inc|dec|mute]
+    flatpak install
+    distrobox install
+    resources
+    notify-daemon
+    exit                         # Exit from desktop
+EOF
+}
+
+main() {
+  local command="${1-help}"; shift || /bin/true
+  local func="cmd_${command//-/_}"
+
+  # Commands
+  case "${command}" in
+    init) cmd_init;;
+    panel) cmd_panel;;
+    notify-daemon) cmd_notify_daemon;;
+    wallpaper) cmd_wallpaper;;
+    wallpaper-timer) desk_wallpaper_timer "${@}";;
+    resources) cmd_resource_monitor;;
+    #portals) cmd_portals;;
+    terminal) terminal "${@}";;
+    menu) menu "${@}";;
+    screenshot) f:screenshot;;
+    volume) volume "${@}";;
+    micro) volume "${@}";;
+    distrobox) cmd_distroboxes "${@}";;
+    output) cmd_outputs;;
+    lock) cmd_lock;;
+    exit) ctl_exit;;
+    shutdown) systemctl poweroff -i;;
+    reboot) systemctl reboot;;
+    *)
+      if declare -F ${func} > /dev/null; then
+        "${func}" "${@}"
+      else
+        help
+      fi
+      ;;
+  esac
+
+  return 0
 }
 
 trap 'fail ${LINENO} "${BASH_COMMAND}"' ERR
