@@ -1,33 +1,26 @@
 #!/bin/bash
 set -eE -o functrace
-#set -euxo pipefail
 
+############################# VARIABLES #############################
 readonly DESKCTL=$0
 readonly SCRIPT_NAME=$(basename $0)
 readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
 readonly CPU_NUMBER=$(grep -c ^processor /proc/cpuinfo)
-# readonly ARGS="${@}"
 
-
+############################# AUX FUNCTIONS #############################
 fail() {
   echo "Failed at $1: $2"
   notify-send -t 0 "Hyprland Desktop" "hyprcmd: failed code at line $1: $2"
 }
 
-err() {
-  echo "$1"
-}
-
 run() {
-  local cmd="$@"
-  echo "Exec: $cmd"
-  [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && \
-    hyprctl dispatch exec "$cmd" || /bin/true
-  [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
-    swaymsg exec "$cmd" || /bin/true
+  echo "Running command: $@"
+  hyprctl dispatch exec "$@" || /bin/true
 }
 
-# command
+############################# COMMANDS #############################
+
+# INIT
 cmd_init() {
   dbus-update-activation-environment --systemd --all
 
@@ -35,7 +28,7 @@ cmd_init() {
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
 
   # RESOURCES
-  cmd_set_resources
+  cmd_resources
 
   # ionice -c 2 -n 0 -p $(pidof Hyprland)
 
@@ -50,44 +43,50 @@ cmd_init() {
   return 0
 }
 
+# DAEMON
+daemon_check_battery() {
+  local battery=$(cat /sys/class/power_supply/BAT0/capacity)
+  local status=$(cat /sys/class/power_supply/BAT0/status)
+
+  [[ ! $battery =~ ^[0-9]+$ ]] && battery=100
+
+  [[ $battery -lt 20 ]] && [[ ! -e ~/.cache/daemon/notify ]] && \
+    notify-send -u critical -t 0 "Low Battery" "Battery level is ${battery}%." && \
+    touch ~/.cache/daemon/notify
+
+  [[ $battery -gt 20 ]] && [[ -e ~/.cache/daemon/notify ]] && rm ~/.cache/daemon/notify
+
+  # Power profile
+  if [ ${status} = "Discharging" ]; then
+    if [[ $battery -lt 50 ]]; then
+      cmd_power_profile power-saver
+    else
+      cmd_power_profile balanced
+    fi
+  else
+    cmd_power_profile balanced
+  fi
+
+}
+
 cmd_daemon() {
-  set +e
   echo "[+] Starting desktop daemon..."
+  set +e;trap '' ERR
   while true; do
-    battery=$(cat /sys/class/power_supply/BAT0/capacity)
-    [[ ! $battery =~ ^[0-9]+$ ]] && battery=100
-    [[ $battery -lt 20 ]] && \
-      notify-send -u critical -t 0 "Low Battery" "Battery level is ${battery}%."
+    daemon_check_battery
     sleep 5
   done
 }
 
-# command
+# PORTALS
 cmd_portals() {
-  pkill -f "xdg-desktop-portal" || /bin/true
-  systemctl --user restart xdg-desktop-portal
   return 0
-
-  # if [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
-  #   run "$HOME/.nix-profile/libexec/xdg-desktop-portal-hyprland"
-  #   # run "$HOME/.nix-profile/libexec/xdg-desktop-portal -r"; sleep 0.3
-  #   # run "$HOME/.nix-profile/libexec/xdg-desktop-portal-gtk -r"; sleep 0.3
-  # fi
-
-  # local location="/usr/lib"
-  # [ -e /usr/libexec/xdg-desktop-portal ] && location="/usr/libexec"
-  # run "${location}/xdg-desktop-portal -r"; sleep 0.3
-  # run "${location}/xdg-desktop-portal-gtk -r"; sleep 0.3
-
-    #systemctl --user mask xdg-desktop-portal-hyprland && \
-    #run "${location}/xdg-desktop-portal-hyprland"
-
-  #[[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]] && \
-  #  run "${location}/xdg-desktop-portal-wlr -r"
-
+  pkill -f "xdg-desktop-portal" || /bin/true
+  run "$HOME/.nix-profile/libexec/xdg-desktop-portal-hyprland"
   return 0
 }
 
+# PANEL
 cmd_panel() {
   if type waybar &>/dev/null; then
     pkill waybar || /bin/true
@@ -103,6 +102,7 @@ cmd_panel() {
   return 0
 }
 
+# NOTIFY
 cmd_notify_daemon() {
   if type mako &>/dev/null; then
     pkill mako || /bin/true
@@ -110,6 +110,7 @@ cmd_notify_daemon() {
   fi
 }
 
+# WALLPAPER
 cmd_wallpaper() {
   local cache_file="$HOME/.cache/wallpaper"
   local cached="$(cat ${cache_file})"
@@ -119,7 +120,6 @@ cmd_wallpaper() {
   if type swww &>/dev/null; then
     if ! pgrep -x "swww-daemon" > /dev/null; then
       pkill swww || /bin/true
-      # run "swww init"
       run "swww-daemon --format 'xrgb'"
       [ -e "${cached}" ] && wallpaper=${cached}
       swww img ${wallpaper}
@@ -131,19 +131,16 @@ cmd_wallpaper() {
         --transition-duration 1
       echo "${wallpaper}" > ${cache_file}
     fi
-  elif [ "${XDG_CURRENT_DESKTOP,,}" = "sway" ]; then
-    swaymsg output '*' bg ${wallpaper} fill
-    echo "${wallpaper}" > ${cache_file}
-    # swaymsg output * bg #1e1e2e solid_color
   fi
 
-  #if type wal &>/dev/null; then
-  #  wal -i ${wallpaper}
-  #fi
+  # if type wal &>/dev/null; then
+  #   wal -i ${wallpaper}
+  # fi
 
   return 0
 }
 
+# DISTROBOXES
 cmd_distroboxes() {
   if type distrobox &>/dev/null; then
     for name in $(distrobox list --no-color | awk -F'|' '{print $2}' | grep -v "NAME" ); do
@@ -155,68 +152,27 @@ cmd_distroboxes() {
   return 0
 }
 
-cmd_outputs() {
-  [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]] && return 0
-
-  local screens external internal
-  local selected default
-
-  screens=$(swaymsg -t get_outputs | jq -r '.[].name' | sort)
-  default="$(swaymsg -t get_outputs | jq -r '.[].name' | grep "eDP" | head -1)"
-
-  # Criteria two
-  selected="$(swaymsg -t get_outputs | jq -r '.[].name' | sort | grep -v "eDP" | head -1)"
-  [ -z "$selected" ] && selected="$default"
-
-  echo $selected
-  for screen in $(echo "$screens"); do
-    if [ "$screen" = "$selected" ]; then
-      swaymsg output $screen enable
-      #swaymsg output $screen resolution 1920x1080 position 0,0 scale 1
-      swaymsg output $screen resolution 1920x1080 scale 1
-    else
-      swaymsg output $screen disable
-    fi
-  done
-
-  return 0
-}
-
+# LOCK
 cmd_lock() {
   local image=$(ls ~/.local/share/backgrounds | shuf -n 1)
   exec swaylock -i ~/.local/share/backgrounds/${image}
   return 0
-  # type pacman &>/dev/null && \
-  # [[ -n "$(pacman -Q swaylock | grep effects-git)" ]] && \
-  # swaylock -C /dev/null \
-  #   --ignore-empty-password \
-  #   --show-failed-attempts \
-  #   --indicator-radius 200 \
-  #   -f -i ~/.local/share/backgrounds/${image} -s fill
-  # return 0
 }
 
-f:screenshot() {
+# SCREENSHOT
+cmd_screenshot() {
   sleep 0.2
-  # slurp | grim -g - - | wl-copy
-  grim -g "$(slurp)" - | wl-copy -t image/png
+  grim -g "$(slurp || true)" - | wl-copy -t image/png
 }
 
-terminal_scratchpad_toggle() {
-  if [[ "${XDG_CURRENT_DESKTOP,,}" == "sway" ]]; then
-    if ! swaymsg scratchpad show; then
-      swaymsg exec "foot"; sleep 0.3
-      swaymsg move scratchpad
-      swaymsg scratchpad show
-    fi
-  elif [[ "${XDG_CURRENT_DESKTOP,,}" == "hyprland" ]]; then
-    local namespace="terminal"
-    local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
-    [ -z "${window}" ] && \
-      exec hyprctl dispatch exec "[floating;size 1400 600;workspace special:${namespace}] alacritty -e deskcmd terminal shell true 1"
-      # exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
-    hyprctl dispatch togglespecialworkspace "${namespace}"
-  fi
+# TERMINAL
+terminal_toggle() {
+  local namespace="terminal"
+  local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
+  [ -z "${window}" ] && \
+    exec hyprctl dispatch exec "[floating;size 1400 600;workspace special:${namespace}] alacritty -e deskcmd terminal shell true 1"
+    # exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
+  hyprctl dispatch togglespecialworkspace "${namespace}"
   return 0
 }
 
@@ -240,11 +196,11 @@ terminal_shell() {
   return 0
 }
 
-terminal() {
+cmd_terminal() {
   local command="${1-start}"; shift || /bin/true
 
   if [ "${command}" = "toggle" ]; then
-    terminal_scratchpad_toggle
+    terminal_toggle
   elif [ "${command}" = "shell" ]; then
     terminal_shell "$@"
   elif [ "${command}" = "start" ]; then
@@ -267,6 +223,7 @@ terminal() {
   return 0
 }
 
+# MENU
 menu_launcher() {
   # FIX nixGL
   unset LD_LIBRARY_PATH
@@ -305,14 +262,15 @@ menu_power() {
   [ "${choice,,}" = "poweroff" ] && systemctl poweroff -i
 }
 
-menu() {
+cmd_menu() {
   local menu="${1-launcher}"; shift || /bin/true
   [[ "${menu}" == "launcher" ]] && menu_launcher
   [[ "${menu}" == "power" ]] && menu_power
   [[ "${menu}" == "exit" ]] && menu_power
 }
 
-theme() {
+# THEME
+cmd_theme() {
   local gnome_schema="org.gnome.desktop.interface"
   local cursor_theme="bibata-modern-ice-cursors"
   local gtk_theme="Catppuccin-Mocha-Standard-Peach-Dark"
@@ -339,7 +297,8 @@ theme() {
   return 0
 }
 
-volume() {
+# VOLUME
+cmd_volume() {
   local cmd="${1}"
 
   local volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | tr -d '.' | grep -o "[0-9]\+" | sed 's/^0*//g')
@@ -353,64 +312,13 @@ volume() {
   return 0
 }
 
-# close desktop
-ctl_exit() {
-  #exec wlogout
+# EXIT
+cmd_exit() {
   hyprctl dispatch exit 0
-  # loginctl terminate-user $(whoami)
-  # rm -rf /tmp/hypr &> /dev/null
-  # killall -u $USER
 }
 
-ctl_distrobox_create_archlinux() {
-  echo 'Creating archlinux distrobox ...'
-  distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
-  distrobox enter archlinux -- sudo pacman-key --init
-  distrobox enter archlinux -- sudo pacman -Syu --noconfirm
-  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
-  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S alacritty kitty code
-  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S ttf-jetbrains-mono-nerd
-  distrobox enter archlinux -- sudo pacman -Scc --noconfirm
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
-  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/sudo /usr/bin/csudo
-  #distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/sudo
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/swaymsg
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/hyprctl
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/makoctl
-  distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
-  distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
-  distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
-}
-
-ctl_flatpak_install_apps() {
-  flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-  flatpak --user install -y flathub com.brave.Browser
-  flatpak --user install -y flathub com.google.Chrome
-  flatpak --user install -y flathub com.microsoft.Edge
-  flatpak --user install -y flathub org.chromium.Chromium
-  flatpak --user install -y flathub org.freedesktop.Platform.ffmpeg-full
-  flatpak --user install -y flathub org.keepassxc.KeePassXC
-  flatpak --user install -y flathub com.github.tchx84.Flatseal
-  flatpak --user install -y flathub org.mozilla.Thunderbird
-  flatpak --user install -y flathub org.mozilla.firefox
-  flatpak --user install -y flathub org.pulseaudio.pavucontrol
-  flatpak --user install -y flathub com.calibre_ebook.calibre
-  flatpak --user install -y flathub com.spotify.Client
-  flatpak --user install -y flathub org.libreoffice.LibreOffice
-  flatpak --user install -y flathub org.videolan.VLC
-  flatpak --user install -y flathub org.gnome.Boxes
-  flatpak --user install -y flathub com.usebottles.bottles
-  flatpak --user install -y flathub org.telegram.desktop
-  flatpak --user install -y flathub io.dbeaver.DBeaverCommunity
-  flatpak --user install -y flathub dev.k8slens.OpenLens
-  flatpak --user install -y flathub md.obsidian.Obsidian
-  flatpak --user install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
-  flatpak --user install -y flathub org.gnome.dspy
-}
-
-desk_wallpaper_timer() {
+# WALLPAPER TIMER
+cmd_wallpaper_timer() {
   local timer="${1-30}"
   while true; do
     sleep $timer
@@ -418,12 +326,30 @@ desk_wallpaper_timer() {
   done
 }
 
-cmd_set_resources() {
+# POWER PROFILE
+cmd_power_profile () {
+  local profile="$1" # balanced power-saver performance
+  local notify="$2"
+  local current
+
+  if type powerprofilesctl &>/dev/null; then
+    current=$(powerprofilesctl get)
+    if [ $profile != $current ]; then
+    powerprofilesctl set $profile
+    [ -z "$notify" ] && \
+      notify-send -u low "Power Profile" "${profile}"
+    fi
+  fi
+
+  return 0
+}
+
+# SET RESOURCES
+cmd_resources() {
   echo "[+] Setting resources.."
 
   # POWERPROFILE
-  type powerprofilesctl &>/dev/null && \
-    powerprofilesctl set balanced # power-saver performance
+  cmd_power_profile balanced 1
 
   # systemctl set-property system.slice CPUShares=4096 IOWeight=400
   systemctl --user set-property --runtime session.slice CPUShares=8192 MemoryMin=1G MemoryLow=2G ManagedOOMPreference=omit IOWeight=400
@@ -448,50 +374,8 @@ cmd_set_resources() {
   systemctl --user daemon-reload
 }
 
-cmd_resource_monitor() {
-  echo "[+] Starting resource monitor..."
-  sleep 2
-
-  echo "[+] Setting global resources..."
-  systemctl --user set-property --runtime desktop.slice CPUShares=2048 IOWeight=400
-  systemctl --user set-property --runtime session.slice CPUShares=2048
-  # systemctl --user set-property --runtime user.slice CPUShares=1024
-  # systemctl --user set-property --runtime app.slice CPUShares=1024
-
-  # systemctl --user set-property --runtime app-flatpak-com.jetbrains.DataGrip-84387.scope CPUShares=256
-  # systemctl --user set-property --runtime app-flatpak-io.dbeaver.DBeaverCommunity-20315.scope CPUShares=256
-
-  while true; do
-    # Limit resources for distroboxes
-    for uuid in $(podman ps --all --no-trunc --format "{{.Names}} {{.ID}} {{.Labels}}" | grep "manager:distrobox" | cut -d " " -f2); do
-      # [[ $(ls /run/user/${UID}/systemd/transient/libpod-${uuid}.scope.d/ | wc -l) -ne 0 ]] && continue
-      [[ -d /run/user/${UID}/systemd/transient/libpod-${uuid}.scope.d/ ]] && continue
-      echo "[+] Set resources for distrobox libpod-${uuid}"
-      systemctl --user set-property --runtime libpod-${uuid}.scope CPUQuota="$((75 * ${CPU_NUMBER}))%"
-      systemctl --user set-property --runtime libpod-${uuid}.scope CPUShares=256
-    done
-
-    # Limit build container resources
-    for scope in $(systemctl --user list-units --type=scope --all | grep 'crun-buildah' | awk '{print $1}'); do
-      # [ $(ls /run/user/${UID}/systemd/transient/${scope}.d/ | wc -l) -ne 0 ] && continue
-      [[ -d /run/user/${UID}/systemd/transient/${scope}.d/ ]] && continue
-      echo "[+] Set resources for scope ${scope}"
-      systemctl --user set-property --runtime ${scope} CPUQuota="$((75 * ${CPU_NUMBER}))%"
-      systemctl --user set-property --runtime ${scope} CPUShares=256
-    done
-
-    # Privileged apps
-    for scope in $(systemctl --user list-units --type=scope --all | grep -i -e 'org.mozilla.firefox' -e 'com.microsoft.edge' | awk '{print $1}'); do
-      [[ -d /run/user/${UID}/systemd/transient/${scope}.d/ ]] && continue
-      echo "[+] Set resources for scope ${scope}"
-      systemctl --user set-property --runtime ${scope} CPUShares=512
-    done
-
-    sleep 5
-  done
-}
-
-help() {
+# HELP
+cmd_help() {
   cat <<- EOF
   Commands:
     init                         # Initialize desktop environment
@@ -513,27 +397,15 @@ EOF
 }
 
 main() {
-  local command="${1-help}"; shift || /bin/true
+  local command="${1-help}"; shift
   local func="cmd_${command//-/_}"
+
+  trap 'fail ${LINENO} "${BASH_COMMAND}"' ERR
+
+  [[ ! -d ~/.cache/daemon ]] && mkdir -p ~/.cache/daemon
 
   # Commands
   case "${command}" in
-    init) cmd_init;;
-    panel) cmd_panel;;
-    notify-daemon) cmd_notify_daemon;;
-    wallpaper) cmd_wallpaper;;
-    wallpaper-timer) desk_wallpaper_timer "${@}";;
-    resources) cmd_resource_monitor;;
-    #portals) cmd_portals;;
-    terminal) terminal "${@}";;
-    menu) menu "${@}";;
-    screenshot) f:screenshot;;
-    volume) volume "${@}";;
-    micro) volume "${@}";;
-    distrobox) cmd_distroboxes "${@}";;
-    output) cmd_outputs;;
-    lock) cmd_lock;;
-    exit) ctl_exit;;
     shutdown) systemctl poweroff -i;;
     reboot) systemctl reboot;;
     *)
@@ -548,5 +420,4 @@ main() {
   return 0
 }
 
-trap 'fail ${LINENO} "${BASH_COMMAND}"' ERR
 main "$@"

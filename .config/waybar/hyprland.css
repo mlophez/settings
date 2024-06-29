@@ -14,6 +14,7 @@ window#waybar {
 #pulseaudio,
 #backlight,
 #battery,
+#cpu,
 #memory,
 #disk,
 #custom-lock,
@@ -78,4 +79,8 @@ window#waybar {
 
 #memory {
   color: @pink;
+}
+
+#cpu {
+  color: @peach;
 }

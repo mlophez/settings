@@ -132,6 +132,10 @@
       ""
     ]
   },
+  "cpu": {
+    "interval": 10,
+    "format": " {usage}%"
+  },
   "memory": {
     "interval": 15,
     "format": " {percentage}%"
