@@ -2,7 +2,7 @@
 
 window#waybar {
   font-family: JetBrainsMono Nerd Font;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   background-color: rgba(0, 0, 0, 0);
 }
@@ -17,6 +17,7 @@ window#waybar {
 #cpu,
 #memory,
 #disk,
+#temperature,
 #custom-lock,
 #custom-wallpaper,
 #custom-screenshot,
@@ -66,7 +67,7 @@ window#waybar {
 }
 
 #clock {
-  color: @pink;
+  color: @white;
 }
 
 #pulseaudio {
@@ -83,4 +84,8 @@ window#waybar {
 
 #cpu {
   color: @peach;
+}
+
+#temperature {
+  color: @red;
 }

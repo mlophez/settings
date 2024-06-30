@@ -12,14 +12,15 @@
     "hyprland/workspaces",
   ],
   "modules-center": [
+    "cpu",
+    "memory",
     "clock#date",
-    "clock#time"
+    "clock#time",
+    "temperature",
+    "disk",
   ],
   "modules-right": [
     "tray",
-    "cpu",
-    "memory",
-    "disk",
     "pulseaudio",
     "backlight",
     "battery"
