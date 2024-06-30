@@ -20,25 +20,16 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
 
-  # install -m 644 -o root -g root ~/.nix-profile/etc/pam.d/hyprlock /etc/pam.d/hyprlock
-  home.activation = {
-    postActivation = ''
-      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/icons/ .local/share/icons/
-      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/fonts/ .local/share/fonts/
-      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/themes/ .local/share/themes/
-      # nix-collect-garbage --delete-older-than 7d
-      # nix-collect-garbage --delete-old
-    '';
-  };
 
   home.packages = [
     # Desktop Enviroment
     pkgs.nixgl.auto.nixGLDefault
-    hypr.hyprland
-    hypr.hyprlock
-    hypr.hyprpaper
-    hypr.hypridle
-    hypr.xwayland
+    pkgs.hyprland
+    pkgs.hyprlock
+    pkgs.hyprpaper
+    pkgs.hypridle
+    pkgs.xdg-desktop-portal-hyprland
+    pkgs.xwayland
     pkgs.waybar
     pkgs.swww
     pkgs.pywal
@@ -205,18 +196,12 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
-
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
-    # ".bash_profile".text = ''
-    # '';
+    ".config/systemd/user/xdg-desktop-portal-hyprland.service".source = "${pkgs.xdg-desktop-portal-hyprland}/share/systemd/user/xdg-desktop-portal-hyprland.service";
+    ".config/xdg-desktop-portal/portals/hyprland.portal".source = "${pkgs.xdg-desktop-portal-hyprland}/share/xdg-desktop-portal/portals/hyprland.portal";
+    ".config/xdg-desktop-portal/hyprland-portals.conf".text = ''
+      [preferred]
+      default=hyprland;gtk # hyprland, wlr
+    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -266,6 +251,20 @@
   #  #  size = 11;
   #  #};
   #};
+
+  # install -m 644 -o root -g root ~/.nix-profile/etc/pam.d/hyprlock /etc/pam.d/hyprlock
+  home.activation = {
+    postActivation = ''
+      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/icons/ .local/share/icons/
+      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/fonts/ .local/share/fonts/
+      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/themes/ .local/share/themes/
+
+      #cp .nix-profile/share/systemd/user/xdg-desktop-portal-hyprland.service ~/.config/systemd/user/xdg-desktop-portal-hyprland.service
+      /usr/bin/systemctl --user daemon-reload
+      # nix-collect-garbage --delete-older-than 7d
+      # nix-collect-garbage --delete-old
+    '';
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

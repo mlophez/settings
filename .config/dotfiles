@@ -30,7 +30,7 @@
 ~/.config/rofi
 ~/.config/mutt
 ~/.config/mako
-~/.config/xdg-desktop-portal
+#~/.config/xdg-desktop-portal
 ~/.config/dunst
 ~/.config/scripts
 ~/.config/starship.toml
@@ -38,10 +38,10 @@
 ~/.config/distrobox
 ~/.config/i3
 ~/.config/pylintrc
-~/.config/systemd/user/*.timer
-~/.config/systemd/user/*.service
-~/.config/systemd/user/*.slice
-~/.config/systemd/user/*.d
+#~/.config/systemd/user/*.timer
+#~/.config/systemd/user/*.service
+#~/.config/systemd/user/*.slice
+#~/.config/systemd/user/*.d
 ~/.config/gnupg/gpg.conf
 ~/.config/gnupg/gpg-agent.conf
 ~/.config/Windows
