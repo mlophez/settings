@@ -9,7 +9,7 @@
     "$HOME/.config/waybar/modules.json"
   ],
   "modules-left": [
-    "hyprland/workspaces"
+    "hyprland/workspaces",
   ],
   "modules-center": [
     "clock#date",
