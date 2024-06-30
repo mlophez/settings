@@ -52,6 +52,7 @@
     pkgs.networkmanagerapplet
     pkgs.ranger
     pkgs.nwg-look
+    # pkgs.qt5ct
     pkgs.fira-code-nerdfont
     pkgs.vscode
     pkgs.openlens
@@ -253,6 +254,7 @@
   #};
 
   # install -m 644 -o root -g root ~/.nix-profile/etc/pam.d/hyprlock /etc/pam.d/hyprlock
+  # rsync -raL /home/mlr/.config/xdg-desktop-portal/ /usr/share/xdg-desktop-portal/
   home.activation = {
     postActivation = ''
       ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/icons/ .local/share/icons/
