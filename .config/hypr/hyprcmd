@@ -7,6 +7,12 @@ readonly SCRIPT_NAME=$(basename $0)
 readonly SCRIPT_DIR=$(readlink -m $(dirname $0))
 readonly CPU_NUMBER=$(grep -c ^processor /proc/cpuinfo)
 
+# FIX nixGL
+unset LD_LIBRARY_PATH
+unset LIBGL_DRIVERS_PATH
+unset LIBVA_DRIVERS_PATH
+unset __EGL_VENDOR_LIBRARY_FILENAMES
+
 ############################# AUX FUNCTIONS #############################
 fail() {
   echo "Failed at $1: $2"
@@ -37,8 +43,7 @@ cmd_init() {
     balooctl disable &>/dev/null
 
   # THEME
-  [ -d "$HOME/.local/share/icons/${cursor_theme}" ] && \
-    hyprctl setcursor "Bibata-Modern-Ice" 28
+  hyprctl setcursor "Bibata-Modern-Ice" 28
 
   return 0
 }
@@ -225,12 +230,6 @@ cmd_terminal() {
 
 # MENU
 menu_launcher() {
-  # FIX nixGL
-  unset LD_LIBRARY_PATH
-  unset LIBGL_DRIVERS_PATH
-  unset LIBVA_DRIVERS_PATH
-  unset __EGL_VENDOR_LIBRARY_FILENAMES
-
   type rofi &>/dev/null && exec systemd-run --user --scope --slice=app.slice -- rofi -show drun
 
   [ -n "$(pidof wofi)" ] && return 0
@@ -357,9 +356,16 @@ cmd_resources() {
 
   set_scope_resources() {
     local scope=$1; shift
+    #local type="Scope"
+    #[ "${scope}" = "" ] && type="Service"
     mkdir -p /run/user/${UID}/systemd/user.control/${scope}.d
     # rm -r /run/user/${UID}/systemd/user.control/${scope}.d/*
-    echo "[Scope]" > /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf
+    #
+    case "$scope" in
+      *.service) echo "[Service]" > /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf ;;
+      *) echo "[Scope]" > /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf ;;
+    esac
+
     for property in ${@}; do
       echo "${property}" >> /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf
     done
@@ -368,6 +374,7 @@ cmd_resources() {
   # Falta el terminal?
   set_scope_resources "app-flatpak-org.mozilla.firefox-.scope" CPUShares=4096
   set_scope_resources "app-flatpak-com.microsoft.Edge-.scope" CPUShares=2048
+  set_scope_resources "xdg-desktop-portal-wlr.service" CPUShares=2048
   set_scope_resources "crun-buildah-.scope" CPUShares=256 CPUQuota="$((50 * ${CPU_NUMBER}))%"
   set_scope_resources "libpod-.scope" CPUShares=256 CPUQuota="$((50 * ${CPU_NUMBER}))%"
 
