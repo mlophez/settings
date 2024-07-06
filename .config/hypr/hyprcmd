@@ -356,11 +356,9 @@ cmd_resources() {
 
   set_scope_resources() {
     local scope=$1; shift
-    #local type="Scope"
-    #[ "${scope}" = "" ] && type="Service"
     mkdir -p /run/user/${UID}/systemd/user.control/${scope}.d
     # rm -r /run/user/${UID}/systemd/user.control/${scope}.d/*
-    #
+
     case "$scope" in
       *.service) echo "[Service]" > /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf ;;
       *) echo "[Scope]" > /run/user/${UID}/systemd/user.control/${scope}.d/90-Resources.conf ;;
