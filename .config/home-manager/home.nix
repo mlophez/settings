@@ -201,11 +201,25 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/systemd/user/xdg-desktop-portal-hyprland.service".source = "${pkgs.xdg-desktop-portal-hyprland}/share/systemd/user/xdg-desktop-portal-hyprland.service";
+    #".config/systemd/user/xdg-desktop-portal-hyprland.service".source = "${pkgs.xdg-desktop-portal-hyprland}/share/systemd/user/xdg-desktop-portal-hyprland.service";
     ".config/xdg-desktop-portal/portals/hyprland.portal".source = "${pkgs.xdg-desktop-portal-hyprland}/share/xdg-desktop-portal/portals/hyprland.portal";
     ".config/xdg-desktop-portal/hyprland-portals.conf".text = ''
       [preferred]
       default=hyprland;gtk # hyprland, wlr
+    '';
+    ".config/systemd/user/xdg-desktop-portal-hyprland.service".text = ''
+      [Unit]
+      Description=Portal service (Hyprland implementation)
+      PartOf=graphical-session.target
+      After=graphical-session.target
+      ConditionEnvironment=WAYLAND_DISPLAY
+
+      [Service]
+      Type=dbus
+      BusName=org.freedesktop.impl.portal.desktop.hyprland
+      ExecStart=/home/mlr/.nix-profile/bin/nixGL /home/mlr/.nix-profile/libexec/xdg-desktop-portal-hyprland
+      Restart=on-failure
+      Slice=session.slice
     '';
   };
 
