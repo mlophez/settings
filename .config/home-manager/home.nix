@@ -28,8 +28,10 @@
     pkgs.hyprlock
     pkgs.hyprpaper
     pkgs.hypridle
-    pkgs.xdg-desktop-portal-hyprland
     pkgs.xwayland
+    #pkgs.xdg-desktop-portal
+    #pkgs.xdg-desktop-portal-gtk
+    pkgs.xdg-desktop-portal-hyprland
     pkgs.waybar
     pkgs.swww
     pkgs.pywal
@@ -47,11 +49,13 @@
     pkgs.wev
     pkgs.grim
     pkgs.slurp
+    pkgs.wf-recorder
     pkgs.swappy
     pkgs.swaylock-effects
     pkgs.networkmanagerapplet
     pkgs.ranger
     pkgs.nwg-look
+    pkgs.mpv
     # pkgs.qt5ct
     pkgs.fira-code-nerdfont
     pkgs.vscode

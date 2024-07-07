@@ -214,7 +214,8 @@ cmd_terminal() {
     [ -n "${scope_pid}" ] && opts=""
 
     type alacritty &>/dev/null \
-      && exec systemd-run --user --scope ${scope_pid} --slice=app.slice -- alacritty -e deskcmd terminal shell
+      && exec hyprctl dispatch exec "systemd-run --user --scope ${scope_pid} --slice=app.slice -- alacritty -e deskcmd terminal shell"
+      # && exec systemd-run --user --scope ${scope_pid} --slice=app.slice -- alacritty -e deskcmd terminal shell
       # && exec alacritty -e ${DESKCTL} terminal shell
       # && exec systemd-run --user --scope -p CPUQuota=50% -- alacritty -e ${DESKCTL} terminal shell
 
@@ -351,7 +352,7 @@ cmd_resources() {
   cmd_power_profile balanced 1
 
   # systemctl set-property system.slice CPUShares=4096 IOWeight=400
-  systemctl --user set-property --runtime session.slice CPUShares=8192 MemoryMin=1G MemoryLow=2G ManagedOOMPreference=omit IOWeight=400
+  systemctl --user set-property --runtime session.slice CPUWeight=800 MemoryMin=1G MemoryLow=2G ManagedOOMPreference=omit IOWeight=400
   systemctl --user set-property --runtime app.slice MemoryHigh=10G MemoryMax=12G ManagedOOMMemoryPressureLimit=50%
 
   set_scope_resources() {
@@ -370,11 +371,11 @@ cmd_resources() {
   }
 
   # Falta el terminal?
-  set_scope_resources "app-flatpak-org.mozilla.firefox-.scope" CPUShares=4096
-  set_scope_resources "app-flatpak-com.microsoft.Edge-.scope" CPUShares=2048
-  set_scope_resources "xdg-desktop-portal-wlr.service" CPUShares=2048
-  set_scope_resources "crun-buildah-.scope" CPUShares=256 CPUQuota="$((50 * ${CPU_NUMBER}))%"
-  set_scope_resources "libpod-.scope" CPUShares=256 CPUQuota="$((50 * ${CPU_NUMBER}))%"
+  set_scope_resources "app-flatpak-org.mozilla.firefox-.scope" CPUWeight=400
+  set_scope_resources "app-flatpak-com.microsoft.Edge-.scope" CPUWeight=200
+  set_scope_resources "xdg-desktop-portal-wlr.service" CPUWeight=200
+  set_scope_resources "crun-buildah-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"
+  set_scope_resources "libpod-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"
 
   systemctl --user daemon-reload
 }
