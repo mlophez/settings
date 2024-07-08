@@ -134,6 +134,11 @@ return {
       lspconfig.rust_analyzer.setup({})
     end
 
+    -- Markdown
+    if vim.fn.executable("marksman") == 1 then
+      lspconfig.marksman.setup({})
+    end
+
     -- html --
     if vim.fn.executable("emmet-language-server") == 1 then
       lspconfig.emmet_language_server.setup({})

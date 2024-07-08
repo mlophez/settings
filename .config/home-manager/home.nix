@@ -275,9 +275,9 @@
   # rsync -raL /home/mlr/.config/xdg-desktop-portal/ /usr/share/xdg-desktop-portal/
   home.activation = {
     postActivation = ''
-      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/icons/ .local/share/icons/
-      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/fonts/ .local/share/fonts/
-      ~/.nix-profile/bin/rsync -raL --delete-after ~/.nix-profile/share/themes/ .local/share/themes/
+      ~/.nix-profile/bin/rsync -raL --delete-after --chmod=D755,F644 ~/.nix-profile/share/icons/ .local/share/icons/
+      ~/.nix-profile/bin/rsync -raL --delete-after --chmod=D755,F644 ~/.nix-profile/share/themes/ .local/share/themes/
+      ~/.nix-profile/bin/rsync -raL --delete-after --chmod=D755,F644 ~/.nix-profile/share/fonts/ .local/share/fonts/
 
       #cp .nix-profile/share/systemd/user/xdg-desktop-portal-hyprland.service ~/.config/systemd/user/xdg-desktop-portal-hyprland.service
       /usr/bin/systemctl --user daemon-reload
