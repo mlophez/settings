@@ -209,15 +209,9 @@ cmd_terminal() {
   elif [ "${command}" = "shell" ]; then
     terminal_shell "$@"
   elif [ "${command}" = "start" ]; then
-    local scope_pid=$(systemctl --user show -p MainPID --value terminal.scope)
-    local opts="--unit=terminal.scope"
-    [ -n "${scope_pid}" ] && opts=""
-
+    local uuid=$(tr -dc 'a-z0-9' < /dev/urandom | head -c 12)
     type alacritty &>/dev/null \
-      && exec hyprctl dispatch exec "systemd-run --user --scope ${scope_pid} --slice=app.slice -- alacritty -e deskcmd terminal shell"
-      # && exec systemd-run --user --scope ${scope_pid} --slice=app.slice -- alacritty -e deskcmd terminal shell
-      # && exec alacritty -e ${DESKCTL} terminal shell
-      # && exec systemd-run --user --scope -p CPUQuota=50% -- alacritty -e ${DESKCTL} terminal shell
+      && exec hyprctl dispatch exec "systemd-run --user --scope --unit=app-terminal-${uuid}.scope --slice=app.slice -- alacritty -e deskcmd terminal shell"
 
     type wezterm &>/dev/null \
       && exec wezterm start --always-new-process -- ${DESKCTL} terminal shell
@@ -373,6 +367,7 @@ cmd_resources() {
   # Falta el terminal?
   set_scope_resources "app-flatpak-org.mozilla.firefox-.scope" CPUWeight=400
   set_scope_resources "app-flatpak-com.microsoft.Edge-.scope" CPUWeight=200
+  set_scope_resources "app-terminal-.scope" CPUQuota="$((50 * ${CPU_NUMBER}))%"
   set_scope_resources "xdg-desktop-portal-wlr.service" CPUWeight=200
   set_scope_resources "crun-buildah-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"
   set_scope_resources "libpod-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"

@@ -1,5 +1,11 @@
 { config, pkgs, hypr, ... }:
 
+let
+  wrapWithNixGL = pkg: pkgs.writeScriptBin "${pkg.name}-wrapper" ''
+    #!/bin/bash
+    exec nixGL ${pkg.name} "$@"
+  '';
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -56,6 +62,7 @@
     pkgs.ranger
     pkgs.nwg-look
     pkgs.mpv
+    # (wrapWithNixGL pkgs.mpv)
     # pkgs.qt5ct
     pkgs.fira-code-nerdfont
     pkgs.vscode
