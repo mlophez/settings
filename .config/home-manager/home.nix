@@ -1,10 +1,14 @@
 { config, pkgs, hypr, ... }:
 
 let
-  wrapWithNixGL = pkg: pkgs.writeScriptBin "${pkg.name}-wrapper" ''
-    #!/bin/bash
-    exec nixGL ${pkg.name} "$@"
-  '';
+  #wrapWithNixGL = name: pkgs.writeScriptBin "${name}" ''
+  #  #!/bin/bash
+  #  exec nixGL ${name} "$@"
+  #'';
+  #wrapWithNixGL = pkg: name: pkgs.writeScriptBin "${name}" ''
+  #  #!/bin/bash
+  #  exec nixGL ${name} "$@"
+  #'';
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -59,10 +63,11 @@ in
     pkgs.swappy
     pkgs.swaylock-effects
     pkgs.networkmanagerapplet
+    pkgs.gnome.networkmanager-openconnect
     pkgs.ranger
     pkgs.nwg-look
     pkgs.mpv
-    # (wrapWithNixGL pkgs.mpv)
+    # (wrapWithNixGL pkgs.mpv "mpv")
     # pkgs.qt5ct
     pkgs.fira-code-nerdfont
     pkgs.vscode
@@ -228,6 +233,10 @@ in
       Restart=on-failure
       Slice=session.slice
     '';
+    ".local/bin/mpv".text = ''
+      #!/bin/bash
+      exec nixGL ${config.home.homeDirectory}/.nix-profile/bin/mpv "$@"
+    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -247,6 +256,7 @@ in
   #  /etc/profiles/per-user/mlr/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
+    PATH = "${config.home.homeDirectory}/.local/bin:$PATH";
     ZDOTDIR = "${config.home.homeDirectory}/.config/zsh";
     EDITOR = "nvim";
   };
@@ -290,6 +300,8 @@ in
       /usr/bin/systemctl --user daemon-reload
       # nix-collect-garbage --delete-older-than 7d
       # nix-collect-garbage --delete-old
+
+      chmod 755 ${config.home.homeDirectory}/.local/bin/*
     '';
   };
 

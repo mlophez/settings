@@ -16,6 +16,9 @@
 [ -f "/usr/lib/locale/locale-archive" ] && \
   export LOCALE_ARCHIVE=/usr/lib/locale/locale-archive
 
+# PATH
+export PATH=${HOME}/.local/bin:${PATH}
+
 # DESKTOP
 [[ -z $WAYLAND_DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && \
   exec systemd-run --user --scope --unit=hyprland.scope --slice=session.slice -- nixGL Hyprland
