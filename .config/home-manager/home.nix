@@ -158,7 +158,7 @@ in
     pkgs.nodejs
     pkgs.typescript
 
-    pkgs.jdk
+    pkgs.jdk17
     pkgs.maven
 
     ##################### DEV/OPS #####################
