@@ -51,6 +51,7 @@ in
     pkgs.wlogout
     pkgs.foot
     pkgs.alacritty
+    pkgs.kitty
     pkgs.just
     pkgs.brightnessctl
     pkgs.wl-clipboard
@@ -65,8 +66,10 @@ in
     pkgs.networkmanagerapplet
     pkgs.gnome.networkmanager-openconnect
     pkgs.ranger
-    pkgs.nwg-look
     pkgs.mpv
+    pkgs.nwg-look
+    pkgs.libsForQt5.qt5ct
+    pkgs.kdePackages.qt6ct
     # (wrapWithNixGL pkgs.mpv "mpv")
     # pkgs.qt5ct
     pkgs.fira-code-nerdfont
