@@ -240,6 +240,10 @@ in
       #!/bin/bash
       exec nixGL ${config.home.homeDirectory}/.nix-profile/bin/mpv "$@"
     '';
+    ".local/bin/kitty".text = ''
+      #!/bin/bash
+      exec nixGL ${config.home.homeDirectory}/.nix-profile/bin/kitty "$@"
+    '';
   };
 
   # Home Manager can also manage your environment variables through
