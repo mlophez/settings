@@ -3,17 +3,17 @@ views:
   v1/pods:
     # Overrides default sort column
     sortColumn: AGE:desc
-    columns:
-      - PF
-      - NAMESPACE
-      - NAME
-      - READY
-      - RESTARTS
-      - CPU
-      - MEM
-      - "%MEM/R"
-      - "%MEM/L"
-      - IP
-      - NODE
-      - STATUS
-      - AGE
+    #columns:
+    #  - PF
+    #  - NAMESPACE
+    #  - NAME
+    #  - READY
+    #  - RESTARTS
+    #  - CPU
+    #  - MEM
+    #  - "%MEM/R"
+    #  - "%MEM/L"
+    #  - IP
+    #  - AGE
+    #  - NODE
+    #  - STATUS

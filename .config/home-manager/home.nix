@@ -53,6 +53,7 @@ in
     pkgs.alacritty
     pkgs.kitty
     pkgs.just
+    pkgs.gnumake
     pkgs.brightnessctl
     pkgs.wl-clipboard
     pkgs.xclip
@@ -72,12 +73,13 @@ in
     pkgs.kdePackages.qt6ct
     # (wrapWithNixGL pkgs.mpv "mpv")
     # pkgs.qt5ct
-    pkgs.fira-code-nerdfont
     pkgs.vscode
     pkgs.openlens
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = ["JetBrainsMono"]; })
+    pkgs.fira-code-nerdfont
+    pkgs.noto-fonts-emoji
     # Themes
     pkgs.bibata-cursors
     # pkgs.catppuccin
