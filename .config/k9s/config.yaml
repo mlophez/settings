@@ -11,10 +11,10 @@ k9s:
   ui:
     enableMouse: false
     headless: false
-    logoless: false
+    logoless: true
     crumbsless: false
     reactive: false
-    noIcons: false
+    noIcons: true
     skin: catppuccin-mocha-transparent
   shellPod:
     image: busybox:1.35.0
