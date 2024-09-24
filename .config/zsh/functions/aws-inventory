@@ -3,7 +3,7 @@
 aws-inventory() {
   local regions=("eu-west-1" "eu-south-2")
   #local profiles=($(cat $HOME/.aws/config | grep -v "^ *#" | grep -o "\[ *profile .*\]" | sed 's/\]//g' | cut -d" " -f 2 | grep -v root |tr "\n" ' '))
-  local profiles=("ireland" "production" "tools" "demo" "qa" "dev" "shared" "mutua")
+  local profiles=("ireland" "production" "tools" "demo" "qa" "dev" "shared" "mutua" "secure")
   local query='.Reservations[] | .Instances[] | select(.State.Name != "terminated") | { Name: (.Tags[]|select(.Key=="Name")|.Value), InstanceId: .InstanceId, Region: $region, Profile: $profile } | join (";") '
   local region profile
 

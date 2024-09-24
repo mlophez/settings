@@ -65,7 +65,7 @@ in
     pkgs.swappy
     pkgs.swaylock-effects
     pkgs.networkmanagerapplet
-    pkgs.gnome.networkmanager-openconnect
+    pkgs.networkmanager-openconnect
     pkgs.ranger
     pkgs.mpv
     pkgs.nwg-look
@@ -74,7 +74,7 @@ in
     # (wrapWithNixGL pkgs.mpv "mpv")
     # pkgs.qt5ct
     pkgs.vscode
-    pkgs.openlens
+    # pkgs.openlens
 
     # Fonts
     (pkgs.nerdfonts.override { fonts = ["JetBrainsMono"]; })
@@ -172,6 +172,7 @@ in
     pkgs.git-lfs
     pkgs.delta
     pkgs.devbox
+    pkgs.lazygit
 
     # ANSIBLE
     pkgs.ansible
@@ -197,6 +198,7 @@ in
     pkgs.k9s
     pkgs.trivy
     pkgs.kubeseal
+    pkgs.conftest
 
     # CI/CD
     # dagger

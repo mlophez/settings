@@ -175,8 +175,7 @@ terminal_toggle() {
   local namespace="terminal"
   local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
   [ -z "${window}" ] && \
-    exec hyprctl dispatch exec "[floating;size 1400 600;workspace special:${namespace}] alacritty -e deskcmd terminal shell true 1"
-    # exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
+    exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
   hyprctl dispatch togglespecialworkspace "${namespace}"
   return 0
 }
