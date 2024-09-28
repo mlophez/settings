@@ -40,7 +40,8 @@ start-hyprland-distrobox() {
       --volume /run/dbus:/run/dbus:ro \
       --volume /run/systemd:/run/systemd:ro \
       --volume /run/udev:/run/udev:ro \
-      -a "--security-opt label=disable --cgroupns=host --device /dev/dri --device /dev/input"
+      -a "--cgroupns=host"
+      #-a "--security-opt label=disable --cgroupns=host --device /dev/dri --device /dev/input"
   fi
 
   export PATH=${HOME}/.local/bin:${PATH}
