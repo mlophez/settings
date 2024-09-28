@@ -31,20 +31,23 @@ start-hyprland-nix() {
 }
 
 start-hyprland-distrobox() {
-  # distrobox rm -f ${DISTROBOX_NAME}
+  #distrobox rm -f ${DISTROBOX_NAME}
   if [ "$(distrobox list | grep " ${DISTROBOX_NAME} " | wc -l)" -eq 0 ]; then
-    distrobox create --nvidia --no-entry -Y -n ${DISTROBOX_NAME} \
+    distrobox create -n ${DISTROBOX_NAME} \
+      --nvidia --no-entry -Y \
       --image ${DISTROBOX_IMAGE} \
-      --volume /proc:/proc:ro \
       --volume /lib/modules:/lib/modules:rslave \
       --volume /run/dbus:/run/dbus:ro \
       --volume /run/systemd:/run/systemd:ro \
       --volume /run/udev:/run/udev:ro \
       -a "--cgroupns=host"
+      #--volume /proc:/proc:ro \
       #-a "--security-opt label=disable --cgroupns=host --device /dev/dri --device /dev/input"
+      #--volume /tmp/.X11-unix:/tmp/.X11-unix \
   fi
 
   export PATH=${HOME}/.local/bin:${PATH}
+  export TZ=Europe/Madrid
   exec distrobox enter ${DISTROBOX_NAME} -- systemd-run --user --scope --unit=hyprland.scope --slice=session.slice -- Hyprland
 }
 
