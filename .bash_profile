@@ -31,7 +31,7 @@ start-hyprland-nix() {
 }
 
 start-hyprland-distrobox() {
-  distrobox rm -f ${DISTROBOX_NAME}
+  # distrobox rm -f ${DISTROBOX_NAME}
   if [ "$(distrobox list | grep " ${DISTROBOX_NAME} " | wc -l)" -eq 0 ]; then
     distrobox create --nvidia --no-entry -Y -n ${DISTROBOX_NAME} \
       --image ${DISTROBOX_IMAGE} \
