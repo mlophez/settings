@@ -224,7 +224,8 @@ cmd_terminal() {
 
 # MENU
 menu_launcher() {
-  type rofi &>/dev/null && exec systemd-run --user --scope --slice=app.slice -- rofi -show drun
+  #type rofi &>/dev/null && exec systemd-run --user --scope --slice=app.slice -- rofi -show drun
+  type rofi &>/dev/null && exec rofi -show drun
 
   [ -n "$(pidof wofi)" ] && return 0
 
@@ -247,10 +248,11 @@ menu_power() {
     exec wlogout -b 2 -c 20 -r 20 -m 100
   fi
 
-  local choice=$(echo -e "Lock|Reboot|Poweroff" | rofi -dmenu -sep '|' -p "Option" -only-match -i)
+  local choice=$(echo -e "Lock|Exit|Reboot|Poweroff" | rofi -dmenu -sep '|' -p "Option" -only-match -i)
   echo ${choice,,}
 
-  [ "${choice,,}" = "lock" ] && desktop lock
+  [ "${choice,,}" = "lock" ] && $0 lock
+  [ "${choice,,}" = "exit" ] && $0 exit
   [ "${choice,,}" = "reboot" ] && systemctl reboot
   [ "${choice,,}" = "poweroff" ] && systemctl poweroff -i
 }
@@ -369,7 +371,7 @@ cmd_resources() {
   set_scope_resources "app-terminal-.scope" CPUQuota="$((50 * ${CPU_NUMBER}))%"
   set_scope_resources "xdg-desktop-portal-wlr.service" CPUWeight=200
   set_scope_resources "crun-buildah-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"
-  set_scope_resources "libpod-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"
+  # set_scope_resources "libpod-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"
 
   systemctl --user daemon-reload
 }
