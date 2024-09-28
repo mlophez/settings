@@ -248,13 +248,14 @@ menu_power() {
     exec wlogout -b 2 -c 20 -r 20 -m 100
   fi
 
-  local choice=$(echo -e "Lock|Exit|Reboot|Poweroff" | rofi -dmenu -sep '|' -p "Option" -only-match -i)
+  local choice=$(echo -e "Lock|Exit|Reboot|Poweroff|None" | rofi -dmenu -sep '|' -p "Option" -only-match -i)
   echo ${choice,,}
 
   [ "${choice,,}" = "lock" ] && $0 lock
   [ "${choice,,}" = "exit" ] && $0 exit
   [ "${choice,,}" = "reboot" ] && systemctl reboot
   [ "${choice,,}" = "poweroff" ] && systemctl poweroff -i
+  [ "${choice,,}" = "none" ] && echo none
 }
 
 cmd_menu() {
