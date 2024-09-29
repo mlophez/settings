@@ -101,7 +101,7 @@ alias se="settings"
 # DISTROBOX
 alias ds="distrobox-menu"
 alias sys="distrobox-host-exec bash"
-alias sysadmin="distrobox-host-exec sudo bash"
+alias admin="distrobox-host-exec sudo bash"
 alias root="distrobox-host-exec sudo bash"
 
 # SYSTEMD
@@ -109,6 +109,3 @@ alias systemctl="systemctl --user"
 
 # HOME-MANAGER
 alias switch="home-manager switch --impure"
-
-# DISTROBOX
-alias host="distrobox-host-exec sudo bash"
