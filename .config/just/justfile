@@ -71,6 +71,13 @@ vpn-globalprotect:
     --servercert pin-sha256:o5uZ5Kl+5Cg/tDzWHiIOPHR8Y7rq7wXc7IuX9lLbnkM= \
     194.140.17.69
 
+vpn-globalprotect-host:
+  distrobox-host-exec sudo openconnect --protocol=gp \
+    -u miguellopez \
+    -c $HOME/Documents/Certificates/logalty.vpn.cliente.sistemas.pem \
+    --servercert pin-sha256:o5uZ5Kl+5Cg/tDzWHiIOPHR8Y7rq7wXc7IuX9lLbnkM= \
+    194.140.17.69
+
 argocd-dev:
   kubectl --context dev -n argocd port-forward svc/argocd-server 8080:80
 
