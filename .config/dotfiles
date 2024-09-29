@@ -47,6 +47,7 @@
 ~/.config/Windows
 ~/.config/Code/User/settings.json
 ~/.config/Code/User/keybindings.json
+~/.config/code-flags.conf
 ~/.config/user-dirs.dirs
 ~/.config/user-dirs.locale
 ~/.ssh/config
