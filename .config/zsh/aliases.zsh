@@ -93,8 +93,7 @@ alias tmv="terraform state mv"
 alias d="deactivate"
 
 # ZELLIJ
-#alias zel="zellij -s $USER"
-alias zel="zellij attach 0 || exec zellij -s 0"
+alias zel="zellij attach 0 || exec systemd-run --user --scope --unit=zellij.scope --slice=app.slice -- zellij -s 0"
 
 # SETTINGS
 alias se="settings"
