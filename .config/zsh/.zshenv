@@ -78,11 +78,3 @@ export PATH=${PATH}:${HOME}/.local/bin
 
 # PODMAN
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
-
-if [ -n "$CONTAINER_ID" ]; then
-  export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/run/host/run/dbus/system_bus_socket
-else
-  unset DBUS_SYSTEM_BUS_ADDRESS
-fi
-
-# export LOCALE_ARCHIVE="$(nix-env --installed --no-name --out-path --query glibc-locales)/lib/locale/locale-archive"
