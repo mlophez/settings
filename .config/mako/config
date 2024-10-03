@@ -18,6 +18,6 @@ border-color=#fab387
 progress-color=over #313244
 
 [urgency=high]
-anchor=center
+#anchor=center
 border-color=#f38ba8
 default-timeout=0

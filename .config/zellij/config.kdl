@@ -35,10 +35,11 @@ keybinds clear-defaults=true {
     bind "Alt ,"  { SwitchToMode "renametab"; TabNameInput 0; }
 
     bind "Alt n" { NewTab; }
+    bind "Alt t" "Alt p" { NewPane; }
     bind "Alt v" { NewPane "Down"; }
     bind "Alt h" { NewPane "Right"; }
     bind "Alt f" { ToggleFocusFullscreen; }
-    bind "Alt t" "Alt m" { ToggleFloatingPanes; }
+    bind "Alt m" { ToggleFloatingPanes; }
     bind "Alt u" { CloseFocus; }
 
     bind "Alt 1" { GoToTab  1; }

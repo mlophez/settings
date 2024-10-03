@@ -372,7 +372,6 @@ cmd_resources() {
   # Falta el terminal?
   set_scope_resources "app-flatpak-org.mozilla.firefox-.scope" CPUWeight=400
   set_scope_resources "app-flatpak-com.microsoft.Edge-.scope" CPUWeight=200
-  set_scope_resources "app-terminal-.scope" CPUQuota="$((50 * ${CPU_NUMBER}))%"
   set_scope_resources "xdg-desktop-portal-wlr.service" CPUWeight=200
   set_scope_resources "zellij.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"
   set_scope_resources "crun-buildah-.scope" CPUWeight=25 CPUQuota="$((50 * ${CPU_NUMBER}))%"

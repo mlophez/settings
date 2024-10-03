@@ -6,13 +6,12 @@ layout {
     pane cwd="$HOME"
   }
   swap_floating_layout {
-    floating_panes max_panes=1 {
-      pane {
-        x "5%"
-        y "10%"
-        width "90%"
-        height "80%"
-      }
+    floating_panes max_panes=5 {
+      pane { x "2%"; y "10%"; width "90%"; height "80%"; }
+      pane { x "4%"; y "12%"; width "90%"; height "80%"; }
+      pane { x "6%"; y "14%"; width "90%"; height "80%"; }
+      pane { x "8%"; y "16%"; width "90%"; height "80%"; }
+      pane { x "10%"; y "18%"; width "90%"; height "80%"; }
     }
   }
   tab name="1# LOCAL"

@@ -50,6 +50,7 @@ export PYLINTRC="$HOME/.config/pylintrc"
 # GO
 export GOPATH="$HOME/.local/share/go"
 export PATH=${PATH}:${GOPATH}/bin
+export GOMAXPROCS=4
 
 # RUST
 export RUSTUP_HOME="$HOME/.local/share/rustup"

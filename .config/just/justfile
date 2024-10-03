@@ -35,6 +35,15 @@ tunnel-db-mutua:
   --parameters '{"host":["mutua.c8yct6jx3mwh.eu-west-1.rds.amazonaws.com"],"portNumber":["5432"],"localPortNumber":["5432"]}' \
   --profile mutua
 
+tunnel-db-ireland:
+  aws ssm start-session --cli-read-timeout 8000 \
+  --target i-0837b768596c26989 \
+  --document-name AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters '{"host":["pro-db-lgtid.cw9jeidr8a9e.eu-west-1.rds.amazonaws.com"],"portNumber":["1521"],"localPortNumber":["1526"]}' \
+  --profile ireland
+
+
+
 tunnel-db-connect-demo:
   kubectl --context demo -n default port-forward pods/forward-0 5433:5433
 
