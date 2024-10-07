@@ -38,6 +38,7 @@
 ~/.config/distrobox
 ~/.config/i3
 ~/.config/pylintrc
+~/.config/fontconfig/fonts.conf
 #~/.config/systemd/user/*.timer
 #~/.config/systemd/user/*.service
 #~/.config/systemd/user/*.slice
