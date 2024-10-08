@@ -63,6 +63,7 @@ export M2_HOME="$HOME/.local/share/maven"
 
 # ANDROID
 export ANDROID_HOME=${HOME}/.local/share/android
+export ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
 export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
 
