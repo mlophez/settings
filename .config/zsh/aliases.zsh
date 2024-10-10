@@ -109,3 +109,6 @@ alias systemctl="systemctl --user"
 
 # HOME-MANAGER
 alias switch="home-manager switch --impure"
+
+# ANDROID
+alias emu="emulator"

@@ -62,9 +62,15 @@ export NPM_CONFIG_PREFIX="$HOME/.local"
 export M2_HOME="$HOME/.local/share/maven"
 
 # ANDROID
-export ANDROID_HOME=${HOME}/.local/share/android
-export ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
+export ANDROID_HOME=${HOME}/.local/share/android/sdk
+export ANDROID_USER_HOME=${HOME}/.local/share/android
+export ANDROID_AVD_HOME=${ANDROID_USER_HOME}/avd
+export ANDROID_JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+# export ANDROID_EMULATOR_USE_SYSTEM_LIBS=1
+export PATH=${PATH}:${ANDROID_HOME}/tools
+export PATH=${PATH}:${ANDROID_HOME}/tools/bin
 export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+export PATH=${PATH}:${ANDROID_HOME}/emulator
 export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
 
 # FLUTTER
@@ -80,3 +86,6 @@ export PATH=${PATH}:${HOME}/.local/bin
 
 # PODMAN
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
+
+typeset -U path
+typeset -U fpath

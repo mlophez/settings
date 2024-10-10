@@ -64,6 +64,9 @@ return {
           inherit = true,
           exit_codes = { 0 },
         },
+        yq = {
+          args = { "-Y", "--explicit-start", "--width=150" },
+        },
         black = {
           prepend_args = { "--line-length=120" },
         },
@@ -81,6 +84,7 @@ return {
         --astro = {},
         --svelte = { "prettier" },
         json = { { "jq" } },
+        yaml = { { "yq" } },
         --xml = { "xmlformat" },
         -- yaml = { { "prettier", "yamlfmt" } },
         markdown = { "prettier" },
