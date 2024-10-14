@@ -84,7 +84,7 @@ return {
         --astro = {},
         --svelte = { "prettier" },
         json = { { "jq" } },
-        yaml = { { "yq" } },
+        -- yaml = { "prettier" }, -- yaml = { { "yq" } },
         --xml = { "xmlformat" },
         -- yaml = { { "prettier", "yamlfmt" } },
         markdown = { "prettier" },
