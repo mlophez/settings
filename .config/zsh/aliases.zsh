@@ -112,3 +112,6 @@ alias switch="home-manager switch --impure"
 
 # ANDROID
 alias emu="emulator"
+
+# RANDOM PASSWORD
+alias random-password="openssl rand -base64 18"

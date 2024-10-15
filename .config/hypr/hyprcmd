@@ -352,7 +352,7 @@ cmd_resources() {
 
   # systemctl set-property system.slice CPUShares=4096 IOWeight=400
   systemctl --user set-property --runtime session.slice CPUWeight=800 MemoryMin=1G MemoryLow=2G ManagedOOMPreference=omit IOWeight=400
-  systemctl --user set-property --runtime app.slice MemoryHigh=10G MemoryMax=12G ManagedOOMMemoryPressureLimit=50%
+  #systemctl --user set-property --runtime app.slice MemoryHigh=10G MemoryMax=12G ManagedOOMMemoryPressureLimit=50%
 
   set_scope_resources() {
     local scope=$1; shift
