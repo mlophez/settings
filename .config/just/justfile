@@ -21,6 +21,9 @@ tunnel-db-new-test:
 tunnel-db-prod:
   kubectl --context prod -n default port-forward pods/forward-0 1525:1521
 
+tunnel-db-prod-logalsend:
+  kubectl --context prod -n default port-forward pods/forward-0 1526:1522
+
 tunnel-db-test:
   aws ssm start-session --cli-read-timeout 8000 \
   --target i-04a7f8ed6a1c77a37 \

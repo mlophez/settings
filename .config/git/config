@@ -12,6 +12,7 @@
 	rebase = true
 [rebase]
 	autoStash = true
+	autoSquash = true
 ; [user]
 ;   name = Miguel Lopez Ruiz
 ;   email = miguel.lr96@gmail.com
