@@ -1,47 +1,48 @@
 return {
-	"jakewvincent/mkdnflow.nvim",
-	ft = { "markdown" },
-	opts = {
-		perspective = {
-			priority = "root",
-			root_tell = "index.md",
-		},
-		links = {
-			style = "markdown",
-			name_is_source = true,
-			transform_implicit = function(text)
-				text = text:gsub(" ", "-")
-				text = text:lower()
-				if vim.fn.filereadable(text) == 1 then
-					return text
-				else
-					return ("pkm/" .. text)
-				end
-			end,
-			transform_explicit = function(text)
-				text = text:gsub(" ", "-")
-				text = text:lower()
-				return text
-			end,
-		},
-		mappings = {
-			MkdnNextLink = { "n", "C-n" },
-			MkdnPrevLink = { "n", "C-b" },
-			MkdnGoBack = false,
-			MkdnEnter = { { "n" }, "gf" },
-			MkdnFoldSection = false,
-			MkdnUnfoldSection = false,
-		},
-	},
-	--init = function()
-	--	vim.api.nvim_create_autocmd("FileType", {
-	--		pattern = "markdown",
-	--		callback = function()
-	--			local opts = { noremap = true, silent = true, buffer = tonumber(vim.fn.expand("<abuf>", 10)) }
-	--			vim.keymap.set("n", "m", "$v0<cr>", opts)
-	--		end,
-	--	})
-	--end,
+  "jakewvincent/mkdnflow.nvim",
+  enabled = false,
+  ft = { "markdown" },
+  opts = {
+    perspective = {
+      priority = "root",
+      root_tell = "index.md",
+    },
+    links = {
+      style = "markdown",
+      name_is_source = true,
+      transform_implicit = function(text)
+        text = text:gsub(" ", "-")
+        text = text:lower()
+        if vim.fn.filereadable(text) == 1 then
+          return text
+        else
+          return ("pkm/" .. text)
+        end
+      end,
+      transform_explicit = function(text)
+        text = text:gsub(" ", "-")
+        text = text:lower()
+        return text
+      end,
+    },
+    mappings = {
+      MkdnNextLink = { "n", "C-n" },
+      MkdnPrevLink = { "n", "C-b" },
+      MkdnGoBack = false,
+      MkdnEnter = { { "n" }, "gf" },
+      MkdnFoldSection = false,
+      MkdnUnfoldSection = false,
+    },
+  },
+  --init = function()
+  --	vim.api.nvim_create_autocmd("FileType", {
+  --		pattern = "markdown",
+  --		callback = function()
+  --			local opts = { noremap = true, silent = true, buffer = tonumber(vim.fn.expand("<abuf>", 10)) }
+  --			vim.keymap.set("n", "m", "$v0<cr>", opts)
+  --		end,
+  --	})
+  --end,
 }
 
 -- require('mkdnflow').setup({

@@ -153,7 +153,7 @@ return {
 
     -- typescript --
     if vim.fn.executable("typescript-language-server") == 1 then
-      lspconfig.tsserver.setup({})
+      lspconfig.ts_ls.setup({})
     end
 
     -- astro --

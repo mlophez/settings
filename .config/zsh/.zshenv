@@ -76,6 +76,7 @@ export PATH=${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin
 # FLUTTER
 export FLUTTER_HOME=${HOME}/.local/share/flutter/default
 export PATH=${PATH}:${FLUTTER_HOME}/bin
+export PATH=${PATH}:$HOME/.pub-cache/bin
 
 # RUBY
 export GEM_HOME=$HOME/.local/share/ruby
