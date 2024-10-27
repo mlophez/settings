@@ -50,6 +50,9 @@ tunnel-db-ireland:
 tunnel-db-connect-demo:
   kubectl --context demo -n default port-forward pods/forward-0 5433:5433
 
+tunnel-db-connect-prod:
+  kubectl --context prod -n default port-forward pods/forward-0 5433:5433
+
 tunnel-db-releases:
   kubectl --context tools -n logalty port-forward pods/mysql-0 3306:3306
 
