@@ -16,12 +16,6 @@ k9s:
     reactive: false
     noIcons: true
     skin: catppuccin-mocha-transparent
-  shellPod:
-    image: busybox:1.35.0
-    namespace: default
-    limits:
-      cpu: 100m
-      memory: 100Mi
   imageScans:
     enable: false
     exclusions:
@@ -41,3 +35,12 @@ k9s:
     memory:
       warn: 90
       critical: 95
+  featureGates:
+    nodeShell: true
+  shellPod:
+    #image: ubuntu:latest
+    image: lgtjpmora/debugger:latest
+    namespace: default
+    limits:
+      memory: 100Mi
+      #cpu: 100m

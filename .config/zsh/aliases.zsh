@@ -75,6 +75,7 @@ alias kp="kubectl-menu port-forward pods"
 alias kt="kubectl-run-pod"
 alias kdrain="kubectl drain --delete-emptydir-data --ignore-daemonsets --disable-eviction --force --context"
 alias k9="k9s -c pods --all-namespaces --context"
+alias k9conf="find $HOME/.local/share/k9s -name config.yaml | xargs -I@ sed 's/nodeShell: false/nodeShell: true/g' -i @ "
 
 # HELM
 alias helm-list="helm ls -A --kube-context"
