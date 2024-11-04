@@ -33,12 +33,12 @@ return {
         i = {
           ["<esc>"] = "close",
           ["<C-c>"] = "close",
-          ["<TAB>"] = "close",
+          --["<TAB>"] = "close",
         },
         n = {
           ["<esc>"] = "close",
           ["<BS>"] = "close",
-          ["<TAB>"] = "close",
+          --["<TAB>"] = "close",
           ["<C-c>"] = "close",
           ["q"] = "close",
         },

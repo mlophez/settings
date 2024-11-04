@@ -87,7 +87,7 @@ cmd_daemon() {
 cmd_portals() {
   return 0
   pkill -f "xdg-desktop-portal" || /bin/true
-  run "$HOME/.nix-profile/libexec/xdg-desktop-portal-hyprland"
+  run "xdg-desktop-portal"
   return 0
 }
 
