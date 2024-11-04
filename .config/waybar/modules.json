@@ -125,7 +125,6 @@
     "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
   },
   "backlight": {
-    "device": "intel_backlight",
     "format": "{percent}% {icon} ",
     "format-icons": [
       "",

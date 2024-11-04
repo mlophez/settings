@@ -33,6 +33,9 @@ cmd_init() {
   # INSTALL
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
 
+  # Portals
+  cmd_portals
+
   # RESOURCES
   cmd_resources
 
@@ -41,6 +44,9 @@ cmd_init() {
   # BALOOCTL
   type balooctl &>/dev/null && \
     balooctl disable &>/dev/null
+
+  type brightnessctl &>/dev/null && \
+    brightnessctl set 50% &>/dev/null
 
   # THEME
   hyprctl setcursor "Bibata-Modern-Ice" 28
@@ -65,11 +71,14 @@ daemon_check_battery() {
   if [ ${status} = "Discharging" ]; then
     if [[ $battery -lt 50 ]]; then
       cmd_power_profile power-saver
+      brightnessctl -d tpacpi::kbd_backlight set 0
     else
       cmd_power_profile balanced
+      brightnessctl -d tpacpi::kbd_backlight set 2
     fi
   else
     cmd_power_profile balanced
+    brightnessctl -d tpacpi::kbd_backlight set 2
   fi
 
 }
@@ -85,9 +94,11 @@ cmd_daemon() {
 
 # PORTALS
 cmd_portals() {
-  return 0
   pkill -f "xdg-desktop-portal" || /bin/true
-  run "xdg-desktop-portal"
+  run "/usr/lib/xdg-desktop-portal-hyprland"
+  run "/usr/lib/xdg-desktop-portal-wlr -r"
+  run "/usr/lib/xdg-desktop-portal-gtk -r"
+  sleep 1; run "/usr/lib/xdg-desktop-portal -r"
   return 0
 }
 
