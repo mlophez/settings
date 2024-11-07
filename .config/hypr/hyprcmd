@@ -45,8 +45,9 @@ cmd_init() {
   type balooctl &>/dev/null && \
     balooctl disable &>/dev/null
 
-  type brightnessctl &>/dev/null && \
-    brightnessctl set 50% &>/dev/null
+  # Bug en waybar, se pasa a cmd_panel
+  #type brightnessctl &>/dev/null && \
+  #  brightnessctl set 50% &>/dev/null
 
   # THEME
   hyprctl setcursor "Bibata-Modern-Ice" 28
@@ -104,6 +105,9 @@ cmd_portals() {
 
 # PANEL
 cmd_panel() {
+  type brightnessctl &>/dev/null && \
+    brightnessctl set 50% &>/dev/null
+
   if type waybar &>/dev/null; then
     pkill waybar || /bin/true
     ln -sf $XDG_RUNTIME_DIR/hypr /tmp

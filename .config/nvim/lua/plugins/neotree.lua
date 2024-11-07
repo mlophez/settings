@@ -10,7 +10,7 @@ return {
   },
   keys = {
     { "m",         ":Neotree toggle filesystem reveal float<cr>", silent = true },
-    { "<leader>e", ":Neotree toggle filesystem reveal float<cr>", silent = true },
+    { "<leader>e", ":Neotree toggle filesystem reveal left<cr>",  silent = true },
     --{ "m",         ":Neotree toggle filesystem reveal right<cr>", silent = true },
   },
   config = function()
