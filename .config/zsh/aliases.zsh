@@ -118,5 +118,5 @@ alias emu="emulator"
 alias random-password="openssl rand -base64 18"
 
 # YOUTUBE
-alias youtube="mpv --ytdl-format='bestvideo[ext=mp4][height<=?1080]+bestaudio[ext=m4a]'"
+alias youtube="mpv --ytdl-format='bestvideo[ext=mp4][height<=?1080]'"
 alias yt="youtube"
