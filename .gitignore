@@ -3,7 +3,7 @@
 .config/nvim/plugin
 
 # Files
-.zcompdump
+.zcompdump*
 .nvimlog
 *.zsh.zwc
 *.bak
