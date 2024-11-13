@@ -1,14 +1,15 @@
-font=Roboto Mono 14
+font=Roboto Mono 16
 layer=overlay
-anchor=top-right
+anchor=top-center
 width=600
 height=600
-margin=7,20
+outer-margin=10
 padding=20
 
 default-timeout=1200000
 ignore-timeout=1
 max-visible=5
+#group-by=app-name
 
 background-color=#1e1e2e
 text-color=#b4befe
@@ -18,6 +19,8 @@ border-color=#fab387
 progress-color=over #313244
 
 [urgency=high]
-#anchor=center
 border-color=#f38ba8
 default-timeout=0
+
+[body~=".*teams\.microsoft\.com.*"]
+border-color=#fab387
