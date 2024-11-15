@@ -190,7 +190,8 @@ terminal_toggle() {
   local namespace="terminal"
   local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
   [ -z "${window}" ] && \
-    exec hyprctl dispatch exec "[floating;workspace special:${namespace}] kitty -o initial_window_width=1600 -o initial_window_height=800"
+    exec hyprctl dispatch exec "[floating;workspace special:${namespace}] wezterm start --always-new-process"
+    #exec hyprctl dispatch exec "[floating;workspace special:${namespace}] kitty -o initial_window_width=1600 -o initial_window_height=800"
     #exec hyprctl dispatch exec "[floating;workspace special:${namespace}] foot -w 1400x600"
   hyprctl dispatch togglespecialworkspace "${namespace}"
   return 0

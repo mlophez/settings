@@ -1,4 +1,4 @@
-font=Roboto Mono 16
+font=Roboto Mono 14
 layer=overlay
 anchor=top-center
 width=600
@@ -6,7 +6,7 @@ height=600
 outer-margin=10
 padding=20
 
-default-timeout=1200000
+default-timeout=120000
 ignore-timeout=1
 max-visible=5
 #group-by=app-name

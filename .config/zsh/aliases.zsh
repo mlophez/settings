@@ -89,6 +89,7 @@ alias tv="terraform validate"
 alias tp="terraform plan"
 alias ta="terraform apply"
 alias tmv="terraform state mv"
+alias terraspace='docker run -ti -v $(pwd):/workspace -w /workspace ghcr.io/boltops-tools/terraspace:alpine'
 
 # PYTHON
 alias d="deactivate"
