@@ -3,7 +3,7 @@ local wezterm = require("wezterm")
 local if_not_multiplexor = function(key, action)
   return wezterm.action_callback(function(win, pane)
     local pname = pane:get_foreground_process_name()
-    if string.match(pname, "zellij") or string.match(pname, "tmux") then
+    if pname and (string.match(pname, "zellij") or string.match(pname, "tmux")) then
       win:perform_action(wezterm.action.SendKey(key), pane)
     else
       win:perform_action(action, pane)
