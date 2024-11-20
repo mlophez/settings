@@ -7,9 +7,10 @@ return {
   --event = { "VeryLazy" },
   cmd = { "LspInfo", "LspInstall", "LspUninstall" },
   dependencies = {
-    "weilbith/nvim-code-action-menu",
+    "aznhe21/actions-preview.nvim",
     "b0o/schemastore.nvim",
     --"someone-stole-my-name/yaml-companion.nvim",
+    --"weilbith/nvim-code-action-menu",
   },
   init = function()
     vim.opt.completeopt = { "menu", "menuone", "noselect" }
@@ -60,7 +61,8 @@ return {
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "ca", "<cmd>CodeActionMenu<cr>", opts)
+        --vim.keymap.set("n", "ca", "<cmd>CodeActionMenu<cr>", opts)
+        vim.keymap.set("n", "ca", require("actions-preview").code_actions, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
         --vim.keymap.set("n", "ca", vim.lsp.buf.code_action, opts)
         --vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
