@@ -96,6 +96,8 @@ cmd_daemon() {
 # PORTALS
 cmd_portals() {
   pkill -f "xdg-desktop-portal" || /bin/true
+  mkdir -p $HOME/.config/xdg-desktop-portal &>/dev/null
+  cat $HOME/.config/hypr/portals.conf > $HOME/.config/xdg-desktop-portal/hyprland-portals.conf
   run "/usr/lib/xdg-desktop-portal-hyprland"
   run "/usr/lib/xdg-desktop-portal-wlr -r"
   run "/usr/lib/xdg-desktop-portal-gtk -r"
