@@ -40,7 +40,8 @@ start-hyprland-distrobox() {
       --volume /run/dbus:/run/dbus:ro \
       --volume /run/systemd:/run/systemd:ro \
       --volume /run/udev:/run/udev:ro \
-      -a "--cgroupns=host"
+      -a "--cgroupns=host" \
+      -a "--cap-add=SYS_PTRACE"
       #--volume /proc:/proc:ro \
       #-a "--security-opt label=disable --cgroupns=host --device /dev/dri --device /dev/input"
       #--volume /tmp/.X11-unix:/tmp/.X11-unix \
