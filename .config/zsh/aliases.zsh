@@ -40,7 +40,7 @@ alias sshl="ssh -oKexAlgorithms=+diffie-hellman-group1-sha1"
 alias j="just"
 
 # ARCHLINUX
-alias arch="archlinux"
+alias arch='uname -m'
 
 # AWS
 alias a="aws --profile"
