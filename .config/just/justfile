@@ -14,12 +14,14 @@ tunnel-db-demosign:
 tunnel-db-demo:
   kubectl --context demo -n default port-forward pods/forward-0 1522:1521
 
-
 tunnel-db-new-test:
   kubectl --context dev -n testing port-forward pods/forward-0 1523:1521
 
 tunnel-db-prod:
   kubectl --context prod -n default port-forward pods/forward-0 1525:1521
+
+tunnel-db-backoffice:
+  kubectl --context prod -n default port-forward pods/forward-0 5434:5434
 
 tunnel-db-prod-logalsend:
   kubectl --context prod -n default port-forward pods/forward-0 1526:1522
