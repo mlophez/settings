@@ -97,7 +97,7 @@ keybinds clear-defaults=true {
   }
   scroll {
     bind "Enter" "Esc" "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
-    bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
+    //bind "s" { SwitchToMode "EnterSearch"; SearchInput 0; }
 
     bind "k" "Down" { ScrollDown; }
     bind "l" "Up" { ScrollUp; }

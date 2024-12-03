@@ -241,6 +241,16 @@ cmd_terminal() {
   return 0
 }
 
+# FILES
+cmd_files() {
+  local namespace="files"
+  local window=$(hyprctl clients -j | jq ".[] | select(.workspace.name == \"special:${namespace}\" )")
+  [ -z "${window}" ] && \
+    exec hyprctl dispatch exec "[floating;workspace special:${namespace}] wezterm start --always-new-process -- nvim"
+  hyprctl dispatch togglespecialworkspace "${namespace}"
+  return 0
+}
+
 # MENU
 menu_launcher() {
   #type rofi &>/dev/null && exec systemd-run --user --scope --slice=app.slice -- rofi -show drun
