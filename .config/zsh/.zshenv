@@ -88,5 +88,8 @@ export PATH=${PATH}:${HOME}/.local/bin
 # PODMAN
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
 
+# NIX
+export PATH=${PATH}:${HOME}/.nix-profile/bin
+
 typeset -U path
 typeset -U fpath
