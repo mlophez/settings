@@ -30,5 +30,6 @@
     "editor.selectionHighlight": false,
     "editor.tabCompletion": "onlySnippets",
     "editor.wordBasedSuggestions": "off"
-  }
+  },
+  "explorer.confirmDragAndDrop": false
 }
