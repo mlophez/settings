@@ -20,7 +20,7 @@ return {
   enable_wayland = true,
   window_decorations = "NONE",
   window_close_confirmation = 'NeverPrompt',
-  window_background_opacity = 0.95,
+  window_background_opacity = 1,
   --window_background_image = os.getenv("HOME") .. '/.local/share/backgrounds/Img-10.png',
   win32_system_backdrop = "Mica",
   text_background_opacity = 1.0,
