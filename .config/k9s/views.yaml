@@ -12,7 +12,7 @@ views:
       - CPU
       - MEM
       - "%MEM/R"
-      - "%MEM/L"
+      #- "%MEM/L"
       - IP
       #- NODE
       - STATUS
