@@ -70,6 +70,9 @@ return {
         black = {
           prepend_args = { "--line-length=120" },
         },
+        prettier = {
+          prepend_args = { "--prose-wrap", "preserve", "--tab-width", "2", "--use-tabs", "false" },
+        },
       },
       format_on_save = format_on_save,
       formatters_by_ft = {
@@ -87,7 +90,7 @@ return {
         -- yaml = { "prettier" }, -- yaml = { { "yq" } },
         --xml = { "xmlformat" },
         -- yaml = { { "prettier", "yamlfmt" } },
-        markdown = { "prettier" },
+        --markdown = { "prettier" },
         --graphql = { "prettier" },
         python = { "isort", "black" },
         terraform = { "terraform_fmt" },
