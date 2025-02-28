@@ -99,6 +99,9 @@ vpn-globalprotect-host:
     --servercert pin-sha256:o5uZ5Kl+5Cg/tDzWHiIOPHR8Y7rq7wXc7IuX9lLbnkM= \
     194.140.17.69
 
+vpn-fortinet-gui:
+  distrobox-host-exec /bin/bash -c 'GDK_BACKEND=x11 DISPLAY=:0 /opt/forticlient/gui/FortiClient-linux-x64/FortiClient'
+
 vpn-fortinet-host:
   distrobox-host-exec sudo openconnect --protocol=fortinet -u miguel.lopez madrid.logalty.com:10443
 
