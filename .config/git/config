@@ -4,6 +4,7 @@
 	editor = nvim
 	pager = delta
 	hooksPath = ~/.config/git/hooks
+	compression = 0
 [credential]
 	helper = store
 [push]
@@ -16,3 +17,6 @@
 ; [user]
 ;   name = Miguel Lopez Ruiz
 ;   email = miguel.lr96@gmail.com
+[http]
+	postBuffer = 524288000
+	maxRequestBuffer = 524288000

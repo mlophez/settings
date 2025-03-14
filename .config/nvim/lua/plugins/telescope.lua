@@ -1,3 +1,21 @@
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
+
+local function open_multiple_files(prompt_bufnr)
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local entries = picker:get_multi_selection()
+
+  actions.close(prompt_bufnr)
+
+  if #entries > 0 then
+    for _, entry in ipairs(entries) do
+      vim.cmd("edit " .. entry.value)
+    end
+  else
+    vim.cmd("edit " .. action_state.get_selected_entry().value)
+  end
+end
+
 return {
   "nvim-telescope/telescope.nvim",
   cmd = "Telescope",
@@ -33,7 +51,7 @@ return {
         i = {
           ["<esc>"] = "close",
           ["<C-c>"] = "close",
-          --["<TAB>"] = "close",
+          ["<C-o>"] = open_multiple_files,
         },
         n = {
           ["<esc>"] = "close",
