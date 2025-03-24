@@ -105,6 +105,24 @@ vpn-fortinet-gui:
 vpn-fortinet-host:
   distrobox-host-exec sudo openconnect --protocol=fortinet -u miguel.lopez madrid.logalty.com:10443
 
+vpn-fortinet-host-cookie:
+  #!/bin/bash
+  VPN_URL="madrid.logalty.com:10443"
+  USERNAME="miguel.lopez"
+  # Abrir la URL en el navegador predeterminado
+  xdg-open "https://$VPN_URL" &>/dev/null || open "https://$VPN_URL" &>/dev/null
+  # Pedir manualmente la cookie
+  echo "Abre el navegador, inicia sesión en la VPN y copia la cookie 'SVPNCOOKIE'."
+  read -p "Introduce el valor de SVPNCOOKIE: " SVPNCOOKIE
+  # Verificar si la cookie fue ingresada
+  if [[ -z "$SVPNCOOKIE" ]]; then
+      echo "⚠️ No ingresaste la cookie. Saliendo..."
+      exit 1
+  fi
+  # Conectar con OpenConnect
+  echo "Conectando a la VPN..."
+  distrobox-host-exec sudo openconnect --protocol=fortinet -u "${USERNAME}" --cookie "SVPNCOOKIE=${SVPNCOOKIE}" --force-dpd=5 --disable-ipv6 "${VPN_URL}"
+
 argocd-dev:
   kubectl --context dev -n argocd port-forward svc/argocd-server 8080:80
 

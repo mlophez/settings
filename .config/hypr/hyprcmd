@@ -105,6 +105,26 @@ cmd_portals() {
   return 0
 }
 
+# AUDIO
+cmd_audio() {
+  #systemctl --user stop pipewire || /bin/true
+  #systemctl --user stop wireplumber || /bin/true
+  #systemctl --user stop pipewire-pulse || /bin/true
+  pkill -f "pipewire" || /bin/true
+  pkill -f "wireplumber" || /bin/true
+  pkill -f "pipewire-pulse" || /bin/true
+  sleep 3
+  /usr/bin/pipewire &>/tmp/audio.log &
+  /usr/bin/pipewire-pulse &>/tmp/audio.log &
+  /usr/bin/wireplumber &>/tmp/audio.log
+  #run "/usr/bin/pipewire"; sleep 1
+  #run "/usr/bin/wireplumber"; sleep 1
+  #run "/usr/bin/pipewire-pulse"; sleep 1
+  return 0
+}
+
+
+
 # PANEL
 cmd_panel() {
   type brightnessctl &>/dev/null && \
