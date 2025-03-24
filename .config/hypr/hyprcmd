@@ -33,7 +33,7 @@ cmd_init() {
   # INSTALL
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
 
-  # Portals
+  # AUDIO
   cmd_audio
 
   # Portals
@@ -110,20 +110,28 @@ cmd_portals() {
 
 # AUDIO
 cmd_audio() {
-  # systemctl --user stop pipewire || /bin/true
-  # systemctl --user stop wireplumber || /bin/true
-  # systemctl --user stop pipewire-pulse || /bin/true
+  echo "[+] Stopping services..."
+  # systemctl --user stop pipewire-pulse.socket || /bin/true
+  # systemctl --user stop pipewire-pulse.socket || /bin/true
+  # systemctl --user stop pipewire              || /bin/true
+  # systemctl --user stop wireplumber           || /bin/true
+  # systemctl --user stop pipewire-pulse        || /bin/true
+
+  echo "[+] Killing processes..."
   pkill -f "pipewire" || /bin/true
   pkill -f "wireplumber" || /bin/true
   pkill -f "pipewire-pulse" || /bin/true
-  sleep 3
-  run "/usr/bin/pipewire &>/tmp/audio.log"; sleep 1
-  run "/usr/bin/wireplumber &>/tmp/audio.log"; sleep 1
-  run "/usr/bin/pipewire-pulse &>/tmp/audio.log"; sleep 1
+
+  echo "[+] Cleaning socket..."
+  rm -rf /run/user/${UID}/pipewire* || /bin/true
+  rm -rf /run/user/${UID}/pulse || /bin/true
+
+  echo "[+] Starting services..."
+  run "/usr/bin/pipewire";
+  run "/usr/bin/wireplumber";
+  run "/usr/bin/pipewire-pulse";
+
   return 0
-  # /usr/bin/pipewire &>/tmp/audio.log &
-  # /usr/bin/pipewire-pulse &>/tmp/audio.log &
-  # /usr/bin/wireplumber &>/tmp/audio.log
 }
 
 
