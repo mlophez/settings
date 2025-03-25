@@ -12,7 +12,7 @@ plugins:
     confirm: true
     args:
       - -c
-      - "kubectl --kubeconfig=$KUBECONFIG debug -it --context $CONTEXT -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.13 --share-processes -- bash"
+      - "kubectl --kubeconfig=$KUBECONFIG debug -it --context $CONTEXT --profile=netadmin -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.13 --share-processes -- bash"
 
   stern:
     shortCut: Ctrl-Y
