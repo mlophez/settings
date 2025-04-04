@@ -34,7 +34,7 @@ cmd_init() {
   ln -sf $HOME/.config/hypr/hyprcmd $HOME/.local/bin/deskcmd
 
   # AUDIO
-  cmd_audio
+  cmd_audio "start"
 
   # Portals
   cmd_portals
@@ -104,7 +104,8 @@ cmd_portals() {
   run "/usr/lib/xdg-desktop-portal-hyprland"
   run "/usr/lib/xdg-desktop-portal-wlr -r"
   run "/usr/lib/xdg-desktop-portal-gtk -r"
-  sleep 1; run "/usr/lib/xdg-desktop-portal -r"
+  run "/usr/lib/xdg-desktop-portal -r"
+  #sleep 1; run "/usr/lib/xdg-desktop-portal -r"
   return 0
 }
 
@@ -126,10 +127,12 @@ cmd_audio() {
   rm -rf /run/user/${UID}/pipewire* || /bin/true
   rm -rf /run/user/${UID}/pulse || /bin/true
 
-  echo "[+] Starting services..."
-  run "/usr/bin/pipewire";
-  run "/usr/bin/wireplumber";
-  run "/usr/bin/pipewire-pulse";
+  [[ "$1" != "start" ]] && sleep 5
+
+  echo "[+] Starting services...";
+  run "PIPEWIRE_DEBUG=4 /usr/bin/pipewire &>/tmp/pipewire.log";
+  run "/usr/bin/wireplumber &>/tmp/wireplumber.log";
+  run "/usr/bin/pipewire-pulse &>/tmp/pipewire-pulse.log";
 
   return 0
 }

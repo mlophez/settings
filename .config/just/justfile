@@ -33,6 +33,13 @@ tunnel-db-test:
   --parameters '{"host":["logalty.chfbhhgsmzca.eu-south-2.rds.amazonaws.com"],"portNumber":["1521"],"localPortNumber":["1523"]}' \
   --profile qa
 
+tunnel-db-dev:
+  aws ssm start-session --cli-read-timeout 8000 \
+  --target i-01a83003abcf23341 \
+  --document-name AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters '{"host":["oradb01.cf6k4wckidbw.eu-south-2.rds.amazonaws.com"],"portNumber":["1521"],"localPortNumber":["1521"]}' \
+  --profile dev
+
 tunnel-db-mutua:
   aws ssm start-session --cli-read-timeout 8000 \
   --target i-0de20ea701c7b5a58 \

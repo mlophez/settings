@@ -102,7 +102,7 @@ alias se="settings"
 
 # DISTROBOX
 alias ds="distrobox-menu"
-alias sys="distrobox-host-exec bash"
+alias user="distrobox-host-exec bash"
 alias admin="distrobox-host-exec sudo bash"
 alias root="distrobox-host-exec sudo bash"
 
