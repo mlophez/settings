@@ -93,6 +93,7 @@ return {
         --markdown = { "prettier" },
         --graphql = { "prettier" },
         python = { "isort", "black" },
+        go = { "gofmt" },
         terraform = { "terraform_fmt" },
         jsonnet = { "jsonnetfmt" },
         rust = { "rustfmt" },
