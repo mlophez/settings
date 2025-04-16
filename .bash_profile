@@ -48,6 +48,8 @@ start-hyprland-distrobox() {
 
   export PATH=${HOME}/.local/bin:${PATH}
   export TZ=Europe/Madrid
+  # export HYPRLAND_TRACE=1
+  # export AQ_TRACE=1
   exec distrobox enter ${DISTROBOX_NAME} -- systemd-run --user --scope --unit=hyprland.scope --slice=session.slice -- Hyprland
 }
 
