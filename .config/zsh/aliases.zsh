@@ -121,3 +121,4 @@ alias random-password="openssl rand -base64 18"
 # YOUTUBE
 alias youtube="mpv --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
 alias yt="youtube"
+alias youtube-download-mp3="yt-dlp -x --audio-format mp3"

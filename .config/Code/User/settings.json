@@ -32,5 +32,9 @@
     "editor.wordBasedSuggestions": "off"
   },
   "explorer.confirmDragAndDrop": false,
-  "terminal.integrated.defaultProfile.linux": "zsh"
+  "terminal.integrated.defaultProfile.linux": "zsh",
+  "[yaml]": {
+    "diffEditor.ignoreTrimWhitespace": false
+  },
+  "diffEditor.renderSideBySide": false
 }
