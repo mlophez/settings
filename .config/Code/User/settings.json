@@ -36,5 +36,7 @@
   "[yaml]": {
     "diffEditor.ignoreTrimWhitespace": false
   },
-  "diffEditor.renderSideBySide": false
+  "diffEditor.renderSideBySide": false,
+  "docker.extension.enableComposeLanguageServer": false,
+  "github.copilot.nextEditSuggestions.enabled": true
 }
