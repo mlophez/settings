@@ -7,8 +7,7 @@ return {
 
     lint.linters_by_ft = {
       -- go = { "golangcilint" },
-      --python = { "pylint" },
-      --python = { "pylint", "mypy" },
+      python = { "ruff",  "mypy" }, -- "pylint"
       -- terraform = { "tflint", "trivy" },
     }
 

@@ -92,7 +92,7 @@ return {
         -- yaml = { { "prettier", "yamlfmt" } },
         --markdown = { "prettier" },
         --graphql = { "prettier" },
-        python = { "isort", "black" },
+        python = { "ruff_format" }, -- { "isort", "black" },
         go = { "gofmt" },
         terraform = { "terraform_fmt" },
         jsonnet = { "jsonnetfmt" },

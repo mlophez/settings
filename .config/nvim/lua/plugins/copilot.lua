@@ -1,7 +1,7 @@
 return {
   "github/copilot.vim",
   -- "zbirenbaum/copilot.lua",
-  enabled = false,
+  enabled = true,
   lazy = false,
   config = function()
     vim.g.copilot_no_tab_map = true
