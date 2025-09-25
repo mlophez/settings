@@ -67,8 +67,21 @@ return {
         yq = {
           args = { "-Y", "--explicit-start", "--width=150" },
         },
+        isort = {
+          command = "isort",
+          args = { "--stdout", "--profile", "black", "-" },
+          stdin = true,
+        },
         black = {
-          prepend_args = { "--line-length=120" },
+          prepend_args = { "--line-length=180" },
+        },
+        ruff_format = {
+          prepend_args = { "--line-length=180" },
+        },
+        ruff_fix = {
+          command = "ruff",
+          args = { "check", "--fix", "--stdin-filename", "$FILENAME", "-" },
+          stdin = true,
         },
         prettier = {
           prepend_args = { "--prose-wrap", "preserve", "--tab-width", "2", "--use-tabs", "false" },
@@ -86,13 +99,13 @@ return {
         --typescriptreact = { "prettier" },
         --astro = {},
         --svelte = { "prettier" },
-        json = { { "jq" } },
+        json = { "jq" },
         -- yaml = { "prettier" }, -- yaml = { { "yq" } },
         --xml = { "xmlformat" },
         -- yaml = { { "prettier", "yamlfmt" } },
         --markdown = { "prettier" },
         --graphql = { "prettier" },
-        python = { "ruff_format" }, -- { "isort", "black" },
+        python = { "isort", "ruff_fix", "ruff_format" }, -- { "isort", "black" },
         go = { "gofmt" },
         terraform = { "terraform_fmt" },
         jsonnet = { "jsonnetfmt" },
