@@ -44,6 +44,9 @@ export HELM_CONFIG_HOME="$HOME/.config/helm"
 # ANSIBLE
 export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
+# TERRAFORM
+export TF_PLUGIN_CACHE_DIR="$HOME/.local/share/terraform/plugin-cache"
+
 # PYTHON
 export PYLINTRC="$HOME/.config/pylintrc"
 

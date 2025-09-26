@@ -30,7 +30,7 @@ keybinds clear-defaults=true {
   }
   normal {
     // Zellij no admite Alt+Space, Alt+Space = F10 en alacritty y wezterm
-    bind "F10" "Ctrl s" { SwitchToMode "tmux"; }
+    bind "F10"    { SwitchToMode "tmux"; }
     bind "Alt o"  { SwitchToMode "scroll"; }
     bind "Alt ,"  { SwitchToMode "renametab"; TabNameInput 0; }
 
