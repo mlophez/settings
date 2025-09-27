@@ -1,9 +1,11 @@
 return {
-  "github/copilot.vim",
-  -- "zbirenbaum/copilot.lua",
-  --lazy = false,
-  config = function()
-    vim.g.copilot_no_tab_map = true
-    vim.api.nvim_set_keymap("i", "<A-Tab>", 'copilot#Accept("<CR>")', { expr = true, silent = true, noremap = true })
-  end
+  "zbirenbaum/copilot.lua",
+  cmd = "Copilot",
+  event = "InsertEnter",
+  opts = {
+      copilot_model = "claude-sonnet-4",
+  },
+  --dependencies = {
+  --  "copilotlsp-nvim/copilot-lsp", -- (optional) for NES functionality
+  --},
 }
