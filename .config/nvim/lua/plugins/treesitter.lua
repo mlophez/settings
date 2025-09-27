@@ -1,8 +1,9 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	main = "nvim-treesitter.configs",
-	build = ":TSUpdate",
 	lazy = false,
+  branch = "master",
+  version = false, -- last release is way too old and doesn't work on Windows
+	build = ":TSUpdate",
 	priority = 100,
 	--event = "VimEnter",
 	--cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },

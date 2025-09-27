@@ -1,8 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
-  enabled = true,
   lazy = false,
-  version = false,
   --event = { "BufReadPost", "BufNewFile" },
   dependencies = {
     "aznhe21/actions-preview.nvim",
