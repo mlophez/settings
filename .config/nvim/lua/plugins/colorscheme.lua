@@ -1,6 +1,7 @@
 return {
   {
     "Mofiqul/dracula.nvim",
+    enabled = false,
     name = "dracula",
     priority = 10000,
   },
@@ -8,6 +9,7 @@ return {
   {
     "folke/tokyonight.nvim",
     name = "tokyonight",
+    enabled = false,
     priority = 10000,
     opts = { style = "moon" },
   },
@@ -35,6 +37,7 @@ return {
   {
     "gbprod/nord.nvim",
     name = "nord",
+    enabled = false,
     priority = 10000,
     install = {
       colorscheme = { "nord" },
