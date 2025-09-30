@@ -2,6 +2,9 @@ return {
   "yetone/avante.nvim",
   event = "VeryLazy",
   version = false, -- Never set this value to "*"! Never!
+  keys = {
+    { "<leader>i", "<cmd>AvanteToggle<cr>", silent = true, desc = "Avante Toggle" },
+  },
   opts = {
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     ---@type Provider

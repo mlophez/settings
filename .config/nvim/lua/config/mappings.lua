@@ -23,6 +23,9 @@ vim.keymap.set("n", "<leader><leader>", ":", { noremap = true, silent = false })
 vim.keymap.set("n", "<leader>", "<nop>", opts)
 vim.keymap.set("n", ",", "<nop>", opts)
 
+-- Replace in visual
+vim.keymap.set("v", "<leader><leader>", [[:s/]], { noremap = true })
+
 -- Navigation
 vim.keymap.set("n", "j", "h", opts)
 vim.keymap.set("n", "k", "j", opts)
