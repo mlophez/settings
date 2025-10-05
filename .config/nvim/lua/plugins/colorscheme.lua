@@ -3,14 +3,14 @@ return {
     "Mofiqul/dracula.nvim",
     enabled = false,
     name = "dracula",
-    priority = 10000,
+    priority = 200,
   },
 
   {
     "folke/tokyonight.nvim",
     name = "tokyonight",
     enabled = false,
-    priority = 10000,
+    priority = 200,
     opts = { style = "moon" },
   },
 
@@ -20,7 +20,7 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = false,
-    priority = 10000,
+    priority = 200,
     config = function()
       require("catppuccin").setup({
         flavour = "mocha",
@@ -38,7 +38,7 @@ return {
     "gbprod/nord.nvim",
     name = "nord",
     enabled = false,
-    priority = 10000,
+    priority = 200,
     install = {
       colorscheme = { "nord" },
     },
@@ -48,7 +48,7 @@ return {
     "xiyaowong/transparent.nvim",
     enabled = false,
     lazy = false,
-    priority = 10000,
+    priority = 200,
 
     opts = {     -- Optional, you don't have to run setup.
       groups = { -- table: default groups

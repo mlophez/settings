@@ -1,6 +1,6 @@
 return {
   "folke/snacks.nvim",
-  priority = 1000,
+  priority = 102,
   lazy = false,
   opts = {
     bigfile = { enabled = true },

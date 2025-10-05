@@ -4,58 +4,35 @@ return {
   branch = "master",
   version = false, -- last release is way too old and doesn't work on Windows
 	build = ":TSUpdate",
-	priority = 100,
-	--event = "VimEnter",
-	--cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
+	priority = 101,
+  main = "nvim-treesitter.configs",
 	opts = {
-		ensure_installed = {
-			"bash",
-			"python",
-			"go",
-			"c",
-			"cpp",
-			"json",
-			"lua",
-			"typescript",
-			"tsx",
-			"html",
-			"css",
-			"javascript",
-			"typescript",
-			"rust",
-			"java",
-			"yaml",
-			"markdown",
-			"markdown_inline",
-			"hcl",
-			"http",
-			"json",
-			"xml",
-			"sql",
-			"terraform",
-			"dart",
-			"query",
-			"astro",
-		},
-		ignore_install = { "phpdoc" },
 		sync_install = false,
 		auto_install = true,
+
 		highlight = {
 			enable = true,
-			use_languagetree = true,
-			disable = { "css" },
+      -- use_languagetree = true,
+			-- disable = { "css" },
+      -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+      disable = function(lang, buf)
+          local max_filesize = 100 * 1024 -- 100 KB
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+          if ok and stats and stats.size > max_filesize then
+              return true
+          end
+      end,
 		},
-	},
-	--init = function()
-	--	vim.opt.foldmethod = "expr"
-	--	vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+    indent = { enable = true },
+    folds = { enable = true },
 
-	--	local treesitterau = vim.api.nvim_create_augroup("treesitter", { clear = true })
-	--	vim.api.nvim_create_autocmd({ "BufReadPost", "FileReadPost" }, {
-	--		group = treesitterau,
-	--		callback = function()
-	--			vim.cmd("normal zR")
-	--		end,
-	--	})
-	--end,
+		ignore_install = { "phpdoc" },
+    ensure_installed = {
+      "astro",       "bash",      "c",         "cpp",       "css",
+      "dart",        "go",        "hcl",       "html",      "http",
+      "java",        "javascript","json",      "lua",       "markdown",
+      "markdown_inline","python", "query",     "rust",      "sql",
+      "terraform",   "tsx",       "typescript","xml",       "yaml",
+    },
+	},
 }

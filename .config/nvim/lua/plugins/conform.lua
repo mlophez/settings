@@ -75,9 +75,6 @@ return {
         black = {
           prepend_args = { "--line-length=180" },
         },
-        ruff_format = {
-          prepend_args = { "--line-length=180" },
-        },
         ruff_fix = {
           command = "ruff",
           args = { "check", "--fix", "--stdin-filename", "$FILENAME", "-" },

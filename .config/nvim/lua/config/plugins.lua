@@ -20,6 +20,7 @@ require("lazy").setup({
 	lockfile = vim.fn.stdpath("config") .. "/lazy-lock.json",
 	defaults = {
 		lazy = true,
+    priority = 100,
 	},
 	checker = {
 		enabled = false,
