@@ -19,7 +19,7 @@ return {
     -- See :h blink-cmp-config-keymap for defining your own keymap
     keymap = {
       --preset = 'super-tab',
-      preset = 'default',
+      preset = 'enter',
       ["<C-Space>"] = {'show'},
       ["<esc>"] = {'hide'},
     },
