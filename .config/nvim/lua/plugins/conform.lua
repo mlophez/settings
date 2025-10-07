@@ -55,6 +55,7 @@ return {
     end
 
     conform.setup({
+      format_on_save = format_on_save,
       formatters = {
         -- jsonnnet --
         jsonnetfmt = {
@@ -84,7 +85,6 @@ return {
           prepend_args = { "--prose-wrap", "preserve", "--tab-width", "2", "--use-tabs", "false" },
         },
       },
-      format_on_save = format_on_save,
       formatters_by_ft = {
         -- lua = { "stylua" },
         -- html = { "prettier" },
