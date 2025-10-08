@@ -9,7 +9,10 @@ local function open_multiple_files(prompt_bufnr)
 
   if #entries > 0 then
     for _, entry in ipairs(entries) do
-      vim.cmd("edit " .. entry.value)
+      -- Fix name when opeing from fzf: example: terraform_modules.tf:1:1:module
+      -- We only want the file path before the first colon
+      local file_path = entry.value:match("^[^:]+") or entry.value
+      vim.cmd("edit " .. file_path)
     end
   else
     vim.cmd("edit " .. action_state.get_selected_entry().value)
