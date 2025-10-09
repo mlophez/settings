@@ -5,6 +5,20 @@ return {
   keys = {
     { "<leader>i", "<cmd>AvanteToggle<cr>", silent = true, desc = "Avante Toggle" },
   },
+  init = function()
+    -- 👇 ejemplo: keymap local en buffer Avante
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = { "Avante", "AvanteInput" },
+      callback = function()
+        local opts = { buffer = true, silent = true }
+        vim.keymap.set("n", "<BS>", "<cmd>AvanteToggle<cr>", opts)
+        vim.keymap.set("n", "<esc>", "<cmd>AvanteToggle<cr>", opts)
+        vim.keymap.set("n", "<leader>q", "<cmd>AvanteToggle<cr>", opts)
+        vim.keymap.set("n", "c", "<cmd>AvanteClear<cr>", opts)
+        vim.keymap.set("n", "n", "<cmd>AvanteChatNew<cr>", opts)
+      end,
+    })
+  end,
   opts = {
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     ---@type Provider

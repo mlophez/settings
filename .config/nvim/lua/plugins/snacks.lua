@@ -4,11 +4,11 @@ return {
   lazy = false,
   opts = {
     bigfile = { enabled = true },
-    -- bufdelete = { enabled = true },
     quickfile = { enabled = true },
-    rename = { enabled = true },
     lazygit = { enabled = true },
     scroll = { enabled = true }
+    -- rename = { enabled = false },
+    -- bufdelete = { enabled = true },
   },
   keys = {
     { "<leader>cr", function() Snacks.rename.rename_file() end, desc = "Rename File" },
