@@ -13,8 +13,8 @@ configure:
     local dest=$2
     [[ -d $dest ]] && rm -r $dest
     [[ -f $dest ]] && rm $dest
-    [[ -s $dest ]] && rm $dest
     echo $src - $dest
+    mkdir -p $(dirname $dest)
     ln -sf $src $dest
   }
   install $(pwd)/config/wezterm $HOME/.config/wezterm
@@ -25,6 +25,10 @@ configure:
   install $(pwd)/config/nix $HOME/.config/nix
   install $(pwd)/config/git $HOME/.config/git
   install $(pwd)/config/k9s $HOME/.config/k9s
-  install $(pwd)/config/aws $HOME/.aws
-  install $(pwd)/config/ssh $HOME/.ssh
+  install $(pwd)/config/kube/config $HOME/.config/kube/config
+  install $(pwd)/config/aws/config $HOME/.aws/config
+  install $(pwd)/config/ssh/config $HOME/.ssh/config
 
+netskope:
+  mkdir -p $HOME/.local/share/certificates
+  echo | openssl s_client -connect oidc.eu-west-1.amazonaws.com:443 -servername oidc.eu-west-1.amazonaws.com 2>/dev/null | openssl x509 -outform PEM > $HOME/.local/share/certificates/netskope.crt

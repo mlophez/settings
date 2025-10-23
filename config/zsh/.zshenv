@@ -35,6 +35,11 @@ export FZF_DEFAULT_OPTS
 
 # AWS
 export AWS_PROFILE="none"
+# Add netskope CA cert to aws cli if we are working with netskope: Logalty
+if [[ -e $HOME/.local/share/certificates/netskope.crt ]]; then
+  export AWS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+  export REQUESTS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+fi
 
 # KUBERNETES
 export KUBECONFIG="$HOME/.config/kube/config"
