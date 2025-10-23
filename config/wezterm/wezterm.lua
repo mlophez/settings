@@ -13,12 +13,12 @@ end
 
 return {
   color_scheme = "Catppuccin Mocha",
-  font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false }),
-  font_size = 11.0,
+  --font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false }),
+  font_size = 14.0,
   initial_rows = 30,
   initial_cols = 140,
   enable_wayland = true,
-  window_decorations = "NONE",
+  -- window_decorations = "NONE",
   window_close_confirmation = 'NeverPrompt',
   window_background_opacity = 0.95,
   -- window_background_image = os.getenv("HOME") .. '/.local/share/backgrounds/Img-10.png',
@@ -26,7 +26,7 @@ return {
   text_background_opacity = 1.0,
   use_fancy_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
-  default_prog = { "/usr/bin/zsh" },
+  default_prog = { "zsh" },
   set_environment_variables = {
     ZDOTDIR = os.getenv("HOME") .. "/.config/zsh",
   },

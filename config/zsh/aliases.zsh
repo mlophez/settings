@@ -95,7 +95,8 @@ alias terraspace='docker run -ti -v $(pwd):/workspace -w /workspace ghcr.io/bolt
 alias d="deactivate"
 
 # ZELLIJ
-alias zel="zellij attach 0 || exec systemd-run --user --scope --unit=zellij.scope --slice=app.slice -- zellij -s 0"
+#alias zel="zellij attach 0 || exec systemd-run --user --scope --unit=zellij.scope --slice=app.slice -- zellij -s 0"
+alias zel="zellij attach 0 || exec zellij -s 0"
 
 # SETTINGS
 alias se="settings"
