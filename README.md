@@ -10,6 +10,12 @@ container system start
 # Run home-manager first time
 nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
 
+# Install raycast
+brew install --cask raycast
+
+security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > ~/system-ca.pem
+security find-certificate -a -p /Library/Keychains/System.keychain >> ~/system-ca.pem
+
 ```
 
 

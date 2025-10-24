@@ -40,6 +40,7 @@ configure:
     mkdir -p $(dirname $dest)
     ln -sf $src $dest
   }
+  install $(pwd) $HOME/.local/share/settings
   install $(pwd)/config/wezterm $HOME/.config/wezterm
   install $(pwd)/config/zsh $HOME/.config/zsh
   install $(pwd)/config/zsh/zshrc $HOME/.zshrc

@@ -10,7 +10,7 @@ export FPATH=${FPATH}:${HOME}/.config/zsh/functions
 # SHELL
 export HOSTNAME=$(hostname)
 export EDITOR=nvim
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 # XDG
 export XDG_STATE_HOME=$HOME/.local/share/state

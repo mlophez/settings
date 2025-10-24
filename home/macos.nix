@@ -23,9 +23,9 @@
     pkgs.curlie
     # ZSH
     #pkgs.zsh
-    #pkgs.zsh-completions
-    #pkgs.zsh-autosuggestions
-    #pkgs.zsh-syntax-highlighting
+    pkgs.zsh-completions
+    pkgs.zsh-autosuggestions
+    pkgs.zsh-syntax-highlighting
     # SHELL
     pkgs.fzf
     pkgs.expect
@@ -36,6 +36,7 @@
     pkgs.lsd
     pkgs.colordiff
     pkgs.bat
+    pkgs.gnused
     pkgs.dialog
     pkgs.tmux
     pkgs.zellij

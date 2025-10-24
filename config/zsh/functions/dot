@@ -1,7 +1,8 @@
 #!/usr/bin/zsh
 
 dot@git() {
-  command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
+  #command git --git-dir=$HOME/.local/share/settings --work-tree=$HOME "$@"
+  (cd $HOME/.local/share/settings; command git "$@")
 }
 
 dot@dot-get-windows-files() {
@@ -30,13 +31,14 @@ dot@status() {
   [ -e "$KUBECONFIG" ] && \
     sed "s/current-context:.*$/current-context: none/g" -i $KUBECONFIG
 
-  # add
-  set +e
-  dot@git add -u
-  while read -r line; do
-    eval dot@git add $line &>/dev/null
-  done < $HOME/.config/dotfiles
-  set -e
+  # # add
+  # set +e
+  # dot@git add -u
+  # while read -r line; do
+  #   eval dot@git add $line &>/dev/null
+  # done < $HOME/.config/dotfiles
+  # set -e
+  dot@git add .
 
   # status
   dot@git status
