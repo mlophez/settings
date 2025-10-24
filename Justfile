@@ -3,14 +3,17 @@
 help:
   @just -u -l
 
+install:
+  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
+
 switch:
-  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure --show-trace
+  home-manager --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure --show-trace
 
 packages:
-  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" packages --flake .#macos  --impure
+  home-manager --extra-experimental-features "nix-command flakes" packages --flake .#macos  --impure
 
 news:
-  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" news --flake .#macos  --impure
+  home-manager --extra-experimental-features "nix-command flakes" news --flake .#macos  --impure
 
 clean:
   nix-collect-garbage --delete-old

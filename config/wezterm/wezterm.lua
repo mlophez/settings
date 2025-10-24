@@ -11,27 +11,38 @@ local if_not_multiplexor = function(key, action)
   end)
 end
 
+local mux = wezterm.mux
+wezterm.on("gui-startup", function(cmd)
+    local tab, pane, window = mux.spawn_window(cmd or {})
+    window:gui_window():maximize()
+end)
+
+-- Config
 return {
   color_scheme = "Catppuccin Mocha",
   --font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false }),
   font_size = 14.0,
-  initial_rows = 30,
-  initial_cols = 140,
+  -- initial_rows = 30,
+  -- initial_cols = 140,
   enable_wayland = true,
-  -- window_decorations = "NONE",
+  --window_decorations = "NONE",
   window_close_confirmation = 'NeverPrompt',
-  window_background_opacity = 0.95,
+  window_background_opacity = 1.0,
+  --macos_window_background_blur = 20,
   -- window_background_image = os.getenv("HOME") .. '/.local/share/backgrounds/Img-10.png',
   win32_system_backdrop = "Mica",
   text_background_opacity = 1.0,
   use_fancy_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
   default_prog = { "zsh" },
-  set_environment_variables = {
-    ZDOTDIR = os.getenv("HOME") .. "/.config/zsh",
-  },
+  --set_environment_variables = {
+  --  ZDOTDIR = os.getenv("HOME") .. "/.config/zsh",
+  --},
+  -- Keyboard
   disable_default_key_bindings = true,
-  debug_key_events = false,
+  debug_key_events = true,
+  -- send_composed_key_when_left_alt_is_pressed = true,
+  send_composed_key_when_right_alt_is_pressed = true,
   keys = { -- showkeys: wezterm show-keys --lua | less
     { mods = "CTRL", key = "C",      action = wezterm.action.CopyTo("Clipboard") },
     { mods = "CTRL", key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
@@ -39,7 +50,13 @@ return {
     { mods = "CTRL", key = "-",      action = wezterm.action.DecreaseFontSize },
     { mods = "CTRL", key = "0",      action = wezterm.action.ResetFontSize },
     { mods = "CTRL", key = "X",      action = wezterm.action.ActivateCopyMode },
-    --{ mods = "ALT",  key = "t",     action = wezterm.action.SpawnTab({ DomainName = "WSL:Archlinux" }) },
+    -- { mods = "ALT",  key = "t",     action = wezterm.action.SpawnTab({ DomainName = "WSL:Archlinux" }) },
+    -- MacOS
+    { mods = "CMD", key = "C",      action = wezterm.action.CopyTo("Clipboard") },
+    { mods = "CMD", key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
+    { mods = "CMD", key = "+",      action = wezterm.action.IncreaseFontSize },
+    { mods = "CMD", key = "-",      action = wezterm.action.DecreaseFontSize },
+    { mods = "CMD", key = "0",      action = wezterm.action.ResetFontSize },
     -- Adapter for zellij prefix
     { mods = "ALT",  key = "Space",  action = wezterm.action.SendKey({ key = "F10" }) },
     -- KEYS
@@ -47,6 +64,7 @@ return {
     { mods = "ALT",  key = "k",      action = wezterm.action.SendKey({ key = "DownArrow" }) },
     { mods = "ALT",  key = "l",      action = wezterm.action.SendKey({ key = "UpArrow" }) },
     { mods = "ALT",  key = "raw:47", action = wezterm.action.SendKey({ key = "RightArrow" }) },
+    { mods = "ALT",  key = "raw:41", action = wezterm.action.SendKey({ key = "RightArrow" }) }, -- MacOS
     -- TABS
     { mods = "ALT",  key = 'n',      action = if_not_multiplexor({ mods = "ALT", key = 'n' }, wezterm.action.SpawnTab('CurrentPaneDomain')) },
     { mods = "ALT",  key = '1',      action = if_not_multiplexor({ mods = "ALT", key = '1' }, wezterm.action.ActivateTab(0)) },

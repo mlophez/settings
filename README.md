@@ -7,10 +7,10 @@ brew install --cask container
 container system start
 
 # Install nix from determinate
+# Run home-manager first time
+nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
 
-nix flake init -t github:LnL7/nix-darwin#minimal
-
-nix profile install .#default
-nix profile install nixpkgs#neovim
-nix profile install nixpkgs#stow
 ```
+
+
+
