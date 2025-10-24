@@ -16,6 +16,14 @@ brew install --cask raycast
 security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > ~/system-ca.pem
 security find-certificate -a -p /Library/Keychains/System.keychain >> ~/system-ca.pem
 
+# VSCODE
+# flutter
+
+# INSTALAR FLUTTER
+xcode-select --install
+sudo xcodebuild -license accept
+xcode-select -p
+
 ```
 
 
