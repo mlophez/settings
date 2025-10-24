@@ -1,10 +1,27 @@
+# Help
+[private]
 help:
-  just -l
+  @just -u -l
 
-install:
+switch:
+  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure --show-trace
+
+packages:
+  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" packages --flake .#macos  --impure
+
+news:
+  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" news --flake .#macos  --impure
+
+clean:
+  nix-collect-garbage --delete-old
+
+build:
   #!/bin/bash
-  export NIXPKGS_ALLOW_UNFREE=1
-  nix profile add .#install
+  DATE=$(date '+%Y%m%d')
+  podman build -t workstation:${DATE} .
+  podman tag workstation:latest workstation:backup
+  podman tag workstation:${DATE} workstation:latest
+  podman image prune
 
 configure:
   #!/bin/bash
@@ -19,6 +36,9 @@ configure:
   }
   install $(pwd)/config/wezterm $HOME/.config/wezterm
   install $(pwd)/config/zsh $HOME/.config/zsh
+  install $(pwd)/config/zsh/zshrc $HOME/.zshrc
+  install $(pwd)/config/zsh/zshenv $HOME/.zshenv
+  install $(pwd)/config/zsh/zprofile $HOME/.zprofile
   install $(pwd)/config/starship.toml $HOME/.config/starship.toml
   install $(pwd)/config/zellij $HOME/.config/zellij
   install $(pwd)/config/tmux $HOME/.config/tmux

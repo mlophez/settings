@@ -1,11 +1,11 @@
 #!/usr/bin/zsh
 
 # ZSH
-export ZDOTDIR=$HOME/.config/zsh
+# export ZDOTDIR=$HOME/.config/zsh
 export KEYTIMEOUT=1
 
 export PATH=${PATH}:${HOME}/.config/scripts
-export FPATH=${FPATH}:${ZDOTDIR}/functions
+export FPATH=${FPATH}:${HOME}/.config/zsh/functions
 
 # SHELL
 export SHELL=/usr/bin/zsh
@@ -95,6 +95,10 @@ export PATH=${PATH}:${HOME}/.local/bin
 
 # PODMAN
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
+
+# BREW
+[[ "$(uname)" == "Darwin" ]] && \
+  export PATH=${PATH}:/opt/homebrew/bin
 
 # NIX
 export PATH=${PATH}:${HOME}/.nix-profile/bin
