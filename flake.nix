@@ -23,17 +23,26 @@
 
   outputs = { nixpkgs, home-manager, ... }@inputs:
     let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
     in {
+      # Linux machine
+      homeConfigurations."linux" = home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          overlays = [ inputs.nixgl.overlay ];
+          config.allowUnfree = true;
+        };
+        hypr = import inputs.hyprland {
+          system = "x86_64-linux";
+        };
+        modules = [ ./home/linux.nix ];
+      };
+      # MacOS Machine
       homeConfigurations."macos" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        modules = [ 
-          ./home/macos.nix
-        ];
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          config.allowUnfree = true;
+        };
+        modules = [ ./home/macos.nix ];
       };
     };
 }

@@ -8,7 +8,6 @@ export PATH=${PATH}:${HOME}/.config/scripts
 export FPATH=${FPATH}:${HOME}/.config/zsh/functions
 
 # SHELL
-export SHELL=/usr/bin/zsh
 export HOSTNAME=$(hostname)
 export EDITOR=nvim
 export TERM=xterm-256color

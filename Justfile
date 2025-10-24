@@ -6,7 +6,7 @@ help:
 install:
   nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
 
-switch:
+switch: && clean
   home-manager --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure --show-trace
 
 packages:
@@ -14,6 +14,9 @@ packages:
 
 news:
   home-manager --extra-experimental-features "nix-command flakes" news --flake .#macos  --impure
+
+upgrade: && switch clean
+  nix flake update
 
 clean:
   nix-collect-garbage --delete-old
