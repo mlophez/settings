@@ -11,8 +11,8 @@ export FPATH=${FPATH}:${HOME}/.config/zsh/functions
 export HOSTNAME=$(hostname)
 export EDITOR=nvim
 # export TERM=xterm-256color
-
-# XDG
+export PATH=${PATH}:/usr/local/bin
+export PATH=${PATH}:${HOME}/.local/bin
 export XDG_STATE_HOME=$HOME/.local/share/state
 
 # SPACESHIP
@@ -82,10 +82,6 @@ export PATH=${PATH}:$HOME/.pub-cache/bin
 
 # RUBY
 export GEM_HOME=$HOME/.local/share/ruby
-
-# PATH
-export PATH=${PATH}:/usr/local/bin
-export PATH=${PATH}:${HOME}/.local/bin
 
 # PODMAN
 export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
