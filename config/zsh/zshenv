@@ -103,8 +103,11 @@ if [[ -e $HOME/.local/share/certificates/netskope.crt ]]; then
   export AWS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
   export REQUESTS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
   export CURL_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+  export NODE_EXTRA_CA_CERTS="$HOME/.local/share/certificates/netskope.crt"
+  export GIT_SSL_CAINFO="$HOME/.local/share/certificates/netskope.crt"
+  export SSL_CERT_FILE="$HOME/.local/share/certificates/netskope.crt"
+  export REQUESTS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
 fi
 
 typeset -U path
 typeset -U fpath
-export PATH="/Users/miguel.lopez/Flutter/flutter/bin:$PATH"
