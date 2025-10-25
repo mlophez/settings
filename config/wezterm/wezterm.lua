@@ -1,16 +1,5 @@
 local wezterm = require("wezterm")
 
-local if_not_multiplexor = function(key, action)
-  return wezterm.action_callback(function(win, pane)
-    local pname = pane:get_foreground_process_name()
-    if pname and (string.match(pname, "zellij") or string.match(pname, "tmux")) then
-      win:perform_action(wezterm.action.SendKey(key), pane)
-    else
-      win:perform_action(action, pane)
-    end
-  end)
-end
-
 local mux = wezterm.mux
 wezterm.on("gui-startup", function(cmd)
     local tab, pane, window = mux.spawn_window(cmd or {})
@@ -20,12 +9,8 @@ end)
 -- Config
 return {
   color_scheme = "Catppuccin Mocha",
-  -- font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Regular", italic = false }),
   font_size = 14.0,
-  -- initial_rows = 30,
-  -- initial_cols = 140,
   enable_wayland = true,
-  -- window_decorations = "NONE",
   window_close_confirmation = 'NeverPrompt',
   window_background_opacity = 1.0,
   win32_system_backdrop = "Mica",
@@ -58,17 +43,30 @@ return {
     { mods = "ALT",  key = "l",      action = wezterm.action.SendKey({ key = "UpArrow" }) },
     { mods = "ALT",  key = "raw:47", action = wezterm.action.SendKey({ key = "RightArrow" }) },
     { mods = "ALT",  key = "raw:41", action = wezterm.action.SendKey({ key = "RightArrow" }) }, -- MacOS
-    -- TABS (Intercept when not use zellij)
-    -- { mods = "ALT",  key = 'n',      action = if_not_multiplexor({ mods = "ALT", key = 'n' }, wezterm.action.SpawnTab('CurrentPaneDomain')) },
-    -- { mods = "ALT",  key = '1',      action = if_not_multiplexor({ mods = "ALT", key = '1' }, wezterm.action.ActivateTab(0)) },
-    -- { mods = "ALT",  key = '2',      action = if_not_multiplexor({ mods = "ALT", key = '2' }, wezterm.action.ActivateTab(1)) },
-    -- { mods = "ALT",  key = '3',      action = if_not_multiplexor({ mods = "ALT", key = '3' }, wezterm.action.ActivateTab(2)) },
-    -- { mods = "ALT",  key = '4',      action = if_not_multiplexor({ mods = "ALT", key = '4' }, wezterm.action.ActivateTab(3)) },
-    -- { mods = "ALT",  key = '5',      action = if_not_multiplexor({ mods = "ALT", key = '5' }, wezterm.action.ActivateTab(4)) },
-    -- { mods = "ALT",  key = '6',      action = if_not_multiplexor({ mods = "ALT", key = '6' }, wezterm.action.ActivateTab(5)) },
-    -- { mods = "ALT",  key = '7',      action = if_not_multiplexor({ mods = "ALT", key = '7' }, wezterm.action.ActivateTab(6)) },
-    -- { mods = "ALT",  key = '8',      action = if_not_multiplexor({ mods = "ALT", key = '8' }, wezterm.action.ActivateTab(7)) },
-    -- { mods = "ALT",  key = '9',      action = if_not_multiplexor({ mods = "ALT", key = '9' }, wezterm.action.ActivateTab(8)) },
-    -- { mods = "ALT",  key = '0',      action = if_not_multiplexor({ mods = "ALT", key = '0' }, wezterm.action.ActivateTab(9)) },
   },
 }
+
+-- Helper function to detect if the foreground process is a multiplexor (zellij or tmux)
+-- local if_not_multiplexor = function(key, action)
+--   return wezterm.action_callback(function(win, pane)
+--     local pname = pane:get_foreground_process_name()
+--     if pname and (string.match(pname, "zellij") or string.match(pname, "tmux")) then
+--       win:perform_action(wezterm.action.SendKey(key), pane)
+--     else
+--       win:perform_action(action, pane)
+--     end
+--   end)
+-- end
+
+-- TABS (Intercept when not use zellij)
+-- { mods = "ALT",  key = 'n',      action = if_not_multiplexor({ mods = "ALT", key = 'n' }, wezterm.action.SpawnTab('CurrentPaneDomain')) },
+-- { mods = "ALT",  key = '1',      action = if_not_multiplexor({ mods = "ALT", key = '1' }, wezterm.action.ActivateTab(0)) },
+-- { mods = "ALT",  key = '2',      action = if_not_multiplexor({ mods = "ALT", key = '2' }, wezterm.action.ActivateTab(1)) },
+-- { mods = "ALT",  key = '3',      action = if_not_multiplexor({ mods = "ALT", key = '3' }, wezterm.action.ActivateTab(2)) },
+-- { mods = "ALT",  key = '4',      action = if_not_multiplexor({ mods = "ALT", key = '4' }, wezterm.action.ActivateTab(3)) },
+-- { mods = "ALT",  key = '5',      action = if_not_multiplexor({ mods = "ALT", key = '5' }, wezterm.action.ActivateTab(4)) },
+-- { mods = "ALT",  key = '6',      action = if_not_multiplexor({ mods = "ALT", key = '6' }, wezterm.action.ActivateTab(5)) },
+-- { mods = "ALT",  key = '7',      action = if_not_multiplexor({ mods = "ALT", key = '7' }, wezterm.action.ActivateTab(6)) },
+-- { mods = "ALT",  key = '8',      action = if_not_multiplexor({ mods = "ALT", key = '8' }, wezterm.action.ActivateTab(7)) },
+-- { mods = "ALT",  key = '9',      action = if_not_multiplexor({ mods = "ALT", key = '9' }, wezterm.action.ActivateTab(8)) },
+-- { mods = "ALT",  key = '0',      action = if_not_multiplexor({ mods = "ALT", key = '0' }, wezterm.action.ActivateTab(9)) },

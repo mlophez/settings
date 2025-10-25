@@ -1,4 +1,11 @@
-# My Settings dot files
+# WORKSTATION
+
+This is all needed to configure mi workstation or my personal laptop
+
+---
+## MAC OS
+
+### Instal homebrew and gui apps
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -26,5 +33,11 @@ xcode-select -p
 
 ```
 
+### NOTES
 
+### SSH KEYS
+
+### KEEPASSXC
+
+### Instalar flutter, android-studio, xcode
 
