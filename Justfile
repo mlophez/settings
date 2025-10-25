@@ -50,6 +50,7 @@ configure:
   install $(pwd)/config/zellij $HOME/.config/zellij
   install $(pwd)/config/tmux $HOME/.config/tmux
   install $(pwd)/config/nix $HOME/.config/nix
+  install $(pwd)/config/nvim $HOME/.config/nvim
   install $(pwd)/config/git $HOME/.config/git
   install $(pwd)/config/k9s $HOME/.config/k9s
   install $(pwd)/config/kube/config $HOME/.config/kube/config
