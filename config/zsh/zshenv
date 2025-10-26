@@ -103,6 +103,7 @@ if [[ -e $HOME/.local/share/certificates/netskope.crt ]]; then
   export GIT_SSL_CAINFO="$HOME/.local/share/certificates/netskope.crt"
   export SSL_CERT_FILE="$HOME/.local/share/certificates/netskope.crt"
   export REQUESTS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+  export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$HOME/.local/share/certificates/netskope.jks -Djavax.net.ssl.trustStorePassword=changeit"
 fi
 
 typeset -U path

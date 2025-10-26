@@ -20,8 +20,19 @@ nix run home-manager/master -- --extra-experimental-features "nix-command flakes
 # Install raycast
 brew install --cask raycast
 
+# NETSKOPE
 security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > ~/system-ca.pem
 security find-certificate -a -p /Library/Keychains/System.keychain >> ~/system-ca.pem
+
+CACERTS="$(dirname $(readlink -f $(which java)))/../lib/security/cacerts"
+cp $CACERTS ~/.local/share/certificates/netskope.jks
+keytool -list -keystore ~/.local/share/certificates/netskope.jks -storepass changeit | head
+keytool -importcert \
+  -trustcacerts \
+  -alias netskope \
+  -file ~/.local/share/certificates/netskope.crt \
+  -keystore ~/.local/share/certificates/netskope.jks \
+  -storepass changeit
 
 # VSCODE
 # flutter
