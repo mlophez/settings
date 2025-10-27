@@ -92,7 +92,7 @@ return {
       vim.lsp.config('gopls', {
         cmd = { "gopls" },
         filetypes = { "go", "gomod", "gowork", "gotmpl" },
-        root_dir = require("lspconfig/util").root_pattern("go.work", "go.mod", ".git"),
+        root_dir = vim.fs.dirname(vim.fs.find({ "go.work", "go.mod", ".git" }, { upward = true })[1]),
         settings = {
           gopls = {
             completeUnimported = true,
@@ -159,13 +159,13 @@ return {
       })
     end
 
-    -- Dart / Flutter
+    -- Dart / Flutter (Deshabilitado por flutter-tools.nvim)
     if vim.fn.executable("dart") == 1 then
       vim.lsp.enable('dartls')
       vim.lsp.config('dartls', {
         cmd = { "dart", "language-server", "--protocol=lsp" },
         filetypes = { "dart" },
-        root_dir = require("lspconfig/util").root_pattern("pubspec.yaml", ".git"),
+        root_dir = vim.fs.dirname(vim.fs.find({ "pubspec.yaml", ".git" }, { upward = true })[1]),
       })
     end
   end,

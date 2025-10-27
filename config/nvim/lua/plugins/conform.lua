@@ -7,9 +7,9 @@ return {
 
     vim.api.nvim_create_user_command("Format", function()
       conform.format({
-        lsp_fallback = true,
         async = false,
         timeout_ms = 3000,
+        lsp_format = "last"
       })
     end, {})
 
@@ -28,7 +28,7 @@ return {
     end, { desc = "Re-enable autoformat-on-save" })
 
     local format_on_save = function(bufnr)
-      local lsp_fallback_enabled = true
+      local lsp_format = "last"
 
       if vim.g.autoformat == nil then
         vim.g.autoformat = true
@@ -44,13 +44,13 @@ return {
 
       -- Check if lsp fallback --
       if vim.bo[bufnr].filetype == "astro" then
-        lsp_fallback_enabled = false
+        lsp_format = "never"
       end
 
       return {
-        lsp_fallback = lsp_fallback_enabled,
         async = false,
         timeout_ms = 2000,
+        lsp_format = lsp_format,
       }
     end
 

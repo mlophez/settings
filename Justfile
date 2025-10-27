@@ -53,6 +53,7 @@ configure:
   install $(pwd)/config/nvim $HOME/.config/nvim
   install $(pwd)/config/git $HOME/.config/git
   install $(pwd)/config/k9s $HOME/.config/k9s
+  install $(pwd)/config/just $HOME/.config/just
   install $(pwd)/config/kube/config $HOME/.config/kube/config
   install $(pwd)/config/aws/config $HOME/.aws/config
   install $(pwd)/config/ssh/config $HOME/.ssh/config
