@@ -2,8 +2,8 @@ local wezterm = require("wezterm")
 
 local mux = wezterm.mux
 wezterm.on("gui-startup", function(cmd)
-    local tab, pane, window = mux.spawn_window(cmd or {})
-    window:gui_window():maximize()
+  local tab, pane, window = mux.spawn_window(cmd or {})
+  window:gui_window():maximize()
 end)
 
 -- Config
@@ -12,7 +12,7 @@ return {
   font_size = 14.0,
   enable_wayland = true,
   window_close_confirmation = 'NeverPrompt',
-  window_background_opacity = 1.0,
+  window_background_opacity = 0.95,
   win32_system_backdrop = "Mica",
   text_background_opacity = 1.0,
   use_fancy_tab_bar = false,
@@ -30,11 +30,11 @@ return {
     { mods = "CTRL", key = "X",      action = wezterm.action.ActivateCopyMode },
     -- { mods = "ALT",  key = "t",     action = wezterm.action.SpawnTab({ DomainName = "WSL:Archlinux" }) },
     -- MacOS
-    { mods = "CMD", key = "C",      action = wezterm.action.CopyTo("Clipboard") },
-    { mods = "CMD", key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
-    { mods = "CMD", key = "+",      action = wezterm.action.IncreaseFontSize },
-    { mods = "CMD", key = "-",      action = wezterm.action.DecreaseFontSize },
-    { mods = "CMD", key = "0",      action = wezterm.action.ResetFontSize },
+    { mods = "CMD",  key = "C",      action = wezterm.action.CopyTo("Clipboard") },
+    { mods = "CMD",  key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
+    { mods = "CMD",  key = "+",      action = wezterm.action.IncreaseFontSize },
+    { mods = "CMD",  key = "-",      action = wezterm.action.DecreaseFontSize },
+    { mods = "CMD",  key = "0",      action = wezterm.action.ResetFontSize },
     -- Adapter for zellij prefix
     { mods = "ALT",  key = "Space",  action = wezterm.action.SendKey({ key = "F10" }) },
     -- KEYS

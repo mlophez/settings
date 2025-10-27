@@ -13,6 +13,11 @@ This is all needed to configure mi workstation or my personal laptop
 brew install --cask container
 container system start
 
+brew tap FelixKratz/formulae
+brew install sketchybar
+
+brew install --cask spaceid
+
 # Install nix from determinate
 # Run home-manager first time
 nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
