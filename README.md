@@ -18,6 +18,9 @@ brew install sketchybar
 
 brew install --cask spaceid
 
+brew tap hashicorp/tap
+brew install hashicorp/tap/terraform
+
 # Install nix from determinate
 # Run home-manager first time
 nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
