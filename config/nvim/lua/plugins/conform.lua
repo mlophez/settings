@@ -5,6 +5,7 @@ return {
   config = function()
     local conform = require("conform")
 
+    -- Command to format the current buffer --
     vim.api.nvim_create_user_command("Format", function()
       conform.format({
         async = false,
@@ -13,6 +14,7 @@ return {
       })
     end, {})
 
+    -- Commands to enable/disable autoformat-on-save --
     vim.api.nvim_create_user_command("FormatOnSaveDisable", function(args)
       if args.bang then
         -- FormatDisable! will disable formatting just for this buffer
@@ -27,35 +29,11 @@ return {
       vim.g.autoformat = true
     end, { desc = "Re-enable autoformat-on-save" })
 
-    local format_on_save = function(bufnr)
-      local lsp_format = "last"
-
-      if vim.g.autoformat == nil then
-        vim.g.autoformat = true
-      end
-
-      if vim.b[bufnr].autoformat == nil then
-        vim.b[bufnr].autoformat = true
-      end
-
-      if not vim.g.autoformat or not vim.b[bufnr].autoformat then
-        return nil
-      end
-
-      -- Check if lsp fallback --
-      if vim.bo[bufnr].filetype == "astro" then
-        lsp_format = "never"
-      end
-
-      return {
-        async = false,
-        timeout_ms = 2000,
-        lsp_format = lsp_format,
-      }
-    end
-
+    -- Setup Conform --
     conform.setup({
-      format_on_save = format_on_save,
+      default_format_opts = {
+        lsp_format = "last",
+      },
       formatters = {
         -- jsonnnet --
         jsonnetfmt = {
@@ -113,6 +91,32 @@ return {
         ["*"] = { "trim_whitespace" },
         ["_"] = { "trim_whitespace" },
       },
+      format_on_save = function(bufnr)
+        local lsp_format = "last"
+
+        if vim.g.autoformat == nil then
+          vim.g.autoformat = true
+        end
+
+        if vim.b[bufnr].autoformat == nil then
+          vim.b[bufnr].autoformat = true
+        end
+
+        if not vim.g.autoformat or not vim.b[bufnr].autoformat then
+          return nil
+        end
+
+        -- Check if lsp fallback --
+        if vim.bo[bufnr].filetype == "astro" then
+          lsp_format = "never"
+        end
+
+        return {
+          async = false,
+          timeout_ms = 2000,
+          lsp_format = lsp_format,
+        }
+      end,
     })
   end,
 }
