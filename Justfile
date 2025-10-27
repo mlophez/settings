@@ -58,6 +58,10 @@ configure:
   install $(pwd)/config/kube/config $HOME/.config/kube/config
   install $(pwd)/config/aws/config $HOME/.aws/config
   install $(pwd)/config/ssh/config $HOME/.ssh/config
+  # DOCKER, TODO: in linux only put docker, not podman
+  install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
+  install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
+
 
 netskope:
   mkdir -p $HOME/.local/share/certificates
