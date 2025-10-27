@@ -1,6 +1,7 @@
 ## GITIGNORE ##
-.config/systemd/user/default.target.wants
-.config/nvim/plugin
+config/systemd/user/default.target.wants
+config/nvim/plugin
+config/k9s/clusters
 
 # Files
 .zcompdump*

@@ -34,11 +34,11 @@ configure:
   install () {
     local src=$1
     local dest=$2
-    [[ -d $dest ]] && rm -r $dest
-    [[ -f $dest ]] && rm $dest
+    [[ -d $dest ]] && rm -r "$dest"
+    [[ -f $dest ]] && rm "$dest"
     echo $src - $dest
-    mkdir -p $(dirname $dest)
-    ln -sf $src $dest
+    mkdir -p "$(dirname "$dest")"
+    ln -sf "$src" "$dest"
   }
   install $(pwd) $HOME/.local/share/settings
   install $(pwd)/config/wezterm $HOME/.config/wezterm
@@ -53,6 +53,7 @@ configure:
   install $(pwd)/config/nvim $HOME/.config/nvim
   install $(pwd)/config/git $HOME/.config/git
   install $(pwd)/config/k9s $HOME/.config/k9s
+  install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
   install $(pwd)/config/just $HOME/.config/just
   install $(pwd)/config/kube/config $HOME/.config/kube/config
   install $(pwd)/config/aws/config $HOME/.aws/config
