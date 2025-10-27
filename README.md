@@ -35,12 +35,18 @@ security find-certificate -a -p /Library/Keychains/System.keychain >> ~/system-c
 CACERTS="$(dirname $(readlink -f $(which java)))/../lib/security/cacerts"
 cp $CACERTS ~/.local/share/certificates/netskope.jks
 keytool -list -keystore ~/.local/share/certificates/netskope.jks -storepass changeit | head
+# Asegurarse de añadir la ca de netskope al jks
 keytool -importcert \
   -trustcacerts \
   -alias netskope \
-  -file ~/.local/share/certificates/netskope.crt \
+  -file ~/.local/share/certificates/netskope.ca.pem \
   -keystore ~/.local/share/certificates/netskope.jks \
   -storepass changeit
+
+# Add to dbveaver
+vim /Applications/DBeaver.app/Contents/Eclipse/dbeaver.ini
+# -Djavax.net.ssl.trustStore=/Users/miguel.lopez/.local/share/certificates/netskope.jks
+# -Djavax.net.ssl.trustStorePassword=changeit
 
 # VSCODE
 # flutter
@@ -54,7 +60,7 @@ xcode-select -p
 
 ### NOTES
 
-### SSH KEYS
+### SSH KEYS y CREDS de aws
 
 ### KEEPASSXC
 

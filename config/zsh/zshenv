@@ -45,6 +45,7 @@ export ANSIBLE_CONFIG=$HOME/.config/ansible.cfg
 
 # TERRAFORM
 export TF_PLUGIN_CACHE_DIR="$HOME/.local/share/terraform/plugin-cache"
+[[ -d "$TF_PLUGIN_CACHE_DIR" ]] || mkdir -p "$TF_PLUGIN_CACHE_DIR"
 
 # PYTHON
 export PYLINTRC="$HOME/.config/pylintrc"

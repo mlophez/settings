@@ -31,6 +31,7 @@ alias wifi-down="nmcli connection down"
 
 alias audio-hdmi="pactl set-card-profile 0 output:hdmi-stereo-extra1"
 alias audio-micro="pactl set-card-profile 0 output:analog-stereo+input:analog-stereo"
+alias clipboard="pbcopy"
 
 # SSH
 alias s="ssh-menu"
