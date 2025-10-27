@@ -97,13 +97,19 @@ export PATH=${PATH}:${HOME}/.nix-profile/bin
 # NETSKOPE
 # Add netskope CA cert to aws cli if we are working with netskope: Logalty
 if [[ -e $HOME/.local/share/certificates/netskope.crt ]]; then
+  # AWS CLI
   export AWS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+  # PYTHON REQUESTS
   export REQUESTS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+  # CURL
   export CURL_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+  # NODEJS
   export NODE_EXTRA_CA_CERTS="$HOME/.local/share/certificates/netskope.crt"
+  # GIT
   export GIT_SSL_CAINFO="$HOME/.local/share/certificates/netskope.crt"
+  # OPENSSL
   export SSL_CERT_FILE="$HOME/.local/share/certificates/netskope.crt"
-  export REQUESTS_CA_BUNDLE="$HOME/.local/share/certificates/netskope.crt"
+  # JAVA
   export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$HOME/.local/share/certificates/netskope.jks -Djavax.net.ssl.trustStorePassword=changeit"
 fi
 
