@@ -21,6 +21,7 @@ return {
   disable_default_key_bindings = true,
   debug_key_events = true,
   send_composed_key_when_right_alt_is_pressed = true,
+  --macos_left_command_as_control = true,
   keys = { -- showkeys: wezterm show-keys --lua | less
     { mods = "CTRL", key = "C",      action = wezterm.action.CopyTo("Clipboard") },
     { mods = "CTRL", key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
@@ -28,13 +29,6 @@ return {
     { mods = "CTRL", key = "-",      action = wezterm.action.DecreaseFontSize },
     { mods = "CTRL", key = "0",      action = wezterm.action.ResetFontSize },
     { mods = "CTRL", key = "X",      action = wezterm.action.ActivateCopyMode },
-    -- { mods = "ALT",  key = "t",     action = wezterm.action.SpawnTab({ DomainName = "WSL:Archlinux" }) },
-    -- MacOS
-    { mods = "CMD",  key = "C",      action = wezterm.action.CopyTo("Clipboard") },
-    { mods = "CMD",  key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
-    { mods = "CMD",  key = "+",      action = wezterm.action.IncreaseFontSize },
-    { mods = "CMD",  key = "-",      action = wezterm.action.DecreaseFontSize },
-    { mods = "CMD",  key = "0",      action = wezterm.action.ResetFontSize },
     -- Adapter for zellij prefix
     { mods = "ALT",  key = "Space",  action = wezterm.action.SendKey({ key = "F10" }) },
     -- KEYS

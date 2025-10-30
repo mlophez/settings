@@ -32,6 +32,7 @@
     pkgs.bc
     pkgs.jq
     pkgs.yq
+    pkgs.tree
     pkgs.eza
     pkgs.lsd
     pkgs.colordiff
