@@ -14,6 +14,9 @@ container_wrapper() {
     [[ "$1" == "pull" ]]  && shift && set -- "image" "pull" "$@"
     [[ "$1" == "ps" ]] && shift && set -- "ls" "$@"
 
+    # Always show all containers
+    [[ "$1" == "ls" ]] && shift && set -- "ls" "-a" "$@"
+
     container "$@"
 }
 

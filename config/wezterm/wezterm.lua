@@ -31,11 +31,14 @@ return {
     { mods = "CTRL", key = "X",      action = wezterm.action.ActivateCopyMode },
     -- Adapter for zellij prefix
     { mods = "ALT",  key = "Space",  action = wezterm.action.SendKey({ key = "F10" }) },
-    -- KEYS
+    -- Movements keys
     { mods = "ALT",  key = "j",      action = wezterm.action.SendKey({ key = "LeftArrow" }) },
     { mods = "ALT",  key = "k",      action = wezterm.action.SendKey({ key = "DownArrow" }) },
     { mods = "ALT",  key = "l",      action = wezterm.action.SendKey({ key = "UpArrow" }) },
     { mods = "ALT",  key = "raw:47", action = wezterm.action.SendKey({ key = "RightArrow" }) },
+    -- MacOS
+    { mods = "CMD",  key = "c",      action = wezterm.action.CopyTo("Clipboard") },
+    { mods = "CMD",  key = "v",      action = wezterm.action.PasteFrom("Clipboard") },
     { mods = "ALT",  key = "raw:41", action = wezterm.action.SendKey({ key = "RightArrow" }) }, -- MacOS
   },
 }
