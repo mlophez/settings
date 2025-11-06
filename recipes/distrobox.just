@@ -1,12 +1,12 @@
 [private]
 distrobox-setup:
-  #distrobox rm archlinux -f
-	distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
-	distrobox enter archlinux -- sudo pacman-key --init
-	distrobox enter archlinux -- sudo pacman -Syu --noconfirm
-	distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm nix
-	distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
-	distrobox enter archlinux -- distrobox-export --app wezterm
+  -distrobox rm archlinux -f
+  distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
+  distrobox enter archlinux -- sudo pacman-key --init
+  distrobox enter archlinux -- sudo pacman -Syu --noconfirm
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm nix
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
+  distrobox enter archlinux -- distrobox-export --app wezterm
 
 [private]
 distrobox-install:
