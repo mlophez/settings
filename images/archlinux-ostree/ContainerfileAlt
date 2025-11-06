@@ -1,0 +1,4 @@
+FROM docker.io/library/archlinux AS base
+
+RUN sed -i -e "s|^NoExtract.*||g" /etc/pacman.conf && \
+    pacman --noconfirm -Syu

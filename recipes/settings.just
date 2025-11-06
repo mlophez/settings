@@ -27,6 +27,7 @@ dotfiles:
   install $(pwd)/config/kube/config $HOME/.config/kube/config
   install $(pwd)/config/aws/config $HOME/.aws/config
   install $(pwd)/config/ssh/config $HOME/.ssh/config
+  install $(pwd)/config/containers $HOME/.config/containers
 
 [private]
 dotfiles-macos:

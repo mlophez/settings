@@ -1,0 +1,28 @@
+---
+ref: fedora/39/${basearch}/silverblue
+rojig:
+  name: fedora-silverblue
+  summary: "Fedora Silverblue base image"
+  license: MIT
+
+mutate-os-release: "39"
+automatic_version_prefix: "39"
+repos: ["fedora-39", "fedora-39-updates"]
+container-cmd: ["/usr/bin/bash"]
+selinux: true
+documentation: true
+boot-location: modules
+default_target: graphical.target
+etc-group-members: ["wheel"]
+tmp-is-dir: true
+ignore-removed-users: ["root"]
+ignore-removed-groups: ["root"]
+check-passwd:
+  type: file
+  filename: passwd
+check-groups:
+  type: file
+  filename: group
+
+include: packages.yaml
+postprocess-script: "postprocess.sh"

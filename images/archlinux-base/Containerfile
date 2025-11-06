@@ -1,0 +1,16 @@
+##### Create a base archlinux #####
+FROM docker.io/archlinux:latest AS base
+
+RUN sed -i -e 's|^NoExtract.*||g' /etc/pacman.conf && \
+    pacman --noconfirm -Sy arch-install-scripts ostree
+
+# This allows using pacstrap -N in a rootless container.
+RUN echo 'root:1000:5000' > /etc/subuid
+RUN echo 'root:1000:5000' > /etc/subgid
+
+RUN pacstrap -c -G -M -K -N /mnt base
+
+FROM scratch as builder
+COPY --from=base /mnt /
+
+

@@ -1,0 +1,128 @@
+# vim: ft=ini
+
+# BASE
+###############################################################################
+base
+linux
+linux-firmware
+linux-headers
+linux-docs
+intel-ucode
+amd-ucode
+
+# ARCHLINUX
+reflector
+arch-install-scripts
+
+# CRON
+# cronie
+
+# BOOTLOADERs
+efivar
+efibootmgr
+
+# FILESYSTEM
+btrfs-progs
+dosfstools
+gdisk
+parted
+gptfdisk
+hdparm
+ntfs-3g
+usbutils
+
+# NETWORK
+networkmanager
+# networkmanager-openvpn
+# networkmanager-pptp
+# networkmanager-strongswan
+# networkmanager-vpnc
+openssh
+curl
+wget
+traceroute
+inetutils
+bind-tools
+dhclient
+
+# SHELL
+bash
+just
+sudo
+which
+nano
+rsync
+htop
+btop
+man
+
+# FONTS
+ttf-fira-code
+ttf-dejavu
+ttf-liberation
+ttf-font-awesome
+
+# CONTAINERS
+###############################################################################
+# PODMAN
+podman
+podman-compose
+buildah
+slirp4netns
+fuse-overlayfs
+
+# TOOLBOXES
+toolbox
+distrobox
+
+# FLATPAK
+flatpak
+flatpak-builder
+
+# GUI
+###############################################################################
+# WAYLAND
+wayland wayland-protocols
+mesa mesa-demos
+
+# AUDIO
+pipewire
+pipewire-docs
+pipewire-alsa
+pipewire-pulse
+pipewire-media-session
+pipewire-jack
+
+# GNOME
+###############################################################################
+# LOGIN MANAGER
+# gdm
+
+# GNOME
+# gnome-shell
+# xdg-desktop-portal-gnome
+
+# SWAY
+###############################################################################
+sway
+swaybg
+swaylock
+swayidle
+waybar
+rofi
+foot
+jq
+xdg-desktop-portal
+xdg-desktop-portal-wlr
+# mako
+# wl-clipboard
+# brightnessctl
+# libnotify
+# wofi
+# wf-recorder grim slurp swappy
+# imv mpv
+
+# APPS
+###############################################################################
+# TERMINAL
+# alacritty

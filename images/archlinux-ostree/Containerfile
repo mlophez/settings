@@ -1,0 +1,38 @@
+#FROM ghcr.io/cgwalters/c9s-oscore AS oscore
+
+##### Create a base archlinux #####
+FROM docker.io/archlinux:latest AS base
+RUN sed -i -e 's|^NoExtract.*||g' /etc/pacman.conf && \
+    pacman --noconfirm -Sy arch-install-scripts ostree
+
+# This allows using pacstrap -N in a rootless container.
+RUN echo 'root:1000:5000' > /etc/subuid
+RUN echo 'root:1000:5000' > /etc/subgid
+
+RUN pacstrap -c -G -M /mnt \
+    base linux linux-firmware intel-ucode amd-ucode \
+    ostree bash efibootmgr grub \
+    gptfdisk cryptsetup dosfstools xfsprogs
+
+RUN mv /mnt/home /mnt/var/home && ln -sf var/home /mnt/home
+RUN mv /mnt/mnt /mnt/var/mnt && ln -sf var/mnt /mnt/mnt
+RUN mv /mnt/root /mnt/var/roothome && ln -sf var/roothome /mnt/root
+RUN mv /mnt/srv /mnt/var/srv && ln -sf var/srv /mnt/srv
+RUN mv /mnt/opt /mnt/var/opt && ln -sf var/opt /mnt/opt
+RUN mkdir -p /mnt/sysroot/ostree && ln -sf sysroot/ostree /mnt/ostree
+
+# # Install bootc
+# COPY --from=oscore /usr/bin/bootc /mnt/usr/bin/
+# COPY --from=oscore /usr/lib/bootc /mnt/usr/lib/bootc
+
+COPY ./files/ostree-0-integration.conf /mnt/usr/lib/tmpfiles.d/ostree-0-integration.conf
+RUN echo "options overlay metacopy=off redirect_dir=off" > /mnt/etc/modprobe.d/disable-overlay-redirect-dir.conf
+
+# OSTree: Bootloader integration
+RUN curl https://raw.githubusercontent.com/ostreedev/ostree/v2023.6/src/boot/grub2/grub2-15_ostree -o /etc/grub.d/15_ostree && \
+    chmod +x /etc/grub.d/15_ostree
+
+##### Configure a image #####
+FROM scratch as builder
+COPY --from=base /mnt /
+#RUN ostree --repo=/sysroot/ostree/repo init --mode=archive && ostree container commit

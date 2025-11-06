@@ -1,0 +1,243 @@
+ref: fedora/39/${basearch}/custom
+rojig:
+  name: fedora-silverblue
+  summary: "Fedora Silverblue base image"
+  license: MIT
+automatic_version_prefix: "39"
+mutate-os-release: "39"
+repos:
+  - fedora-39
+  - fedora-39-updates
+container-cmd:
+  - /usr/bin/bash
+selinux: true
+documentation: true
+boot-location: modules
+etc-group-members:
+  - wheel
+tmp-is-dir: true
+ignore-removed-users:
+  - root
+ignore-removed-groups:
+  - root
+check-passwd:
+  type: file
+  filename: passwd
+check-groups:
+  type: file
+  filename: group
+default_target: graphical.target
+packages:
+  - basesystem
+  - fedora-release-silverblue
+  - fedora-repos-archive
+  - fedora-repos-ostree
+  # Do not include "full" Git as it brings in Perl
+  - git-core
+  # Explicitely add Git docs
+  - git-core-doc
+  - rpm-ostree
+  - bootc
+  # Required for compatibility with old bootloaders until we have bootupd
+  # See https://github.com/fedora-silverblue/issue-tracker/issues/120
+  - ostree-grub2
+  # Container management
+  - podman
+  - buildah
+  - skopeo
+  - toolbox
+  - distrobox
+  # Provides terminal tools like clear, reset, tput, and tset
+  - ncurses
+  # Flatpak support
+  - flatpak
+  - xdg-desktop-portal
+
+  - grub2-efi-x64
+  - grub2-pc
+  - efibootmgr
+  - shim-ia32
+  - shim-x64
+
+  - acl
+  - alsa-ucm
+  - alsa-utils
+  - amd-gpu-firmware
+  - atheros-firmware
+  - attr
+  - audit
+
+  - bash
+  - bash-color-prompt
+  - bash-completion
+  - bc
+  - bind-utils
+  - btrfs-progs
+  - bzip2
+  - chrony
+  - cifs-utils
+  - compsize
+  - coreutils
+  - cpio
+  - cryptsetup
+  - curl
+  - cyrus-sasl-plain
+  - default-editor
+  - dhcp-client
+  - dnsmasq
+  - e2fsprogs
+  - ethtool
+  - exfatprogs
+  - fedora-bookmarks
+  - fedora-chromium-config
+  - fedora-flathub-remote
+  - fedora-workstation-backgrounds
+  - fedora-workstation-repositories
+  - file
+  - filesystem
+  - firewalld
+  - fpaste
+  - fros-gnome
+  - fwupd
+  - gamemode
+  - glibc
+  - glibc-all-langpacks
+  - gnupg2
+  - hostname
+  - hplip
+  - hunspell
+  - ibus-anthy
+  - ibus-gtk3
+  - ibus-gtk4
+  - ibus-hangul
+  - ibus-libpinyin
+  - ibus-libzhuyin
+  - ibus-m17n
+  - ibus-typing-booster
+  - intel-gpu-firmware
+  - iproute
+  - iptables-nft
+  - iptstate
+  - iputils
+  - kbd
+  - kernel
+  - kernel-modules-extra
+  - less
+  - libertas-firmware
+  - libglvnd-gles
+  - linux-firmware
+  - logrotate
+  - lrzsz
+  - lsof
+  - man-db
+  - man-pages
+  - mdadm
+  - mpage
+  - mt7xxx-firmware
+  - mtr
+  - nfs-utils
+  - nss-altfiles
+  - nss-mdns
+  - ntfs-3g
+  - ntfsprogs
+  - nvidia-gpu-firmware
+  - opensc
+  - openssh-clients
+  - pam_afs_session
+  - paps
+  - passwd
+  - passwdqc
+  - pciutils
+  - pinfo
+  - plocate
+  - policycoreutils
+  - policycoreutils-python-utils
+  - procps-ng
+  - psmisc
+  - quota
+  - realtek-firmware
+  - rootfiles
+  - rpm
+  - rsync
+  - samba-client
+  - selinux-policy-targeted
+  - setup
+  - shadow-utils
+  - sudo
+  - system-config-printer-udev
+  - systemd
+  - systemd-oomd-defaults
+  - systemd-resolved
+  - systemd-udev
+  - tar
+  - time
+  - tree
+  - unzip
+  - uresourced
+  - usb_modeswitch
+  - usbutils
+  - util-linux
+  - vim-minimal
+  - wget
+  - which
+  - whois
+  - words
+  - wpa_supplicant
+  - zip
+  #- zram-generator-defaults
+
+  - fprintd-pam
+  - glib-networking
+  - glx-utils
+
+  - ModemManager
+
+  - NetworkManager
+  - NetworkManager-bluetooth
+  - NetworkManager-config-connectivity-fedora
+  - NetworkManager-wifi
+  - NetworkManager-adsl
+  - NetworkManager-fortisslvpn
+  - NetworkManager-ppp
+  - NetworkManager-wwan
+  - NetworkManager-openconnect-gnome
+  - NetworkManager-openvpn-gnome
+  - NetworkManager-pptp-gnome
+  - NetworkManager-ssh-gnome
+  - NetworkManager-vpnc-gnome
+  - NetworkManager-fortisslvpn-gnome
+
+postprocess:
+  - |
+    #!/usr/bin/env bash
+    set -xeuo pipefail
+
+    # Work around https://bugzilla.redhat.com/show_bug.cgi?id=1265295
+    # From https://github.com/coreos/fedora-coreos-config/blob/testing-devel/overlay.d/05core/usr/lib/systemd/journald.conf.d/10-coreos-persistent.conf
+    install -dm0755 /usr/lib/systemd/journald.conf.d/
+    echo -e "[Journal]\nStorage=persistent" > /usr/lib/systemd/journald.conf.d/10-persistent.conf
+
+    # See: https://src.fedoraproject.org/rpms/glibc/pull-request/4
+    # Basically that program handles deleting old shared library directories
+    # mid-transaction, which never applies to rpm-ostree. This is structured as a
+    # loop/glob to avoid hardcoding (or trying to match) the architecture.
+    for x in /usr/sbin/glibc_post_upgrade.*; do
+        if test -f ${x}; then
+            ln -srf /usr/bin/true ${x}
+        fi
+    done
+
+    # Remove loader directory causing issues in Anaconda in unified core mode
+    # Will be obsolete once we start using bootupd
+    rm -rf /usr/lib/ostree-boot/loader
+
+    # Undo RPM scripts enabling units; we want the presets to be canonical
+    # https://github.com/projectatomic/rpm-ostree/issues/1803
+    rm -rf /etc/systemd/system/*
+    systemctl preset-all
+    rm -rf /etc/systemd/user/*
+    systemctl --user --global preset-all
+
+    # Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=2218006
+    systemctl enable nfs-client.target
+postprocess-script: "postprocess.sh"

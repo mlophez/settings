@@ -1,0 +1,265 @@
+---
+packages:
+  # BASE
+  - basesystem
+  - filesystem
+  - kernel
+  - kernel-modules-extra
+  - kbd
+  - linux-firmware
+  - amd-gpu-firmware
+  - atheros-firmware
+  - brcmfmac-firmware
+  - intel-gpu-firmware
+  - iwlegacy-firmware
+  - iwlwifi-dvm-firmware
+  - iwlwifi-mvm-firmware
+  - libertas-firmware
+  - mt7xxx-firmware
+  - nvidia-gpu-firmware
+  - realtek-firmware
+  - alsa-sof-firmware
+  - amd-ucode-firmware
+  - b43-fwcutter
+  - b43-openfwwf
+
+  # FEDORA
+  #- fedora-bookmarks
+  #- fedora-chromium-config
+  #- fedora-flathub-remote
+  - fedora-workstation-backgrounds
+  - fedora-workstation-repositories
+  - fedora-repos-archive
+  - fedora-repos-ostree
+  - fedora-release-silverblue
+
+  # BOOT
+  - grub2-efi-ia32
+  - grub2-efi-x64
+  - grub2-pc
+  - ostree-grub2
+  - efibootmgr
+  - shim-ia32
+  - shim-x64
+
+  # SYSTEM
+  - fwupd
+  - logrotate
+  - plymouth
+  - plymouth-system-theme
+  - lsof
+  - man-db
+  - man-pages
+  - rpm
+  - systemd
+  - systemd-oomd-defaults
+  - systemd-resolved
+  - systemd-udev
+  - mcelog
+  - microcode_ctl
+  - thermald
+  - passwd
+  - passwdqc
+  - plocate
+  - pciutils
+
+  # FILESYSTEM/DISKs
+  - btrfs-progs
+  - e2fsprogs
+  - exfatprogs
+  - ntfs-3g
+  - ntfsprogs
+  - hfsplus-tools
+  - mdadm
+  - nfs-utils
+  - cifs-utils
+
+  # SECURITY
+  - cryptsetup
+  - firewalld
+  - acl
+  - attr
+  - fprintd-pam
+  - audit
+  - gnupg2
+  - selinux-policy-targeted
+  - policycoreutils
+  - policycoreutils-python-utils
+
+  # NETWORK
+  - NetworkManager
+  - NetworkManager-bluetooth
+  - NetworkManager-config-connectivity-fedora
+  - NetworkManager-wifi
+  - NetworkManager-wwan
+  - NetworkManager-fortisslvpn
+  - NetworkManager-fortisslvpn-gnome
+  - NetworkManager-adsl
+  - NetworkManager-openconnect-gnome
+  - NetworkManager-openvpn-gnome
+  - NetworkManager-ppp
+  - NetworkManager-pptp-gnome
+  - NetworkManager-ssh-gnome
+  - NetworkManager-vpnc-gnome
+  - NetworkManager-l2tp-gnome
+  - NetworkManager-libreswan-gnome
+  - bind-utils
+  - chrony
+  - compsize
+  - curl
+  - dhcp-client
+  - dnsmasq
+  - ethtool
+  - iproute
+  - iptables-nft
+  - iptstate
+  - iputils
+  - hostname
+  - nss-altfiles
+  - nss-mdns
+
+  # AUTH
+  - cyrus-sasl-plain
+
+  # PRINTERS
+  - cups
+  - cups-browsed
+  - cups-filters
+  - bluez-cups
+  - gutenprint
+  - gutenprint-cups
+  - hplip
+
+  # LIBS
+  - glibc
+  - glibc-all-langpacks
+
+  # SHELL
+  - bash
+  - bash-color-prompt
+  - bash-completion
+  - bc
+  - bzip2
+  - default-editor
+  - coreutils
+  - cpio
+  - file
+  - less
+  - openssh-clients
+  - tar
+  - unzip
+  - util-linux
+  - wget
+  - vim-minimal
+  - ncurses
+  - which
+  - tree
+  - zip
+  - sudo
+  - git-core
+  - git-core-doc
+  - just
+
+  # FONTS
+  - default-fonts-cjk-mono
+  - default-fonts-cjk-sans
+  - default-fonts-cjk-serif
+  - default-fonts-core-emoji
+  - default-fonts-core-math
+  - default-fonts-core-mono
+  - default-fonts-core-sans
+  - default-fonts-core-serif
+  - default-fonts-other-mono
+  - default-fonts-other-sans
+  - default-fonts-other-serif
+  - adobe-source-code-pro-fonts
+
+  # CONTAINERS
+  ###############################################################################
+  - rpm-ostree
+  - bootc
+  - podman
+  - buildah
+  - skopeo
+  - toolbox
+  - distrobox
+  - flatpak
+  - xdg-desktop-portal
+
+  # GUI
+  ###############################################################################
+  - colord
+
+  # WAYLAND
+  - mesa-dri-drivers
+  - mesa-libEGL
+  - mesa-vulkan-drivers
+
+  # AUDIO
+  - alsa-ucm
+  - alsa-utils
+  - pipewire-alsa
+  - pipewire-gstreamer
+  - pipewire-pulseaudio
+  - pipewire-utils
+  - wireplumber
+  #- gstreamer1-plugin-libav
+  #- gstreamer1-plugins-bad-free
+  #- gstreamer1-plugins-good
+  #- gstreamer1-plugins-ugly-free
+
+  # GNOME
+  - gdm
+  - gnome-session-wayland-session
+  - gnome-shell
+  - gnome-terminal
+  - gnome-backgrounds
+  - gnome-control-center
+  - gnome-shell-extension-background-logo
+  - gnome-shell-extension-blur-my-shell
+  - gnome-shell-extension-gsconnect
+  - gnome-shell-extension-forge
+  - gnome-shell-extension-pop-shell
+  - gnome-shell-extension-pop-shell-shortcut-overrides
+  - gnome-shell-extension-user-theme
+  - xdg-desktop-portal-gnome
+  - xdg-desktop-portal-gtk
+  - desktop-backgrounds-gnome
+  - pinentry-gnome3
+  - qadwaitadecorations-qt5
+
+  # SWAY
+  - sway
+  - swaybg
+  - swayidle
+  - swaylock
+  - sway-config-fedora
+  - waybar
+  - dunst
+  - grim
+  - imv
+  - kanshi
+  - network-manager-applet
+  - pinentry-gnome3
+  - slurp
+  - wev
+  - wl-clipboard
+  - xdg-desktop-portal-gtk
+  - xdg-desktop-portal-wlr
+
+exclude-packages:
+  - PackageKit
+  # We can not include openh264. See https://fedoraproject.org/wiki/OpenH264
+  - gstreamer1-plugin-openh264
+  - mozilla-openh264
+  - openh264
+  # Always exclude dnf when pulled in as a dependency
+  - dnf
+  - dnf-plugins-core
+  - dnf5
+  - dnf5-plugins
+  # https://github.com/fedora-silverblue/issue-tracker/issues/517
+  - grubby
+  - sdubby
+  - tracker
+  - tracker-miners

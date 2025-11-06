@@ -1,0 +1,18 @@
+FROM ghcr.io/mlr96/archlinux:base as base
+
+# 1. Install all packages
+COPY ./images/archlinux/packages.list /root/packages.list
+RUN sed 's/#Server/Server/g' -i /etc/pacman.d/mirrorlist && \
+    pacman -Syu && \
+    pacman --needed --noconfirm -S $(cat /root/packages.list | grep -v "^ *#" | tr '\n' ' ') && \
+    pacman -Scc
+
+# 2. Copy etc to /usr/etc
+RUN cp -ra -p /etc /usr/etc
+
+# 3. Customize configurations
+# 4. CleanUp
+
+FROM scratch
+COPY --from=base / /
+ENTRYPOINT ["/usr/bin/bash", "-c"]
