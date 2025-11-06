@@ -1,9 +1,18 @@
-distrobox: distrobox-fedora distrobox-archlinux
+[private]
+distrobox-setup:
+	distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
+	distrobox enter archlinux -- sudo pacman-key --init
+	distrobox enter archlinux -- sudo pacman -Syu --noconfirm
+	distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm nix
+	distrobox-export --app wezterm
 
-distrobox-fedora:
-	echo 'Creating fedora distrobox ...'
-	distrobox-create --nvidia -Y -n fedora --image ghcr.io/ublue-os/fedora-distrobox:latest
+[private]
+distrobox-install:
+	distrobox enter fedora -- sudo dnf copr enable wezfurlong/wezterm-nightly -y
+	distrobox enter fedora -- sudo dnf install wezterm -y
+	distrobox-export --app wezterm
 
+[private]
 distrobox-archlinux:
 	echo 'Creating archlinux distrobox ...'
 	distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
@@ -23,10 +32,12 @@ distrobox-archlinux:
 	distrobox enter archlinux -- distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
 	distrobox enter archlinux -- distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
 
+[private]
 distrobox-anbox:
 	echo 'Creating anbox distrobox ...'
 	distrobox-create --nvidia -Y -n anbox --image ghcr.io/ublue-os/arch-distrobox:latest
 
+[private]
 distrobox-host-alias:
 	sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
 	sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
@@ -35,6 +46,7 @@ distrobox-host-alias:
 	sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/dconf
 	sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/rofi
 
+[private]
 distrobox-export-apps:
 	type alacritty &>/dev/null && distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
 	type kitty &>/dev/null && distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
