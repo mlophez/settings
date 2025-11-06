@@ -2,7 +2,7 @@ views:
   # Alters the pod view column layout. Uses GVR as key
   v1/pods:
     # Overrides default sort column
-    sortColumn: AGE:desc
+    sortColumn: AGE:asc
     columns:
       - PF
       - NAMESPACE
@@ -11,9 +11,35 @@ views:
       - RESTARTS
       - CPU
       - MEM
-      - "%MEM/R"
-      #- "%MEM/L"
+      - '%MEM/R'
       - IP
-      #- NODE
+      - STATUS
+      - AGE
+      - '%CPU/R|H'
+      - '%CPU/L|H'
+      - '%MEM/L|H'
+      - 'NODE|H'
+  v1/nodes:
+    sortColumn: AGE:asc
+    columns:
+      - NAME
+      - NODEPOOL:.metadata.labels.karpenter\.sh/nodepool
+      - TYPE:.metadata.labels.node\.kubernetes\.io/instance-type
+      - CAPACITY:.metadata.labels.karpenter\.sh/capacity-type
+      - ZONE:.metadata.labels.topology\.kubernetes\.io/zone
+      - TAINTS
+      - PODS
+      - CPU
+      - '%CPU'
+      - MEM
+      - '%MEM'
+      - CPU/A|H
+      - ROLE|H
+      - MEM/A|H
+      - GPU/A|H
+      - GPU/C|H
+      - SH-GPU/A|H
+      - SH-GPU/C|H
+      - VERSION
       - STATUS
       - AGE

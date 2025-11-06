@@ -2,6 +2,17 @@
 
 This is all needed to configure mi workstation or my personal laptop
 
+```
+mkdir Code
+cd Code
+git clone https://github.com/mlophez/settings.git Workstation
+cd Workstation
+just install
+```
+
+---
+## LINUX
+
 ---
 ## MAC OS
 
