@@ -1,5 +1,0 @@
-[Desktop Entry]
-Name=AutoStartScript
-Comment=AutoStartScript
-Exec=/bin/bash -c 'exec $HOME/.config/autostart/autostart.sh'
-Type=Application

@@ -1,5 +1,5 @@
 [private]
-distrobox-setup:
+distrobox-setup: && distrobox-autostart
   -distrobox rm archlinux -f
 
   distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
@@ -15,6 +15,18 @@ distrobox-setup:
   distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
 
   distrobox enter archlinux -- distrobox-export --app wezterm
+
+[private]
+distrobox-autostart:
+  #!/bin/bash
+  mkdir -p $HOME/.config/autostart/
+  cat << EOF > $HOME/.config/autostart/archlinux.desktop
+  [Desktop Entry]
+  Name=Archlinux
+  Comment=Archlinux Distrobox
+  Exec=/bin/bash -c 'distrobox enter archlinux -- echo'
+  Type=Application
+  EOF
 
 [private]
 distrobox-host-alias:
