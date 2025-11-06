@@ -7,7 +7,13 @@ mkdir Code
 cd Code
 git clone https://github.com/mlophez/settings.git Workstation
 cd Workstation
-just install
+just setup
+```
+
+**rpm-ostree**
+
+```bash
+rpm-ostree initramfs --enable --arg=--force-add --arg=tpm2-tss
 ```
 
 ---
