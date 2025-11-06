@@ -22,6 +22,7 @@ dot@dot-get-windows-files() {
 }
 
 dot@status() {
+  dot@git pull
   dot@git restore --staged . &>/dev/null
 
   # ADD WINDOWS FILE (WSL)

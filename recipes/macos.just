@@ -1,8 +1,6 @@
 # Setup macos
-mac-setup: mac-nix-install mac-nix-switch
-
-linux-nix-install:
-  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#linux --impure
+mac-setup:
+  @just mac-nix-install
 
 # Install all nix packages in terminal
 mac-nix-install:

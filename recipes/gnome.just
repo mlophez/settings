@@ -1,6 +1,6 @@
 [private]
 gnome-load-settings:
-  dconf dump / > ./gnome/backup.ini
+  # dconf dump / > ./gnome/backup.ini
   dconf load / < ./gnome/settings.ini
   dconf load / < ./gnome/keybindings.ini
 
