@@ -5,7 +5,7 @@ distrobox-setup:
 	distrobox enter archlinux -- sudo pacman-key --init
 	distrobox enter archlinux -- sudo pacman -Syu --noconfirm
 	distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm nix
-	distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $HOME/.config/distrobox/archlinux.txt | grep -v "^ *#" | tr '\n' ' ')
+	distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 	distrobox enter archlinux -- distrobox-export --app wezterm
 
 [private]
