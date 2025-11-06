@@ -193,5 +193,5 @@ httpie
 curlie
 
 # AWS
-https://aur.archlinux.org/aws-cli-v2-bin.git
-https://aur.archlinux.org/aws-session-manager-plugin.git
+#https://aur.archlinux.org/aws-cli-v2-bin.git
+#https://aur.archlinux.org/aws-session-manager-plugin.git
