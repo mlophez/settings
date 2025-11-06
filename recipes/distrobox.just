@@ -1,6 +1,6 @@
 [private]
 distrobox-setup:
-  -distrobox rm archlinux -f
+  #distrobox rm archlinux -f
 	distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
 	distrobox enter archlinux -- sudo pacman-key --init
 	distrobox enter archlinux -- sudo pacman -Syu --noconfirm
