@@ -1,22 +1,6 @@
-# Setup macos
+[private]
 mac-setup:
-  @just mac-nix-install
-
-# Install all nix packages in terminal
-mac-nix-install:
-  nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
-
-mac-nix-switch: && nix-clean
-  home-manager --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure --show-trace
-
-mac-nix-packages:
-  home-manager --extra-experimental-features "nix-command flakes" packages --flake .#macos  --impure
-
-mac-nix-news:
-  home-manager --extra-experimental-features "nix-command flakes" news --flake .#macos  --impure
-
-nix-upgrade: && mac-nix-switch nix-clean
-  nix flake update
+  @just nix-install
 
 [private]
 netskope:

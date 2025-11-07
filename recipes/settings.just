@@ -45,5 +45,6 @@ clone-repositories:
 	git clone https://github.com/MLR96/ldapproxy.git
 	git clone https://github.com/MLR96/jwauto.git
 	git clone https://github.com/MLR96/TimeManager.git
+  git clone https://mlophez@bitbucket.org/firmapro/sealed-secret-app.git
 
 

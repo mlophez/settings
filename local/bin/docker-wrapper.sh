@@ -17,6 +17,15 @@ container_wrapper() {
     # Always show all containers
     [[ "$1" == "ls" ]] && shift && set -- "ls" "-a" "$@"
 
+    if [[ "$1" == "build" ]]; then
+      shift
+      # If no -f is provided and Containerfile exists, use it
+      if [[ -e "Containerfile" && " $* " != *" -f "* ]]; then
+        set -- "-f" "Containerfile" "$@"
+      fi
+      set -- "build" "$@"
+    fi
+
     container "$@"
 }
 

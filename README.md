@@ -10,11 +10,15 @@ cd Workstation
 just setup
 ```
 
-**rpm-ostree**
+## TASKS
 
-```bash
-rpm-ostree initramfs --enable --arg=--force-add --arg=tpm2-tss
-```
+- [ ] Instalar automaticamente el distrobox y flatpack
+    - [ ] Instalar automaticamente nix
+- [ ] Configurar dotfiles y gnome
+- [ ] Configurar los repositorios
+- [ ] Restaurar backup
+- [ ] Configurar el navegador
+- [ ] Configura el password manager
 
 ---
 ## LINUX
