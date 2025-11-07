@@ -19,6 +19,7 @@ just setup
 - [ ] Restaurar backup
 - [ ] Configurar el navegador
 - [ ] Configura el password manager
+- [ ] Configurar el correo electronico
 
 ---
 ## LINUX
