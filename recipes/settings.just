@@ -39,12 +39,19 @@ dotfiles-macos:
 
 # Get Git Repositories
 clone-repositories:
-	#!/usr/bin/env bash
-	mkdir -p $HOME/Code; cd $HOME/Code
-	git clone https://github.com/MLR96/settings.git
-	git clone https://github.com/MLR96/ldapproxy.git
-	git clone https://github.com/MLR96/jwauto.git
-	git clone https://github.com/MLR96/TimeManager.git
-  git clone https://mlophez@bitbucket.org/firmapro/sealed-secret-app.git
+  #!/usr/bin/env bash
+  clone () {
+    local repo=$1
+    local path=$2
+    [[ -d $path ]] && return
+    git clone $repo $path
+  }
+  mkdir -p $HOME/Code; cd $HOME/Code
+  clone https://github.com/MLR96/settings.git Workstation
+  clone https://github.com/MLR96/ldapproxy.git LDAPProxy
+  clone https://github.com/mlophez/chroniq.git Chroniq
+  #clone https://mlophez@bitbucket.org/firmapro/sealed-secret-app.git SealedSecretsApp
+  clone https://github.com/mlophez/turnix.git Zitania
+  clone https://github.com/mlophez/kubeops-agent.git KubeOpsAgent
 
 

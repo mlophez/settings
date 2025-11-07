@@ -30,6 +30,7 @@ linux-setup-apps:
 	flatpak install -y flathub com.usebottles.bottles
 	flatpak install -y flathub org.telegram.desktop
 	flatpak install -y flathub io.dbeaver.DBeaverCommunity
+	flatpak install -y flathub com.ticktick.TickTick
 	flatpak install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
 
 	flatpak install flathub com.mattjakeman.ExtensionManager

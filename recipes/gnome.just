@@ -1,31 +1,25 @@
 [private]
-gnome-load-settings:
-  # dconf dump / > ./gnome/backup.ini
+gnome-load-settings: && gnome-set-keybinds
   dconf load / < ./gnome/settings.ini
+
+[private]
+gnome-set-keybinds:
+  #!/usr/bin/env bash
+  # Clear existing keybindings
+  gsettings list-keys org.gnome.desktop.wm.keybindings | xargs -I@ gsettings set org.gnome.desktop.wm.keybindings @ "[]"
+  gsettings list-keys org.gnome.shell.keybindings | xargs -I@ gsettings set org.gnome.shell.keybindings @ "[]"
+  # Load keybindings from file
   dconf load / < ./gnome/keybindings.ini
 
 [private]
-gnome-keybindings:
-	#!/usr/bin/env bash
-	echo "SETTINGS GNOME KEYBINDINGS"
-
-	# gsettings list-keys org.gnome.desktop.wm.keybindings | xargs -I@ gsettings reset org.gnome.desktop.wm.keybindings @
-	# gsettings list-keys org.gnome.shell.keybindings | xargs -I@ gsettings reset org.gnome.shell.keybindings @
-
-	FORGE="$HOME/.local/share/gnome-shell/extensions/forge@jmmaranan.com/schemas"
-
-	gsettings list-keys org.gnome.desktop.wm.keybindings | \
-	  xargs -I@ gsettings set org.gnome.desktop.wm.keybindings @ "[]"
-
-	gsettings list-keys org.gnome.shell.keybindings | \
-	  xargs -I@ gsettings set org.gnome.shell.keybindings @ "[]"
-
-	if [ -d ${FORGE} ]; then
-	  gsettings --schemadir ${FORGE} list-keys org.gnome.shell.extensions.forge.keybindings | \
-	    xargs -I% gsettings --schemadir ${FORGE} set org.gnome.shell.extensions.forge.keybindings % "[]"
-	fi
-
-	dconf load / < $HOME/.config/gnome/keybindings.ini
+gnome-forge-keybinds-reset:
+  # gsettings list-keys org.gnome.desktop.wm.keybindings | xargs -I@ gsettings reset org.gnome.desktop.wm.keybindings @
+  # gsettings list-keys org.gnome.shell.keybindings | xargs -I@ gsettings reset org.gnome.shell.keybindings @
+  # FORGE="$HOME/.local/share/gnome-shell/extensions/forge@jmmaranan.com/schemas"
+  #if [ -d ${FORGE} ]; then
+  #  gsettings --schemadir ${FORGE} list-keys org.gnome.shell.extensions.forge.keybindings | \
+  #    xargs -I% gsettings --schemadir ${FORGE} set org.gnome.shell.extensions.forge.keybindings % "[]"
+  #fi
 
 [private]
 gnome-disable-services:
