@@ -13,7 +13,7 @@ linux-setup:
 [private]
 linux-setup-apps:
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	#flatpak --user install -y flathub com.brave.Browser
+	flatpak --user install -y flathub com.brave.Browser
 	#flatpak --user install -y flathub com.google.Chrome
 	#flatpak --user install -y flathub com.microsoft.Edge
 	#flatpak --user install -y flathub org.chromium.Chromium

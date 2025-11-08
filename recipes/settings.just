@@ -28,13 +28,13 @@ dotfiles:
   install $(pwd)/config/aws/config $HOME/.aws/config
   install $(pwd)/config/ssh/config $HOME/.ssh/config
   install $(pwd)/config/containers $HOME/.config/containers
+  install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
 
 [private]
 dotfiles-macos:
   #!/usr/bin/env bash
   install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
   # DOCKER, TODO: in linux only put docker, not podman
-  install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
   install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
 
 # Get Git Repositories
