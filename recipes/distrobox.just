@@ -12,8 +12,8 @@ distrobox-setup: && distrobox-autostart
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/dconf
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
+  # distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/dconf
 
   distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
 

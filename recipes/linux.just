@@ -61,14 +61,18 @@ linux-setup-android-development:
 	sdkmanager --install "platforms;android-33"
 	# sdkmanager --install "cmdline-tools;latest"
 
-[private]
 linux-setup-flutter-development:
-	#!/usr/bin/env bash
-	mkdir -p $HOME/.local/share/flutter; cd $HOME/.local/share/flutter
-	wget -nc -q -O flutter.tar.xz 'https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.16.3-stable.tar.xz'
-	rm -rf flutter/ &>/dev/null
-	tar -xvf flutter.tar.xz
-	mv flutter default
+  #!/usr/bin/env bash
+  mkdir -p $HOME/.local/share/flutter; cd $HOME/.local/share/flutter
+
+  curl -s 'https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json' -o /tmp/releases_linux.json
+  hash=$(cat /tmp/releases_linux.json | jq -r '.current_release.stable')
+  version=$(cat /tmp/releases_linux.json | jq -r ".releases[] | select(.hash == \"$hash\") | .archive")
+
+  wget -nc -q -O flutter.tar.xz "https://storage.googleapis.com/flutter_infra_release/releases/$version"
+  rm -rf flutter/ &>/dev/null
+  tar -xvf flutter.tar.xz
+  mv flutter default
 
 [private]
 linux-setup-gtk-themes:

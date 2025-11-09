@@ -146,6 +146,11 @@ jdk11-openjdk
 jdk8-openjdk
 maven
 
+# FLUTTER (Linux)
+ninja
+gtk3
+mesa mesa-utils libglvnd
+
 # # RUBY
 # ruby
 # rubygems
