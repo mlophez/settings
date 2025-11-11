@@ -12,6 +12,7 @@ container_wrapper() {
     [[ "$1" == "login" ]] && shift && set -- "registry" "login" "$@"
     [[ "$1" == "push" ]]  && shift && set -- "image" "push" "$@"
     [[ "$1" == "pull" ]]  && shift && set -- "image" "pull" "$@"
+    [[ "$1" == "tag" ]]  && shift && set -- "image" "tag" "$@"
     [[ "$1" == "ps" ]] && shift && set -- "ls" "$@"
 
     # Always show all containers
