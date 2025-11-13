@@ -43,3 +43,15 @@ views:
       - VERSION
       - STATUS
       - AGE
+  argoproj.io/v1alpha1/applications:
+    sortColumn: NAME:asc
+    columns:
+      - NAMESPACE
+      - NAME
+      - BRANCH:.spec.source.targetRevision
+      - PULLREQUEST:.metadata.annotations.bot\.gitbot\.io/pull-request
+      - SYNC STATUS
+      - HEALTH STATUS
+      - REVISION
+      - PROJECT
+
