@@ -2,6 +2,8 @@
 mac-setup:
   @just nix-install
 
+macos-upgrade-terminal: nix-upgrade
+
 [private]
 netskope:
   mkdir -p $HOME/.local/share/certificates

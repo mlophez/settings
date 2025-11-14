@@ -14,3 +14,7 @@ default:
 # Run all
 setup:
   @just {{platform}}-setup
+
+# Upgrade all in terminal, packages nvim plugins etc.
+upgrade-terminal:
+  @just {{platform}}-upgrade-terminal
