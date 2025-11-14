@@ -16,5 +16,5 @@ setup:
   @just {{platform}}-setup
 
 # Upgrade all in terminal, packages nvim plugins etc.
-upgrade-terminal:
+upgrade:
   @just {{platform}}-upgrade-terminal

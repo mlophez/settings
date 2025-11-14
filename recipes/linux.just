@@ -138,4 +138,21 @@ linux-settings-locale:
 	XDG_VIDEOS_DIR="\$HOME/Videos"
 	EOF
 
+[private]
+linux-upgrade-terminal:
+  @just upgrade-archlinux
+  @just upgrade-flatpak
+  @just nvim-upgrade-plugins
+
+upgrade-archlinux:
+  #!/usr/bin/env bash
+  sudo pacman -Syu --noconfirm
+
+upgrade-flatpak:
+  #!/usr/bin/env bash
+  flatpak update -y
+
+nvim-upgrade-plugins:
+  #!/usr/bin/env bash
+  nvim --headless +Lazy! update +qa
 

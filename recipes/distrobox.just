@@ -6,7 +6,7 @@ distrobox-setup: && distrobox-autostart
 
   distrobox enter archlinux -- sudo pacman-key --init
   distrobox enter archlinux -- sudo pacman -Syu --noconfirm
-  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm nix
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm code nix
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
@@ -18,6 +18,7 @@ distrobox-setup: && distrobox-autostart
   distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
 
   distrobox enter archlinux -- distrobox-export --app wezterm
+  distrobox enter archlinux -- distrobox-export --app code
 
 [private]
 distrobox-autostart:
