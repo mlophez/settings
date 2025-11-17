@@ -27,6 +27,22 @@ container_wrapper() {
       set -- "build" "$@"
     fi
 
+    # Erase network_mode=host
+    if [[ "$1" == "run" ]]; then
+      shift
+      args=()
+      while [[ $# -gt 0 ]]; do
+        if [[ "$1" == "--network=host" || "$1" == "--network host" ]]; then
+          shift
+        else
+          args+=("$1")
+          shift
+        fi
+      done
+      set -- "run" "${args[@]}"
+      echo "Warning: --network=host is not supported in macOS and has been removed."
+    fi
+
     container "$@"
 }
 
