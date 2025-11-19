@@ -47,11 +47,11 @@ views:
     sortColumn: NAME:asc
     columns:
       - NAMESPACE
+      - PROJECT
       - NAME
       - BRANCH:.spec.source.targetRevision
       - PULLREQUEST:.metadata.annotations.bot\.gitbot\.io/pull-request
       - SYNC STATUS
       - HEALTH STATUS
       - REVISION
-      - PROJECT
 
