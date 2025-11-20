@@ -28,6 +28,8 @@
     pkgs.zsh-syntax-highlighting
     # SHELL
     pkgs.fish
+    pkgs.nushell
+    # TOOLS
     pkgs.fzf
     pkgs.expect
     pkgs.bc

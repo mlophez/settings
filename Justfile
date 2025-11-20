@@ -1,9 +1,9 @@
-import "recipes/linux.just"
-import "recipes/macos.just"
-import "recipes/nix.just"
-import "recipes/distrobox.just"
-import "recipes/settings.just"
-import "recipes/gnome.just"
+import "just/linux.just"
+import "just/macos.just"
+import "just/nix.just"
+import "just/distrobox.just"
+import "just/settings.just"
+import "just/gnome.just"
 
 platform := os()
 
