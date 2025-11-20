@@ -34,7 +34,7 @@
         hypr = import inputs.hyprland {
           system = "x86_64-linux";
         };
-        modules = [ ./home/linux.nix ];
+        modules = [ ./nix/linux.nix ];
       };
       # MacOS Machine
       homeConfigurations."macos" = home-manager.lib.homeManagerConfiguration {
@@ -42,7 +42,7 @@
           system = "aarch64-darwin";
           config.allowUnfree = true;
         };
-        modules = [ ./home/macos.nix ];
+        modules = [ ./nix/macos.nix ];
       };
     };
 }

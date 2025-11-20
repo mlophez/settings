@@ -27,6 +27,7 @@
     pkgs.zsh-autosuggestions
     pkgs.zsh-syntax-highlighting
     # SHELL
+    pkgs.fish
     pkgs.fzf
     pkgs.expect
     pkgs.bc
