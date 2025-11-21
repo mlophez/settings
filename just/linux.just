@@ -50,6 +50,12 @@ linux-setup-fonts:
 	fc-cache
 
 [private]
+linux-setup-backgrounds:
+  #!/usr/bin/env bash
+  mkdir -p $HOME/.local/share/backgrounds
+  cp -rf local/share/backgrounds/* $HOME/.local/share/backgrounds/
+
+[private]
 linux-setup-android-development:
 	#!/usr/bin/env bash
 	export ANDROID_HOME="$HOME/.local/share/android"
