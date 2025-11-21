@@ -32,9 +32,10 @@ dotfiles:
   install $(pwd)/config/containers $HOME/.config/containers
   install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
   # PLATFORM SPECIFIC
-  [[ "{{platform}}" != "macos" ]] && return 0
-  install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
-  install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
+  if [[ "{{platform}}" == "macos" ]]; then
+    install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
+    install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
+  fi
 
 # Get Git Repositories
 clone-repositories:
