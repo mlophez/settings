@@ -39,6 +39,7 @@ local options = {
   guifont = "JetBrainsMono Nerd Font:h14",                    -- the font used in graphical neovim applications
   --whichwrap = "bs<>[]hl",                  -- which "horizontal" keys are allowed to travel to prev/next line
   compatible = false,
+  textwidth = 120,
 }
 
 -- New plugin loader

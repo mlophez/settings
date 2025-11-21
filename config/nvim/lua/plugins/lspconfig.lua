@@ -166,6 +166,11 @@ return {
         cmd = { "dart", "language-server", "--protocol=lsp" },
         filetypes = { "dart" },
         root_dir = vim.fs.dirname(vim.fs.find({ "pubspec.yaml", ".git" }, { upward = true })[1]),
+        settings = {
+          dart = {
+            lineLength = 120,
+          },
+        },
       })
     end
   end,
