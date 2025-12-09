@@ -11,8 +11,8 @@ aws-ssm-connect() {
 
   instance_name=$(echo "$instance" |  awk '{print $1 }')
   instance_id=$(echo "$instance" |  awk '{print $2 }')
-  region=$(echo "$instance" |  awk '{print $3 }')
-  profile=$(echo "$instance" |  awk '{print $4 }')
+  region=$(echo "$instance" |  awk '{print $5 }')
+  profile=$(echo "$instance" |  awk '{print $6 }')
 
   echo "-> Connect to ${instance_id} - ${instance_name}"
   echo "aws ssm start-session --target ${instance_id} --region ${region} --profile ${profile}" --cli-read-timeout 8000
