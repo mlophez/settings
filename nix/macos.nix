@@ -21,6 +21,7 @@
     pkgs.mitmproxy
     pkgs.httpie
     pkgs.curlie
+    pkgs.ngrok
     # ZSH
     #pkgs.zsh
     pkgs.zsh-completions
