@@ -25,6 +25,7 @@ dotfiles:
   install $(pwd)/config/nix $HOME/.config/nix
   install $(pwd)/config/git $HOME/.config/git
   install $(pwd)/config/k9s $HOME/.config/k9s
+  install $(pwd)/config/ngrok $HOME/.config/ngrok
   install $(pwd)/config/just $HOME/.config/just
   install $(pwd)/config/kube/config $HOME/.config/kube/config
   install $(pwd)/config/aws/config $HOME/.aws/config
@@ -34,6 +35,7 @@ dotfiles:
   # PLATFORM SPECIFIC
   if [[ "{{platform}}" == "macos" ]]; then
     install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
+    install $(pwd)/config/ngrok "$HOME/Library/Application Support/ngrok"
     install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
   fi
 

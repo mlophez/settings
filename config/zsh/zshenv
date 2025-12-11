@@ -113,5 +113,8 @@ if [[ -e $HOME/.local/share/certificates/netskope.crt ]]; then
   export JAVA_TOOL_OPTIONS="-Djavax.net.ssl.trustStore=$HOME/.local/share/certificates/netskope.jks -Djavax.net.ssl.trustStorePassword=changeit"
 fi
 
+# PASSWORD
+[[ -e $HOME/.local/share/environment.zsh ]] && source $HOME/.local/share/environment.zsh
+
 typeset -U path
 typeset -U fpath

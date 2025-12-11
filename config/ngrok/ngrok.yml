@@ -1,0 +1,5 @@
+version: "3"
+agent:
+    console_ui_color: transparent
+    connect_url: connect.us.ngrok-agent.com:443
+    connect_cas: /Users/miguel.lopez/.local/share/certificates/netskope.crt
