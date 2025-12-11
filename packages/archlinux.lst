@@ -23,7 +23,7 @@ dhclient
 nmap
 mitmproxy
 speedtest-cli
-ngrok
+# https://aur.archlinux.org/ngrok.git
 
 # SHELL
 bash
