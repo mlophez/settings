@@ -23,6 +23,7 @@ dhclient
 nmap
 mitmproxy
 speedtest-cli
+ngrok
 
 # SHELL
 bash
