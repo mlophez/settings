@@ -132,6 +132,7 @@
     pkgs.kubecolor
     pkgs.kustomize
     pkgs.stern
+    pkgs.krr
     # pkgs.helm
     pkgs.kompose
     pkgs.k9s
