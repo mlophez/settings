@@ -24,7 +24,7 @@ container_wrapper() {
       if [[ -e "Containerfile" && " $* " != *" -f "* ]]; then
         set -- "-f" "Containerfile" "$@"
       fi
-      set -- "build" "$@"
+      set -- "build" "-c" "5" "-m" "4096MB" "$@"
     fi
 
     # Erase network_mode=host

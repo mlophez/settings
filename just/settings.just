@@ -31,12 +31,13 @@ dotfiles:
   install $(pwd)/config/aws/config $HOME/.aws/config
   install $(pwd)/config/ssh/config $HOME/.ssh/config
   install $(pwd)/config/containers $HOME/.config/containers
-  install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
+  # install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
   # PLATFORM SPECIFIC
   if [[ "{{platform}}" == "macos" ]]; then
     install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
     install $(pwd)/config/ngrok "$HOME/Library/Application Support/ngrok"
-    install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
+    ln -sf /opt/podman/bin/podman $HOME/.local/bin/docker
+    # install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
   fi
 
 # Get Git Repositories

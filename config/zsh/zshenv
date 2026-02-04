@@ -89,7 +89,7 @@ export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
 
 # BREW
 [[ "$(uname)" == "Darwin" ]] && \
-  export PATH=${PATH}:/opt/homebrew/bin
+  export PATH=${PATH}:/opt/homebrew/bin:/opt/podman/bin
 
 # NIX
 export PATH=${PATH}:${HOME}/.nix-profile/bin
