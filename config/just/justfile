@@ -139,6 +139,9 @@ argocd-demo:
 argocd-prod:
   kubectl --context prod -n argocd port-forward svc/argocd-server 8080:80
 
+argocd-secure:
+  kubectl --context secure -n argocd port-forward svc/argocd-server 8080:80
+
 argocd-tools:
   kubectl --context tools -n argocd port-forward svc/argocd-server 8080:80
 

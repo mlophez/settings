@@ -129,6 +129,10 @@ source_profile = terraform
 role_arn = arn:aws:iam::234166862235:role/TerraformCrossAccountRole
 source_profile = terraform
 
+[profile terraform-secure]
+role_arn = arn:aws:iam::861735061093:role/TerraformCrossAccountRole
+source_profile = terraform
+
 [profile ansible]
 region = eu-south-2
 output = json
