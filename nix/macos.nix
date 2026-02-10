@@ -86,7 +86,7 @@
     pkgs.isort
     pkgs.black
     pkgs.ruff
-    pkgs.poetry
+    # pkgs.poetry
     pkgs.uv
     # GO
     pkgs.go
@@ -112,6 +112,8 @@
     # pkgs.jdk11
     # pkgs.jdk8
     pkgs.maven
+    # OTHERS
+    pkgs.fastlane
     ##################### DEV/OPS #####################
     # GIT
     pkgs.git
@@ -132,7 +134,7 @@
     pkgs.kubecolor
     pkgs.kustomize
     pkgs.stern
-    pkgs.krr
+    #pkgs.krr
     # pkgs.helm
     pkgs.kompose
     pkgs.k9s
