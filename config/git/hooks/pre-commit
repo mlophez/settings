@@ -4,6 +4,12 @@ set -e
 # Primero, definimos el nombre de la rama actual
 #current_branch=$(git rev-parse --abbrev-ref HEAD)
 
+# If repo remote is github.com set user.name and user.email if not already set
+if [ -n "$(git remote -v | grep github.com)" ]; then
+  [[ -z "$(git config user.name)" ]] && git config user.name "Miguel López Ruiz"
+  [[ -z "$(git config user.email)" ]] && git config user.email "miguel.lr96@gmail.com"
+fi
+
 if [ -z "$(git config user.email)" ]; then
   echo Your name and email address were configured automatically based
   echo on your username and hostname. Please check that they are accurate.
@@ -11,6 +17,7 @@ if [ -z "$(git config user.email)" ]; then
   echo
   echo     git config --global user.name "Your Name"
   echo     git config --global user.email you@example.com
+  echo "Current repository path: $(git rev-parse --show-toplevel)"
   exit -1
 fi
 
