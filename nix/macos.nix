@@ -134,6 +134,7 @@
     pkgs.kubecolor
     pkgs.kustomize
     pkgs.stern
+    pkgs.conftest
     #pkgs.krr
     # pkgs.helm
     pkgs.kompose
