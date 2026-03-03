@@ -3,7 +3,7 @@ return {
   cmd = "Copilot",
   event = "InsertEnter",
   opts = {
-    copilot_model = "claude-sonnet-4",
+    -- copilot_model = "gpt-41-copilot", -- (optional) se pone en avante
     suggestion = {
       auto_trigger = true,
       debounce = 50,

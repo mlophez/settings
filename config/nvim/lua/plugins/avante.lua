@@ -19,6 +19,7 @@ return {
       end,
     })
   end,
+  -- Config: https://github.com/yetone/avante.nvim/blob/main/lua/avante/config.lua
   opts = {
     ---@alias Provider "claude" | "openai" | "azure" | "gemini" | "cohere" | "copilot" | string
     ---@type Provider
@@ -31,6 +32,9 @@ return {
     -- Of course, you can reduce the request frequency by increasing `suggestion.debounce`.
     auto_suggestions_provider = "copilot",
     providers = {
+      copilot = {
+        model = "gemini-2.5-pro",
+      },
       claude = {
         endpoint = "https://api.anthropic.com",
         model = "claude-3-5-sonnet-20241022",
@@ -53,7 +57,8 @@ return {
       enabled = false,
       first_provider = "openai",
       second_provider = "claude",
-      prompt = "Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]",
+      prompt =
+      "Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]",
       timeout = 60000, -- Timeout in milliseconds
     },
     behaviour = {
@@ -62,19 +67,19 @@ return {
       auto_set_keymaps = true,
       auto_apply_diff_after_generation = false,
       support_paste_from_clipboard = false,
-      minimize_diff = true, -- Whether to remove unchanged lines when applying a code block
-      enable_token_counting = true, -- Whether to enable token counting. Default to true.
+      minimize_diff = true,                  -- Whether to remove unchanged lines when applying a code block
+      enable_token_counting = true,          -- Whether to enable token counting. Default to true.
       auto_approve_tool_permissions = false, -- Default: show permission prompts for all tools
       -- Examples:
       -- auto_approve_tool_permissions = true,                -- Auto-approve all tools (no prompts)
       -- auto_approve_tool_permissions = {"bash", "replace_in_file"}, -- Auto-approve specific tools only
     },
-    prompt_logger = { -- logs prompts to disk (timestamped, for replay/debugging)
-      enabled = true, -- toggle logging entirely
+    prompt_logger = {                                         -- logs prompts to disk (timestamped, for replay/debugging)
+      enabled = true,                                         -- toggle logging entirely
       log_dir = vim.fn.stdpath("cache") .. "/avante_prompts", -- directory where logs are saved
-      fortune_cookie_on_success = false, -- shows a random fortune after each logged prompt (requires `fortune` installed)
+      fortune_cookie_on_success = false,                      -- shows a random fortune after each logged prompt (requires `fortune` installed)
       next_prompt = {
-        normal = "<C-n>", -- load the next (newer) prompt log in normal mode
+        normal = "<C-n>",                                     -- load the next (newer) prompt log in normal mode
         insert = "<C-n>",
       },
       prev_prompt = {
@@ -131,10 +136,10 @@ return {
     windows = {
       ---@type "right" | "left" | "top" | "bottom"
       position = "right", -- the position of the sidebar
-      wrap = true, -- similar to vim.o.wrap
-      width = 30, -- default % based on available width
+      wrap = true,        -- similar to vim.o.wrap
+      width = 30,         -- default % based on available width
       sidebar_header = {
-        enabled = true, -- true, false to enable/disable the header
+        enabled = true,   -- true, false to enable/disable the header
         align = "center", -- left, center, right for title
         rounded = true,
       },
@@ -152,7 +157,7 @@ return {
         start_insert = true, -- Start insert mode when opening the edit window
       },
       ask = {
-        floating = false, -- Open the 'AvanteAsk' prompt in a floating window
+        floating = false,    -- Open the 'AvanteAsk' prompt in a floating window
         start_insert = true, -- Start insert mode when opening the ask window
         border = "rounded",
         ---@type "ours" | "theirs"
@@ -190,14 +195,14 @@ return {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
     --- The below dependencies are optional,
-    "echasnovski/mini.pick", -- for file_selector provider mini.pick
+    "echasnovski/mini.pick",         -- for file_selector provider mini.pick
     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-    "ibhagwan/fzf-lua", -- for file_selector provider fzf
-    "stevearc/dressing.nvim", -- for input provider dressing
-    "folke/snacks.nvim", -- for input provider snacks
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "zbirenbaum/copilot.lua", -- for providers='copilot'
+    "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
+    "ibhagwan/fzf-lua",              -- for file_selector provider fzf
+    "stevearc/dressing.nvim",        -- for input provider dressing
+    "folke/snacks.nvim",             -- for input provider snacks
+    "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
+    "zbirenbaum/copilot.lua",        -- for providers='copilot'
     {
       -- support for image pasting
       "HakonHarnes/img-clip.nvim",

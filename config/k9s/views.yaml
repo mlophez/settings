@@ -10,15 +10,19 @@ views:
       - READY
       - RESTARTS
       - CPU
+      #- CPU/A:.spec.containers[*].resources.requests.cpu
+      - '%CPU/R'
+      - '%CPU/L|H'
       - MEM
+      #- MEM/A:.spec.containers[*].resources.requests.memory
       - '%MEM/R'
+      - '%MEM/L|H'
       - IP
       - STATUS
       - AGE
-      - '%CPU/R|H'
-      - '%CPU/L|H'
-      - '%MEM/L|H'
       - 'NODE|H'
+      #- CPU_LIM:.spec.containers[*].resources.limits.cpu
+      #- MEM_LIM:.spec.containers[*].resources.limits.memory
   v1/nodes:
     sortColumn: AGE:asc
     columns:
@@ -30,8 +34,8 @@ views:
       - TAINTS
       - PODS
       - CPU
-      - '%CPU'
       - MEM
+      - '%CPU'
       - '%MEM'
       - CPU/A|H
       - ROLE|H
@@ -54,4 +58,5 @@ views:
       - SYNC STATUS
       - HEALTH STATUS
       - REVISION
-
+  karpenter.sh/v1/nodepool:
+    sortColumn: WEIGHT:asc

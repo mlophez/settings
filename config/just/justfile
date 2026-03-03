@@ -71,11 +71,12 @@ tunnel-db-mongodb:
   echo kubectl --context demo -n mongodb port-forward pods/mongo-2 27017
 
 tunnel-db-secure:
-  aws ssm start-session --cli-read-timeout 8000 \
-  --target i-06fbe4d9a69550d27 \
-  --document-name AWS-StartPortForwardingSessionToRemoteHost \
-  --parameters '{"host":["logteca.cdl88pofwdpb.eu-west-1.rds.amazonaws.com"],"portNumber":["1521"],"localPortNumber":["1521"]}' \
-  --profile secure --region eu-west-1
+  kubectl --context secure -n default port-forward pods/forward-0 1521:1521
+  #aws ssm start-session --cli-read-timeout 8000 \
+  #--target i-06fbe4d9a69550d27 \
+  #--document-name AWS-StartPortForwardingSessionToRemoteHost \
+  #--parameters '{"host":["logteca.cdl88pofwdpb.eu-west-1.rds.amazonaws.com"],"portNumber":["1521"],"localPortNumber":["1521"]}' \
+  #--profile secure --region eu-west-1
 
 demo-mongodb-0:
   kubectl --context demo -n mongodb exec -it pod/mongo-0 -c mongo -- bash -c 'mongo -u $MONGO_INITDB_ROOT_USERNAME -p $MONGO_INITDB_ROOT_PASSWORD'
@@ -145,8 +146,20 @@ argocd-secure:
 argocd-tools:
   kubectl --context tools -n argocd port-forward svc/argocd-server 8080:80
 
+prometheus-dev:
+  kubectl --context dev -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
+
 prometheus-demo:
   kubectl --context demo -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
+
+prometheus-prod:
+  kubectl --context prod -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
+
+prometheus-secure:
+  kubectl --context secure -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
+
+prometheus-tools:
+  kubectl --context tools -n monitoring port-forward pod/prometheus-prometheus-0 9090:9090
 
 sqlline-install:
   #!/bin/bash
