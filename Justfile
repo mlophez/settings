@@ -4,6 +4,7 @@ import "just/nix.just"
 import "just/distrobox.just"
 import "just/settings.just"
 import "just/gnome.just"
+import "just/backup.just"
 
 platform := os()
 
