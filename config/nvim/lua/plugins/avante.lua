@@ -33,7 +33,7 @@ return {
     auto_suggestions_provider = "copilot",
     providers = {
       copilot = {
-        model = "gemini-2.5-pro",
+        model = "claude-sonnet-4.6",
       },
       claude = {
         endpoint = "https://api.anthropic.com",

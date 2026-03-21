@@ -113,6 +113,10 @@ sso_role_name = administrator
 region = eu-south-2
 output = json
 
+[profile minio]
+region = eu-south-2
+output = json
+
 [profile terraform]
 region = eu-south-2
 output = json
