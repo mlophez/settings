@@ -118,7 +118,11 @@ alias switch="home-manager switch --impure"
 alias emu="emulator"
 
 # RANDOM PASSWORD
-alias random-password="openssl rand -base64 18"
+#alias random-password="openssl rand -base64 18"
+random-password() {
+  local length=${1:-18}
+  openssl rand -base64 $length
+}
 
 # YOUTUBE
 alias youtube="mpv --ytdl-format='bestvideo[height<=?1080]+bestaudio/best'"
