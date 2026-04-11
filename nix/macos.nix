@@ -126,7 +126,7 @@
     # TERRAFORM
     # pkgs.terraform
     pkgs.terraform-ls
-    pkgs.terragrunt
+    #pkgs.terragrunt
     ## CONTAINERS
     pkgs.skopeo
     # KUBERNETES
