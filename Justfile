@@ -29,3 +29,6 @@ claude-install:
 claude-setup:
   claude plugin marketplace add JuliusBrussee/caveman
   claude plugin install caveman@caveman
+
+kiro-install:
+  curl -fsSL https://cli.kiro.dev/install | bash
