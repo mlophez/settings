@@ -22,3 +22,10 @@ setup:
 upgrade:
   @just {{platform}}-upgrade-terminal
   npm -g install tree-sitter-cli
+
+claude-install:
+  curl -fsSL https://claude.ai/install.sh | bash
+
+claude-setup:
+  claude plugin marketplace add JuliusBrussee/caveman
+  claude plugin install caveman@caveman
