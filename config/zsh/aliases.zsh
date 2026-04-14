@@ -131,3 +131,8 @@ alias youtube-download-mp3="yt-dlp -x --audio-format mp3"
 
 # POETRY
 alias penv="\$(poetry env activate)"
+
+# IA
+alias ia="claude"
+alias ai="claude"
+alias c="claude"

@@ -88,3 +88,9 @@ xcode-select -p
 
 ### Instalar flutter, android-studio, xcode
 
+### NEOVIM
+
+**Instalar treesitter cli**
+```bash
+npm -g install tree-sitter-cli
+```

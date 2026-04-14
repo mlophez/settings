@@ -15,7 +15,10 @@ default:
 # Run all
 setup:
   @just {{platform}}-setup
+  npm -g install tree-sitter-cli
+  # cargo install --locked tree-sitter-cli
 
 # Upgrade all in terminal, packages nvim plugins etc.
 upgrade:
   @just {{platform}}-upgrade-terminal
+  npm -g install tree-sitter-cli
