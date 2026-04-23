@@ -70,3 +70,41 @@ plugins:
         break
         fi
         done
+
+  holmesgpt:
+    shortCut: Shift-H
+    description: Ask HolmesGPT
+    scopes:
+      - all
+    command: bash
+    background: false
+    confirm: false
+    args:
+      - -c
+      - |
+        export AWS_PROFILE=production
+        export AWS_BEDROCK_MODEL="bedrock/eu.anthropic.claude-opus-4-6-v1"
+        # Check if we're already using the correct context
+        CURRENT_CONTEXT=$(kubectl config current-context 2>/dev/null || echo "")
+        if [ "$CURRENT_CONTEXT" = "$CONTEXT" ]; then
+          # Already using the correct context, run HolmesGPT directly
+          holmes ask "why is $NAME of $RESOURCE_NAME in -n $NAMESPACE not working as expected" --model="${AWS_BEDROCK_MODEL}"
+        else
+          # Create temporary kubeconfig to avoid changing user's system context
+          # K9s passes $CONTEXT but we need to ensure HolmesGPT uses the same context
+          # without permanently switching the user's kubectl context
+          TEMP_KUBECONFIG=$(mktemp)
+          kubectl config view --raw > $TEMP_KUBECONFIG
+          KUBECONFIG=$TEMP_KUBECONFIG kubectl config use-context $CONTEXT
+          # KUBECONFIG environment variable is passed to holmes and all its child processes
+          KUBECONFIG=$TEMP_KUBECONFIG holmes ask "why is $NAME of $RESOURCE_NAME in -n $NAMESPACE not working as expected" --model="${AWS_BEDROCK_MODEL}"
+          rm -f $TEMP_KUBECONFIG
+        fi
+        echo "Press 'q' to exit"
+        while : ; do
+        read -n 1 k <&1
+        if [[ $k = q ]] ; then
+        break
+        fi
+        done
+

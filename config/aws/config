@@ -106,6 +106,13 @@ sso_role_name = administrator
 region = eu-west-1
 output = json
 
+[profile cetelem]
+sso_session = awscli
+sso_account_id = 805426308814
+sso_role_name = administrator
+region = eu-west-1
+output = json
+
 [profile sandbox]
 sso_session = awscli
 sso_account_id = 372147419716
@@ -135,6 +142,10 @@ source_profile = terraform
 
 [profile terraform-secure]
 role_arn = arn:aws:iam::861735061093:role/TerraformCrossAccountRole
+source_profile = terraform
+
+[profile terraform-cetelem]
+role_arn = arn:aws:iam::805426308814:role/TerraformCrossAccountRole
 source_profile = terraform
 
 [profile ansible]

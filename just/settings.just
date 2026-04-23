@@ -32,6 +32,9 @@ dotfiles:
   install $(pwd)/config/ssh/config $HOME/.ssh/config
   install $(pwd)/config/containers $HOME/.config/containers
   # install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
+  # CLAUDE
+  install $(pwd)/config/claude/CLAUDE.md $HOME/.claude/CLAUDE.md
+  install $(pwd)/config/claude/settings.json $HOME/.claude/settings.json
   # PLATFORM SPECIFIC
   if [[ "{{platform}}" == "macos" ]]; then
     install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
