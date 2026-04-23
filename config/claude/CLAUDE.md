@@ -14,6 +14,7 @@
 - When context window is running low, proactively: (1) commit current work, (2) create a handoff prompt with necessary context and plan for next session
 - If you create any temporary new files, scripts, or helper files for iteration, clean up these files by removing them at the end of the task
 - For complex research: develop competing hypotheses, track confidence in notes, self-critique approach
+- Make commit without coauthored by claude.
 
 ## Quality Standards
 - Do not hard-code values or create solutions that only work for specific test inputs. Implement the actual logic that solves the problem generally
