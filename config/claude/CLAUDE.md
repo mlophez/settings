@@ -20,6 +20,17 @@
 - Do not hard-code values or create solutions that only work for specific test inputs. Implement the actual logic that solves the problem generally
 - If the task is unreasonable or infeasible, or if any of the tests are incorrect, inform me rather than working around them
 
+## AWS
+- Always use `aws --profile <profile>` explicitly — never rely on default profile or environment variables
+- Exception: `AWS_PROFILE=tools` is set globally for Claude Code's own Bedrock connection — do not use it for workload commands
+- Profile inventory is at `$HOME/.claude/memory/aws-profiles.md` — read it only when working with AWS
+- If a profile appears that is not in the inventory, ask Miguel to describe it and add it to the file
+
+## Kubernetes
+- Always use `kubectl --context <context-name>` explicitly — never rely on the current context
+- Cluster inventory is at `$HOME/.claude/memory/kubernetes-clusters.md` — read it only when working with Kubernetes
+- If a context appears that is not in the inventory, ask Miguel to describe it and add it to the file
+
 ## Shell tool preferences
 Prefer these tools over standard alternatives when available:
 - Use `rg` instead of `grep` for searching
