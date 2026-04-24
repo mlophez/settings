@@ -116,12 +116,12 @@ contexts:
 
   - name: test
     context:
-      cluster: dev
+      cluster: development
       user: dev
 
   - name: dev
     context:
-      cluster: dev
+      cluster: development
       user: dev
 
   - name: testing
