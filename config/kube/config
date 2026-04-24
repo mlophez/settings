@@ -5,168 +5,132 @@ kind: Config
 current-context: none
 preferences: {}
 clusters:
-- name: prod
-  cluster:
-    server: https://F014FC5DAE0A9C41F698C9375CC5DB7D.gr7.eu-south-2.eks.amazonaws.com
-    insecure-skip-tls-verify: true
-    # certificate-authority: netskope.crt
+  - name: production
+    cluster:
+      server: https://F014FC5DAE0A9C41F698C9375CC5DB7D.gr7.eu-south-2.eks.amazonaws.com
+      insecure-skip-tls-verify: true
 
-- name: demo
-  cluster:
-    server: https://7765F82FD0DBC9B034E8C053F844D80D.gr7.eu-south-2.eks.amazonaws.com
-    insecure-skip-tls-verify: true
-    # certificate-authority: demo.crt
+  - name: secure
+    cluster:
+      server: https://6F642B68A0FA2B01E9AD8B3D0BC0849D.gr7.eu-west-1.eks.amazonaws.com
+      insecure-skip-tls-verify: true
 
-- name: tools
-  cluster:
-    server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
-    insecure-skip-tls-verify: true
-    # certificate-authority: tools.crt
+  - name: cetelem
+    cluster:
+      server: https://A928E630B106AAAB39866115330D6ED8.sk1.eu-south-2.eks.amazonaws.com
+      insecure-skip-tls-verify: true
 
-- name: dev
-  cluster:
-    server: https://F81371C297F2A64DE99B63FABD708517.gr7.eu-south-2.eks.amazonaws.com
-    insecure-skip-tls-verify: true
-    # certificate-authority: dev.crt
-    extensions:
-    - name: telepresence.io
-      extension:
-        manager:
-          namespace: telepresence
+  - name: demo
+    cluster:
+      server: https://7765F82FD0DBC9B034E8C053F844D80D.gr7.eu-south-2.eks.amazonaws.com
+      insecure-skip-tls-verify: true
 
-- name: biiddev
-  cluster:
-    server: https://54.74.163.210:6443
-    insecure-skip-tls-verify: true
+  - name: tools
+    cluster:
+      server: https://9E8CE2F853C652CB27A80EE4C992E8FE.yl4.eu-south-2.eks.amazonaws.com
+      insecure-skip-tls-verify: true
 
-- name: biiduat
-  cluster:
-    server: https://34.246.33.86:6443
-    insecure-skip-tls-verify: true
-
-- name: biidprod
-  cluster:
-    server: https://34.247.238.150:6443
-    insecure-skip-tls-verify: true
+  - name: development
+    cluster:
+      server: https://F81371C297F2A64DE99B63FABD708517.gr7.eu-south-2.eks.amazonaws.com
+      insecure-skip-tls-verify: true
+      extensions:
+      - name: telepresence.io
+        extension:
+          manager:
+            namespace: telepresence
 
 users:
-- name: terraform
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "terraform"]
+  - name: production
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        command: aws
+        args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "production"]
 
-- name: terraform-prod
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "terraform-prod"]
+  - name: secure
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        command: aws
+        args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-west-1", "--profile", "secure"]
 
-- name: prod-admin
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "production"]
+  - name: cetelem
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        command: aws
+        args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "cetelem"]
 
-- name: demo-admin
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo"]
+  - name: demo
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        command: aws
+        args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo"]
 
-- name: dev
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--profile", "dev"]
+  - name: tools
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        command: aws
+        args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools"]
 
-- name: demo-viewer
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "demo-viewer"]
-
-- name: tools-admin
-  user:
-    exec:
-      apiVersion: client.authentication.k8s.io/v1beta1
-      command: aws
-      args: ["eks", "get-token", "--cluster-name", "kubernetes", "--region", "eu-south-2", "--profile", "tools"]
-
-- name: biiddev-admin
-  user:
-    client-key: biiddev-admin.key
-    client-certificate: biiddev-admin.crt
-
-- name: biiduat-admin
-  user:
-    client-key: biiduat-admin.key
-    client-certificate: biiduat-admin.crt
-
-- name: biidprod-admin
-  user:
-    client-key: biidprod-admin.key
-    client-certificate: biidprod-admin.crt
+  - name: dev
+    user:
+      exec:
+        apiVersion: client.authentication.k8s.io/v1beta1
+        command: aws
+        args: ["eks", "get-token", "--cluster-name", "kubernetes", "--profile", "dev"]
 
 contexts:
-- name: prod
-  context:
-    cluster: prod
-    user: prod-admin
+  - name: prod
+    context:
+      cluster: production
+      user: production
 
-- name: demo
-  context:
-    cluster: demo
-    user: demo-admin
+  - name: secure
+    context:
+      cluster: production
+      user: production
 
-- name: demosign
-  context:
-    cluster: demo
-    user: demo-admin
+  - name: cetelem
+    context:
+      cluster: cetelem
+      user: cetelem
 
-- name: test
-  context:
-    cluster: dev
-    user: dev
+  - name: cet
+    context:
+      cluster: cetelem
+      user: cetelem
 
-- name: dev
-  context:
-    cluster: dev
-    user: dev
+  - name: demo
+    context:
+      cluster: demo
+      user: demo
 
-- name: testing
-  context:
-    cluster: dev
-    user: dev
+  - name: demosign
+    context:
+      cluster: demo
+      user: demo
 
-- name: tools
-  context:
-    cluster: tools
-    user: tools-admin
+  - name: test
+    context:
+      cluster: dev
+      user: dev
 
-- name: biiddev
-  context:
-    cluster: biiddev
-    user: biiddev-admin
+  - name: dev
+    context:
+      cluster: dev
+      user: dev
 
-- name: biiduat
-  context:
-    cluster: biiduat
-    user: biiduat-admin
+  - name: testing
+    context:
+      cluster: dev
+      user: dev
 
-- name: biidprod
-  context:
-    cluster: biidprod
-    user: biidprod-admin
+  - name: tools
+    context:
+      cluster: tools
+      user: tools
 
-- name: demo-viewer
-  context:
-    cluster: demo
-    user: demo-viewer
-    namespace: demosign
