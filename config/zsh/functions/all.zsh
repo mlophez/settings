@@ -18,10 +18,10 @@ ls() {
     elif type lsd &>/dev/null; then
       command lsd -v --group-directories-first "$@"
     else
-      command ls -v --group-directories-first --color "$@"
+      command ls -v --color "$@"
     fi
   else
-    command ls -v --group-directories-first "$@"
+    command ls -v "$@"
   fi
 }
 

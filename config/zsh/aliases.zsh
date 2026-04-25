@@ -133,7 +133,5 @@ alias youtube-download-mp3="yt-dlp -x --audio-format mp3"
 alias penv="\$(poetry env activate)"
 
 # IA
-alias ia="claude"
 alias ai="claude"
-alias c="claude"
-alias kiro="kiro-cli"
+alias aib="claude-with-bedrock"

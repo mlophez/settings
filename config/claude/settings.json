@@ -1,12 +1,7 @@
 {
   "awsAuthRefresh": "aws sso login --profile tools",
   "env": {
-    "CLAUDE_CODE_USE_BEDROCK": "1",
-    "AWS_PROFILE": "tools",
-    "AWS_REGION": "eu-south-2",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "eu.anthropic.claude-opus-4-7",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "eu.anthropic.claude-sonnet-4-6",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "eu.anthropic.claude-haiku-4-5-20251001-v1:0"
+    "SHELL": "/bin/zsh"
   },
   "permissions": {
     "allow": [
@@ -31,6 +26,19 @@
       "Bash(kubectl logs *)"
     ]
   },
+  "model": "opus[1m]",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'CAVEMAN MODE ACTIVE — level: full'"
+          }
+        ]
+      }
+    ]
+  },
   "statusLine": {
     "type": "command",
     "command": "bash /Users/miguel.lopez/.claude/statusline-command.sh"
@@ -38,7 +46,7 @@
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
     "claude-md-management@claude-plugins-official": true,
-    "caveman@caveman": false,
+    "caveman@caveman": true,
     "terraform@claude-plugins-official": false,
     "frontend-design@claude-plugins-official": false,
     "code-review@claude-plugins-official": false,
@@ -52,5 +60,5 @@
       }
     }
   },
-  "effortLevel": "medium"
+  "effortLevel": "high"
 }
