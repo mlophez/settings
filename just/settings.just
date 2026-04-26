@@ -35,6 +35,8 @@ dotfiles:
   # CLAUDE
   install $(pwd)/config/claude/CLAUDE.md $HOME/.claude/CLAUDE.md
   install $(pwd)/config/claude/settings.json $HOME/.claude/settings.json
+  # OPENCODE
+  install $(pwd)/config/opencode $HOME/.config/opencode
   # PLATFORM SPECIFIC
   if [[ "{{platform}}" == "macos" ]]; then
     install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
