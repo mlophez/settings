@@ -111,3 +111,6 @@ unset LD_LIBRARY_PATH
 unset LIBGL_DRIVERS_PATH
 unset LIBVA_DRIVERS_PATH
 unset __EGL_VENDOR_LIBRARY_FILENAMES
+
+# opencode
+export PATH=/Users/miguel.lopez/.opencode/bin:$PATH

@@ -10,7 +10,7 @@ default_shell "zsh"
 pane_frames false
 auto_layout true
 copy_on_select true
-mouse_mode false
+mouse_mode true
 session_serialization false
 
 //env {

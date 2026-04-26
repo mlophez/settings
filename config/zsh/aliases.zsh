@@ -135,3 +135,5 @@ alias penv="\$(poetry env activate)"
 # IA
 alias ai="claude"
 alias aib="claude-with-bedrock"
+alias bai="claude-with-bedrock"
+alias oc="opencode"
