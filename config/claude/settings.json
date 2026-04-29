@@ -21,26 +21,17 @@
       "Bash(git show *)",
       "Bash(git add *)",
       "Bash(git commit *)",
+      "Bash(git *)",
       "Bash(kubectl get *)",
       "Bash(kubectl describe *)",
-      "Bash(kubectl logs *)"
-    ]
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo 'CAVEMAN MODE ACTIVE — level: full'"
-          }
-        ]
-      }
+      "Bash(kubectl logs *)",
+      "Bash(curl * https://api.bitbucket.org/ *)",
+      "mcp__claude_ai_Atlassian__*"
     ]
   },
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/miguel.lopez/.claude/statusline-command.sh"
+    "command": "bash /Users/miguel.lopez/.claude/statusline.sh"
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,

@@ -34,6 +34,8 @@ dotfiles:
   # install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
   # CLAUDE
   install $(pwd)/config/claude/CLAUDE.md $HOME/.claude/CLAUDE.md
+  install $(pwd)/config/claude/skills $HOME/.claude/skills
+  install $(pwd)/config/claude/commands $HOME/.claude/commands
   install $(pwd)/config/claude/settings.json $HOME/.claude/settings.json
   # OPENCODE
   install $(pwd)/config/opencode $HOME/.config/opencode
