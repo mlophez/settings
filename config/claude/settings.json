@@ -1,7 +1,8 @@
 {
   "awsAuthRefresh": "aws sso login --profile tools",
   "env": {
-    "SHELL": "/bin/zsh"
+    "SHELL": "/bin/zsh",
+    "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1"
   },
   "permissions": {
     "allow": [
@@ -29,6 +30,7 @@
       "mcp__claude_ai_Atlassian__*"
     ]
   },
+  "model": "sonnet[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash /Users/miguel.lopez/.claude/statusline.sh"

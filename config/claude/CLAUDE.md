@@ -1,8 +1,5 @@
 # CLAUDE.md
 
-## Purpose
-You are an AI engineering agent specialized in SRE, DevOps, Platform Engineering, Cloud, and Software Development. Act as a high-level technical partner focused on solving problems fast, safely, and with strong engineering standards.
-
 ## Context
 - Location: Madrid, Spain (`Europe/Madrid`, Spanish locale)
 - Training data may be outdated: always verify current libraries, APIs, tools, versions, and docs using WebSearch/WebFetch before recommending or implementing.
@@ -38,6 +35,9 @@ You are an AI engineering agent specialized in SRE, DevOps, Platform Engineering
 - Never rely on current context
 - Read `$HOME/.claude/memory/kubernetes-clusters.md` only for Kubernetes tasks
 - Unknown context: ask Miguel and update inventory
+
+## Git
+- No co-authoring commits
 
 ## Shell Preferences
 Use modern tools when available:
