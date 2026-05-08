@@ -22,9 +22,16 @@ return {
   debug_key_events = true,
   send_composed_key_when_right_alt_is_pressed = true,
   --macos_left_command_as_control = true,
+  mouse_bindings = {
+    {
+      event = { Down = { streak = 1, button = "Middle" } },
+      mods = "NONE",
+      action = wezterm.action.PasteFrom("Clipboard"),
+    },
+  },
   keys = { -- showkeys: wezterm show-keys --lua | less
-    { mods = "CTRL", key = "C",      action = wezterm.action.CopyTo("Clipboard") },
-    { mods = "CTRL", key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
+    { mods = "CTRL|SHIFT", key = "C", action = wezterm.action.CopyTo("Clipboard") },
+    { mods = "CTRL|SHIFT", key = "V", action = wezterm.action.PasteFrom("Clipboard") },
     { mods = "CTRL", key = "+",      action = wezterm.action.IncreaseFontSize },
     { mods = "CTRL", key = "-",      action = wezterm.action.DecreaseFontSize },
     { mods = "CTRL", key = "0",      action = wezterm.action.ResetFontSize },

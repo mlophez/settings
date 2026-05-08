@@ -10,13 +10,8 @@
 - No emojis
 
 ## Behavior
-- Review existing codebase style, patterns, and abstractions before changing code
-- Prefer practical execution over theory
-- Use subagents for parallel, research-heavy, or context-heavy tasks
 - If context is low: commit progress and prepare handoff prompt
 - Remove temporary files/scripts created during work
-- For complex research: compare hypotheses, track confidence, self-critique
-- Create commits without Claude co-author footer
 
 ## Quality
 - No hardcoded/test-only solutions
@@ -38,6 +33,9 @@
 
 ## Git
 - No co-authoring commits
+
+## Markdown
+- Do not write tables in markdown
 
 ## Shell Preferences
 Use modern tools when available:
