@@ -25,8 +25,13 @@ ui {
 
 keybinds clear-defaults=true {
   shared {
-    bind "Alt q" { Quit; }
+    bind "Alt q" { SwitchToMode "session"; }
     //bind "Esc" { Detach; }
+  }
+  session {
+    bind "Esc" "Ctrl c" { SwitchToMode "normal"; }
+    bind "q" { Quit; }
+    bind "d" { Detach; }
   }
   normal {
     // Zellij no admite Alt+Space, Alt+Space = F10 en alacritty y wezterm

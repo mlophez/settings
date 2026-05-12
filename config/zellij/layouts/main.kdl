@@ -7,11 +7,11 @@ layout {
   }
   swap_floating_layout {
     floating_panes max_panes=5 {
-      pane { x "2%"; y "10%"; width "90%"; height "80%"; }
-      pane { x "4%"; y "12%"; width "90%"; height "80%"; }
-      pane { x "6%"; y "14%"; width "90%"; height "80%"; }
-      pane { x "8%"; y "16%"; width "90%"; height "80%"; }
-      pane { x "10%"; y "18%"; width "90%"; height "80%"; }
+      pane { x "2%"; y "5%"; width "86%"; height "75%"; }
+      pane { x "4%"; y "8%"; width "86%"; height "75%"; }
+      pane { x "6%"; y "11%"; width "86%"; height "75%"; }
+      pane { x "8%"; y "14%"; width "86%"; height "75%"; }
+      pane { x "10%"; y "17%"; width "86%"; height "75%"; }
     }
   }
   tab name="1# LOCAL"
