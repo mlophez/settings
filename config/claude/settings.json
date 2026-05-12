@@ -42,7 +42,8 @@
     "terraform@claude-plugins-official": false,
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": false,
-    "lua-lsp@claude-plugins-official": true
+    "lua-lsp@claude-plugins-official": true,
+    "logalty-ai@logalty": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -50,7 +51,19 @@
         "source": "github",
         "repo": "JuliusBrussee/caveman"
       }
+    },
+    "logalty": {
+      "source": {
+        "source": "git",
+        "url": "https://bitbucket.org/firmapro/logalty-ai.git"
+      }
     }
   },
-  "effortLevel": "xhigh"
+  "language": "Español",
+  "effortLevel": "xhigh",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "voiceEnabled": true
 }
