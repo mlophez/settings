@@ -6,7 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Repositorio de dotfiles y configuración versionada de la workstation (Linux y macOS) de Miguel. No es código de aplicación: son ficheros de configuración + un orquestador en `just` + Nix Home Manager para gestionar paquetes y enlaces simbólicos al `$HOME` del usuario.
 
-El árbol del repo se enlaza en `$HOME/.local/share/settings` y cada subcarpeta de `config/` se enlaza a su destino XDG (ver `just/settings.just`).
+Tres jerarquías versionadas, todas mapeadas al sistema mediante symlinks:
+- `config/` → dotfiles y configuración de aplicaciones del usuario. Cada subcarpeta se enlaza a su destino en `$HOME` (típicamente `~/.config/<app>`, ver `just/settings.just`).
+- `default/` → configuración a nivel de sistema (`/etc/`). Cada fichero/subcarpeta se enlaza a su ruta equivalente bajo `/etc/` (requiere `sudo`).
+- `bin/` → scripts ejecutables del usuario. Cada fichero se enlaza a `$HOME/.local/bin/<script>`.
+
+El árbol completo del repo además se enlaza en `$HOME/.local/share/settings`.
 
 ## Comandos principales
 
@@ -47,9 +52,16 @@ Ambos módulos son listas planas de `home.packages`. Para añadir/quitar una her
 
 `just dotfiles` es la única fuente de verdad sobre dónde aterriza cada configuración. Lee esa receta antes de mover ficheros: el destino puede no ser el típico `~/.config/<app>` (ej. zsh enlaza `zshrc`/`zshenv`/`zprofile` directamente en `$HOME`; en macOS, k9s y ngrok se duplican en `~/Library/Application Support/`).
 
+Tres orígenes:
+- `config/<app>/` → enlazado a rutas del usuario (`$HOME`, `~/.config`, `~/Library/Application Support`, etc.).
+- `default/<path>` → enlazado a `/etc/<path>` para trackear configuración del sistema.
+- `bin/<script>` → enlazado a `$HOME/.local/bin/<script>` (asegúrate de que el fichero tenga permisos de ejecución en el repo).
+
 Reglas:
-- Editar la configuración en `config/<app>/` del repo, nunca en el destino enlazado (los enlaces apuntan al repo, así que ambos lados son el mismo fichero, pero edita siempre desde aquí para que `git` lo vea).
-- Si añades una app nueva, crea `config/<app>/` y añade la línea `install` a `just/settings.just`.
+- Editar la configuración o scripts en el repo, nunca en el destino enlazado (ambos lados son el mismo inode, pero edita desde aquí para que `git` lo vea).
+- App nueva de usuario: crear `config/<app>/` y añadir la línea `install` a `just/settings.just`.
+- Config de sistema nueva: colocarla bajo `default/` replicando la ruta dentro de `/etc/` (ej. `default/ssh/sshd_config` → `/etc/ssh/sshd_config`) y añadir el enlace correspondiente.
+- Script nuevo: colocarlo en `bin/`, `chmod +x` y añadir el enlace a `just/settings.just`.
 
 ### Plataforma y entornos
 
