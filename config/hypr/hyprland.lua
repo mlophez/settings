@@ -129,6 +129,7 @@ local function run_terminal()
     { bin = "wezterm",   args = "start --always-new-process" },
     { bin = "alacritty", args = "" },
     { bin = "foot",      args = "" },
+    { bin = "ptyxis",    args = "--new-window" },
   }
   for _, t in ipairs(candidates) do
     if which(t.bin) then
