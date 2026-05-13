@@ -38,8 +38,8 @@ local function reload()
 end
 
 -- ===== Env =====
-hl.env("PATH", os.getenv("HOME") .. "/.local/bin:" .. (os.getenv("PATH") or ""))
--- hl.env("PATH", "$PATH:$HOME/.config/hypr")
+--hl.env("PATH", os.getenv("HOME") .. "/.local/bin:" .. (os.getenv("PATH") or ""))
+hl.env("PATH", "$PATH:$HOME/.local/bin")
 -- hl.env("MOZ_ENABLE_WAYLAND", "1")
 -- hl.env("GDK_BACKEND", "wayland")
 -- hl.env("QT_QPA_PLATFORM", "wayland-egl;wayland;xcb")
