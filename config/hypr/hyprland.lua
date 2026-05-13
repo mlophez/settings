@@ -24,7 +24,7 @@ hl.monitor({ output = "", disabled = true })
 
 -- ===== Autostart =====
 hl.on("hyprland.start", function()
-  hl.exec_cmd("ptyxis")
+  hl.exec_cmd("uwsm-app -- ptyxis")
 end)
 
 -- ===== General / look'n'feel =====
@@ -129,7 +129,8 @@ hl.bind("SUPER + Z", hl.dsp.exec_cmd("deskcmd lock"), { description = "Lock" })
 hl.bind("SUPER + I", hl.dsp.exec_cmd("makoctl dismiss"), { description = "Dismiss notification" })
 
 hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd("ptyxis"), { description = "Ptyxis terminal" })
-hl.bind("F1", hl.dsp.exec_cmd([[sh -c 'echo "exec ok at $(date)"' > /tmp/hyprtest.log]]), { description = "Hypr test ping" })
+hl.bind("F1", hl.dsp.exec_cmd([[sh -c 'echo "exec ok at $(date)"' > /tmp/hyprtest.log]]),
+  { description = "Hypr test ping" })
 hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd("deskcmd menu exit"), { description = "Exit menu" })
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -f hex -n -a"), { description = "Color picker" })
 hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reload Hyprland" })
@@ -168,8 +169,10 @@ hl.bind("SUPER + SHIFT + K", hl.dsp.window.move({ direction = "d" }), { descript
 
 -- Workspaces 1..10
 for key, workspace in pairs({ ["1"] = 1, ["2"] = 2, ["3"] = 3, ["4"] = 4, ["5"] = 5, ["6"] = 6, ["7"] = 7, ["8"] = 8, ["9"] = 9, ["0"] = 10 }) do
-  hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = tostring(workspace) }), { description = "Workspace " .. workspace })
-  hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = tostring(workspace) }), { description = "Move window to workspace " .. workspace })
+  hl.bind("SUPER + " .. key, hl.dsp.focus({ workspace = tostring(workspace) }),
+    { description = "Workspace " .. workspace })
+  hl.bind("SUPER + SHIFT + " .. key, hl.dsp.window.move({ workspace = tostring(workspace) }),
+    { description = "Move window to workspace " .. workspace })
 end
 
 -- Move / resize with mouse
