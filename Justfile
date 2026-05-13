@@ -391,6 +391,7 @@ dotfiles:
   install $(pwd)/config/hypr $HOME/.config/hypr
   install $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/hyprcmd
   install $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/deskcmd
+  install $(pwd)/config/waybar $HOME/.config/waybar
   # TERMINAL AND SHELL
   install $(pwd)/config/wezterm $HOME/.config/wezterm
   install $(pwd)/config/fish $HOME/.config/fish

@@ -1,6 +1,42 @@
 -- Hyprland config (Lua). Equivalent of hyprland.conf.
 -- Docs: https://wiki.hypr.land/Configuring/Start/
 
+-- ===== Helpers =====
+local function which(bin)
+  local f = io.popen("command -v " .. bin .. " 2>/dev/null")
+  if not f then return false end
+  local path = f:read("*l")
+  f:close()
+  return path ~= nil and path ~= ""
+end
+
+local function run_terminal()
+  local candidates = {
+    { bin = "wezterm",   args = "start --always-new-process" },
+    { bin = "alacritty", args = "" },
+    { bin = "foot",      args = "" },
+    { bin = "ptyxis",    args = "--new-window" },
+  }
+  for _, t in ipairs(candidates) do
+    if which(t.bin) then
+      hl.dispatch(hl.dsp.exec_cmd("uwsm-app -- " .. t.bin .. " " .. t.args))
+      return
+    end
+  end
+end
+
+local function run_panel()
+  local cmd =
+  "uwsm-app -- waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css"
+  hl.dispatch(hl.dsp.exec_cmd(cmd))
+  --hl.exec_cmd(
+  --  "uwsm-app -- waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css")
+end
+
+local function reload()
+  run_panel()
+end
+
 -- ===== Env =====
 -- hl.env("PATH", "$PATH:$HOME/.config/hypr")
 -- hl.env("MOZ_ENABLE_WAYLAND", "1")
@@ -26,7 +62,7 @@
 
 -- ===== Autostart =====
 hl.on("hyprland.start", function()
-  hl.exec_cmd("uwsm-app -- ptyxis")
+  run_panel()
 end)
 
 -- ===== General / look'n'feel =====
@@ -115,30 +151,6 @@ hl.config({
 --hl.animation({ leaf = "workspaces", enabled = true, speed = 7, bezier = "default" })
 --hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 7, bezier = "default", style = "slidefadevert" })
 
--- ===== Helpers =====
-local function which(bin)
-  local f = io.popen("command -v " .. bin .. " 2>/dev/null")
-  if not f then return false end
-  local path = f:read("*l")
-  f:close()
-  return path ~= nil and path ~= ""
-end
-
-local function run_terminal()
-  local candidates = {
-    { bin = "wezterm",   args = "start --always-new-process" },
-    { bin = "alacritty", args = "" },
-    { bin = "foot",      args = "" },
-    { bin = "ptyxis",    args = "--new-window" },
-  }
-  for _, t in ipairs(candidates) do
-    if which(t.bin) then
-      hl.dispatch(hl.dsp.exec_cmd("uwsm-app -- " .. t.bin .. " " .. t.args))
-      return
-    end
-  end
-end
-
 -- ===== Bindings =====
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Kill active window" })
 hl.bind("SUPER + SPACE", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating" })
@@ -159,7 +171,8 @@ hl.bind("F1", hl.dsp.exec_cmd([[sh -c 'echo "exec ok at $(date)"' > /tmp/hyprtes
   { description = "Hypr test ping" })
 hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd("deskcmd menu exit"), { description = "Exit menu" })
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -f hex -n -a"), { description = "Color picker" })
-hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reload Hyprland" })
+--hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reload Hyprland" })
+hl.bind("SUPER + SHIFT + R", run_panel, { description = "Reload Hyprland" })
 hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("hyprctl kill"), { description = "Kill picker" })
 
 -- Audio
