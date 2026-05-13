@@ -380,6 +380,8 @@ dotfiles:
     ln -sf "$src" "$dest"
   }
   install $(pwd) $HOME/.local/share/settings
+  # DESKTOP
+  install $(pwd)/config/hypr $HOME/.config/hypr
   # TERMINAL AND SHELL
   install $(pwd)/config/wezterm $HOME/.config/wezterm
   install $(pwd)/config/fish $HOME/.config/fish

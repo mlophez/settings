@@ -17,7 +17,6 @@ RUN dnf5 install -y \
       rofi-wayland \
       wlogout \
       mako \
-      swww \
       swaylock \
       `# Screenshot, clipboard, media keys` \
       grim \
