@@ -1,6 +1,7 @@
 platform := os()
 image := "localhost/workstation"
-distrobox_image := "quay.io/toolbx-images/archlinux-toolbox:latest"
+distrobox_image := "docker.io/library/archlinux:latest"
+# distrobox_image := "quay.io/toolbx-images/archlinux-toolbox:latest"
 # distrobox_image := "ghcr.io/ublue-os/arch-distrobox:latest"
 chooser := "fzf --preview 'just --show {}'"
 
