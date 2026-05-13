@@ -6,6 +6,4 @@ FROM ghcr.io/ublue-os/bluefin:gts
 # Custom configs
 # COPY default/<file> /etc/<file>
 
-RUN ostree container commit
-
-CMD ["/sbin/init"]
+RUN bootc container lint
