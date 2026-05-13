@@ -325,7 +325,9 @@ bootc-build:
   #!/usr/bin/env bash
   set -euo pipefail
   tag="$(date +%Y%m%d)"
+  cpus=$(( $(nproc) / 2 ))
   sudo podman build --pull=newer \
+    --cpus="${cpus}" \
     -t {{image}}:"${tag}" \
     -t {{image}}:latest \
     -f Containerfile .
