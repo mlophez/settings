@@ -315,7 +315,14 @@ nix-clean:
 
 [group('Distrobox')]
 distrobox-install: && distrobox-autostart
-  -distrobox rm archlinux -f
+  #!/usr/bin/env bash
+  set -euo pipefail
+  if [[ -f /run/.containerenv ]] || [[ -f /.dockerenv ]] || [[ -n "${CONTAINER_ID:-}" ]] || [[ -n "${DISTROBOX_ENTER_PATH:-}" ]]; then
+    echo "Error: distrobox-install debe ejecutarse desde el host, no dentro de un contenedor." >&2
+    exit 1
+  fi
+
+  distrobox rm archlinux -f || true
 
   distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
 
@@ -324,17 +331,6 @@ distrobox-install: && distrobox-autostart
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm code nix
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
-  # distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/dconf
-
-  distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
-
-  distrobox enter archlinux -- distrobox-export --app wezterm
-  distrobox enter archlinux -- distrobox-export --app code
-
 [group('Distrobox')]
 distrobox-upgrade:
   #!/usr/bin/env bash
@@ -342,11 +338,23 @@ distrobox-upgrade:
 
 [group('Distrobox')]
 distrobox-config:
-  #!/bin/bash
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  if [[ ! -f /run/.containerenv ]] && [[ -z "${CONTAINER_ID:-}" ]] && [[ -z "${DISTROBOX_ENTER_PATH:-}" ]]; then
+    echo "Ejecutando distrobox-config dentro del contenedor archlinux..."
+    exec distrobox enter archlinux -- just distrobox-config
+  fi
+
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
+  sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/ujust
+  sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/bootc
+
+  distrobox-export --app wezterm
+  distrobox-export --app code
 
 [private]
 [group('Distrobox')]
