@@ -115,6 +115,29 @@ hl.config({
 --hl.animation({ leaf = "workspaces", enabled = true, speed = 7, bezier = "default" })
 --hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 7, bezier = "default", style = "slidefadevert" })
 
+-- ===== Helpers =====
+local function which(bin)
+  local f = io.popen("command -v " .. bin .. " 2>/dev/null")
+  if not f then return false end
+  local path = f:read("*l")
+  f:close()
+  return path ~= nil and path ~= ""
+end
+
+local function run_terminal()
+  local candidates = {
+    { bin = "wezterm",   args = "start --always-new-process" },
+    { bin = "alacritty", args = "" },
+    { bin = "foot",      args = "" },
+  }
+  for _, t in ipairs(candidates) do
+    if which(t.bin) then
+      hl.dispatch(hl.dsp.exec_cmd("uwsm-app -- " .. t.bin .. " " .. t.args))
+      return
+    end
+  end
+end
+
 -- ===== Bindings =====
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Kill active window" })
 hl.bind("SUPER + SPACE", hl.dsp.window.float({ action = "toggle" }), { description = "Toggle floating" })
@@ -126,11 +149,11 @@ hl.bind("SUPER + M", hl.dsp.exec_cmd("deskcmd terminal toggle"), { description =
 hl.bind("SUPER + H", hl.dsp.exec_cmd("deskcmd files"), { description = "Files" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("deskcmd files"), { description = "Files" })
 hl.bind("SUPER + W", hl.dsp.exec_cmd("deskcmd wallpaper"), { description = "Wallpaper" })
-hl.bind("SUPER + RETURN", hl.dsp.exec_cmd("deskcmd terminal toggle"), { description = "Terminal toggle" })
+hl.bind("SUPER + RETURN", run_terminal, { description = "Terminal" })
 hl.bind("SUPER + Z", hl.dsp.exec_cmd("deskcmd lock"), { description = "Lock" })
 hl.bind("SUPER + I", hl.dsp.exec_cmd("makoctl dismiss"), { description = "Dismiss notification" })
 
-hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd("ptyxis"), { description = "Ptyxis terminal" })
+hl.bind("SUPER + SHIFT + RETURN", run_terminal, { description = "Terminal" })
 hl.bind("F1", hl.dsp.exec_cmd([[sh -c 'echo "exec ok at $(date)"' > /tmp/hyprtest.log]]),
   { description = "Hypr test ping" })
 hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd("deskcmd menu exit"), { description = "Exit menu" })
