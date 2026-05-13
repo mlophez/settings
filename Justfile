@@ -248,11 +248,6 @@ system-upgrade-terminal-linux:
 [group('System')]
 system-upgrade-terminal-macos: nix-upgrade
 
-[group('Distrobox')]
-distrobox-upgrade:
-  #!/usr/bin/env bash
-  sudo pacman -Syu --noconfirm
-
 # Upgrade flatpak apps
 [group('Apps')]
 upgrade-flatpak-apps:
@@ -318,9 +313,8 @@ nix-clean:
 
 # ---- Distrobox ----
 
-[private]
 [group('Distrobox')]
-distrobox-setup: && dx-autostart
+distrobox-install: && distrobox-autostart
   -distrobox rm archlinux -f
 
   distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
@@ -342,6 +336,11 @@ distrobox-setup: && dx-autostart
   distrobox enter archlinux -- distrobox-export --app code
 
 [group('Distrobox')]
+distrobox-upgrade:
+  #!/usr/bin/env bash
+  sudo pacman -Syu --noconfirm
+
+[group('Distrobox')]
 distrobox-config:
   #!/bin/bash
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
@@ -351,7 +350,7 @@ distrobox-config:
 
 [private]
 [group('Distrobox')]
-dx-autostart:
+distrobox-autostart:
   #!/bin/bash
   mkdir -p $HOME/.config/autostart/
   cat << EOF > $HOME/.config/autostart/archlinux.desktop
