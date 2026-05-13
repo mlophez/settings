@@ -331,6 +331,8 @@ distrobox-install: && distrobox-autostart
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm code nix
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 
+  just distrobox-config
+
 [group('Distrobox')]
 distrobox-upgrade:
   #!/usr/bin/env bash
