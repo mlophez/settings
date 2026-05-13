@@ -5,7 +5,10 @@ chooser := "fzf --preview 'just --show {}'"
 [private]
 default:
   @just -u -l
-#@type fzf &>/dev/null && just --choose --unsorted --chooser {{quote(chooser)}} || just -u -l
+
+[private]
+ui:
+  @just --choose --unsorted --chooser {{quote(chooser)}}
 
 # ============================================================
 # GENERAL
@@ -324,7 +327,11 @@ distrobox-install: && distrobox-autostart
 
   distrobox rm archlinux -f || true
 
-  distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
+  nvidia_flag=""
+  if [[ -e /dev/nvidia0 ]] || [[ -d /proc/driver/nvidia ]]; then
+    nvidia_flag="--nvidia"
+  fi
+  distrobox-create $nvidia_flag -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
 
   distrobox enter archlinux -- sudo pacman-key --init
   distrobox enter archlinux -- sudo pacman -Syu --noconfirm
