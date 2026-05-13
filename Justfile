@@ -329,12 +329,7 @@ distrobox-install: && distrobox-autostart
   fi
 
   distrobox rm archlinux -f || true
-
-  nvidia_flag=""
-  if [[ -e /dev/nvidia0 ]] || [[ -d /proc/driver/nvidia ]]; then
-    nvidia_flag="--nvidia"
-  fi
-  distrobox-create $nvidia_flag -Y -n archlinux --image {{distrobox_image}}
+  distrobox-create --nvidia -Y -n archlinux --image {{distrobox_image}}
 
   distrobox enter archlinux -- sudo pacman-key --init
   distrobox enter archlinux -- sudo pacman -Syu --noconfirm
