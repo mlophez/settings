@@ -168,8 +168,6 @@ hl.bind("SUPER + Z", hl.dsp.exec_cmd("deskcmd lock"), { description = "Lock" })
 hl.bind("SUPER + I", hl.dsp.exec_cmd("makoctl dismiss"), { description = "Dismiss notification" })
 
 hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm-app -- ptyxis --new-window"), { description = "Backup Terminal" })
-hl.bind("F1", hl.dsp.exec_cmd([[sh -c 'echo "exec ok at $(date)"' > /tmp/hyprtest.log]]),
-  { description = "Hypr test ping" })
 hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd("deskcmd menu exit"), { description = "Exit menu" })
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -f hex -n -a"), { description = "Color picker" })
 --hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reload Hyprland" })
