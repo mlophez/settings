@@ -13,14 +13,14 @@ default:
 
 # Run all
 [group('General')]
-setup:
+install-all:
   @just system-setup-{{platform}}
   npm -g install tree-sitter-cli
   # cargo install --locked tree-sitter-cli
 
 # Upgrade all in terminal, packages nvim plugins etc.
 [group('General')]
-upgrade:
+upgrade-all:
   @just system-upgrade-terminal-{{platform}}
   npm -g install tree-sitter-cli
 
@@ -28,18 +28,70 @@ upgrade:
 # SYSTEM
 # ============================================================
 
+# Rebuild local image and apply with bootc upgrade
 [group('System')]
-claude-install:
+upgrade: build
+  sudo bootc upgrade
+
+# Build local bootc image from Containerfile (tag = YYYYMMDD + latest)
+[group('System')]
+build:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  tag="$(date +%Y%m%d)"
+  cpus=$(( $(nproc) / 2 ))
+  sudo podman build --pull=newer \
+    --squash \
+    --retry=5 --retry-delay=10s \
+    --cpu-shares=2 \
+    -t {{image}}:"${tag}" \
+    -t {{image}}:latest \
+    -f Containerfile .
+
+# Rebase running system to the local image (first-time switch)
+[group('System')]
+switch:
+  sudo bootc switch --transport containers-storage {{image}}:latest
+
+# Show current bootc deployment status
+[group('System')]
+status:
+  sudo bootc status
+
+# Rollback to previous deployment
+[group('System')]
+rollback:
+  sudo bootc rollback
+
+# List local images built for this workstation
+[group('System')]
+list-images:
+  sudo podman images {{image}}
+
+# Prune old local images (keep latest + today's date tag)
+[group('System')]
+prune-images:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  keep="$(date +%Y%m%d)"
+  sudo podman images --format '{{{{.Repository}}:{{{{.Tag}}' {{image}} \
+    | grep -v -E ":(latest|${keep})$" \
+    | xargs -r -n1 sudo podman rmi -f
+
+
+
+[group('Apps')]
+install-claude:
   curl -fsSL https://claude.ai/install.sh | bash
 
-[group('System')]
-kiro-install:
+[group('Apps')]
+install-kiro:
   curl -fsSL https://cli.kiro.dev/install | bash
 
 # ---- Setup (per platform) ----
 
 [private]
-[group('System')]
+[group('Settings')]
 system-setup-linux:
   # Setup gnome
   @just gnome-load-settings
@@ -52,7 +104,7 @@ system-setup-linux:
   @just dotfiles
 
 [private]
-[group('System')]
+[group('Apps')]
 system-setup-macos:
   @just nix-install
 
@@ -119,8 +171,8 @@ system-install-android:
 	sdkmanager --install "platforms;android-33"
 	# sdkmanager --install "cmdline-tools;latest"
 
-[group('System')]
-system-install-flutter:
+[group('Apps')]
+install-flutter:
   #!/usr/bin/env bash
   mkdir -p $HOME/.local/share/flutter; cd $HOME/.local/share/flutter
 
@@ -196,21 +248,22 @@ system-upgrade-terminal-linux:
 [group('System')]
 system-upgrade-terminal-macos: nix-upgrade
 
-[group('System')]
-system-upgrade-archlinux:
+[group('Distrobox')]
+distrobox-upgrade:
   #!/usr/bin/env bash
   sudo pacman -Syu --noconfirm
 
-[group('System')]
-system-upgrade-flatpak:
+# Upgrade flatpak apps
+[group('Apps')]
+upgrade-flatpak-apps:
   #!/usr/bin/env bash
   flatpak update -y
 
 # ---- Clean ----
 
 # Limpia cachés del sistema para liberar espacio en disco
-[group('System')]
-system-clean:
+[group('Clean')]
+clean-cache:
   @echo "Limpiando cachés de navegadores..."
   rm -rf ~/Library/Caches/BraveSoftware
   rm -rf ~/Library/Caches/Firefox
@@ -239,35 +292,35 @@ system-clean:
 # ---- Nix / Home-Manager ----
 
 # Install all nix packages in terminal
-[group('System')]
+[group('Nix')]
 nix-install:
   nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#{{platform}} --impure
 
-[group('System')]
+[group('Nix')]
 nix-switch: && nix-clean
   home-manager --extra-experimental-features "nix-command flakes" switch --flake .#{{platform}} --impure --show-trace
 
-[group('System')]
+[group('Nix')]
 nix-packages:
   home-manager --extra-experimental-features "nix-command flakes" packages --flake .#{{platform}}  --impure
 
-[group('System')]
+[group('Nix')]
 nix-news:
   home-manager --extra-experimental-features "nix-command flakes" news --flake .#{{platform}}  --impure
 
-[group('System')]
+[group('Nix')]
 nix-upgrade: && nix-switch nix-clean
   nix flake update
 
-[group('System')]
+[group('Nix')]
 nix-clean:
   nix-collect-garbage --delete-old
 
 # ---- Distrobox ----
 
 [private]
-[group('System')]
-dx-setup: && dx-autostart
+[group('Distrobox')]
+distrobox-setup: && dx-autostart
   -distrobox rm archlinux -f
 
   distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
@@ -288,8 +341,8 @@ dx-setup: && dx-autostart
   distrobox enter archlinux -- distrobox-export --app wezterm
   distrobox enter archlinux -- distrobox-export --app code
 
-[group('System')]
-dx-config:
+[group('Distrobox')]
+distrobox-config:
   #!/bin/bash
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
@@ -297,7 +350,7 @@ dx-config:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
 
 [private]
-[group('System')]
+[group('Distrobox')]
 dx-autostart:
   #!/bin/bash
   mkdir -p $HOME/.config/autostart/
@@ -310,7 +363,7 @@ dx-autostart:
   EOF
 
 [private]
-[group('System')]
+[group('Distrobox')]
 dx-host-alias:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
@@ -320,7 +373,7 @@ dx-host-alias:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/rofi
 
 [private]
-[group('System')]
+[group('Distrobox')]
 dx-export:
   type alacritty &>/dev/null && distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
   type kitty &>/dev/null && distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
@@ -328,63 +381,13 @@ dx-export:
 
 # ---- Bootc (Bluefin derivation) ----
 
-# Build local bootc image from Containerfile (tag = YYYYMMDD + latest)
-[group('System')]
-bootc-build:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  tag="$(date +%Y%m%d)"
-  cpus=$(( $(nproc) / 2 ))
-  sudo podman build --pull=newer \
-    --squash \
-    --retry=5 --retry-delay=10s \
-    --cpu-shares=2 \
-    -t {{image}}:"${tag}" \
-    -t {{image}}:latest \
-    -f Containerfile .
-
-# Rebase running system to the local image (first-time switch)
-[group('System')]
-bootc-switch:
-  sudo bootc switch --transport containers-storage {{image}}:latest
-
-# Show current bootc deployment status
-[group('System')]
-bootc-status:
-  sudo bootc status
-
-# Rollback to previous deployment
-[group('System')]
-bootc-rollback:
-  sudo bootc rollback
-
-# List local images built for this workstation
-[group('System')]
-bootc-images:
-  sudo podman images {{image}}
-
-# Prune old local images (keep latest + today's date tag)
-[group('System')]
-bootc-prune:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  keep="$(date +%Y%m%d)"
-  sudo podman images --format '{{{{.Repository}}:{{{{.Tag}}' {{image}} \
-    | grep -v -E ":(latest|${keep})$" \
-    | xargs -r -n1 sudo podman rmi -f
-
-# Rebuild local image and apply with bootc upgrade
-[group('System')]
-upgrade-system: bootc-build
-  sudo bootc upgrade
-
 # ============================================================
 # SETTINGS
 # ============================================================
 
 # Configure symlinks for config files
 [group('Settings')]
-dotfiles:
+config:
   #!/bin/bash
   install () {
     local src=$1
@@ -438,8 +441,8 @@ dotfiles:
   fi
 
 # Clone reference config repos into resources/ (ignored by git)
-[group('Settings')]
-clone-resources:
+[group('General')]
+download-resources:
   #!/usr/bin/env bash
   clone () {
     local repo=$1
@@ -455,7 +458,7 @@ clone-resources:
 
 # Get Git Repositories
 [group('Settings')]
-clone-repositories:
+config-repositories:
   #!/usr/bin/env bash
   clone () {
     local repo=$1
@@ -471,14 +474,15 @@ clone-repositories:
   clone https://github.com/mlophez/turnix.git Zitania
   clone https://github.com/mlophez/kubeops-agent.git KubeOpsAgent
 
+# Configure marketplace in claude code
 [group('Settings')]
-claude-setup:
+config-claude:
   claude plugin marketplace add JuliusBrussee/caveman
   claude plugin install caveman@caveman
 
-[private]
+# Install and configure vscode extensions
 [group('Settings')]
-vscode-install-extensions:
+config-vscode-extensions:
 	#!/usr/bin/env bash
 	code --install-extension ms-python.python
 	code --install-extension golang.go
@@ -501,8 +505,8 @@ vscode-install-extensions:
 	code --install-extension catppuccin.catppuccin-vsc
 	code --install-extension pkief.material-icon-theme
 
-[group('Settings')]
-nvim-upgrade-plugins:
+[group('Apps')]
+upgrade-nvim-plugins:
   #!/usr/bin/env bash
   nvim --headless +Lazy! update +qa
 
@@ -578,8 +582,9 @@ gnome-disable-services2:
 # BACKUP
 # ============================================================
 
+# Backup user files to external usb drive
 [group('Backup')]
-backup:
+backup-to-disk:
   #!/bin/bash
   distrobox-host-exec sudo bash -c << 'EOF'
     DISK=$(blkid -U 77a01e45-e966-48f0-90c3-73589b397528)
