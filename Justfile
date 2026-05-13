@@ -366,6 +366,7 @@ distrobox-config:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/bootc
 
   distrobox-export --app wezterm
+  distrobox-export --bin /usr/bin/wezterm --export-path $HOME/.local/bin
   distrobox-export --app code
 
 [private]
