@@ -8,46 +8,43 @@ default:
 #@type fzf &>/dev/null && just --choose --unsorted --chooser {{quote(chooser)}} || just -u -l
 
 # ============================================================
-# TOP-LEVEL
+# GENERAL
 # ============================================================
 
 # Run all
-[group('top')]
+[group('General')]
 setup:
-  @just {{platform}}-setup
+  @just system-setup-{{platform}}
   npm -g install tree-sitter-cli
   # cargo install --locked tree-sitter-cli
 
 # Upgrade all in terminal, packages nvim plugins etc.
-[group('top')]
+[group('General')]
 upgrade:
-  @just {{platform}}-upgrade-terminal
+  @just system-upgrade-terminal-{{platform}}
   npm -g install tree-sitter-cli
 
-[group('claude')]
+# ============================================================
+# SYSTEM
+# ============================================================
+
+[group('System')]
 claude-install:
   curl -fsSL https://claude.ai/install.sh | bash
 
-[group('claude')]
-claude-setup:
-  claude plugin marketplace add JuliusBrussee/caveman
-  claude plugin install caveman@caveman
-
-[group('kiro')]
+[group('System')]
 kiro-install:
   curl -fsSL https://cli.kiro.dev/install | bash
 
-# ============================================================
-# LINUX
-# ============================================================
+# ---- Setup (per platform) ----
 
 [private]
-[group('linux')]
-linux-setup:
+[group('System')]
+system-setup-linux:
   # Setup gnome
   @just gnome-load-settings
   # Install gui apps
-  @just linux-setup-apps
+  @just system-install-apps
   # Install distroboxes
   @just dx-setup
   #@just nix-install
@@ -55,8 +52,15 @@ linux-setup:
   @just dotfiles
 
 [private]
-[group('linux')]
-linux-setup-apps:
+[group('System')]
+system-setup-macos:
+  @just nix-install
+
+# ---- Install ----
+
+[private]
+[group('System')]
+system-install-apps:
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak --user install -y flathub com.brave.Browser
 	#flatpak --user install -y flathub com.google.Chrome
@@ -84,8 +88,8 @@ linux-setup-apps:
 	#flatpak --user override --filesystem=xdg-data/icons
 
 [private]
-[group('linux')]
-linux-setup-fonts:
+[group('System')]
+system-install-fonts:
 	#!/usr/bin/env bash
 	mkdir -p $HOME/.local/share/fonts
 	cd $HOME/.local/share/fonts
@@ -96,15 +100,15 @@ linux-setup-fonts:
 	fc-cache
 
 [private]
-[group('linux')]
-linux-setup-backgrounds:
+[group('System')]
+system-install-backgrounds:
   #!/usr/bin/env bash
   mkdir -p $HOME/.local/share/backgrounds
   cp -rf local/share/backgrounds/* $HOME/.local/share/backgrounds/
 
 [private]
-[group('linux')]
-linux-setup-android-development:
+[group('System')]
+system-install-android:
 	#!/usr/bin/env bash
 	export ANDROID_HOME="$HOME/.local/share/android"
 	export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
@@ -115,8 +119,8 @@ linux-setup-android-development:
 	sdkmanager --install "platforms;android-33"
 	# sdkmanager --install "cmdline-tools;latest"
 
-[group('linux')]
-linux-setup-flutter-development:
+[group('System')]
+system-install-flutter:
   #!/usr/bin/env bash
   mkdir -p $HOME/.local/share/flutter; cd $HOME/.local/share/flutter
 
@@ -130,8 +134,8 @@ linux-setup-flutter-development:
   mv flutter default
 
 [private]
-[group('linux')]
-linux-setup-gtk-themes:
+[group('System')]
+system-install-gtk-themes:
 	#!/usr/bin/env bash
 	mkdir -p $HOME/.local/share/themes; cd $HOME/.local/share/themes
 	wget -nc -q https://github.com/catppuccin/gtk/releases/download/v0.7.0/Catppuccin-Mocha-Standard-Peach-Dark.zip
@@ -146,34 +150,17 @@ linux-setup-gtk-themes:
 	# ln -sf "${HOME}/.local/share/themes/Catppuccin-Mocha-Standard-Peach-Dark/gtk-4.0/gtk-dark.css" "${HOME}/.config/gtk-4.0/gtk-dark.css"
 
 [private]
-[group('linux')]
-vscode-setup-extensions:
-	#!/usr/bin/env bash
-	code --install-extension ms-python.python
-	code --install-extension golang.go
-	code --install-extension dart-code.flutter
+[group('System')]
+system-install-netskope:
+  mkdir -p $HOME/.local/share/certificates
+  echo | openssl s_client -connect oidc.eu-west-1.amazonaws.com:443 -servername oidc.eu-west-1.amazonaws.com 2>/dev/null | openssl x509 -outform PEM > $HOME/.local/share/certificates/netskope.crt
 
-	code --install-extension esbenp.prettier-vscode
-	code --install-extension mhutchie.git-graph
-	code --install-extension ritwickdey.liveserver
-	code --install-extension christian-kohler.path-intellisense
-	code --install-extension formulahendry.auto-rename-tag
-	code --install-extension pranaygp.vscode-css-peek
-	code --install-extension dbaeumer.vscode-eslint
-	code --install-extension zignd.html-css-class-completion
-	code --install-extension bradlc.vscode-tailwindcss
-	code --install-extension dsznajder.es7-react-js-snippets
-	code --install-extension gruntfuggly.bettercommen
-	code --install-extension glenn2223.live-sass
-	code --install-extension astro-build.astro-vscode
-
-	code --install-extension catppuccin.catppuccin-vsc
-	code --install-extension pkief.material-icon-theme
+# ---- Locale ----
 
 # Setup linux locale and user dirs
 [private]
-[group('linux')]
-linux-settings-locale:
+[group('System')]
+system-set-locale:
 	#!/usr/bin/env bash
 	mkdir -p $HOME/Desktop
 	mkdir -p $HOME/Downloads
@@ -196,43 +183,34 @@ linux-settings-locale:
 	XDG_VIDEOS_DIR="\$HOME/Videos"
 	EOF
 
+# ---- Upgrade ----
+
 [private]
-[group('linux')]
-linux-upgrade-terminal:
-  @just upgrade-archlinux
-  @just upgrade-flatpak
+[group('System')]
+system-upgrade-terminal-linux:
+  @just system-upgrade-archlinux
+  @just system-upgrade-flatpak
   @just nvim-upgrade-plugins
 
-[group('linux')]
-upgrade-archlinux:
+[private]
+[group('System')]
+system-upgrade-terminal-macos: nix-upgrade
+
+[group('System')]
+system-upgrade-archlinux:
   #!/usr/bin/env bash
   sudo pacman -Syu --noconfirm
 
-[group('linux')]
-upgrade-flatpak:
+[group('System')]
+system-upgrade-flatpak:
   #!/usr/bin/env bash
   flatpak update -y
 
-[group('linux')]
-nvim-upgrade-plugins:
-  #!/usr/bin/env bash
-  nvim --headless +Lazy! update +qa
-
-# ============================================================
-# MACOS
-# ============================================================
-
-[private]
-[group('macos')]
-mac-setup:
-  @just nix-install
-
-[group('macos')]
-macos-upgrade-terminal: nix-upgrade
+# ---- Clean ----
 
 # Limpia cachés del sistema para liberar espacio en disco
-[group('macos')]
-clean:
+[group('System')]
+system-clean:
   @echo "Limpiando cachés de navegadores..."
   rm -rf ~/Library/Caches/BraveSoftware
   rm -rf ~/Library/Caches/Firefox
@@ -258,47 +236,37 @@ clean:
   rm -rf ~/.local/share/terraform/plugin-cache/*
   @echo "Listo."
 
-[private]
-[group('macos')]
-netskope:
-  mkdir -p $HOME/.local/share/certificates
-  echo | openssl s_client -connect oidc.eu-west-1.amazonaws.com:443 -servername oidc.eu-west-1.amazonaws.com 2>/dev/null | openssl x509 -outform PEM > $HOME/.local/share/certificates/netskope.crt
-
-# ============================================================
-# NIX / HOME-MANAGER
-# ============================================================
+# ---- Nix / Home-Manager ----
 
 # Install all nix packages in terminal
-[group('nix')]
+[group('System')]
 nix-install:
   nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#{{platform}} --impure
 
-[group('nix')]
+[group('System')]
 nix-switch: && nix-clean
   home-manager --extra-experimental-features "nix-command flakes" switch --flake .#{{platform}} --impure --show-trace
 
-[group('nix')]
+[group('System')]
 nix-packages:
   home-manager --extra-experimental-features "nix-command flakes" packages --flake .#{{platform}}  --impure
 
-[group('nix')]
+[group('System')]
 nix-news:
   home-manager --extra-experimental-features "nix-command flakes" news --flake .#{{platform}}  --impure
 
-[group('nix')]
+[group('System')]
 nix-upgrade: && nix-switch nix-clean
   nix flake update
 
-[group('nix')]
+[group('System')]
 nix-clean:
   nix-collect-garbage --delete-old
 
-# ============================================================
-# DISTROBOX
-# ============================================================
+# ---- Distrobox ----
 
 [private]
-[group('dx')]
+[group('System')]
 dx-setup: && dx-autostart
   -distrobox rm archlinux -f
 
@@ -320,7 +288,7 @@ dx-setup: && dx-autostart
   distrobox enter archlinux -- distrobox-export --app wezterm
   distrobox enter archlinux -- distrobox-export --app code
 
-[group('dx')]
+[group('System')]
 dx-config:
   #!/bin/bash
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
@@ -329,7 +297,7 @@ dx-config:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
 
 [private]
-[group('dx')]
+[group('System')]
 dx-autostart:
   #!/bin/bash
   mkdir -p $HOME/.config/autostart/
@@ -342,7 +310,7 @@ dx-autostart:
   EOF
 
 [private]
-[group('dx')]
+[group('System')]
 dx-host-alias:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
@@ -352,18 +320,16 @@ dx-host-alias:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/rofi
 
 [private]
-[group('dx')]
+[group('System')]
 dx-export:
   type alacritty &>/dev/null && distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
   type kitty &>/dev/null && distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
   type code &>/dev/null && distrobox-export --app code
 
-# ============================================================
-# BOOTC (Bluefin derivation)
-# ============================================================
+# ---- Bootc (Bluefin derivation) ----
 
 # Build local bootc image from Containerfile (tag = YYYYMMDD + latest)
-[group('bootc')]
+[group('System')]
 bootc-build:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -378,27 +344,27 @@ bootc-build:
     -f Containerfile .
 
 # Rebase running system to the local image (first-time switch)
-[group('bootc')]
+[group('System')]
 bootc-switch:
   sudo bootc switch --transport containers-storage {{image}}:latest
 
 # Show current bootc deployment status
-[group('bootc')]
+[group('System')]
 bootc-status:
   sudo bootc status
 
 # Rollback to previous deployment
-[group('bootc')]
+[group('System')]
 bootc-rollback:
   sudo bootc rollback
 
 # List local images built for this workstation
-[group('bootc')]
+[group('System')]
 bootc-images:
   sudo podman images {{image}}
 
 # Prune old local images (keep latest + today's date tag)
-[group('bootc')]
+[group('System')]
 bootc-prune:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -408,16 +374,16 @@ bootc-prune:
     | xargs -r -n1 sudo podman rmi -f
 
 # Rebuild local image and apply with bootc upgrade
-[group('bootc')]
+[group('System')]
 upgrade-system: bootc-build
   sudo bootc upgrade
 
 # ============================================================
-# SETTINGS (dotfiles, repos)
+# SETTINGS
 # ============================================================
 
 # Configure symlinks for config files
-[group('settings')]
+[group('Settings')]
 dotfiles:
   #!/bin/bash
   install () {
@@ -472,7 +438,7 @@ dotfiles:
   fi
 
 # Clone reference config repos into resources/ (ignored by git)
-[group('settings')]
+[group('Settings')]
 clone-resources:
   #!/usr/bin/env bash
   clone () {
@@ -488,7 +454,7 @@ clone-resources:
   clone https://github.com/basecamp/omarchy.git $(pwd)/resources/omarchy
 
 # Get Git Repositories
-[group('settings')]
+[group('Settings')]
 clone-repositories:
   #!/usr/bin/env bash
   clone () {
@@ -505,17 +471,50 @@ clone-repositories:
   clone https://github.com/mlophez/turnix.git Zitania
   clone https://github.com/mlophez/kubeops-agent.git KubeOpsAgent
 
-# ============================================================
-# GNOME
-# ============================================================
+[group('Settings')]
+claude-setup:
+  claude plugin marketplace add JuliusBrussee/caveman
+  claude plugin install caveman@caveman
 
 [private]
-[group('gnome')]
+[group('Settings')]
+vscode-install-extensions:
+	#!/usr/bin/env bash
+	code --install-extension ms-python.python
+	code --install-extension golang.go
+	code --install-extension dart-code.flutter
+
+	code --install-extension esbenp.prettier-vscode
+	code --install-extension mhutchie.git-graph
+	code --install-extension ritwickdey.liveserver
+	code --install-extension christian-kohler.path-intellisense
+	code --install-extension formulahendry.auto-rename-tag
+	code --install-extension pranaygp.vscode-css-peek
+	code --install-extension dbaeumer.vscode-eslint
+	code --install-extension zignd.html-css-class-completion
+	code --install-extension bradlc.vscode-tailwindcss
+	code --install-extension dsznajder.es7-react-js-snippets
+	code --install-extension gruntfuggly.bettercommen
+	code --install-extension glenn2223.live-sass
+	code --install-extension astro-build.astro-vscode
+
+	code --install-extension catppuccin.catppuccin-vsc
+	code --install-extension pkief.material-icon-theme
+
+[group('Settings')]
+nvim-upgrade-plugins:
+  #!/usr/bin/env bash
+  nvim --headless +Lazy! update +qa
+
+# ---- GNOME ----
+
+[private]
+[group('Settings')]
 gnome-load-settings: && gnome-set-keybinds
   dconf load / < ./gnome/settings.ini
 
 [private]
-[group('gnome')]
+[group('Settings')]
 gnome-set-keybinds:
   #!/usr/bin/env bash
   # Clear existing keybindings
@@ -525,7 +524,7 @@ gnome-set-keybinds:
   dconf load / < ./gnome/keybindings.ini
 
 [private]
-[group('gnome')]
+[group('Settings')]
 gnome-forge-keybinds-reset:
   # gsettings list-keys org.gnome.desktop.wm.keybindings | xargs -I@ gsettings reset org.gnome.desktop.wm.keybindings @
   # gsettings list-keys org.gnome.shell.keybindings | xargs -I@ gsettings reset org.gnome.shell.keybindings @
@@ -536,7 +535,7 @@ gnome-forge-keybinds-reset:
   #fi
 
 [private]
-[group('gnome')]
+[group('Settings')]
 gnome-disable-services:
 	#!/usr/bin/env bash
 	regex=$(cat << EOF | tr -d '\n' | tr -d ' ' | tr -d '\t'
@@ -555,7 +554,7 @@ gnome-disable-services:
 	done
 
 [private]
-[group('gnome')]
+[group('Settings')]
 gnome-disable-services2:
 	#!/usr/bin/env bash
 	regex=$(cat << EOF | tr -d '\n' | tr -d ' ' | tr -d '\t'
@@ -579,7 +578,7 @@ gnome-disable-services2:
 # BACKUP
 # ============================================================
 
-[group('backup')]
+[group('Backup')]
 backup:
   #!/bin/bash
   distrobox-host-exec sudo bash -c << 'EOF'
