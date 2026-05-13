@@ -2,27 +2,27 @@
 -- Docs: https://wiki.hypr.land/Configuring/Start/
 
 -- ===== Env =====
-hl.env("PATH", "$PATH:$HOME/.config/hypr")
-hl.env("MOZ_ENABLE_WAYLAND", "1")
-hl.env("GDK_BACKEND", "wayland")
-hl.env("QT_QPA_PLATFORM", "wayland-egl;wayland;xcb")
-hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
-hl.env("CLUTTER_BACKEND", "wayland")
-hl.env("SDL_VIDEODRIVER", "wayland")
-hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
-hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
-hl.env("SAL_USE_VCLPLUGIN", "kf5")
-hl.env("ZDOTDIR=", "$HOME/.config/zsh")
-hl.env("BROWSER", "org.mozilla.firefox")
+-- hl.env("PATH", "$PATH:$HOME/.config/hypr")
+-- hl.env("MOZ_ENABLE_WAYLAND", "1")
+-- hl.env("GDK_BACKEND", "wayland")
+-- hl.env("QT_QPA_PLATFORM", "wayland-egl;wayland;xcb")
+-- hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+-- hl.env("CLUTTER_BACKEND", "wayland")
+-- hl.env("SDL_VIDEODRIVER", "wayland")
+-- hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
+-- hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
+-- hl.env("SAL_USE_VCLPLUGIN", "kf5")
+-- hl.env("ZDOTDIR=", "$HOME/.config/zsh")
+-- hl.env("BROWSER", "org.mozilla.firefox")
 
 -- ===== Monitors =====
-hl.monitor({ output = "eDP-1", mode = "1920x1080", position = "0x0", scale = 1 })
-
-for _, output in ipairs({ "DP-2", "DP-3", "DP-4", "DP-5", "DP-6", "DP-7", "DP-8", "DP-9", "HDMI-A-1" }) do
-  hl.monitor({ output = output, mode = "preferred", position = "auto", scale = 1, mirror = "eDP-1" })
-end
-
-hl.monitor({ output = "", disabled = true })
+--hl.monitor({ output = "eDP-1", mode = "1920x1080", position = "0x0", scale = 1 })
+--
+--for _, output in ipairs({ "DP-2", "DP-3", "DP-4", "DP-5", "DP-6", "DP-7", "DP-8", "DP-9", "HDMI-A-1" }) do
+--  hl.monitor({ output = output, mode = "preferred", position = "auto", scale = 1, mirror = "eDP-1" })
+--end
+--
+--hl.monitor({ output = "", disabled = true })
 
 -- ===== Autostart =====
 hl.on("hyprland.start", function()
