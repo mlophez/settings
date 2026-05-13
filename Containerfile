@@ -4,6 +4,7 @@ FROM ghcr.io/ublue-os/bluefin:gts
 RUN --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
+    --mount=type=tmpfs,dst=/run \
     dnf5 -y copr enable lionheartp/Hyprland && \
     dnf5 install -y \
       `# Hyprland compositor and core ecosystem` \
@@ -27,7 +28,8 @@ RUN --mount=type=cache,dst=/var/cache \
       playerctl \
       `# Qt theming` \
       qt5ct && \
-    dnf5 -y copr disable lionheartp/Hyprland
+    dnf5 -y copr disable lionheartp/Hyprland && \
+    dnf5 clean all && rm -rf /var/lib/dnf
 
 # Custom configs
 # COPY default/<file> /etc/<file>
