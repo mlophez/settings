@@ -106,14 +106,14 @@ hl.config({
 })
 
 -- ===== Animations =====
-hl.animation({ leaf = "windows", enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "windowsOut", enabled = true, speed = 7, bezier = "default", style = "popin 80%" })
-hl.animation({ leaf = "layers", enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "border", enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "borderangle", enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "workspaces", enabled = true, speed = 7, bezier = "default" })
-hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 7, bezier = "default", style = "slidefadevert" })
+--hl.animation({ leaf = "windows", enabled = true, speed = 7, bezier = "default" })
+--hl.animation({ leaf = "windowsOut", enabled = true, speed = 7, bezier = "default", style = "popin 80%" })
+--hl.animation({ leaf = "layers", enabled = true, speed = 7, bezier = "default" })
+--hl.animation({ leaf = "fade", enabled = true, speed = 7, bezier = "default" })
+--hl.animation({ leaf = "border", enabled = true, speed = 7, bezier = "default" })
+--hl.animation({ leaf = "borderangle", enabled = true, speed = 7, bezier = "default" })
+--hl.animation({ leaf = "workspaces", enabled = true, speed = 7, bezier = "default" })
+--hl.animation({ leaf = "specialWorkspace", enabled = true, speed = 7, bezier = "default", style = "slidefadevert" })
 
 -- ===== Bindings =====
 hl.bind("SUPER + Q", hl.dsp.window.close(), { description = "Kill active window" })
