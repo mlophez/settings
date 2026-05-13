@@ -1,32 +1,39 @@
 platform := os()
 image := "localhost/workstation"
+chooser := "fzf --preview 'just --show {}'"
 
 [private]
 default:
   @just -u -l
+#@type fzf &>/dev/null && just --choose --unsorted --chooser {{quote(chooser)}} || just -u -l
 
 # ============================================================
 # TOP-LEVEL
 # ============================================================
 
 # Run all
+[group('top')]
 setup:
   @just {{platform}}-setup
   npm -g install tree-sitter-cli
   # cargo install --locked tree-sitter-cli
 
 # Upgrade all in terminal, packages nvim plugins etc.
+[group('top')]
 upgrade:
   @just {{platform}}-upgrade-terminal
   npm -g install tree-sitter-cli
 
+[group('claude')]
 claude-install:
   curl -fsSL https://claude.ai/install.sh | bash
 
+[group('claude')]
 claude-setup:
   claude plugin marketplace add JuliusBrussee/caveman
   claude plugin install caveman@caveman
 
+[group('kiro')]
 kiro-install:
   curl -fsSL https://cli.kiro.dev/install | bash
 
@@ -35,18 +42,20 @@ kiro-install:
 # ============================================================
 
 [private]
+[group('linux')]
 linux-setup:
   # Setup gnome
   @just gnome-load-settings
   # Install gui apps
   @just linux-setup-apps
   # Install distroboxes
-  @just distrobox-setup
+  @just dx-setup
   #@just nix-install
   # Configure dotfiles
   @just dotfiles
 
 [private]
+[group('linux')]
 linux-setup-apps:
 	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 	flatpak --user install -y flathub com.brave.Browser
@@ -75,6 +84,7 @@ linux-setup-apps:
 	#flatpak --user override --filesystem=xdg-data/icons
 
 [private]
+[group('linux')]
 linux-setup-fonts:
 	#!/usr/bin/env bash
 	mkdir -p $HOME/.local/share/fonts
@@ -86,12 +96,14 @@ linux-setup-fonts:
 	fc-cache
 
 [private]
+[group('linux')]
 linux-setup-backgrounds:
   #!/usr/bin/env bash
   mkdir -p $HOME/.local/share/backgrounds
   cp -rf local/share/backgrounds/* $HOME/.local/share/backgrounds/
 
 [private]
+[group('linux')]
 linux-setup-android-development:
 	#!/usr/bin/env bash
 	export ANDROID_HOME="$HOME/.local/share/android"
@@ -103,6 +115,7 @@ linux-setup-android-development:
 	sdkmanager --install "platforms;android-33"
 	# sdkmanager --install "cmdline-tools;latest"
 
+[group('linux')]
 linux-setup-flutter-development:
   #!/usr/bin/env bash
   mkdir -p $HOME/.local/share/flutter; cd $HOME/.local/share/flutter
@@ -117,6 +130,7 @@ linux-setup-flutter-development:
   mv flutter default
 
 [private]
+[group('linux')]
 linux-setup-gtk-themes:
 	#!/usr/bin/env bash
 	mkdir -p $HOME/.local/share/themes; cd $HOME/.local/share/themes
@@ -132,6 +146,7 @@ linux-setup-gtk-themes:
 	# ln -sf "${HOME}/.local/share/themes/Catppuccin-Mocha-Standard-Peach-Dark/gtk-4.0/gtk-dark.css" "${HOME}/.config/gtk-4.0/gtk-dark.css"
 
 [private]
+[group('linux')]
 vscode-setup-extensions:
 	#!/usr/bin/env bash
 	code --install-extension ms-python.python
@@ -157,6 +172,7 @@ vscode-setup-extensions:
 
 # Setup linux locale and user dirs
 [private]
+[group('linux')]
 linux-settings-locale:
 	#!/usr/bin/env bash
 	mkdir -p $HOME/Desktop
@@ -181,19 +197,23 @@ linux-settings-locale:
 	EOF
 
 [private]
+[group('linux')]
 linux-upgrade-terminal:
   @just upgrade-archlinux
   @just upgrade-flatpak
   @just nvim-upgrade-plugins
 
+[group('linux')]
 upgrade-archlinux:
   #!/usr/bin/env bash
   sudo pacman -Syu --noconfirm
 
+[group('linux')]
 upgrade-flatpak:
   #!/usr/bin/env bash
   flatpak update -y
 
+[group('linux')]
 nvim-upgrade-plugins:
   #!/usr/bin/env bash
   nvim --headless +Lazy! update +qa
@@ -203,12 +223,15 @@ nvim-upgrade-plugins:
 # ============================================================
 
 [private]
+[group('macos')]
 mac-setup:
   @just nix-install
 
+[group('macos')]
 macos-upgrade-terminal: nix-upgrade
 
 # Limpia cachés del sistema para liberar espacio en disco
+[group('macos')]
 clean:
   @echo "Limpiando cachés de navegadores..."
   rm -rf ~/Library/Caches/BraveSoftware
@@ -236,6 +259,7 @@ clean:
   @echo "Listo."
 
 [private]
+[group('macos')]
 netskope:
   mkdir -p $HOME/.local/share/certificates
   echo | openssl s_client -connect oidc.eu-west-1.amazonaws.com:443 -servername oidc.eu-west-1.amazonaws.com 2>/dev/null | openssl x509 -outform PEM > $HOME/.local/share/certificates/netskope.crt
@@ -245,21 +269,27 @@ netskope:
 # ============================================================
 
 # Install all nix packages in terminal
+[group('nix')]
 nix-install:
   nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#{{platform}} --impure
 
+[group('nix')]
 nix-switch: && nix-clean
   home-manager --extra-experimental-features "nix-command flakes" switch --flake .#{{platform}} --impure --show-trace
 
+[group('nix')]
 nix-packages:
   home-manager --extra-experimental-features "nix-command flakes" packages --flake .#{{platform}}  --impure
 
+[group('nix')]
 nix-news:
   home-manager --extra-experimental-features "nix-command flakes" news --flake .#{{platform}}  --impure
 
+[group('nix')]
 nix-upgrade: && nix-switch nix-clean
   nix flake update
 
+[group('nix')]
 nix-clean:
   nix-collect-garbage --delete-old
 
@@ -268,7 +298,8 @@ nix-clean:
 # ============================================================
 
 [private]
-distrobox-setup: && distrobox-autostart
+[group('dx')]
+dx-setup: && dx-autostart
   -distrobox rm archlinux -f
 
   distrobox-create --nvidia -Y -n archlinux --image ghcr.io/ublue-os/arch-distrobox:latest
@@ -289,7 +320,8 @@ distrobox-setup: && distrobox-autostart
   distrobox enter archlinux -- distrobox-export --app wezterm
   distrobox enter archlinux -- distrobox-export --app code
 
-distrobox-config:
+[group('dx')]
+dx-config:
   #!/bin/bash
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
@@ -297,7 +329,8 @@ distrobox-config:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
 
 [private]
-distrobox-autostart:
+[group('dx')]
+dx-autostart:
   #!/bin/bash
   mkdir -p $HOME/.config/autostart/
   cat << EOF > $HOME/.config/autostart/archlinux.desktop
@@ -309,7 +342,8 @@ distrobox-autostart:
   EOF
 
 [private]
-distrobox-host-alias:
+[group('dx')]
+dx-host-alias:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
@@ -318,7 +352,8 @@ distrobox-host-alias:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/rofi
 
 [private]
-distrobox-export-apps:
+[group('dx')]
+dx-export:
   type alacritty &>/dev/null && distrobox-export --bin /usr/bin/alacritty --export-path $HOME/.local/bin
   type kitty &>/dev/null && distrobox-export --bin /usr/bin/kitty --export-path $HOME/.local/bin
   type code &>/dev/null && distrobox-export --app code
@@ -328,6 +363,7 @@ distrobox-export-apps:
 # ============================================================
 
 # Build local bootc image from Containerfile (tag = YYYYMMDD + latest)
+[group('bootc')]
 bootc-build:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -342,22 +378,27 @@ bootc-build:
     -f Containerfile .
 
 # Rebase running system to the local image (first-time switch)
+[group('bootc')]
 bootc-switch:
   sudo bootc switch --transport containers-storage {{image}}:latest
 
 # Show current bootc deployment status
+[group('bootc')]
 bootc-status:
   sudo bootc status
 
 # Rollback to previous deployment
+[group('bootc')]
 bootc-rollback:
   sudo bootc rollback
 
 # List local images built for this workstation
+[group('bootc')]
 bootc-images:
   sudo podman images {{image}}
 
 # Prune old local images (keep latest + today's date tag)
+[group('bootc')]
 bootc-prune:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -367,6 +408,7 @@ bootc-prune:
     | xargs -r -n1 sudo podman rmi -f
 
 # Rebuild local image and apply with bootc upgrade
+[group('bootc')]
 upgrade-system: bootc-build
   sudo bootc upgrade
 
@@ -375,6 +417,7 @@ upgrade-system: bootc-build
 # ============================================================
 
 # Configure symlinks for config files
+[group('settings')]
 dotfiles:
   #!/bin/bash
   install () {
@@ -429,6 +472,7 @@ dotfiles:
   fi
 
 # Clone reference config repos into resources/ (ignored by git)
+[group('settings')]
 clone-resources:
   #!/usr/bin/env bash
   clone () {
@@ -444,6 +488,7 @@ clone-resources:
   clone https://github.com/basecamp/omarchy.git $(pwd)/resources/omarchy
 
 # Get Git Repositories
+[group('settings')]
 clone-repositories:
   #!/usr/bin/env bash
   clone () {
@@ -465,10 +510,12 @@ clone-repositories:
 # ============================================================
 
 [private]
+[group('gnome')]
 gnome-load-settings: && gnome-set-keybinds
   dconf load / < ./gnome/settings.ini
 
 [private]
+[group('gnome')]
 gnome-set-keybinds:
   #!/usr/bin/env bash
   # Clear existing keybindings
@@ -478,6 +525,7 @@ gnome-set-keybinds:
   dconf load / < ./gnome/keybindings.ini
 
 [private]
+[group('gnome')]
 gnome-forge-keybinds-reset:
   # gsettings list-keys org.gnome.desktop.wm.keybindings | xargs -I@ gsettings reset org.gnome.desktop.wm.keybindings @
   # gsettings list-keys org.gnome.shell.keybindings | xargs -I@ gsettings reset org.gnome.shell.keybindings @
@@ -488,6 +536,7 @@ gnome-forge-keybinds-reset:
   #fi
 
 [private]
+[group('gnome')]
 gnome-disable-services:
 	#!/usr/bin/env bash
 	regex=$(cat << EOF | tr -d '\n' | tr -d ' ' | tr -d '\t'
@@ -506,6 +555,7 @@ gnome-disable-services:
 	done
 
 [private]
+[group('gnome')]
 gnome-disable-services2:
 	#!/usr/bin/env bash
 	regex=$(cat << EOF | tr -d '\n' | tr -d ' ' | tr -d '\t'
@@ -529,6 +579,7 @@ gnome-disable-services2:
 # BACKUP
 # ============================================================
 
+[group('backup')]
 backup:
   #!/bin/bash
   distrobox-host-exec sudo bash -c << 'EOF'
