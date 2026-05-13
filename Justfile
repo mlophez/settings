@@ -327,6 +327,7 @@ bootc-build:
   tag="$(date +%Y%m%d)"
   cpus=$(( $(nproc) / 2 ))
   sudo podman build --pull=newer \
+    --squash \
     --retry=5 --retry-delay=10s \
     --cpu-shares=2 \
     -t {{image}}:"${tag}" \
