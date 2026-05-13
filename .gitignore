@@ -2,6 +2,7 @@
 config/systemd/user/default.target.wants
 config/nvim/plugin
 config/k9s/clusters
+resources/
 
 # Files
 .zcompdump*

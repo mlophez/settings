@@ -427,6 +427,21 @@ dotfiles:
     # install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
   fi
 
+# Clone reference config repos into resources/ (ignored by git)
+clone-resources:
+  #!/usr/bin/env bash
+  clone () {
+    local repo=$1
+    local path=$2
+    if [[ -d $path/.git ]]; then
+      git -C "$path" pull --ff-only
+    else
+      git clone "$repo" "$path"
+    fi
+  }
+  mkdir -p $(pwd)/resources
+  clone https://github.com/basecamp/omarchy.git $(pwd)/resources/omarchy
+
 # Get Git Repositories
 clone-repositories:
   #!/usr/bin/env bash
