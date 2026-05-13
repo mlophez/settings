@@ -17,9 +17,11 @@ hl.env("BROWSER", "org.mozilla.firefox")
 
 -- ===== Monitors =====
 hl.monitor({ output = "eDP-1", mode = "1920x1080", position = "0x0", scale = 1 })
+
 for _, output in ipairs({ "DP-2", "DP-3", "DP-4", "DP-5", "DP-6", "DP-7", "DP-8", "DP-9", "HDMI-A-1" }) do
   hl.monitor({ output = output, mode = "preferred", position = "auto", scale = 1, mirror = "eDP-1" })
 end
+
 hl.monitor({ output = "", disabled = true })
 
 -- ===== Autostart =====
