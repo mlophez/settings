@@ -1,7 +1,7 @@
 FROM ghcr.io/ublue-os/bluefin:gts
 
-# Enable solopasha/hyprland COPR (newer Hyprland stack than Fedora main)
-RUN dnf5 -y copr enable solopasha/hyprland
+# Enable lionheartp/Hyprland COPR (newer Hyprland stack than Fedora main)
+RUN dnf5 -y copr enable lionheartp/Hyprland
 
 # Install Hyprland session and Wayland desktop tooling
 RUN dnf5 install -y \
@@ -29,7 +29,7 @@ RUN dnf5 install -y \
       qt5ct
 
 # Disable COPR and clean caches
-RUN dnf5 -y copr disable solopasha/hyprland && \
+RUN dnf5 -y copr disable lionheartp/Hyprland && \
     dnf5 clean all
 
 # Custom configs
