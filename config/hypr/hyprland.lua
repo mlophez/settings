@@ -39,7 +39,7 @@ end
 
 -- ===== Env =====
 --hl.env("PATH", os.getenv("HOME") .. "/.local/bin:" .. (os.getenv("PATH") or ""))
-hl.env("PATH", "$PATH:$HOME/.local/bin")
+--hl.env("PATH", "$PATH:$HOME/.local/bin")
 -- hl.env("MOZ_ENABLE_WAYLAND", "1")
 -- hl.env("GDK_BACKEND", "wayland")
 -- hl.env("QT_QPA_PLATFORM", "wayland-egl;wayland;xcb")
@@ -160,7 +160,7 @@ hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }), { descri
 hl.bind("SUPER + P", hl.dsp.exec_cmd("hyprctl dispatch pin"), { description = "Pin window" })
 hl.bind("SUPER + N", hl.dsp.exec_cmd("deskcmd menu"), { description = "Menu" })
 hl.bind("SUPER + M", hl.dsp.exec_cmd("deskcmd terminal toggle"), { description = "Terminal toggle" })
-hl.bind("SUPER + H", hl.dsp.exec_cmd("deskcmd files"), { description = "Files" })
+hl.bind("SUPER + H", hl.dsp.exec_cmd("uwsm-app -- nautilus --new-window"), { description = "Files" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("deskcmd files"), { description = "Files" })
 hl.bind("SUPER + W", hl.dsp.exec_cmd("deskcmd wallpaper"), { description = "Wallpaper" })
 hl.bind("SUPER + RETURN", run_terminal, { description = "Terminal" })
