@@ -169,15 +169,28 @@ cmd_notify_daemon() {
 # WALLPAPER
 cmd_wallpaper() {
   local cache_file="$HOME/.cache/wallpaper"
-  local cached="$(cat ${cache_file})"
+  local cached="$([ -e ${cache_file} ] && cat ${cache_file} || echo '')"
   local wallpapers_path="$HOME/.local/share/backgrounds"
   local wallpaper="${wallpapers_path}/$(ls ${wallpapers_path} | shuf -n 1)"
 
-  if type swww &>/dev/null; then
+  [ -e "${cached}" ] && wallpaper=${cached}
+
+  if type hyprpaper &>/dev/null; then
+    if ! pgrep -x "hyprpaper" > /dev/null; then
+      run "hyprpaper"
+      for _ in 1 2 3 4 5; do
+        hyprctl hyprpaper listloaded &>/dev/null && break
+        sleep 0.2
+      done
+    fi
+    hyprctl hyprpaper preload "${wallpaper}"
+    hyprctl hyprpaper wallpaper ",${wallpaper}"
+    hyprctl hyprpaper unload unused
+    echo "${wallpaper}" > ${cache_file}
+  elif type swww &>/dev/null; then
     if ! pgrep -x "swww-daemon" > /dev/null; then
       pkill swww || /bin/true
       run "swww-daemon --format 'xrgb'"
-      [ -e "${cached}" ] && wallpaper=${cached}
       swww img ${wallpaper}
     else
       swww img ${wallpaper} \
@@ -185,13 +198,9 @@ cmd_wallpaper() {
         --transition-fps 60 \
         --transition-step 50 \
         --transition-duration 1
-      echo "${wallpaper}" > ${cache_file}
     fi
+    echo "${wallpaper}" > ${cache_file}
   fi
-
-  # if type wal &>/dev/null; then
-  #   wal -i ${wallpaper}
-  # fi
 
   return 0
 }
