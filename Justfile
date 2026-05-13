@@ -282,13 +282,19 @@ distrobox-setup: && distrobox-autostart
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
   distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
-  distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/ublue
   # distrobox enter archlinux -- sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/dconf
 
   distrobox enter archlinux -- sudo ln -sf /run/host/usr/share/ublue-os /usr/share/ublue-os
 
   distrobox enter archlinux -- distrobox-export --app wezterm
   distrobox enter archlinux -- distrobox-export --app code
+
+distrobox-config:
+  #!/bin/bash
+  sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/distrobox
+  sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/podman
+  sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/flatpak
+  sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/gsettings
 
 [private]
 distrobox-autostart:
@@ -383,6 +389,8 @@ dotfiles:
   install $(pwd) $HOME/.local/share/settings
   # DESKTOP
   install $(pwd)/config/hypr $HOME/.config/hypr
+  install $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/hyprcmd
+  install $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/deskcmd
   # TERMINAL AND SHELL
   install $(pwd)/config/wezterm $HOME/.config/wezterm
   install $(pwd)/config/fish $HOME/.config/fish
