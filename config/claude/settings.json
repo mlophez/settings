@@ -43,7 +43,7 @@
     "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": false,
     "lua-lsp@claude-plugins-official": true,
-    "logalty-ai@logalty": true
+    "logalty-ai@logalty": false
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -60,7 +60,7 @@
     }
   },
   "language": "Español",
-  "effortLevel": "xhigh",
+  "effortLevel": "medium",
   "voice": {
     "enabled": true,
     "mode": "hold"
