@@ -421,8 +421,7 @@ config:
   install $(pwd)/config/waybar $HOME/.config/waybar
   # TERMINAL AND SHELL
   install $(pwd)/config/wezterm $HOME/.config/wezterm
-  install $(pwd)/config/fish/config.fish $HOME/.config/fish/config.fish
-  install $(pwd)/config/fish/functions $HOME/.config/fish/functions
+  install $(pwd)/config/fish $HOME/.config/fish
   install $(pwd)/config/starship.toml $HOME/.config/starship.toml
   install $(pwd)/config/zellij $HOME/.config/zellij
   install $(pwd)/config/nvim $HOME/.config/nvim

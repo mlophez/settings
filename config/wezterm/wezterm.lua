@@ -30,23 +30,23 @@ return {
     },
   },
   keys = { -- showkeys: wezterm show-keys --lua | less
-    { mods = "CTRL|SHIFT", key = "C", action = wezterm.action.CopyTo("Clipboard") },
-    { mods = "CTRL|SHIFT", key = "V", action = wezterm.action.PasteFrom("Clipboard") },
-    { mods = "CTRL", key = "+",      action = wezterm.action.IncreaseFontSize },
-    { mods = "CTRL", key = "-",      action = wezterm.action.DecreaseFontSize },
-    { mods = "CTRL", key = "0",      action = wezterm.action.ResetFontSize },
-    { mods = "CTRL", key = "X",      action = wezterm.action.ActivateCopyMode },
+    { mods = "CTRL|SHIFT", key = "C",      action = wezterm.action.CopyTo("Clipboard") },
+    { mods = "CTRL|SHIFT", key = "V",      action = wezterm.action.PasteFrom("Clipboard") },
+    { mods = "CTRL",       key = "+",      action = wezterm.action.IncreaseFontSize },
+    { mods = "CTRL",       key = "-",      action = wezterm.action.DecreaseFontSize },
+    { mods = "CTRL",       key = "0",      action = wezterm.action.ResetFontSize },
+    { mods = "CTRL",       key = "X",      action = wezterm.action.ActivateCopyMode },
     -- Adapter for zellij prefix
-    { mods = "ALT",  key = "Space",  action = wezterm.action.SendKey({ key = "F10" }) },
+    { mods = "ALT",        key = "Space",  action = wezterm.action.SendKey({ key = "F10" }) },
     -- Movements keys
-    { mods = "ALT",  key = "j",      action = wezterm.action.SendKey({ key = "LeftArrow" }) },
-    { mods = "ALT",  key = "k",      action = wezterm.action.SendKey({ key = "DownArrow" }) },
-    { mods = "ALT",  key = "l",      action = wezterm.action.SendKey({ key = "UpArrow" }) },
-    { mods = "ALT",  key = "raw:47", action = wezterm.action.SendKey({ key = "RightArrow" }) },
+    { mods = "ALT",        key = "j",      action = wezterm.action.SendKey({ key = "LeftArrow" }) },
+    { mods = "ALT",        key = "k",      action = wezterm.action.SendKey({ key = "DownArrow" }) },
+    { mods = "ALT",        key = "l",      action = wezterm.action.SendKey({ key = "UpArrow" }) },
+    { mods = "ALT",        key = "raw:47", action = wezterm.action.SendKey({ key = "RightArrow" }) },
     -- MacOS
-    { mods = "CMD",  key = "c",      action = wezterm.action.CopyTo("Clipboard") },
-    { mods = "CMD",  key = "v",      action = wezterm.action.PasteFrom("Clipboard") },
-    { mods = "ALT",  key = "raw:41", action = wezterm.action.SendKey({ key = "RightArrow" }) }, -- MacOS
+    { mods = "CMD",        key = "c",      action = wezterm.action.CopyTo("Clipboard") },
+    { mods = "CMD",        key = "v",      action = wezterm.action.PasteFrom("Clipboard") },
+    { mods = "ALT",        key = "raw:41", action = wezterm.action.SendKey({ key = "RightArrow" }) }, -- MacOS
   },
 }
 
