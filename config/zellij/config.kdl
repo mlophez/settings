@@ -57,6 +57,9 @@ keybinds clear-defaults=true {
     bind "Alt 8" { GoToTab  8; }
     bind "Alt 9" { GoToTab  9; }
     bind "Alt 0" { GoToTab 10; }
+
+    bind "Alt J" { MoveTab "Left"; }
+    bind "Alt Ñ" { MoveTab "Right"; }
   }
   tmux {
     bind "Esc" "q" "Enter" { SwitchToMode "normal"; }
