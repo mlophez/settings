@@ -23,13 +23,14 @@ export GNUPGHOME="$HOME/.config/gnupg"
 export PASSWORD_STORE_DIR="$HOME/.local/share/vault"
 export PASSWORD_STORE_CLIP_TIME=8
 
-# FZF
+# FZF - Catppuccin Mocha
 FZF_DEFAULT_OPTS=""
 FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} -m --ansi --layout=reverse --inline-info"
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --prompt='➤ ' --pointer='➤' --marker='➤'"
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg:-1,bg:-1,hl:#fab387'"
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'fg+:#b4befe,bg+:-1,hl+:#fab387'"
-FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color 'prompt:166'"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --prompt='» ' --pointer='█' --marker='█'"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8"
+FZF_DEFAULT_OPTS="${FZF_DEFAULT_OPTS} --color=selected-bg:#45475a,border:#313244,label:#cdd6f4"
 export FZF_DEFAULT_OPTS
 
 # AWS

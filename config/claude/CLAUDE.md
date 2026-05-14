@@ -22,13 +22,11 @@
 - Always use `aws --profile <profile>`
 - Never rely on default profile/env vars
 - Ignore global `AWS_PROFILE=tools` for workload commands
-- Read `$HOME/.claude/memory/aws-profiles.md` only for AWS tasks
 - Unknown profile: ask Miguel and update inventory
 
 ## Kubernetes
 - Always use `kubectl --context <context>`
 - Never rely on current context
-- Read `$HOME/.claude/memory/kubernetes-clusters.md` only for Kubernetes tasks
 - Unknown context: ask Miguel and update inventory
 
 ## Git
