@@ -6,7 +6,7 @@
 theme "catppuccin-mocha"
 default_layout "main"
 default_mode "normal"
-default_shell "zsh"
+default_shell "fish"
 pane_frames false
 auto_layout true
 copy_on_select true

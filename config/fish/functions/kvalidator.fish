@@ -1,0 +1,13 @@
+function kvalidator
+    echo '***** KUBE-SCORE *****'
+    kustomize build . --enable-helm | kube-score score \
+        --kubernetes-version v1.26 \
+        --ignore-container-cpu-limit \
+        --ignore-container-memory-limit \
+        --ignore-test pod-networkpolicy \
+        --ignore-test container-ephemeral-storage-request-and-limit \
+        -
+
+    echo '***** KUBEVAL *****'
+    kustomize build . --enable-helm | kubeval --ignore-missing-schemas --strict; or return 0
+end
