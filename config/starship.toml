@@ -32,7 +32,7 @@ style="bold red"
 format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_length = 5
 truncate_to_repo = false
-style="bold teal"
+style="bold blue"
 
 [python]
 format = "[$symbol $virtualenv \\($version\\)]($style) "
