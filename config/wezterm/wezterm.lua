@@ -6,6 +6,26 @@ wezterm.on("gui-startup", function(cmd)
   window:gui_window():maximize()
 end)
 
+local function executable(bin)
+  local home = os.getenv("HOME") or ""
+  local dirs = {
+    home .. "/.nix-profile/bin",
+    home .. "/.local/bin",
+    "/nix/var/nix/profiles/default/bin",
+    "/opt/homebrew/bin",
+    "/usr/local/bin",
+    "/run/current-system/sw/bin",
+    "/usr/bin",
+    "/bin",
+  }
+  for _, dir in ipairs(dirs) do
+    local path = dir .. "/" .. bin
+    local f = io.open(path, "r")
+    if f then f:close(); return path end
+  end
+  return nil
+end
+
 -- Config
 return {
   color_scheme = "Catppuccin Mocha",
@@ -17,7 +37,7 @@ return {
   text_background_opacity = 1.0,
   use_fancy_tab_bar = false,
   hide_tab_bar_if_only_one_tab = true,
-  default_prog = { "zsh" },
+  default_prog = { executable("fish") or executable("zsh") or executable("bash") or "/bin/sh", "-l" },
   disable_default_key_bindings = true,
   debug_key_events = true,
   send_composed_key_when_right_alt_is_pressed = true,
