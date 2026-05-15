@@ -404,56 +404,50 @@ dx-export:
 [group('Settings')]
 config:
   #!/bin/bash
-  install () {
-    local src=$1
-    local dest=$2
-    [[ -d $dest ]] && rm -r "$dest"
-    [[ -f $dest ]] && rm "$dest"
-    echo $src - $dest
-    mkdir -p "$(dirname "$dest")"
-    ln -sf "$src" "$dest"
-  }
-  install $(pwd) $HOME/.local/share/settings
+  link () { echo $1 - $2; mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
+  unlink () { [[ -L "$2" ]] && rm "$2"; }
+  # DoIt
+  link $(pwd) $HOME/.local/share/settings
   # DESKTOP
-  install $(pwd)/config/hypr $HOME/.config/hypr
-  install $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/hyprcmd
-  install $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/deskcmd
-  install $(pwd)/config/waybar $HOME/.config/waybar
+  link $(pwd)/config/hypr $HOME/.config/hypr
+  link $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/hyprcmd
+  link $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/deskcmd
+  link $(pwd)/config/waybar $HOME/.config/waybar
   # TERMINAL AND SHELL
-  install $(pwd)/config/wezterm $HOME/.config/wezterm
-  install $(pwd)/config/fish $HOME/.config/fish
-  install $(pwd)/config/starship.toml $HOME/.config/starship.toml
-  install $(pwd)/config/zellij $HOME/.config/zellij
-  install $(pwd)/config/television $HOME/.config/television
-  install $(pwd)/config/nvim $HOME/.config/nvim
+  link $(pwd)/config/wezterm $HOME/.config/wezterm
+  link $(pwd)/config/fish $HOME/.config/fish
+  link $(pwd)/config/starship.toml $HOME/.config/starship.toml
+  link $(pwd)/config/zellij $HOME/.config/zellij
+  link $(pwd)/config/television $HOME/.config/television
+  link $(pwd)/config/nvim $HOME/.config/nvim
+  # ZSH
+  link $(pwd)/config/zsh $HOME/.config/zsh
+  unlink $(pwd)/config/zsh/zshrc $HOME/.zshrc
+  unlink $(pwd)/config/zsh/zshenv $HOME/.zshenv
+  unlink $(pwd)/config/zsh/zprofile $HOME/.zprofile
   # OTHERS
-  install $(pwd)/config/zsh $HOME/.config/zsh
-  install $(pwd)/config/zsh/zshrc $HOME/.zshrc
-  install $(pwd)/config/zsh/zshenv $HOME/.zshenv
-  install $(pwd)/config/zsh/zprofile $HOME/.zprofile
-  install $(pwd)/config/nix $HOME/.config/nix
-  install $(pwd)/config/git $HOME/.config/git
-  install $(pwd)/config/k9s $HOME/.config/k9s
-  install $(pwd)/config/ngrok $HOME/.config/ngrok
-  install $(pwd)/config/just $HOME/.config/just
-  install $(pwd)/config/kube/config $HOME/.config/kube/config
-  install $(pwd)/config/aws/config $HOME/.aws/config
-  install $(pwd)/config/ssh/config $HOME/.ssh/config
-  install $(pwd)/config/containers $HOME/.config/containers
+  link $(pwd)/config/nix $HOME/.config/nix
+  link $(pwd)/config/git $HOME/.config/git
+  link $(pwd)/config/k9s $HOME/.config/k9s
+  link $(pwd)/config/ngrok $HOME/.config/ngrok
+  link $(pwd)/config/just $HOME/.config/just
+  link $(pwd)/config/kube/config $HOME/.config/kube/config
+  link $(pwd)/config/aws/config $HOME/.aws/config
+  link $(pwd)/config/ssh/config $HOME/.ssh/config
+  link $(pwd)/config/containers $HOME/.config/containers
   # install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/docker
   # CLAUDE
-  install $(pwd)/config/claude/CLAUDE.md $HOME/.claude/CLAUDE.md
-  install $(pwd)/config/claude/skills $HOME/.claude/skills
-  install $(pwd)/config/claude/commands $HOME/.claude/commands
-  install $(pwd)/config/claude/settings.json $HOME/.claude/settings.json
+  link $(pwd)/config/claude/CLAUDE.md $HOME/.claude/CLAUDE.md
+  link $(pwd)/config/claude/skills $HOME/.claude/skills
+  link $(pwd)/config/claude/commands $HOME/.claude/commands
+  link $(pwd)/config/claude/settings.json $HOME/.claude/settings.json
   # OPENCODE
-  install $(pwd)/config/opencode $HOME/.config/opencode
+  link $(pwd)/config/opencode $HOME/.config/opencode
   # PLATFORM SPECIFIC
   if [[ "{{platform}}" == "macos" ]]; then
-    install $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
-    install $(pwd)/config/ngrok "$HOME/Library/Application Support/ngrok"
-    ln -sf /opt/podman/bin/podman $HOME/.local/bin/docker
-    # install $(pwd)/local/bin/docker-wrapper.sh $HOME/.local/bin/podman
+    link $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
+    link $(pwd)/config/ngrok "$HOME/Library/Application Support/ngrok"
+    link /opt/podman/bin/podman $HOME/.local/bin/docker
   fi
 
 # Clone reference config repos into resources/ (ignored by git)
