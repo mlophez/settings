@@ -333,7 +333,7 @@ distrobox-install: && distrobox-autostart
 
   distrobox enter archlinux -- sudo pacman-key --init
   distrobox enter archlinux -- sudo pacman -Syu --noconfirm
-  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm code nix
+  # distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm code nix
   distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
 
   just distrobox-config
@@ -360,9 +360,9 @@ distrobox-config:
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/ujust
   sudo ln -sf /usr/sbin/distrobox-host-exec /usr/bin/bootc
 
-  distrobox-export --app wezterm
-  distrobox-export --bin /usr/bin/wezterm --export-path $HOME/.local/bin
-  distrobox-export --app code
+  #distrobox-export --app wezterm
+  #distrobox-export --bin /usr/bin/wezterm --export-path $HOME/.local/bin
+  #distrobox-export --app code
 
 [private]
 [group('Distrobox')]
