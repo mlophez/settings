@@ -1,2 +1,7 @@
 [ui]
 theme = "catppuccin-mocha-peach"
+
+#[shell_integration.channel_triggers]
+#"env" = ["export", "unset"]
+#"dirs" = ["cd", "ls", "rmdir"]
+#"files" = ["mv", "cp", "vim"]

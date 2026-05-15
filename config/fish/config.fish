@@ -28,3 +28,8 @@ end
 #     kubectl completion fish | source
 # end
 
+# Television fuzzy finder integration
+# if type -q tv
+#   tv init fish | source
+# end
+
