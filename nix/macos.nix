@@ -32,6 +32,7 @@
     pkgs.nushell
     # TOOLS
     pkgs.fzf
+    pkgs.television
     pkgs.expect
     pkgs.bc
     pkgs.jq

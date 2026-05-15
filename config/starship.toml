@@ -1,8 +1,8 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$directory$line_break$shell$character"
-right_format = "$git_status$git_branch  "
+format = "$directory$line_break$character"
+right_format = "$shell"
 # Inserts a blank line between shell prompts
 add_newline = true
 palette = "catppuccin_mocha"
@@ -32,6 +32,7 @@ style="bold red"
 format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_length = 5
 truncate_to_repo = false
+style="bold teal"
 
 [python]
 format = "[$symbol $virtualenv \\($version\\)]($style) "

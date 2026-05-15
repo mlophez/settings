@@ -37,6 +37,7 @@ sudo
 which
 ripgrep
 fzf
+television
 expect
 pv
 exa

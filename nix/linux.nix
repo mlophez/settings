@@ -70,6 +70,7 @@
     # SHELL
     # pkgs.bash
     pkgs.fzf
+    pkgs.television
     pkgs.expect
     pkgs.bc
     pkgs.jq

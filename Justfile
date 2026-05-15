@@ -424,6 +424,7 @@ config:
   install $(pwd)/config/fish $HOME/.config/fish
   install $(pwd)/config/starship.toml $HOME/.config/starship.toml
   install $(pwd)/config/zellij $HOME/.config/zellij
+  install $(pwd)/config/television $HOME/.config/television
   install $(pwd)/config/nvim $HOME/.config/nvim
   # OTHERS
   install $(pwd)/config/zsh $HOME/.config/zsh

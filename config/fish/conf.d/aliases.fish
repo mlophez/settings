@@ -80,14 +80,6 @@ alias helm-list 'helm ls -A --kube-context'
 # KUBESEAL
 alias kubeseal 'command kubeseal --controller-namespace kube-system --controller-name sealed-secrets --scope cluster-wide'
 
-# TERRAFORM
-alias ti 'terraform init'
-alias tv 'terraform validate'
-alias tp 'terraform plan'
-alias ta 'terraform apply'
-alias tmv 'terraform state mv'
-alias terraspace 'docker run -ti -v (pwd):/workspace -w /workspace ghcr.io/boltops-tools/terraspace:alpine'
-
 # PYTHON
 alias d deactivate
 
