@@ -6,29 +6,32 @@ RUN --mount=type=cache,dst=/var/cache \
     --mount=type=tmpfs,dst=/tmp \
     --mount=type=tmpfs,dst=/run \
     dnf5 -y copr enable lionheartp/Hyprland && \
+    dnf5 -y copr enable wezfurlong/wezterm-nightly && \
     dnf5 install -y \
-      `# Hyprland compositor and core ecosystem` \
       hyprland \
       hyprlock \
       hyprpaper \
       hypridle \
       hyprpicker \
+      hyprshot \
+      hyprsunset \
+      hyprpolkitagent \
       xdg-desktop-portal-hyprland \
-      `# Wayland desktop utilities (bar, launcher, notifications, wallpaper, lock)` \
       waybar \
       rofi-wayland \
       wlogout \
       mako \
       swaylock \
-      `# Screenshot, clipboard, media keys` \
       grim \
       slurp \
       wl-clipboard \
       brightnessctl \
       playerctl \
-      `# Qt theming` \
-      qt5ct && \
+      wezterm \
+      qt5ct \
+      && \
     dnf5 -y copr disable lionheartp/Hyprland && \
+    dnf5 -y copr disable wezfurlong/wezterm-nightly && \
     dnf5 clean all && rm -rf /var/lib/dnf
 
 # Custom configs
