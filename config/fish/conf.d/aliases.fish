@@ -90,6 +90,7 @@ alias zel 'zellij attach 0; or exec zellij -s 0'
 alias se settings
 
 # DISTROBOX
+alias box 'exec distrobox enter archlinux -- fish'
 alias ds distrobox-menu
 alias user 'distrobox-host-exec bash'
 alias admin 'distrobox-host-exec sudo bash'
