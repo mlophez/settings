@@ -429,6 +429,7 @@ config:
   link $(pwd)/config/nix $HOME/.config/nix
   link $(pwd)/config/git $HOME/.config/git
   link $(pwd)/config/k9s $HOME/.config/k9s
+  link $(pwd)/config/lazygit $HOME/.config/lazygit
   link $(pwd)/config/ngrok $HOME/.config/ngrok
   link $(pwd)/config/just $HOME/.config/just
   link $(pwd)/config/kube/config $HOME/.config/kube/config
@@ -446,6 +447,7 @@ config:
   # PLATFORM SPECIFIC
   if [[ "{{platform}}" == "macos" ]]; then
     link $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
+    link $(pwd)/config/lazygit "$HOME/Library/Application Support/lazygit"
     link $(pwd)/config/ngrok "$HOME/Library/Application Support/ngrok"
     link /opt/podman/bin/podman $HOME/.local/bin/docker
   fi
