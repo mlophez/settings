@@ -2,6 +2,11 @@
 config/systemd/user/default.target.wants
 config/nvim/plugin
 config/k9s/clusters
+config/containers/auth.json
+config/containers/containers.conf
+config/containers/podman-connections.json
+config/containers/podman-connections.json.lock
+config/containers/podman/
 resources/
 
 # Files
