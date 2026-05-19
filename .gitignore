@@ -1,4 +1,6 @@
 ## GITIGNORE ##
+config/fish/conf.d/00_fig_pre.fish
+config/fish/conf.d/99_fig_post.fish
 config/systemd/user/default.target.wants
 config/nvim/plugin
 config/k9s/clusters
