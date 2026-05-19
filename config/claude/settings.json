@@ -1,7 +1,6 @@
 {
   "awsAuthRefresh": "aws sso login --profile tools",
   "env": {
-    "SHELL": "/bin/zsh",
     "CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD": "1"
   },
   "permissions": {
@@ -28,9 +27,10 @@
       "Bash(kubectl logs *)",
       "Bash(curl * https://api.bitbucket.org/ *)",
       "mcp__claude_ai_Atlassian__*"
-    ]
+    ],
+    "defaultMode": "plan"
   },
-  "model": "opus[1m]",
+  "model": "opusplan",
   "statusLine": {
     "type": "command",
     "command": "bash /Users/miguel.lopez/.claude/statusline.sh"

@@ -26,6 +26,12 @@ ui {
 keybinds clear-defaults=true {
   shared {
     bind "Alt q" { SwitchToMode "session"; }
+    bind "Alt s" {
+      LaunchOrFocusPlugin "session-manager" {
+        floating true
+        move_to_focused_tab true
+      };
+    }
     //bind "Esc" { Detach; }
   }
   session {

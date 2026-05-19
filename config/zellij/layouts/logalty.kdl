@@ -15,4 +15,7 @@ layout {
     }
   }
   tab name="1# LOCAL"
+  tab name="2# LOGALTY" cwd="$HOME/Code/Logalty"
+  tab name="3# KUBERNETES" cwd="$HOME/Code/Logalty/config/kubernetes"
+  tab name="4# TERRAFORM" cwd="$HOME/Code/Logalty/config/terraform"
 }

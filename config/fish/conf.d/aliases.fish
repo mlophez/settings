@@ -84,7 +84,7 @@ alias kubeseal 'command kubeseal --controller-namespace kube-system --controller
 alias d deactivate
 
 # ZELLIJ
-alias zel 'zellij attach 0; or exec zellij -s 0'
+alias zel 'zellij attach MAIN; or exec zellij -s MAIN'
 
 # SETTINGS
 alias se settings
@@ -115,4 +115,4 @@ alias ai claude
 alias aib claude-with-bedrock
 alias bai claude-with-bedrock
 alias oc opencode
-alias ail "claude --add-dir $HOME/Code/assistant-ai"
+alias ail "claude --add-dir $HOME/Code/Logalty --model sonnet --effort medium"
