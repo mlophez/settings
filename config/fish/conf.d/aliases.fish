@@ -111,7 +111,7 @@ alias yt youtube
 alias youtube-download-mp3 'yt-dlp -x --audio-format mp3'
 
 # IA
-alias ai claude
+alias ai "clear && claude"
 alias aib claude-with-bedrock
 alias bai claude-with-bedrock
 alias oc opencode

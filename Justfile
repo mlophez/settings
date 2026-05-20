@@ -442,6 +442,7 @@ config:
   link $(pwd)/config/claude/skills $HOME/.claude/skills
   link $(pwd)/config/claude/commands $HOME/.claude/commands
   link $(pwd)/config/claude/settings.json $HOME/.claude/settings.json
+  link $(pwd)/config/claude/statusline.sh $HOME/.claude/statusline.sh
   # OPENCODE
   link $(pwd)/config/opencode $HOME/.config/opencode
   # PLATFORM SPECIFIC
