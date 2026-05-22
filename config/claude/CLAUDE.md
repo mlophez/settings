@@ -42,3 +42,15 @@ Use modern tools when available:
 - `bat` instead of `cat`
 - `rg --type` for filtered searches
 - `jq` for JSON inspection / pretty print
+
+## Procedures
+
+### Run new session of claude
+
+Abre una nueva session de ia en un tab de zellij sobre una carpeta de Logalty y
+arranca una sesión interactiva de claude con un prompt de subtarea derivado del contexto de la sesión actual de planificación.
+Úsala cuando el usuario diga "vamos a implementar esto en <subproyecto>", "lánzame una sesión de claude en <subproyecto>" o "pásame esto a una nueva tab".
+
+```bash
+zellij action new-tab -n "<project-name>" -c "<project-path>" -- claude "$PROMPT"
+```
