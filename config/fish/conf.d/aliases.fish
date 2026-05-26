@@ -90,11 +90,14 @@ alias zel 'zellij attach MAIN; or exec zellij -s MAIN'
 alias se settings
 
 # DISTROBOX
-alias box 'exec distrobox enter archlinux -- fish'
-alias ds distrobox-menu
+alias dx 'distrobox'
+
 alias user 'distrobox-host-exec bash'
 alias admin 'distrobox-host-exec sudo bash'
 alias root 'distrobox-host-exec sudo bash'
+
+alias archlinux 'exec distrobox enter archlinux -- fish'
+alias fedora 'exec distrobox enter fedora -- fish'
 
 # SYSTEMD
 alias systemctl 'systemctl --user'

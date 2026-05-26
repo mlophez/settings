@@ -13,5 +13,5 @@ layout {
       pane { x "8%";  y "14%";  width "90%"; height "85%"; }
     }
   }
-  tab name="MAIN"
+  tab name="LOCAL"
 }

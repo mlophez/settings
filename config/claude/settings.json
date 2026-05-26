@@ -25,6 +25,7 @@
       "Bash(kubectl get *)",
       "Bash(kubectl describe *)",
       "Bash(kubectl logs *)",
+      "Bash(http *)",
       "Bash(curl * https://api.bitbucket.org/ *)",
       "mcp__claude_ai_Atlassian__*"
     ],
@@ -40,7 +41,7 @@
     "claude-md-management@claude-plugins-official": true,
     "caveman@caveman": false,
     "terraform@claude-plugins-official": false,
-    "frontend-design@claude-plugins-official": false,
+    "frontend-design@claude-plugins-official": true,
     "code-review@claude-plugins-official": false,
     "lua-lsp@claude-plugins-official": true,
     "logalty-ai@logalty": false
@@ -65,5 +66,6 @@
     "enabled": true,
     "mode": "hold"
   },
+  "skipDangerousModePermissionPrompt": true,
   "voiceEnabled": true
 }
