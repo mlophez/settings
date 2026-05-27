@@ -133,6 +133,7 @@ typescript
 npm
 yarn
 pnpm
+bun
 
 # RUST
 rustup

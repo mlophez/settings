@@ -98,6 +98,7 @@
     pkgs.nodejs
     pkgs.yarn
     pkgs.pnpm
+    pkgs.bun
     # TYPESCRIPT
     pkgs.typescript
     # RUST
