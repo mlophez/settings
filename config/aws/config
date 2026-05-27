@@ -1,6 +1,10 @@
 [default]
 sso_session = awscli
 
+[profile cloud-platform]
+region = eu-south-2
+output = json
+
 [profile root]
 sso_session = awscli
 sso_account_id = 129717314482
