@@ -457,15 +457,7 @@ config:
 [group('General')]
 download-resources:
   #!/usr/bin/env bash
-  clone () {
-    local repo=$1
-    local path=$2
-    if [[ -d $path/.git ]]; then
-      git -C "$path" pull --ff-only
-    else
-      git clone "$repo" "$path"
-    fi
-  }
+  clone () { local repo=$1; local path=$2; if [[ -d $path/.git ]]; then git -C "$path" pull --ff-only; else git clone "$repo" "$path"; fi; }
   mkdir -p $(pwd)/resources
   clone https://github.com/basecamp/omarchy.git $(pwd)/resources/omarchy
 
@@ -473,19 +465,20 @@ download-resources:
 [group('Settings')]
 config-repositories:
   #!/usr/bin/env bash
-  clone () {
-    local repo=$1
-    local path=$2
-    [[ -d $path ]] && return
-    git clone $repo $path
-  }
+  clone () { local repo=$1; local path=$2; [[ -d $path ]] && return; git clone $repo $path; }
   mkdir -p $HOME/Code; cd $HOME/Code
+
   clone https://github.com/MLR96/settings.git Workstation
-  clone https://github.com/MLR96/ldapproxy.git LDAPProxy
-  clone https://github.com/mlophez/chroniq.git Chroniq
+
+  # Zextime
+  clone https://github.com/mlophez/zextime-app.git zextime-app
+  clone https://github.com/mlophez/zextime-site.git zextime-site
+  clone https://github.com/mlophez/zextime-webapp.git zextime-webapp
+
+  #clone https://github.com/MLR96/ldapproxy.git LDAPProxy
   #clone https://mlophez@bitbucket.org/firmapro/sealed-secret-app.git SealedSecretsApp
-  clone https://github.com/mlophez/turnix.git Zitania
-  clone https://github.com/mlophez/kubeops-agent.git KubeOpsAgent
+  #clone https://github.com/mlophez/turnix.git Zitania
+  #clone https://github.com/mlophez/kubeops-agent.git KubeOpsAgent
 
 # Configure marketplace in claude code
 [group('Settings')]

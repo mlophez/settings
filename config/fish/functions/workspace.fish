@@ -3,10 +3,8 @@ function workspace
     for base in $HOME/Code $HOME/Documents/Code
         if test -d $base
             if command -q fd
-                set dirs $dirs (fd --min-depth 1 --max-depth 1 --type d --type l . $base 2>/dev/null)
                 set dirs $dirs (fd --hidden --no-ignore --max-depth 5 --type d '^\.git$' $base --exec dirname 2>/dev/null)
             else
-                set dirs $dirs (find $base -mindepth 1 -maxdepth 1 -type d -o -type l 2>/dev/null)
                 set dirs $dirs (find $base -mindepth 1 -maxdepth 5 -type d -name .git 2>/dev/null | xargs -I@ dirname @)
             end
         end
@@ -15,7 +13,12 @@ function workspace
     set dirs (string trim --right --chars=/ -- $dirs)
 
     set -l tab (printf '\t')
-    set -l pairs (printf '%s\n' $dirs | sort -u | awk -v t=$tab -F/ '{n=$NF; print toupper(substr(n,1,1)) substr(n,2) t $0}')
+    set -l pairs (printf '%s\n' $dirs | sort -u | awk -v t=$tab -v home="$HOME" '{
+        rel = $0
+        sub(home "/Documents/Code/", "", rel)
+        sub(home "/Code/", "", rel)
+        print toupper(substr(rel,1,1)) substr(rel,2) t $0
+    }')
 
     set -l selected
     if command -q tv
