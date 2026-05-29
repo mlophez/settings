@@ -1,32 +1,46 @@
 #!/usr/bin/env zsh
 
 workspace() {
-  # Helper: listar directorios normales + directorios con .git
-  list_dirs() {
-    (
-      if [ -d "$HOME/Code" ]; then
-        find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d,l -print
-        find "$HOME/Code" -mindepth 1 -maxdepth 3 -type d -name ".git" -exec dirname {} \;
-      fi
-      if [ -d "$HOME/Documents/Code" ]; then
-        find "$HOME/Documents/Code" -mindepth 1 -maxdepth 1 -type d,l -print
-        find "$HOME/Documents/Code" -mindepth 1 -maxdepth 3 -type d -name ".git" -exec dirname {} \;
-      fi
-    ) | sort -u    # elimina duplicados
-  }
+  local container=archlinux
 
-  # main
-  local selected=$(list_dirs | fzf )
-  [ -z "$selected" ] && return 0
-  cd $selected
+  # Already inside a Zellij session → nothing to do
+  if [[ -n "${ZELLIJ}" ]]; then
+    echo "[workspace] already inside a Zellij session" >&2
+    return 1
+  fi
 
-  export WORKSPACE=$(pwd)
+  # Direct-launch paths:
+  #   - macOS
+  #   - already inside a container (distrobox/toolbox/podman)
+  #   - Linux on a mutable distro (no /run/ostree-booted)
+  if [[ "$(uname)" == "Darwin" ]] \
+      || [ -e /run/.containerenv ] \
+      || [[ -n "${CONTAINER_ID}" ]] \
+      || [ ! -e /run/ostree-booted ]; then
+    if ! command -v zellij &>/dev/null; then
+      echo "[workspace] zellij not found in PATH" >&2
+      return 1
+    fi
+    zellij attach MAIN || exec zellij -s MAIN
+    return
+  fi
 
-  [[ -n "$TMUX"   ]] && tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
-  [[ -n "$ZELLIJ" ]] && zellij action rename-tab $(basename ${selected} | tr '[:lower:]' '[:upper:]')
+  # Immutable Linux host (ostree-based: bluefin/silverblue/kinoite/...) → hop into distrobox
+  if ! command -v distrobox &>/dev/null; then
+    echo "[workspace] distrobox not installed on host" >&2
+    echo "[workspace] install it (e.g. 'rpm-ostree install distrobox' on bluefin) and retry" >&2
+    return 1
+  fi
 
-  return 0
+  if ! distrobox list --no-color 2>/dev/null \
+      | awk -F'|' 'NR>1 {gsub(/ /,"",$2); print $2}' \
+      | grep -qx "$container"; then
+    echo "[workspace] distrobox container '$container' does not exist" >&2
+    echo "[workspace] available containers:" >&2
+    distrobox list >&2
+    echo "[workspace] create it with: just distrobox-archlinux  (or 'distrobox create --name $container ...')" >&2
+    return 1
+  fi
+
+  exec distrobox enter "$container" -- fish -lic workspace
 }
-
-
-

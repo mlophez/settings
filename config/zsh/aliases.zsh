@@ -59,7 +59,7 @@ alias gm="git-menu"
 alias gcb="git-create-random-branch"
 alias gi="git-identity"
 alias wk="workspace"
-alias ck="workspace move"
+alias gp="goproject"
 alias git-id-personal="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lr96@gmail.com'"
 alias git-id-logalty="git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lopez@logalty.com'"
 
@@ -95,9 +95,8 @@ alias terraspace='docker run -ti -v $(pwd):/workspace -w /workspace ghcr.io/bolt
 # PYTHON
 alias d="deactivate"
 
-# ZELLIJ
-#alias zel="zellij attach 0 || exec systemd-run --user --scope --unit=zellij.scope --slice=app.slice -- zellij -s 0"
-alias zel="zellij attach 0 || exec zellij -s 0"
+# WORKSPACE
+alias ws="workspace"
 
 # SETTINGS
 alias se="settings"

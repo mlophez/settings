@@ -1,36 +1,42 @@
-function workspace
-    set -l dirs
-    for base in $HOME/Code $HOME/Documents/Code
-        if test -d $base
-            if command -q fd
-                set dirs $dirs (fd --hidden --no-ignore --max-depth 5 --type d '^\.git$' $base --exec dirname 2>/dev/null)
-            else
-                set dirs $dirs (find $base -mindepth 1 -maxdepth 5 -type d -name .git 2>/dev/null | xargs -I@ dirname @)
-            end
+function workspace --description 'Enter workspace: zellij (immutable Linux host → archlinux distrobox)'
+    set -l container archlinux
+
+    # Already inside a Zellij session → nothing to do
+    if set -q ZELLIJ
+        echo "[workspace] already inside a Zellij session" >&2
+        return 1
+    end
+
+    # Direct-launch paths:
+    #   - macOS
+    #   - already inside a container (distrobox/toolbox/podman)
+    #   - Linux on a mutable distro (no /run/ostree-booted) → no need to hop into distrobox
+    if test (uname) = Darwin
+        or test -e /run/.containerenv
+        or set -q CONTAINER_ID
+        or not test -e /run/ostree-booted
+        if not command -q zellij
+            echo "[workspace] zellij not found in PATH" >&2
+            return 1
         end
+        zellij attach MAIN; or exec zellij -s MAIN
+        return
     end
 
-    set dirs (string trim --right --chars=/ -- $dirs)
-
-    set -l tab (printf '\t')
-    set -l pairs (printf '%s\n' $dirs | sort -u | awk -v t=$tab -v home="$HOME" '{
-        rel = $0
-        sub(home "/Documents/Code/", "", rel)
-        sub(home "/Code/", "", rel)
-        print toupper(substr(rel,1,1)) substr(rel,2) t $0
-    }')
-
-    set -l selected
-    if command -q tv
-        set selected (printf '%s\n' $pairs | tv --source-display "{split:$tab:0}" --source-output "{split:$tab:1}")
-    else
-        set selected (printf '%s\n' $pairs | fzf --with-nth=1 -d \t | cut -f2)
+    # Immutable Linux host (ostree-based: bluefin/silverblue/kinoite/...) → hop into distrobox
+    if not command -q distrobox
+        echo "[workspace] distrobox not installed on host" >&2
+        echo "[workspace] install it (e.g. 'rpm-ostree install distrobox' on bluefin) and retry" >&2
+        return 1
     end
-    test -z "$selected"; and return 0
 
-    cd $selected
-    set -gx WORKSPACE (pwd)
+    if not distrobox list --no-color 2>/dev/null | awk -F'|' 'NR>1 {gsub(/ /,"",$2); print $2}' | grep -qx $container
+        echo "[workspace] distrobox container '$container' does not exist" >&2
+        echo "[workspace] available containers:" >&2
+        distrobox list >&2
+        echo "[workspace] create it with: just distrobox-archlinux  (or 'distrobox create --name $container ...')" >&2
+        return 1
+    end
 
-    test -n "$TMUX"; and tmux rename-window (basename $selected | string upper)
-    test -n "$ZELLIJ"; and zellij action rename-tab (basename $selected | string upper)
+    exec distrobox enter $container -- fish -lic workspace
 end

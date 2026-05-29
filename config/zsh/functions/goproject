@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+goproject() {
+  # Helper: listar directorios normales + directorios con .git
+  list_dirs() {
+    (
+      if [ -d "$HOME/Code" ]; then
+        find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d,l -print
+        find "$HOME/Code" -mindepth 1 -maxdepth 3 -type d -name ".git" -exec dirname {} \;
+      fi
+      if [ -d "$HOME/Documents/Code" ]; then
+        find "$HOME/Documents/Code" -mindepth 1 -maxdepth 1 -type d,l -print
+        find "$HOME/Documents/Code" -mindepth 1 -maxdepth 3 -type d -name ".git" -exec dirname {} \;
+      fi
+    ) | sort -u    # elimina duplicados
+  }
+
+  # main
+  local selected=$(list_dirs | fzf )
+  [ -z "$selected" ] && return 0
+  cd $selected
+
+  export WORKSPACE=$(pwd)
+
+  [[ -n "$TMUX"   ]] && tmux rename-window $(basename ${selected} | tr '[:lower:]' '[:upper:]')
+  [[ -n "$ZELLIJ" ]] && zellij action rename-tab $(basename ${selected} | tr '[:lower:]' '[:upper:]')
+
+  return 0
+}
+
+
+

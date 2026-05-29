@@ -94,6 +94,18 @@ install-claude:
 install-kiro:
   curl -fsSL https://cli.kiro.dev/install | bash
 
+# Configure server and login to self-hosted Bitwarden
+[group('Apps')]
+bw-login:
+  bw config server https://bitwarden.zextime.com
+  bw login
+
+# Unlock vault and print session key (run: export BW_SESSION=$(bw unlock --raw))
+[group('Apps')]
+bw-unlock:
+  @echo "Run this in your shell to export the session:"
+  @echo '  export BW_SESSION=$(bw unlock --raw)'
+
 # ---- Setup (per platform) ----
 
 [private]
