@@ -20,5 +20,5 @@ configuration {
     kb-cancel: "Escape,Control+g";
 }
 
-@theme "catppuccin-mocha"
+@theme "hyprland"
 

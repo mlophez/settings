@@ -439,6 +439,7 @@ config:
   unlink $(pwd)/config/zsh/zshenv $HOME/.zshenv
   unlink $(pwd)/config/zsh/zprofile $HOME/.zprofile
   # OTHERS
+  link $(pwd)/config/rofi $HOME/.config/rofi
   link $(pwd)/config/nix $HOME/.config/nix
   link $(pwd)/config/git $HOME/.config/git
   link $(pwd)/config/k9s $HOME/.config/k9s

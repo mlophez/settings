@@ -31,10 +31,9 @@
     ],
     "defaultMode": "plan"
   },
-  "model": "opusplan",
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/miguel.lopez/.claude/statusline.sh"
+    "command": "bash $HOME/.claude/statusline.sh"
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,

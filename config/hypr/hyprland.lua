@@ -26,15 +26,12 @@ local function run_terminal()
 end
 
 local function run_panel()
-  local cmd =
-  "uwsm-app -- waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css"
+  local cmd = "bash -c 'pkill -x waybar; uwsm-app -- waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css'"
   hl.dispatch(hl.dsp.exec_cmd(cmd))
-  --hl.exec_cmd(
-  --  "uwsm-app -- waybar -c $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.json -s $HOME/.config/waybar/${XDG_CURRENT_DESKTOP,,}.css")
 end
 
-local function reload()
-  run_panel()
+local function run_wallpaper()
+  hl.dispatch(hl.dsp.exec_cmd("bash -c 'pkill -x hyprpaper; uwsm-app -- hyprpaper'"))
 end
 
 -- ===== Env =====
@@ -52,6 +49,7 @@ end
 -- ===== Autostart =====
 hl.on("hyprland.start", function()
   run_panel()
+  run_wallpaper()
 end)
 
 -- ===== General / look'n'feel =====
@@ -74,6 +72,7 @@ hl.config({
   },
 
   xwayland = {
+    enabled = false,
     force_zero_scaling = true,
   },
 
@@ -147,7 +146,7 @@ hl.bind("SUPER + SPACE", hl.dsp.window.float({ action = "toggle" }), { descripti
 hl.bind("SUPER + T", hl.dsp.exec_cmd("hyprctl dispatch togglegroup"), { description = "Toggle group" })
 hl.bind("SUPER + F", hl.dsp.window.fullscreen({ mode = "fullscreen" }), { description = "Fullscreen" })
 hl.bind("SUPER + P", hl.dsp.exec_cmd("hyprctl dispatch pin"), { description = "Pin window" })
-hl.bind("SUPER + N", hl.dsp.exec_cmd("uwsm-app -- rofi -show run"), { description = "Menu" })
+hl.bind("SUPER + N", hl.dsp.exec_cmd("uwsm-app -- rofi -show drun"), { description = "Menu" })
 hl.bind("SUPER + M", hl.dsp.exec_cmd("deskcmd terminal toggle"), { description = "Terminal toggle" })
 hl.bind("SUPER + H", hl.dsp.exec_cmd("uwsm-app -- nautilus --new-window"), { description = "File Manager" })
 hl.bind("SUPER + E", hl.dsp.exec_cmd("uwsm-app -- nautilus --new-window"), { description = "File Manager" })
@@ -159,7 +158,10 @@ hl.bind("SUPER + SHIFT + RETURN", hl.dsp.exec_cmd("uwsm-app -- ptyxis --new-wind
 --hl.bind("SUPER + SHIFT + E", hl.dsp.exec_cmd("deskcmd menu exit"), { description = "Exit menu" })
 hl.bind("SUPER + SHIFT + P", hl.dsp.exec_cmd("hyprpicker -f hex -n -a"), { description = "Color picker" })
 --hl.bind("SUPER + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { description = "Reload Hyprland" })
-hl.bind("SUPER + SHIFT + R", run_panel, { description = "Reload Hyprland" })
+hl.bind("SUPER + SHIFT + R", function()
+  run_panel()
+  run_wallpaper()
+end, { description = "Reload Hyprland" })
 hl.bind("SUPER + SHIFT + X", hl.dsp.exec_cmd("hyprctl kill"), { description = "Kill picker" })
 
 -- Audio
