@@ -80,6 +80,8 @@
     pkgs.man
     pkgs.just
     ##################### DEVELOPMENT #####################
+    # TOOLS
+    pkgs.devbox
     # PYTHON
     pkgs.python3
     pkgs.pyright

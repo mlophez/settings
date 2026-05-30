@@ -102,6 +102,9 @@ android-tools
 arch-install-scripts
 
 ##################### DEVELOPMENT #####################
+# TOOLS
+devbox
+
 # C/C++
 base-devel
 clang
