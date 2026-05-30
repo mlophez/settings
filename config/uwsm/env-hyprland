@@ -1,0 +1,2 @@
+# Hyprland / Aquamarine specific
+export HYPRLAND_LOG_WLR=1

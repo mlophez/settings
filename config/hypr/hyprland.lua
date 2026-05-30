@@ -38,18 +38,7 @@ local function reload()
 end
 
 -- ===== Env =====
-hl.env("MOZ_ENABLE_WAYLAND", "1")
-hl.env("GDK_BACKEND", "wayland")
-hl.env("QT_QPA_PLATFORM", "wayland-egl;wayland;xcb")
-hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
-hl.env("CLUTTER_BACKEND", "wayland")
-hl.env("SDL_VIDEODRIVER", "wayland")
-hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
-hl.env("QT_QPA_PLATFORMTHEME", "qt5ct")
-hl.env("SAL_USE_VCLPLUGIN", "kf5")
---hl.env("PATH", os.getenv("HOME") .. "/.local/bin:" .. (os.getenv("PATH") or ""))
---hl.env("PATH", "$PATH:$HOME/.local/bin")
---hl.env("BROWSER", "org.mozilla.firefox")
+-- Variables de entorno gestionadas por UWSM (config/uwsm/env y env-hyprland)
 
 -- ===== Monitors =====
 --hl.monitor({ output = "eDP-1", mode = "1920x1080", position = "0x0", scale = 1 })

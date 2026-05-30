@@ -421,6 +421,7 @@ config:
   # DoIt
   link $(pwd) $HOME/.local/share/settings
   # DESKTOP
+  link $(pwd)/config/uwsm $HOME/.config/uwsm
   link $(pwd)/config/hypr $HOME/.config/hypr
   link $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/hyprcmd
   link $(pwd)/config/hypr/hyprcmd $HOME/.local/bin/deskcmd
