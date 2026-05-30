@@ -55,7 +55,6 @@ alias gd 'git diff'
 alias gm git-menu
 alias gcb git-create-random-branch
 alias gi git-identity
-alias wk workspace
 alias gp goproject
 alias git-id-personal "git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lr96@gmail.com'"
 alias git-id-logalty "git config user.name 'Miguel López Ruiz' && git config user.email 'miguel.lopez@logalty.com'"
