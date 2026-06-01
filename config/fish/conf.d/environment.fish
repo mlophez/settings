@@ -55,6 +55,12 @@ set -gx FLUTTER_HOME $HOME/.local/share/flutter/default
 fish_add_path --path $FLUTTER_HOME/bin
 fish_add_path --path $HOME/.pub-cache/bin
 
+# ANDROID
+set -gx ANDROID_HOME $HOME/.local/share/android
+fish_add_path --path $ANDROID_HOME/platform-tools
+fish_add_path --path $ANDROID_HOME/cmdline-tools/latest/bin
+fish_add_path --path $ANDROID_HOME/emulator
+
 # RUBY
 set -gx GEM_HOME $HOME/.local/share/ruby
 

@@ -91,6 +91,10 @@ install-claude:
   curl -fsSL https://claude.ai/install.sh | bash
 
 [group('Apps')]
+install-devbox:
+  curl -fsSL https://get.jetify.com/devbox | bash
+
+[group('Apps')]
 install-kiro:
   curl -fsSL https://cli.kiro.dev/install | bash
 

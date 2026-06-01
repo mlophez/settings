@@ -103,7 +103,7 @@ arch-install-scripts
 
 ##################### DEVELOPMENT #####################
 # TOOLS
-devbox
+# devbox
 
 # C/C++
 base-devel
