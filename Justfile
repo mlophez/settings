@@ -120,7 +120,7 @@ system-setup-linux:
   # Install gui apps
   @just system-install-apps
   # Install distroboxes
-  @just dx-setup
+  @just distrobox-setup
   #@just nix-install
   # Configure dotfiles
   @just dotfiles
@@ -335,29 +335,61 @@ nix-clean:
 
 # ---- Distrobox ----
 
+# Orchestrate full distrobox provisioning: create + install + config
 [group('Distrobox')]
-distrobox-install: && distrobox-autostart
+distrobox-setup: distrobox-init distrobox-install distrobox-config
+
+alias dx-setup   := distrobox-setup
+alias dx-init    := distrobox-init
+alias dx-install := distrobox-install
+alias dx-upgrade := distrobox-upgrade
+alias dx-config  := distrobox-config
+
+# Create the archlinux distrobox container
+[group('Distrobox')]
+distrobox-init:
   #!/usr/bin/env bash
   set -euo pipefail
   if [[ -f /run/.containerenv ]] || [[ -f /.dockerenv ]] || [[ -n "${CONTAINER_ID:-}" ]] || [[ -n "${DISTROBOX_ENTER_PATH:-}" ]]; then
-    echo "Error: distrobox-install debe ejecutarse desde el host, no dentro de un contenedor." >&2
+    echo "Error: distrobox-init debe ejecutarse desde el host, no dentro de un contenedor." >&2
     exit 1
   fi
 
+  # Persistent single-user nix store: bind-mount /nix to a host dir under $HOME
+  mkdir -p "$HOME/.local/share/nix"
+
   distrobox rm archlinux -f || true
-  distrobox-create --nvidia -Y -n archlinux --image {{distrobox_image}}
+  distrobox-create --nvidia -Y -n archlinux --image {{distrobox_image}} \
+    --volume "$HOME/.local/share/nix:/nix:rw"
 
-  distrobox enter archlinux -- sudo pacman-key --init
-  distrobox enter archlinux -- sudo pacman -Syu --noconfirm
-  # distrobox enter archlinux -- sudo pacman --needed --noconfirm -S wezterm code nix
-  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
+# Install or reinstall all software inside the existing container
+[group('Distrobox')]
+distrobox-install:
+  #!/usr/bin/env bash
+  set -euo pipefail
 
-  just distrobox-config
+  if [[ ! -f /run/.containerenv ]] && [[ -z "${CONTAINER_ID:-}" ]] && [[ -z "${DISTROBOX_ENTER_PATH:-}" ]]; then
+    echo "Ejecutando distrobox-install dentro del contenedor archlinux..."
+    exec distrobox enter archlinux -- just distrobox-install
+  fi
 
+  sudo pacman-key --init
+  sudo pacman -Syu --noconfirm
+  # sudo pacman --needed --noconfirm -S wezterm code
+  sudo pacman --needed --noconfirm -S $(cat $(pwd)/packages/archlinux.lst | grep -v "^ *#" | tr '\n' ' ')
+
+  # Install nix inside the container (single-user, idempotent)
+  if command -v nix >/dev/null 2>&1; then
+    echo "nix ya está instalado en archlinux; omitiendo bootstrap."
+  else
+    sh <(curl -L https://nixos.org/nix/install) --no-daemon
+  fi
+
+# Upgrade the packages inside the container
 [group('Distrobox')]
 distrobox-upgrade:
   #!/usr/bin/env bash
-  sudo pacman -Syu --noconfirm
+  distrobox enter archlinux -- sudo pacman -Syu --noconfirm
 
 [group('Distrobox')]
 distrobox-config:

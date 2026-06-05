@@ -35,6 +35,9 @@
 ## Markdown
 - Do not write tables in markdown
 
+## Coding
+- Always comment generated code for human understand.
+
 ## Shell Preferences
 Use modern tools when available:
 - `rg` instead of `grep`
