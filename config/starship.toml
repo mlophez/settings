@@ -1,7 +1,7 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$username on ${custom.distrobox} in $directory $line_break$character"
+format = "$username on ${custom.distrobox} in $directory ${custom.devbox} $line_break$character"
 right_format = "$shell"
 # Inserts a blank line between shell prompts
 add_newline = true
@@ -53,9 +53,13 @@ modified = "[${count} ](bold blue)"
 untracked = "[${count} ](bold yellow)"
 
 [custom.devbox]
-format = '[\(in devbox\)]($style) '
-when = ''' test "$DEVBOX_SHELL_ENABLED" = "1" '''
+disabled = false
+shell = ['bash', '-c']
+command = "echo devbox"
+format = '[\(devbox enabled\)]($style)'
 style = "bold yellow"
+use_stdin = false
+when = "test \"$DEVBOX_SHELL_ENABLED\" = \"1\""
 
 [custom.distrobox]
 disabled = false

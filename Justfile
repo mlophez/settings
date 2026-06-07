@@ -360,8 +360,8 @@ distrobox-init:
   mkdir -p "$HOME/.local/share/nix"
 
   distrobox rm archlinux -f || true
-  distrobox-create --nvidia -Y -n archlinux --image {{distrobox_image}} \
-    --volume "$HOME/.local/share/nix:/nix:rw"
+  distrobox-create --nvidia -Y -n archlinux --image {{distrobox_image}} --volume "$HOME/.local/share/nix:/nix:rw"
+  distrobox enter archlinux -- sudo pacman --needed --noconfirm -S just
 
 # Install or reinstall all software inside the existing container
 [group('Distrobox')]
