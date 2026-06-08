@@ -526,6 +526,18 @@ config-repositories:
   clone https://github.com/mlophez/zextime-site.git zextime-site
   clone https://github.com/mlophez/zextime-webapp.git zextime-webapp
 
+  # Tools
+  clone https://mlophez@bitbucket.org/firmapro/herocd.git HeroCD
+  clone https://mlophez@bitbucket.org/firmapro/sealed-secret-app.git sealed-secret-app
+
+  # Logalty
+  clone https://bitbucket.org/firmapro/terraform.git logalty-terraform
+  clone https://bitbucket.org/firmapro/kubernetes.git logalty-kubernetes
+  clone https://bitbucket.org/firmapro/tasks.git logalty-tasks
+  clone https://bitbucket.org/firmapro/blog.git logalty-infra-blog
+  clone https://bitbucket.org/firmapro/configcontroller.git logalty-eks-config-controller
+  clone https://bitbucket.org/firmapro/docker.git logalty-image-repository
+
   #clone https://github.com/MLR96/ldapproxy.git LDAPProxy
   #clone https://mlophez@bitbucket.org/firmapro/sealed-secret-app.git SealedSecretsApp
   #clone https://github.com/mlophez/turnix.git Zitania
