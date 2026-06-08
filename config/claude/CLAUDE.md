@@ -55,5 +55,9 @@ arranca una sesión interactiva de claude con un prompt de subtarea derivado del
 Úsala cuando el usuario diga "vamos a implementar esto en <subproyecto>", "lánzame una sesión de claude en <subproyecto>" o "pásame esto a una nueva tab".
 
 ```bash
+# New way (use this)
+zellij action new-pane --floating --cwd "<project-path>" -- claude "$PROMPT"
+# Old way
 zellij action new-tab -n "<project-name>" -c "<project-path>" -- claude "$PROMPT"
 ```
+
