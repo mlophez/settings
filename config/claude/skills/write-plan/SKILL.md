@@ -1,5 +1,5 @@
 ---
-name: writing-plans
+name: write-plan
 description: >
   Writes an implementation plan in docs/plans/ for the implementer agent to
   execute, after interviewing the user on open questions. Use it in plan mode
