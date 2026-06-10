@@ -16,6 +16,9 @@
 ## Planning
 - To plan features, refactors or bugfixes, always use the `writing-plans` skill (plan mode included)
 
+## Subagents
+- `#<agent-name>` in a prompt (e.g. `#implementer`, `#reviewer`) means: launch that subagent immediately for the task, do not handle it in the main session
+
 ## Quality
 - No hardcoded/test-only solutions
 - Build general, maintainable implementations
