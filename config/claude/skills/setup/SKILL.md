@@ -2,9 +2,10 @@
 name: setup
 description: >
   Generates the base documentation of a project (docs/arquitecture.md,
-  docs/code-style.md, docs/design.md and CLAUDE.md) by interviewing the user.
-  Use it when the user says "/setup", "initialize the project",
-  "generate the project docs", or starts a new project without docs/.
+  docs/code-style.md, docs/design.md, README.md and CLAUDE.md) by
+  interviewing the user. Use it when the user says "/setup", "initialize
+  the project", "generate the project docs", or starts a new project
+  without docs/.
 ---
 
 # Setup project docs
@@ -22,8 +23,8 @@ do NOT analyze the project code to infer answers.
 
 ## 0. Pre-checks
 
-Check if any of `CLAUDE.md` (project root), `docs/arquitecture.md`,
-`docs/code-style.md` or `docs/design.md` already exists.
+Check if any of `CLAUDE.md` (project root), `README.md` (project root),
+`docs/arquitecture.md`, `docs/code-style.md` or `docs/design.md` already exists.
 
 - For each existing file, ask the user: regenerate it (full interview for that file) or keep it untouched.
 - Never overwrite an existing file without explicit confirmation.
@@ -74,7 +75,15 @@ Ask:
 - Main commands: build, test, lint, run (free text).
 - Project-specific notes not derivable from the code (AWS profiles, kubectl contexts, quirks).
 
-## 6. Generation
+## 6. README block → `README.md`
+
+Reuses the purpose (block 1) and the main commands (block 5). If `CLAUDE.md`
+is not being generated, ask the main commands here instead. Only ask:
+- Requirements: runtimes, SDKs, tools and accesses needed, with versions.
+- Setup: steps to get the project running locally the first time.
+- Usage: how to run/use it and, if applicable, basic usage examples.
+
+## 7. Generation
 
 1. Create `docs/` if it does not exist.
 2. For each file to generate, copy the matching template from `templates/`
