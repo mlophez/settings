@@ -48,9 +48,11 @@ behavior on edge cases, compatibility, priorities). Then interview the user:
 
 ## 4. Plan file
 
-Path: `docs/plans/<YYYY-MM-DD>-<short-kebab-case-description>.md`
-(e.g. `docs/plans/2026-06-10-add-retry-to-webhook-sender.md`). Get the date
-with `date +%Y-%m-%d`; the date prefix keeps plans sorted by recency.
+Path: `docs/plans/<YYYYMMDDHHMM>-<short-kebab-case-description>.md`
+(e.g. `docs/plans/202606101732-add-retry-to-webhook-sender.md`). Get the
+timestamp with `date +%Y%m%d%H%M`; the prefix keeps plans sorted by recency.
+The whole file name (including `.md`) must not exceed 64 characters: shorten
+the description if needed.
 
 In plan mode file writes are blocked: present the plan via `ExitPlanMode`
 and write the file as the FIRST action after the plan is approved, before
