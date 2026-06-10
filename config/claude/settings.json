@@ -31,6 +31,7 @@
     ],
     "defaultMode": "plan"
   },
+  "model": "claude-fable-5[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline.sh"
@@ -44,7 +45,7 @@
     "code-review@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "logalty-ai@logalty": false,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -61,13 +62,12 @@
     }
   },
   "language": "Español",
-  "effortLevel": "medium",
+  "effortLevel": "xhigh",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "voiceEnabled": true,
-  "model": "opus[1m]"
+  "voiceEnabled": true
 }
