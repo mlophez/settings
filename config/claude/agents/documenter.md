@@ -3,7 +3,7 @@ name: documenter
 color: blue
 description: Reviews the pending changes in the project and keeps documentation up to date. It documents code following best practices (docstrings, comments on non-obvious logic) and updates docs/usecases/ when the change introduces or modifies a use case. Use it after the implementation is done, before committing or opening a PR. All documentation is written in English.
 tools: Read, Grep, Glob, Bash, Edit, Write
-model: sonnet
+model: opus
 effort: medium
 ---
 
