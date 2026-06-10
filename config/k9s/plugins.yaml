@@ -108,3 +108,75 @@ plugins:
         fi
         done
 
+  #--- ArgoCD: disparar un sync de la Application seleccionada sin la CLI de argocd.
+  # Parchea el campo .operation del CRD Application; el controlador de ArgoCD lo detecta,
+  # ejecuta la sincronizacion (con prune) y luego limpia el campo automaticamente.
+  argocd-sync:
+    shortCut: Shift-S
+    description: ArgoCD Sync
+    dangerous: true
+    scopes:
+      - applications
+    command: bash
+    background: false
+    confirm: true
+    args:
+      - -c
+      - |
+        # initiatedBy.username es informativo: aparece en el historial de ArgoCD.
+        kubectl --kubeconfig=$KUBECONFIG patch application $NAME -n $NAMESPACE --context $CONTEXT --type merge \
+          -p '{"operation":{"initiatedBy":{"username":"k9s-miguel"},"sync":{"prune":true,"syncStrategy":{"hook":{}}}}}'
+        echo "Sync solicitado para $NAME. Press 'q' to exit"
+        while : ; do
+        read -n 1 k <&1
+        if [[ $k = q ]] ; then
+        break
+        fi
+        done
+
+  #--- ArgoCD: refresh normal (reevalua el estado contra Git sin sincronizar).
+  # Anota la Application; ArgoCD procesa la anotacion y la elimina tras reconciliar.
+  argocd-refresh:
+    shortCut: Shift-R
+    description: ArgoCD Refresh
+    scopes:
+      - applications
+    command: bash
+    background: false
+    confirm: false
+    args:
+      - -c
+      - |
+        kubectl --kubeconfig=$KUBECONFIG annotate application $NAME -n $NAMESPACE --context $CONTEXT \
+          argocd.argoproj.io/refresh=normal --overwrite
+        echo "Refresh (normal) solicitado para $NAME. Press 'q' to exit"
+        while : ; do
+        read -n 1 k <&1
+        if [[ $k = q ]] ; then
+        break
+        fi
+        done
+
+  #--- ArgoCD: hard refresh (ignora la cache del manifiesto y vuelve a leer de la fuente).
+  argocd-hard-refresh:
+    shortCut: Shift-F
+    description: ArgoCD Hard Refresh
+    dangerous: true
+    scopes:
+      - applications
+    command: bash
+    background: false
+    confirm: true
+    args:
+      - -c
+      - |
+        kubectl --kubeconfig=$KUBECONFIG annotate application $NAME -n $NAMESPACE --context $CONTEXT \
+          argocd.argoproj.io/refresh=hard --overwrite
+        echo "Hard refresh solicitado para $NAME. Press 'q' to exit"
+        while : ; do
+        read -n 1 k <&1
+        if [[ $k = q ]] ; then
+        break
+        fi
+        done
+
