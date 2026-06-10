@@ -17,17 +17,20 @@ self-contained.
 **Rules (apply to every step):**
 - Interview the user in the language of the session; the plan file is ALWAYS in English.
 - Do not write markdown tables in the plan file.
-- The implementer reads `docs/architecture.md` and `docs/code-style.md` on its own: do not restate conventions, reference them.
+- The implementer reads `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md` on its own: do not restate conventions, reference them.
 
 ## 1. Project context
 
 Read these files at the root of the current project:
 - `docs/architecture.md` — source of truth for the project architecture.
 - `docs/code-style.md` — source of truth for coding conventions.
-- `docs/design.md` — source of truth for the product/system design; the plan must be consistent with it.
+- `docs/testing.md` — source of truth for how changes are tested; feeds the "Verification" section.
+- `docs/design.md` — source of truth for the product/system design; the plan must be consistent with it. It only exists in projects with a UI (the project `CLAUDE.md` references it in that case).
 
 If any file is missing, note it in the plan and continue using general best
-practices plus the conventions inferred from the existing code.
+practices plus the conventions inferred from the existing code. Exception:
+a missing `docs/design.md` is only worth noting if the project `CLAUDE.md`
+references it; in a project without UI its absence is correct.
 
 ## 2. Explore
 
@@ -70,7 +73,7 @@ Structure:
   - The verification command for the task with its expected result.
 - **Risks**: what could break and how to mitigate it.
 - **Verification**: how to verify the change end to end (commands, tests).
-- **Missing docs**: only if `docs/architecture.md`, `docs/code-style.md` or `docs/design.md` was not found.
+- **Missing docs**: only if `docs/architecture.md`, `docs/code-style.md` or `docs/testing.md` was not found, or if `docs/design.md` is referenced by the project `CLAUDE.md` but missing.
 
 No placeholders. These are plan failures, never write them:
 - "TBD", "TODO", "implement later", "fill in details".

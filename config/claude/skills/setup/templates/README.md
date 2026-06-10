@@ -33,5 +33,8 @@ Reuse the answers from the CLAUDE.md and code conventions blocks. -->
 
 - [Architecture](docs/architecture.md)
 - [Code style](docs/code-style.md)
-<!-- Include the next line only if docs/design.md exists or was generated. -->
+- [Testing](docs/testing.md)
+- [Security](docs/security.md)
+<!-- Include the next line only if the project has a UI and docs/design.md
+exists or was generated. -->
 - [Design](docs/design.md)

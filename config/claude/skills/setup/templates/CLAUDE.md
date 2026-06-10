@@ -2,7 +2,8 @@
 
 ## Purpose
 
-<!-- 1-2 lines: what this project is. -->
+<!-- 1-2 lines: what this project is. Condense the purpose from the general
+context block. -->
 
 ## Main commands
 
@@ -14,7 +15,10 @@ Sources of truth for this project — read them before planning or writing code:
 
 - `docs/architecture.md` — project architecture.
 - `docs/code-style.md` — coding conventions.
-<!-- Include the next line only if docs/design.md exists. -->
+- `docs/testing.md` — testing strategy and commands.
+- `docs/security.md` — security policy.
+<!-- Include the next line only if the project has a UI and docs/design.md
+exists or was generated. -->
 - `docs/design.md` — design system.
 
 ## Project notes

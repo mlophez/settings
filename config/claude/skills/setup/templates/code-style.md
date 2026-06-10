@@ -16,11 +16,6 @@
 
 <!-- How errors are raised/propagated and how/what to log. -->
 
-## Testing
-
-<!-- Framework, test location, test naming, and what is required for a change
-to be accepted (coverage, kinds of tests). -->
-
 ## Dependencies
 
 <!-- How to add a dependency and the criteria to accept one. -->

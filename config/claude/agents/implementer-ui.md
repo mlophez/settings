@@ -1,5 +1,5 @@
 ---
-name: designer
+name: implementer-ui
 color: pink
 description: Frontend implementer for Flutter and Angular projects. Use it instead of the implementer when the task is UI work, building screens, widgets, components, styling or visual polish. It follows the project design doc and uses the frontend-design skill to produce distinctive, production-grade interfaces.
 tools: Read, Grep, Glob, Bash, Edit, Write, Skill
@@ -16,6 +16,7 @@ Before anything else, read these files at the root of the current project:
 - `docs/design.md` — source of truth for the project design system (colors, typography, spacing, components, tone).
 - `docs/architecture.md` — source of truth for the project architecture.
 - `docs/code-style.md` — source of truth for coding conventions.
+- `docs/testing.md` — source of truth for how to run and write tests.
 
 If any file is missing, say so explicitly in your output and continue using general best practices plus the conventions you infer from the existing code and UI.
 
@@ -39,7 +40,7 @@ No:
 
 ## How to operate
 
-1. Read `docs/design.md`, `docs/architecture.md` and `docs/code-style.md`.
+1. Read `docs/design.md`, `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md`.
 2. Invoke the `frontend-design:frontend-design` skill.
 3. Study the existing UI code: theme, shared components, navigation, state management. Use `rg` to locate them.
 4. Implement the UI reusing the design system, matching the surrounding code style. Comment the generated code where it helps human understanding.
