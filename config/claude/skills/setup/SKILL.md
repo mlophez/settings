@@ -26,10 +26,12 @@ do NOT analyze the project code to infer answers.
 Check if any of `CLAUDE.md` (project root), `README.md` (project root),
 `docs/architecture.md`, `docs/code-style.md` or `docs/design.md` already exists.
 
-- For each existing file, ask the user: regenerate it (full interview for that file) or keep it untouched.
-- Never overwrite an existing file without explicit confirmation.
-- Only run the interview blocks needed for the files being generated (block 1 always runs).
-- If nothing is left to generate, stop.
+- The full interview ALWAYS runs, even if some or all files exist; existing
+  files are regenerated from the new answers.
+- If any file exists, list the ones that will be overwritten and confirm once
+  before starting the interview.
+- When regenerating `docs/architecture.md`, preserve the existing content of
+  its "Architecture decisions" section instead of resetting it to `None yet.`
 
 ## 1. General context block (feeds all files)
 
@@ -77,8 +79,7 @@ Ask:
 
 ## 6. README block → `README.md`
 
-Reuses the purpose (block 1) and the main commands (block 5). If `CLAUDE.md`
-is not being generated, ask the main commands here instead. Only ask:
+Reuses the purpose (block 1) and the main commands (block 5). Only ask:
 - Requirements: runtimes, SDKs, tools and accesses needed, with versions.
 - Setup: steps to get the project running locally the first time.
 - Usage: how to run/use it and, if applicable, basic usage examples.
@@ -94,7 +95,4 @@ is not being generated, ask the main commands here instead. Only ask:
      except sections whose guidance comment says "Omit this section ...",
      which are removed entirely when the condition applies.
    - In `CLAUDE.md`, only reference `docs/design.md` if it exists or was generated.
-3. If an existing `CLAUDE.md` was kept but new `docs/*` files were generated,
-   warn the user if it does not reference them as sources of truth (suggest
-   adding a `## Docs` section like the one in the template).
-4. Show a summary of the created files and remind the user to commit them.
+3. Show a summary of the created files and remind the user to commit them.

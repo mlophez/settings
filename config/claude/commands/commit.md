@@ -9,6 +9,7 @@ description: Make a commit in git repository. Only on demand
 2. `git add <files>`
 3. `git commit -m "<message>"`
 4. `git push`
+5. Git push to another remotes secondaries.
 
 ## RULES
 
