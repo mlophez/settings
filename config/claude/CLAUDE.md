@@ -13,6 +13,9 @@
 - If context is low: commit progress and prepare handoff prompt
 - Remove temporary files/scripts created during work
 
+## Planning
+- To plan features, refactors or bugfixes, always use the `writing-plans` skill (plan mode included)
+
 ## Quality
 - No hardcoded/test-only solutions
 - Build general, maintainable implementations

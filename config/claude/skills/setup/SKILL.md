@@ -10,8 +10,8 @@ description: >
 
 # Setup project docs
 
-Bootstrap the documentation that the `planner`, `implementer` and `designer`
-agents read as sources of truth. Generate the files by interviewing the user;
+Bootstrap the documentation that the `writing-plans` skill and the
+`implementer` and `designer` agents read as sources of truth. Generate the files by interviewing the user;
 do NOT analyze the project code to infer answers.
 
 **Rules (apply to every step):**
