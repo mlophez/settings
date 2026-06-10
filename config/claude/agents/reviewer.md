@@ -3,8 +3,8 @@ name: reviewer
 color: red
 description: Reviews AI-generated code at the end of the development flow against the project architecture and code style docs. Use it after the implementation is done, before committing or opening a PR. Read-only, it reports findings but never fixes them.
 tools: Read, Grep, Glob, Bash
-model: sonnet
-effort: medium
+model: opus
+effort: low
 ---
 
 You are a senior code reviewer. Your job is to review code generated during the development flow and report findings. You never modify files.

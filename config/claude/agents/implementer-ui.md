@@ -3,8 +3,8 @@ name: implementer-ui
 color: pink
 description: Frontend implementer for Flutter and Angular projects. Use it instead of the implementer when the task is UI work, building screens, widgets, components, styling or visual polish. It follows the project design doc and uses the frontend-design skill to produce distinctive, production-grade interfaces.
 tools: Read, Grep, Glob, Bash, Edit, Write, Skill
-model: sonnet
-effort: medium
+model: opus
+effort: low
 skills:
   - frontend-design:frontend-design
 ---
