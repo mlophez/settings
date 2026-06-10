@@ -31,7 +31,7 @@ Reuse the answers from the CLAUDE.md and code conventions blocks. -->
 
 ## Documentation
 
-- [Architecture](docs/arquitecture.md)
+- [Architecture](docs/architecture.md)
 - [Code style](docs/code-style.md)
 <!-- Include the next line only if docs/design.md exists or was generated. -->
 - [Design](docs/design.md)

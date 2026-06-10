@@ -1,7 +1,7 @@
 ---
 name: setup
 description: >
-  Generates the base documentation of a project (docs/arquitecture.md,
+  Generates the base documentation of a project (docs/architecture.md,
   docs/code-style.md, docs/design.md, README.md and CLAUDE.md) by
   interviewing the user. Use it when the user says "/setup", "initialize
   the project", "generate the project docs", or starts a new project
@@ -19,12 +19,12 @@ do NOT analyze the project code to infer answers.
 - Generated files always follow the templates in `templates/` of this skill: same headings, same order. Never invent new structure.
 - Do not write markdown tables in the generated files.
 - Ask per thematic block (one `AskUserQuestion` call per block for closed questions, grouped free-text questions for open ones). Do not interrogate one question at a time. If `AskUserQuestion` is not available, ask the closed questions as grouped free text too.
-- Keep the file name `arquitecture.md` exactly as is (the agents expect this spelling).
+- Keep the file name `architecture.md` exactly as is (the agents expect this spelling).
 
 ## 0. Pre-checks
 
 Check if any of `CLAUDE.md` (project root), `README.md` (project root),
-`docs/arquitecture.md`, `docs/code-style.md` or `docs/design.md` already exists.
+`docs/architecture.md`, `docs/code-style.md` or `docs/design.md` already exists.
 
 - For each existing file, ask the user: regenerate it (full interview for that file) or keep it untouched.
 - Never overwrite an existing file without explicit confirmation.
@@ -39,7 +39,7 @@ Ask:
 - Does it have a UI? → decides whether `docs/design.md` is generated and block 4 runs.
 - Main stack: language(s), framework(s), versions (free text).
 
-## 2. Architecture block → `docs/arquitecture.md`
+## 2. Architecture block → `docs/architecture.md`
 
 Ask:
 - Folder layout and what goes in each folder.

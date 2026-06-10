@@ -12,7 +12,7 @@
 
 Sources of truth for this project — read them before planning or writing code:
 
-- `docs/arquitecture.md` — project architecture.
+- `docs/architecture.md` — project architecture.
 - `docs/code-style.md` — coding conventions.
 <!-- Include the next line only if docs/design.md exists. -->
 - `docs/design.md` — design system.

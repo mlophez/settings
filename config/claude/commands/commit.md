@@ -1,6 +1,6 @@
 ---
-name: commmit
-description: Make a commit in git repository.
+name: commit
+description: Make a commit in git repository. Only on demand
 ---
 
 ## FLOW

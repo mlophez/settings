@@ -31,7 +31,7 @@
     ],
     "defaultMode": "plan"
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline.sh"
@@ -42,9 +42,10 @@
     "caveman@caveman": false,
     "terraform@claude-plugins-official": false,
     "frontend-design@claude-plugins-official": true,
-    "code-review@claude-plugins-official": false,
+    "code-review@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "logalty-ai@logalty": false
+    "logalty-ai@logalty": false,
+    "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
