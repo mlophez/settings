@@ -29,9 +29,9 @@
       "Bash(curl * https://api.bitbucket.org/ *)",
       "mcp__claude_ai_Atlassian__*"
     ],
-    "defaultMode": "plan"
+    "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "claude-fable-5[1m]",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline.sh"
@@ -62,7 +62,7 @@
     }
   },
   "language": "Español",
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "voice": {
     "enabled": true,
     "mode": "hold"
