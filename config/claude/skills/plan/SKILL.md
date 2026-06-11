@@ -64,6 +64,7 @@ before anything else.
 Structure:
 - H1 title with the date and a one-line description of the task.
 - A note right under the title: "To be executed by the `implementer` agent."
+- **Overview**: a high-level summary written in plain language for a human reader who will not read the rest of the file: what is going to change and why, the key decisions taken and their rationale, and the visible effect once done. No file paths, no code, no internal jargon. A few short paragraphs or bullets.
 - **Context**: the problem and the intended outcome, in two or three sentences.
 - **Decisions**: the answers gathered in the interview and the assumptions taken for unanswered questions.
 - **Approach**: the chosen approach and why it fits the documented architecture and design.
@@ -91,7 +92,9 @@ Before handing off, check the plan with fresh eyes:
 ## 6. Handoff
 
 After writing the file, STOP and return control to the user. Report the plan
-path and offer the next step, but do NOT start implementing on your own: the
+path and reproduce the **Overview** section verbatim in your final message,
+so the user can judge the plan without opening the file. Offer the next
+step, but do NOT start implementing on your own: the
 user decides each phase of the flow manually. Typical next steps the user may
 choose:
 - Review the plan file manually and ask for adjustments.
