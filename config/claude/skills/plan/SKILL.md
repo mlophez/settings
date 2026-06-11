@@ -1,5 +1,5 @@
 ---
-name: write-plan
+name: plan
 description: >
   Writes an implementation plan in docs/plans/ for the implementer agent to
   execute, after interviewing the user on open questions. Use it in plan mode
@@ -93,4 +93,4 @@ Before handing off, check the plan with fresh eyes:
 After writing the file, dispatch the `implementer` agent with the plan path
 (one dispatch for the whole plan, or one per task for large plans, reviewing
 between tasks). If the user prefers to implement in the current session,
-follow the plan directly instead.
+follow the plan directly using the `implement` skill instead.

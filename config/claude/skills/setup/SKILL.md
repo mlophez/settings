@@ -10,8 +10,8 @@ description: >
 
 # Setup project docs
 
-Bootstrap the documentation that the `writing-plans` skill and the
-`implementer`, `implementer-ui` and `reviewer` agents read as sources of truth. The
+Bootstrap the documentation that the `plan`, `implement`, `review` and
+`document` skills (and the agents that preload them) read as sources of truth. The
 interview is the single authority on what gets written: the skill may analyze
 the project in read-only mode to propose default answers (see step 1), but it
 never writes an inferred value the user did not confirm.

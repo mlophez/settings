@@ -14,7 +14,7 @@
 - Remove temporary files/scripts created during work
 
 ## Planning
-- To plan features, refactors or bugfixes, always use the `writing-plans` skill (plan mode included)
+- To plan features, refactors or bugfixes, always use the `plan` skill (plan mode included)
 
 ## Subagents
 - `#<agent-name>` in a prompt (e.g. `#implementer`, `#reviewer`) means: launch that subagent immediately for the task, do not handle it in the main session
