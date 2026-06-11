@@ -14,7 +14,8 @@
 - Remove temporary files/scripts created during work
 
 ## Planning
-- To plan features, refactors or bugfixes, always use the `plan` skill (plan mode included)
+- To plan features, refactors or bugfixes, always use the `plan` skill
+- The `plan` skill replaces plan mode: never call EnterPlanMode for planning
 
 ## Development flow
 - Phases (`plan`, `implement`, `review`, `document`, commit, PR) are started manually by Miguel, one at a time

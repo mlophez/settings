@@ -2,9 +2,9 @@
 name: plan
 description: >
   Writes an implementation plan in docs/plans/ for the implementer agent to
-  execute, after interviewing the user on open questions. Use it in plan mode
-  or when the user asks to plan a feature, a refactor or a bugfix, before
-  writing any code.
+  execute, after interviewing the user on open questions. Use it when the
+  user asks to plan a feature, a refactor or a bugfix, before writing any
+  code. It works without plan mode; never enter plan mode for it.
 ---
 
 # Writing plans
@@ -15,6 +15,7 @@ context, so every decision must be resolved here and the plan file must be
 self-contained.
 
 **Rules (apply to every step):**
+- This skill replaces plan mode: do NOT call `EnterPlanMode`. The exploration is read-only and the only file written is the plan file, which the user reviews afterwards.
 - Interview the user in the language of the session; the plan file is ALWAYS in English.
 - Do not write markdown tables in the plan file.
 - The implementer reads `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md` on its own: do not restate conventions, reference them.
@@ -52,14 +53,12 @@ behavior on edge cases, compatibility, priorities). Then interview the user:
 ## 4. Plan file
 
 Path: `docs/plans/<YYYYMMDDHHMM>-<short-kebab-case-description>.md`
-(e.g. `docs/plans/202606101732-add-retry-to-webhook-sender.md`). Get the
-timestamp with `date +%Y%m%d%H%M`; the prefix keeps plans sorted by recency.
-The whole file name (including `.md`) must not exceed 64 characters: shorten
-the description if needed.
+(e.g. `docs/plans/202606101732-add-retry-to-webhook-sender.md`).
 
-In plan mode file writes are blocked: present the plan via `ExitPlanMode`
-and write the file as the FIRST action after the plan is approved, before
-any implementation.
+Write the plan file directly after the interview. Exception: if the session
+already happens to be in plan mode (file writes blocked), present the plan
+via `ExitPlanMode` and write the file as the FIRST action after approval,
+before anything else.
 
 Structure:
 - H1 title with the date and a one-line description of the task.
