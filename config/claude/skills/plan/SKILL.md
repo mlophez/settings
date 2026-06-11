@@ -18,6 +18,7 @@ self-contained.
 - This skill replaces plan mode: do NOT call `EnterPlanMode`. The exploration is read-only and the only file written is the plan file, which the user reviews afterwards.
 - Interview the user in the language of the session; the plan file is ALWAYS in English.
 - Do not write markdown tables in the plan file.
+- Wrap lines in the plan file at 120 characters maximum (code blocks included when feasible).
 - The implementer reads `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md` on its own: do not restate conventions, reference them.
 
 ## 1. Project context
