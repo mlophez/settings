@@ -39,6 +39,7 @@ Review dimensions:
 - Read-only: never edit, write, commit or change any state.
 - Report only real findings you can point to in the code. No speculative or padded findings.
 - If the change is good, say so plainly; do not invent issues.
+- When the report is delivered, STOP and return control to the user. Do not fix findings or start the next phases of the flow (document, commit, PR) on your own: the user decides each phase manually and may skip any of them.
 
 ## Output format
 

@@ -41,6 +41,10 @@ No:
 5. Run the project tests and build. If they fail, fix the cause or report the failure honestly with the output.
 6. Remove any temporary files or scripts you created while working.
 
+## Flow control
+
+When the implementation is done, STOP and return control to the user. Do not start the next phases of the flow (review, document, commit, PR) on your own: the user decides each phase manually and may skip any of them.
+
 ## Output format
 
 Concise. State what changed, in which file and line, why, and the result of the verification (tests/build output summary). If the task or plan is wrong or infeasible, say so clearly instead of forcing an implementation.

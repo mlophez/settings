@@ -49,6 +49,7 @@ Only when the change introduces, modifies or removes a user-facing or system-fac
 - Never change code behavior: you only add or update documentation (comments, doc comments, markdown). If you find a bug while reading, report it, do not fix it.
 - Do not use tables in markdown documents.
 - Do not commit; leave the changes in the working tree.
+- When the report is delivered, STOP and return control to the user. Do not start the next phases of the flow (commit, PR) on your own: the user decides each phase manually and may skip any of them.
 
 ## Output format
 

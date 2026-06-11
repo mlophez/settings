@@ -16,6 +16,11 @@
 ## Planning
 - To plan features, refactors or bugfixes, always use the `plan` skill (plan mode included)
 
+## Development flow
+- Phases (`plan`, `implement`, `review`, `document`, commit, PR) are started manually by Miguel, one at a time
+- After finishing a phase, stop and return control; never chain into the next phase on your own
+- Miguel may skip any phase; do not insist on it
+
 ## Subagents
 - `#<agent-name>` in a prompt (e.g. `#implementer`, `#reviewer`) means: launch that subagent immediately for the task, do not handle it in the main session
 

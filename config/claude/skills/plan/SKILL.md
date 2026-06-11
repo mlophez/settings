@@ -90,7 +90,11 @@ Before handing off, check the plan with fresh eyes:
 
 ## 6. Handoff
 
-After writing the file, dispatch the `implementer` agent with the plan path
-(one dispatch for the whole plan, or one per task for large plans, reviewing
-between tasks). If the user prefers to implement in the current session,
-follow the plan directly using the `implement` skill instead.
+After writing the file, STOP and return control to the user. Report the plan
+path and offer the next step, but do NOT start implementing on your own: the
+user decides each phase of the flow manually. Typical next steps the user may
+choose:
+- Review the plan file manually and ask for adjustments.
+- Dispatch the `implementer` agent with the plan path (one dispatch for the whole plan, or one per task for large plans, reviewing between tasks).
+- Implement in the current session with the `implement` skill.
+- Skip implementation entirely.
