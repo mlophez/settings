@@ -6,6 +6,9 @@ description: >
   implementation is done, before committing or opening a PR, whether in the
   main session or inside the documenter agent. All documentation is written
   in English.
+model: opus
+effort: low
+disable-model-invocation: true
 ---
 
 # Documenting

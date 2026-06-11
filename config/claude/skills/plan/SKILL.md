@@ -5,6 +5,9 @@ description: >
   execute, after interviewing the user on open questions. Use it when the
   user asks to plan a feature, a refactor or a bugfix, before writing any
   code. It works without plan mode; never enter plan mode for it.
+model: opus
+effort: high
+disable-model-invocation: true
 ---
 
 # Writing plans

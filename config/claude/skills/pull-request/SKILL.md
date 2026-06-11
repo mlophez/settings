@@ -5,6 +5,9 @@ description: >
   cuando el usuario diga "/pull-request", "abre la PR", "crea la pull request"
   o similar. Deriva título y descripción del contexto de la sesión y de los
   commits de la rama, y solo pregunta lo que no pueda deducir.
+model: sonnet
+effort: low
+disable-model-invocation: true
 ---
 
 ## Step 1 — Detect repo and branch

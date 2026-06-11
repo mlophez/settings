@@ -5,6 +5,9 @@ description: >
   architecture and code style docs. Use it after planning, to write the
   actual code, whether in the main session or inside the implementer agent.
   It edits files and runs tests, but never commits unless explicitly asked.
+model: sonnet
+effort: medium
+disable-model-invocation: true
 ---
 
 # Implementing

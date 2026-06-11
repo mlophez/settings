@@ -6,6 +6,7 @@ description: >
   README.md and CLAUDE.md) by interviewing the user. Use it when the user
   says "/setup", "initialize the project", "generate the project docs", or
   starts a new project without docs/.
+disable-model-invocation: true
 ---
 
 # Setup project docs
