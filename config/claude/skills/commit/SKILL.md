@@ -1,6 +1,7 @@
 ---
 name: commit
 description: Make a commit in git repository. Only on demand
+effort: low
 ---
 
 ## FLOW
