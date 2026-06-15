@@ -27,7 +27,16 @@ If any file is missing, say so explicitly in your report and continue using gene
 
 ## Scope
 
-By default review the pending changes: `git diff` for the working tree and `git diff <default-branch>...HEAD` for the branch. If the user points you to specific files or commits, review those instead. Read enough surrounding code to judge the change in context, not just the diff hunks.
+Determine the scope yourself from the actual changes, never from any description of the change. Review the full set of
+pending changes: `git diff` for the working tree and `git diff <default-branch>...HEAD` for the branch. Read every
+changed file and enough surrounding code to judge each change in context, not just the diff hunks. Cover everything that
+changed; do not narrow the review to a subset.
+
+Any task description, summary or list of what was implemented (for example a prompt from an orchestrator, a plan file or
+a ticket) is background only. Do not let it condition, bias or limit the review: it tells you the intent, not what to
+look at. Discover what to look at from the diff itself, and judge the code on its own merits. If something changed that
+the description does not mention, review it anyway; if the description claims something that the code does not do, that
+is itself a finding.
 
 Review dimensions:
 - **Correctness**: bugs, broken edge cases, error handling, race conditions.

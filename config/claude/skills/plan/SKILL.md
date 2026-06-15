@@ -43,18 +43,31 @@ Explore the relevant code with `rg` and targeted reads. Trace the real code
 paths, do not guess. Identify reusable functions and utilities, and the
 minimal set of files to touch.
 
-## 3. Interview
+## 3. Brainstorm solutions
 
-List every open question the task leaves unanswered: ambiguous requirements,
-unstated constraints, decisions with more than one reasonable option (scope,
-behavior on edge cases, compatibility, priorities). Then interview the user:
+Before interviewing, think through the problem and design more than one way to
+solve it. The goal is to surface real alternatives and their trade-offs, not to
+rubber-stamp the first idea:
 
-- Ask only what cannot be resolved from the task description, the docs or the code. Never ask something the codebase already answers.
-- Ask in one batch with `AskUserQuestion` (grouped free text if unavailable), each question with the options seen and a recommended default.
-- If the user does not answer some question, take the recommended default and record it in the plan as an assumption.
+- Devise two to four genuinely distinct approaches (not cosmetic variants). For each one capture: the core idea, how it fits the documented architecture and design, its main trade-offs (complexity, risk, effort, performance, maintainability, blast radius) and what it implies for the rest of the system.
+- Discard approaches that clearly violate the architecture or design and say why in one line; keep the ones worth a real decision.
+- Form your own recommendation with its rationale, but stay open to the user steering elsewhere during the interview.
+- This is a thinking step: explore options in your reasoning. The alternatives considered and the chosen one are recorded later in the plan ("Approach", with the discarded options and why).
+
+## 4. Interview
+
+Combine two things in a single interview pass: the choice of approach from the
+brainstorm and every open question the task still leaves unanswered (ambiguous
+requirements, unstated constraints, decisions with more than one reasonable
+option: scope, edge-case behavior, compatibility, priorities).
+
+- Present the brainstormed approaches as the first question: each option with its core trade-offs and your recommended one first (marked as recommended). Let the user pick or propose their own.
+- Then ask the remaining open questions. Ask only what cannot be resolved from the task description, the docs or the code. Never ask something the codebase already answers.
+- Ask in one batch with `AskUserQuestion` (grouped free text if unavailable), each question with the options seen and a recommended default. Use the option previews to show short trade-off summaries or snippets when it helps the user compare.
+- If the user does not answer some question, take the recommended default (including the recommended approach) and record it in the plan as an assumption.
 - Record every answer and assumption in the "Decisions" section, so the plan stays self-contained.
 
-## 4. Plan file
+## 5. Plan file
 
 Path: `docs/plans/<YYYYMMDDHHMM>-<short-kebab-case-description>.md`
 (e.g. `docs/plans/202606101732-add-retry-to-webhook-sender.md`).
@@ -70,7 +83,8 @@ Structure:
 - **Overview**: a high-level summary written in plain language for a human reader who will not read the rest of the file: what is going to change and why, the key decisions taken and their rationale, and the visible effect once done. No file paths, no code, no internal jargon. A few short paragraphs or bullets.
 - **Context**: the problem and the intended outcome, in two or three sentences.
 - **Decisions**: the answers gathered in the interview and the assumptions taken for unanswered questions.
-- **Approach**: the chosen approach and why it fits the documented architecture and design.
+- **Approach**: the chosen approach and why it fits the documented architecture and design. Briefly list the
+  brainstormed alternatives that were considered and the one-line reason each was discarded.
 - **Tasks**: ordered tasks, each one independently implementable and verifiable, with:
   - Exact file paths to create or modify (`path:line` when useful) and existing utilities to reuse.
   - Code blocks for anything non-obvious: signatures, interfaces, key logic. The implementer fills in routine code, not design decisions.
@@ -85,14 +99,14 @@ No placeholders. These are plan failures, never write them:
 - "Similar to Task N" — repeat the detail; tasks may be read in isolation.
 - References to types, functions or files not defined in any task or in the existing code.
 
-## 5. Self-review
+## 6. Self-review
 
 Before handing off, check the plan with fresh eyes:
 1. **Coverage**: every requirement and every interview answer maps to a task. List any gap and fix it.
 2. **Placeholder scan**: search the plan for the patterns above and fix them.
 3. **Consistency**: names, signatures and paths used in later tasks match the ones defined in earlier tasks and in the real code.
 
-## 6. Handoff
+## 7. Handoff
 
 After writing the file, STOP and return control to the user. Report the plan
 path and reproduce the **Overview** section verbatim in your final message,
