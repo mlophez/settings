@@ -1,8 +1,8 @@
 ---
 name: plan
 description: >
-  Writes an implementation plan in docs/plans/ for the implementer agent to
-  execute, after interviewing the user on open questions. Use it when the
+  Writes a self-contained implementation plan in docs/plans/ to be executed
+  later, after interviewing the user on open questions. Use it when the
   user asks to plan a feature, a refactor or a bugfix, before writing any
   code. It works without plan mode; never enter plan mode for it.
 model: opus
@@ -12,17 +12,18 @@ disable-model-invocation: true
 
 # Writing plans
 
-Produce an implementation plan that the `implementer` agent can execute
-without asking anything: it runs as a subagent with zero conversation
-context, so every decision must be resolved here and the plan file must be
-self-contained.
+Produce an implementation plan that anyone can execute without asking
+anything: it may be implemented by a subagent with zero conversation context,
+the current session or the user directly, so every decision must be resolved
+here and the plan file must be self-contained. Do not assume any particular
+executor in the plan file, and do not name a specific agent in it.
 
 **Rules (apply to every step):**
 - This skill replaces plan mode: do NOT call `EnterPlanMode`. The exploration is read-only and the only file written is the plan file, which the user reviews afterwards.
 - Interview the user in the language of the session; the plan file is ALWAYS in English.
 - Do not write markdown tables in the plan file.
 - Wrap lines in the plan file at 120 characters maximum (code blocks included when feasible).
-- The implementer reads `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md` on its own: do not restate conventions, reference them.
+- Whoever implements the plan reads `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md` on their own: do not restate conventions, reference them.
 
 ## 1. Project context
 
@@ -79,7 +80,6 @@ before anything else.
 
 Structure:
 - H1 title with the date and a one-line description of the task.
-- A note right under the title: "To be executed by the `implementer` agent."
 - **Overview**: a high-level summary written in plain language for a human reader who will not read the rest of the file: what is going to change and why, the key decisions taken and their rationale, and the visible effect once done. No file paths, no code, no internal jargon. A few short paragraphs or bullets.
 - **Context**: the problem and the intended outcome, in two or three sentences.
 - **Decisions**: the answers gathered in the interview and the assumptions taken for unanswered questions.
@@ -87,7 +87,7 @@ Structure:
   brainstormed alternatives that were considered and the one-line reason each was discarded.
 - **Tasks**: ordered tasks, each one independently implementable and verifiable, with:
   - Exact file paths to create or modify (`path:line` when useful) and existing utilities to reuse.
-  - Code blocks for anything non-obvious: signatures, interfaces, key logic. The implementer fills in routine code, not design decisions.
+  - Code blocks for anything non-obvious: signatures, interfaces, key logic. Whoever implements it fills in routine code, not design decisions.
   - The verification command for the task with its expected result.
 - **Risks**: what could break and how to mitigate it.
 - **Verification**: how to verify the change end to end (commands, tests).
