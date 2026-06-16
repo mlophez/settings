@@ -1,6 +1,7 @@
 ---
-name: connect-to-kubernetes
+name: how-connect-to-kubernetes
 description: Mapeo de contextos kubectl a clusters de Logalty y reglas de uso. Úsala siempre que vayas a ejecutar un comando kubectl o necesites saber qué cluster está detrás de un contexto.
+user-invocable: false
 ---
 
 Para conectarse a los clusters de Kubernetes de Logalty usar `kubectl --context <ctx>` explícitamente.
