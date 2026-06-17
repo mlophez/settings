@@ -18,9 +18,9 @@
 - The `plan` skill replaces plan mode: never call EnterPlanMode for planning
 
 ## Development flow
-- Phases (`plan`, `implement`, `review`, `document`, commit, PR) are started manually by Miguel, one at a time
-- After finishing a phase, stop and return control; never chain into the next phase on your own
-- Miguel may skip any phase; do not insist on it
+- Do exactly what is asked, nothing more. When the task is done, stop and return control.
+- Never chain into a follow-up action (plan, implement, review, document, commit, PR or any other) on your own: Miguel launches each one manually when he wants it.
+- Do not propose or insist on a next step or a sequence unless Miguel asks for it.
 
 ## Subagents
 - `#<agent-name>` in a prompt (e.g. `#implementer`, `#reviewer`) means: launch that subagent immediately for the task, do not handle it in the main session
@@ -43,6 +43,7 @@
 
 ## Git
 - No co-authoring commits
+- Never commit automatically: only commit when Miguel explicitly asks for it
 
 ## Markdown
 - Do not write tables in markdown

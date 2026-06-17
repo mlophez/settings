@@ -1,7 +1,7 @@
 ---
 name: plan
 description: >
-  Writes a self-contained implementation plan in docs/plans/ to be executed
+  Writes a self-contained implementation plan in .plans/ to be executed
   later, after interviewing the user on open questions. Use it when the
   user asks to plan a feature, a refactor or a bugfix, before writing any
   code. It works without plan mode; never enter plan mode for it.
@@ -70,8 +70,9 @@ option: scope, edge-case behavior, compatibility, priorities).
 
 ## 5. Plan file
 
-Path: `docs/plans/<YYYYMMDDHHMM>-<short-kebab-case-description>.md`
-(e.g. `docs/plans/202606101732-add-retry-to-webhook-sender.md`).
+Path: `.plans/<short-kebab-case-description>.md`
+(e.g. `.plans/add-retry-to-webhook-sender.md`). Do not prefix the file name with
+a date or timestamp: deriving the current date slows down generation.
 
 Write the plan file directly after the interview. Exception: if the session
 already happens to be in plan mode (file writes blocked), present the plan
@@ -79,7 +80,7 @@ via `ExitPlanMode` and write the file as the FIRST action after approval,
 before anything else.
 
 Structure:
-- H1 title with the date and a one-line description of the task.
+- H1 title with a one-line description of the task (no date).
 - **Overview**: a high-level summary written in plain language for a human reader who will not read the rest of the file: what is going to change and why, the key decisions taken and their rationale, and the visible effect once done. No file paths, no code, no internal jargon. A few short paragraphs or bullets.
 - **Context**: the problem and the intended outcome, in two or three sentences.
 - **Decisions**: the answers gathered in the interview and the assumptions taken for unanswered questions.

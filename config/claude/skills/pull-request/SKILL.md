@@ -21,8 +21,22 @@ BRANCH=$(git branch --show-current)
 
 Checks before continuing:
 - If the remote is not Bitbucket, stop and tell the user.
-- If `BRANCH` is the default branch (`main`/`master`), stop: a PR needs a feature branch.
+- If `BRANCH` is the default branch (`main`/`master`), the change has no feature branch yet. Run **Step 1b** to create the branch and commit the change before continuing.
 - If the branch has commits not pushed to origin, push it first (ask the user if the push needs `--set-upstream`).
+
+## Step 1b — Create branch and commit (only when on the default branch)
+
+Trigger this step only when Step 1 detected that `BRANCH` is the default branch.
+
+1. **Derive a branch name** from the change in progress (session context, Jira ticket key, or the staged/working diff). Use a descriptive slug, prefixed with the Jira key when one is found, e.g. `TIF-123-short-description` or `feature/short-description`. Confirm the proposed name with the user before creating it.
+2. **Create and switch to the branch**:
+   ```bash
+   git switch -c "$BRANCH"
+   ```
+3. **Commit the change** by invoking the `commit` skill (it handles `pull --rebase`, `add`, `commit` and `push`). When pushing the new branch, it must set upstream (`git push --set-upstream origin "$BRANCH"`).
+4. Re-read the current branch (`BRANCH=$(git branch --show-current)`) and continue with Step 2.
+
+If there are no pending changes to commit and no commits ahead of the default branch, stop: there is nothing to open a PR for.
 
 ## Step 2 — Detect existing PR
 

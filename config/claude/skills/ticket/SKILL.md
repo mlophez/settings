@@ -26,7 +26,7 @@ Si no está definido, preguntar una vez: "¿Eres de Infraestructura (TIF) o de S
 El ticket describe el cambio en el que se está trabajando. Antes de preguntar nada, deducir todo lo posible de estas fuentes, por orden:
 
 1. La conversación actual: qué se está haciendo y por qué.
-2. El plan de la tarea si existe (el plan aprobado en la sesión o el más reciente de `docs/plans/`).
+2. El plan de la tarea si existe (el plan aprobado en la sesión o el más reciente de `.plans/`).
 3. Los cambios pendientes: `git diff` del working tree y `git diff <default-branch>...HEAD`, más `git log` de la rama si ya hay commits.
 
 Con eso, construir un borrador con estas secciones:

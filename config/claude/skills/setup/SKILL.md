@@ -71,6 +71,12 @@ Ask:
   refine the nuance (e.g. frontend vs fullstack).
 - Does it have a UI? → decides whether `docs/design.md` is generated and block 6 runs.
 - Main stack: language(s), framework(s), versions (free text).
+- "Should the `docs/` folder be referenced in `CLAUDE.md`?" → closed yes/no.
+  The `docs/` files are generated either way; this answer only decides whether
+  the generated `CLAUDE.md` points to them (see block 8). Default: no, because
+  Miguel's skills and agents load the docs on their own. Answer yes when working
+  in a project where those skills/agents are not used, so plain Claude has no
+  other way to load the docs.
 
 ## 3. Architecture block → `docs/architecture.md`
 
@@ -135,6 +141,19 @@ not ask for them again. Ask:
   (build, test, lint, run).
 - Project-specific notes not derivable from the code (AWS profiles, kubectl contexts, quirks).
 
+Documentation references in the generated `CLAUDE.md`, driven by the block 2
+"reference the `docs/` folder in `CLAUDE.md`?" answer:
+- If no (default): do not add references to the `docs/` files; Miguel's skills
+  and agents load them on their own. Keep the existing behavior (only reference
+  `docs/design.md` conditionally, per step 10).
+- If yes: reference the generated docs from `CLAUDE.md` using the `@` import
+  syntax so Claude loads them automatically — one `@`-reference per file:
+  `@docs/architecture.md`, `@docs/code-style.md`, `@docs/testing.md`,
+  `@docs/security.md` (and `@docs/design.md` only if the project has a UI).
+  Add them under a clear heading at the top of `CLAUDE.md` (e.g. a
+  "Documentation" section) stating they are the sources of truth, since no
+  skill or agent will load them automatically in this project.
+
 ## 9. README block → `README.md`
 
 Reuses the purpose (block 2) and the main commands (blocks 4, 5 and 8): the
@@ -157,6 +176,9 @@ starts from the run command of block 8, do not ask for them again. Only ask:
      which are removed entirely when the condition applies.
    - In `CLAUDE.md`, only reference `docs/design.md` if the project has a UI
      and the file exists or was generated.
+   - In `CLAUDE.md`, add the explicit "read the docs as sources of truth"
+     instruction (block 8) only when the block 2 answer is yes to referencing
+     the `docs/` folder in `CLAUDE.md`.
 3. Show a summary of the created files, list the sections left as `TBD` so
    the user knows what remains to be completed, and remind the user to
    commit them.
