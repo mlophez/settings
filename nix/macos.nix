@@ -111,11 +111,12 @@
     # stylua
     pkgs.lua-language-server
     # JAVA
-    # pkgs.jdk
-    pkgs.jdk17
-    # pkgs.jdk11
-    # pkgs.jdk8
     pkgs.maven
+    # pkgs.jdk
+    # pkgs.jdk8
+    # pkgs.jdk11
+    # pkgs.jdk17
+    pkgs.jdk25
     # OTHERS
     pkgs.fastlane
     ##################### DEV/OPS #####################

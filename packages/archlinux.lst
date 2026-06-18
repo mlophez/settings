@@ -148,6 +148,7 @@ lua-language-server
 
 # JAVA
 jdk-openjdk
+jdk25-openjdk
 jdk17-openjdk
 jdk11-openjdk
 jdk8-openjdk
