@@ -4,7 +4,7 @@ color: red
 description: Reviews AI-generated code at the end of the development flow against the project architecture and code style docs. Use it after the implementation is done, before committing or opening a PR. Read-only, it reports findings but never fixes them.
 tools: Read, Grep, Glob, Bash, Skill
 model: opus
-effort: low
+effort: high
 skills:
   - review
 ---

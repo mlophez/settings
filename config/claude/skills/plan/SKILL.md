@@ -70,8 +70,8 @@ option: scope, edge-case behavior, compatibility, priorities).
 
 ## 5. Plan file
 
-Path: `.plans/<short-kebab-case-description>.md`
-(e.g. `.plans/add-retry-to-webhook-sender.md`). Do not prefix the file name with
+Path: `<current_path>/.plans/<short-kebab-case-description>.md`
+(e.g. `<current_path>/.plans/add-retry-to-webhook-sender.md`). Do not prefix the file name with
 a date or timestamp: deriving the current date slows down generation.
 
 Write the plan file directly after the interview. Exception: if the session

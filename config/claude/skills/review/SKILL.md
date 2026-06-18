@@ -38,6 +38,10 @@ look at. Discover what to look at from the diff itself, and judge the code on it
 the description does not mention, review it anyway; if the description claims something that the code does not do, that
 is itself a finding.
 
+You may run the project's existing read-only checks (tests, type-check, linters, build) to ground findings in real
+signals, provided they do not modify any tracked file or repository state. Treat any command that would write tracked
+files, touch a remote, deploy, or rewrite code (formatters, codemods, migrations) as out of bounds.
+
 Review dimensions:
 - **Correctness**: bugs, broken edge cases, error handling, race conditions.
 - **Architecture**: adherence to `docs/architecture.md` (layering, boundaries, dependencies).
@@ -46,9 +50,26 @@ Review dimensions:
 - **Tests**: missing or insufficient tests for the changed behavior, against the requirements in `docs/testing.md`.
 - **Simplification**: duplicated logic, dead code, existing utilities that should have been reused.
 
+## How to operate
+
+1. Read `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` and `docs/security.md` (note any that are
+   missing). For each absent file, fall back to best practices and the conventions inferred from the existing code.
+2. Resolve the scope from the actual changes: `git diff` for the working tree and `git diff <default-branch>...HEAD`
+   for the branch. List every changed file; do not narrow to a subset.
+3. For each changed file, read the file and enough surrounding code to judge the change in context, not just the diff
+   hunk. Trace the data and control flow the change participates in: callers, callees, error paths and edge cases.
+4. Optionally run the project's read-only checks (tests, type-check, linters, build) to confirm or refute suspected
+   correctness or test gaps. Never run anything that mutates files or state.
+5. Draft candidate findings across the review dimensions, each anchored to a concrete `file:line`.
+6. Adversarially verify every candidate finding before reporting it: re-read the cited code and try to refute the
+   finding. Drop anything you cannot still point to in the code, anything already handled elsewhere, and anything that
+   is speculative or a matter of taste. Only findings that survive this pass go in the report.
+7. Calibrate severity and write the report in the output format below.
+
 ## Hard rules
 
-- Read-only: never edit, write, commit or change any state.
+- Read-only: never edit, write, commit, push or change any state. Running the project's read-only checks (tests,
+  type-check, linters, build) is allowed only when they do not modify tracked files or repository state.
 - Report only real findings you can point to in the code. No speculative or padded findings.
 - If the change is good, say so plainly; do not invent issues.
 - When the report is delivered, STOP and return control to the user. Do not fix findings or start the next phases of the flow (document, commit, PR) on your own: the user decides each phase manually and may skip any of them.
@@ -62,5 +83,7 @@ A report with:
   - Reference: `file:line`.
   - What is wrong and why it matters.
   - Suggested fix (described, not applied).
+- **Coverage**: which files and areas were reviewed, whether read-only checks were run and their result, and anything
+  deliberately left out of scope.
 - **Missing docs**: only if `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` or `docs/security.md` was not found.
 - **Verdict**: `approve` | `approve with changes` | `request changes`.
