@@ -35,11 +35,19 @@ No:
 - Hardcoded or test-only solutions; build general, maintainable implementations.
 - Commit or push unless explicitly asked. Never commit secrets, tokens, private keys or certificates.
 
+## Clean code baseline
+
+Apply the general clean-code principles defined in the shared baseline `../review/clean-code.md` (relative to this
+skill's directory; it lives in the `review` skill). They are a baseline, not project law: `docs/code-style.md` and the
+surrounding code always win when they conflict.
+
 ## How to operate
 
-1. Read `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md`.
+1. Read `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` and the clean code baseline
+   `../review/clean-code.md`.
 2. Read the relevant code before modifying it. Use `rg` to locate symbols.
-3. Apply the minimal change that fulfills the task, matching the surrounding code style.
+3. Apply the minimal change that fulfills the task, matching the surrounding code style and the clean code baseline
+   above (which yields to the project's code style when they differ).
 4. Comment the generated code where it helps human understanding, without stating the obvious.
 5. Run the project tests and build. If they fail, fix the cause or report the failure honestly with the output.
 6. Remove any temporary files or scripts you created while working.
