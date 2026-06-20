@@ -488,6 +488,8 @@ config:
   unlink $(pwd)/config/zsh/zshrc $HOME/.zshrc
   unlink $(pwd)/config/zsh/zshenv $HOME/.zshenv
   unlink $(pwd)/config/zsh/zprofile $HOME/.zprofile
+  # FLATPAK
+  link $(pwd)/config/flatpak/overrides/global $HOME/.local/share/flatpak/overrides/global
   # OTHERS
   link $(pwd)/config/rofi $HOME/.config/rofi
   link $(pwd)/config/nix $HOME/.config/nix

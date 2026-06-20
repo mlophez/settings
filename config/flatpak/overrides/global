@@ -1,0 +1,9 @@
+[Context]
+devices=all;dri
+filesystems=xdg-config/Kvantum:ro;xdg-desktop;xdg-download;xdg-data/icons;xdg-data/themes;xdg-data/applications;xdg-documents;xdg-config/qt5ct:ro;!home;!host-etc;!host
+
+[Environment]
+QT_STYLE_OVERRIDE=kvantum
+
+[Session Bus Policy]
+org.freedesktop.Notifications=talk
