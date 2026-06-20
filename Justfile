@@ -116,7 +116,7 @@ bw-unlock:
 [group('Settings')]
 system-setup-linux:
   # Setup gnome
-  @just gnome-load-settings
+  @just gnome-load-config
   # Install gui apps
   @just system-install-apps
   # Install distroboxes
@@ -180,6 +180,19 @@ system-install-backgrounds:
   #!/usr/bin/env bash
   mkdir -p $HOME/.local/share/backgrounds
   cp -rf local/share/backgrounds/* $HOME/.local/share/backgrounds/
+
+[private]
+[group('System')]
+system-install-cursors:
+  #!/usr/bin/env bash
+  # Extract versioned cursor theme tarballs into the user icon dir (XDG: ~/.local/share/icons/<theme>/)
+  # Activate one with: gsettings set org.gnome.desktop.interface cursor-theme 'oreo_black_cursors'
+  mkdir -p $HOME/.local/share/icons
+  for archive in local/share/cursors/*.tar.gz; do
+    [ -e "$archive" ] || continue
+    echo "Extracting ${archive}"
+    tar xzf "$archive" -C $HOME/.local/share/icons/
+  done
 
 [private]
 [group('System')]
@@ -580,33 +593,43 @@ upgrade-nvim-plugins:
   #!/usr/bin/env bash
   nvim --headless +Lazy! update +qa
 
-# ---- GNOME ----
+# ============================================================
+# GNOME
+# ============================================================
 
-[private]
-[group('Settings')]
-gnome-load-settings: && gnome-set-keybinds
-  dconf load / < ./gnome/settings.ini
-
-[private]
-[group('Settings')]
-gnome-set-keybinds:
+# Apply all GNOME config from config/gnome/*.ini (dconf load is selective: only the keys present in each file are written)
+[group('Gnome')]
+gnome-load-config: && gnome-load-keybinds
   #!/usr/bin/env bash
-  # Clear existing keybindings
+  set -euo pipefail
+  # Load every .ini except keybindings (handled separately with a clean slate)
+  for file in config/gnome/*.ini; do
+    [ -e "$file" ] || continue
+    [ "$(basename "$file")" = "keybindings.ini" ] && continue
+    echo "Loading ${file}"
+    dconf load / < "$file"
+  done
+
+# Dump the dedicated extension subtrees into config/gnome/*.ini (settings.ini and keybindings.ini are hand-edited)
+[group('Gnome')]
+gnome-save-config:
+  # dconf dump uses headers relative to the dumped path; the sed rewrites them to absolute so `dconf load /` works.
+  # The `t` after the first substitution skips the second one, avoiding a double prefix on the rewritten header.
+  dconf dump /org/gnome/terminal/ | sed -E 's,^\[/\],[org/gnome/terminal],;t;s,^\[([^/].*)\],[org/gnome/terminal/\1],' > config/gnome/terminal.ini
+  dconf dump /org/gnome/shell/extensions/forge/ | sed -E 's,^\[/\],[org/gnome/shell/extensions/forge],;t;s,^\[([^/].*)\],[org/gnome/shell/extensions/forge/\1],' > config/gnome/forge.ini
+  dconf dump /org/gnome/shell/extensions/search-light/ | sed -E 's,^\[/\],[org/gnome/shell/extensions/search-light],;t;s,^\[([^/].*)\],[org/gnome/shell/extensions/search-light/\1],' > config/gnome/search-light.ini
+
+# Clear default wm/shell keybindings and apply only the ones in config/gnome/keybindings.ini
+[group('Gnome')]
+gnome-load-keybinds:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  # Reset existing bindings so only ours remain (avoids leftover defaults conflicting)
   gsettings list-keys org.gnome.desktop.wm.keybindings | xargs -I@ gsettings set org.gnome.desktop.wm.keybindings @ "[]"
   gsettings list-keys org.gnome.shell.keybindings | xargs -I@ gsettings set org.gnome.shell.keybindings @ "[]"
-  # Load keybindings from file
-  dconf load / < ./gnome/keybindings.ini
-
-[private]
-[group('Settings')]
-gnome-forge-keybinds-reset:
-  # gsettings list-keys org.gnome.desktop.wm.keybindings | xargs -I@ gsettings reset org.gnome.desktop.wm.keybindings @
-  # gsettings list-keys org.gnome.shell.keybindings | xargs -I@ gsettings reset org.gnome.shell.keybindings @
-  # FORGE="$HOME/.local/share/gnome-shell/extensions/forge@jmmaranan.com/schemas"
-  #if [ -d ${FORGE} ]; then
-  #  gsettings --schemadir ${FORGE} list-keys org.gnome.shell.extensions.forge.keybindings | \
-  #    xargs -I% gsettings --schemadir ${FORGE} set org.gnome.shell.extensions.forge.keybindings % "[]"
-  #fi
+  # Load our keybindings from file
+  echo "Loading config/gnome/keybindings.ini"
+  dconf load / < config/gnome/keybindings.ini
 
 [private]
 [group('Settings')]
