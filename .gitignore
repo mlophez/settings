@@ -21,7 +21,7 @@ resources/
 *.tar.gz
 *.swp
 # Exception: versioned cursor theme tarballs (installed via system-install-cursors)
-!local/share/cursors/*.tar.gz
+!share/cursors/*.tar.gz
 
 # Python
 __pycache__/

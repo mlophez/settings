@@ -45,7 +45,8 @@
     "code-review@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
     "logalty-ai@logalty": false,
-    "superpowers@claude-plugins-official": false
+    "superpowers@claude-plugins-official": false,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -58,6 +59,12 @@
       "source": {
         "source": "git",
         "url": "https://bitbucket.org/firmapro/logalty-ai.git"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       }
     }
   },
