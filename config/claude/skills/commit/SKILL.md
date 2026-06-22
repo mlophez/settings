@@ -3,6 +3,7 @@ name: commit
 description: Make a commit in git repository. Only on demand
 model: sonnet
 effort: low
+disable-model-invocation: true
 ---
 
 ## FLOW
