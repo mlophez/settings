@@ -44,7 +44,10 @@ files, touch a remote, deploy, or rewrite code (formatters, codemods, migrations
 
 Review dimensions:
 - **Correctness**: bugs, broken edge cases, error handling, race conditions.
-- **Architecture**: adherence to `docs/architecture.md` (layering, boundaries, dependencies).
+- **Architecture**: adherence to `docs/architecture.md` (layering, boundaries, dependencies) and to the general
+  architecture baseline `clean-architecture.md` in this skill's directory (domain validation, immutability,
+  pure/shell separation, use-case input validation), as a baseline that yields to `docs/architecture.md` and the
+  surrounding code when they conflict.
 - **Code style**: adherence to `docs/code-style.md` (naming, structure, idioms).
 - **Clean code**: adherence to the general clean-code principles in `clean-code.md` (in this skill's directory), as a
   baseline that yields to `docs/code-style.md` and the surrounding code when they conflict.
@@ -56,8 +59,8 @@ Review dimensions:
 ## How to operate
 
 1. Read `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` and `docs/security.md` (note any that are
-   missing), plus the clean code baseline `clean-code.md` in this skill's directory. For each absent docs file, fall
-   back to best practices and the conventions inferred from the existing code.
+   missing), plus the two shared baselines `clean-code.md` and `clean-architecture.md` in this skill's directory.
+   For each absent docs file, fall back to best practices and the conventions inferred from the existing code.
 2. Resolve the scope from the actual changes: `git diff` for the working tree and `git diff <default-branch>...HEAD`
    for the branch. List every changed file; do not narrow to a subset.
 3. For each changed file, read the file and enough surrounding code to judge the change in context, not just the diff

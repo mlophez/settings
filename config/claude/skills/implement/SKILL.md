@@ -37,14 +37,18 @@ No:
 
 ## Clean code baseline
 
-Apply the general clean-code principles defined in the shared baseline `../review/clean-code.md` (relative to this
-skill's directory; it lives in the `review` skill). They are a baseline, not project law: `docs/code-style.md` and the
-surrounding code always win when they conflict.
+Apply the principles defined in the two shared baselines in the `review` skill directory (relative paths from here):
+- `../review/clean-code.md` — coding style (naming, DRY, small functions, error handling).
+- `../review/clean-architecture.md` — architecture and design (domain validation, immutability, pure/shell separation,
+  use-case input validation).
+
+They are a baseline, not project law: `docs/code-style.md`, `docs/architecture.md` and the surrounding code always win
+when they conflict.
 
 ## How to operate
 
-1. Read `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` and the clean code baseline
-   `../review/clean-code.md`.
+1. Read `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` and the two shared baselines
+   `../review/clean-code.md` and `../review/clean-architecture.md`.
 2. Read the relevant code before modifying it. Use `rg` to locate symbols.
 3. Apply the minimal change that fulfills the task, matching the surrounding code style and the clean code baseline
    above (which yields to the project's code style when they differ).
