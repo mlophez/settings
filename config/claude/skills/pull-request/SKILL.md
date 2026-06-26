@@ -90,8 +90,19 @@ http --ignore-stdin -a "$BITBUCKET_EMAIL:$BITBUCKET_TOKEN" PUT \
   description="$NEW_DESCRIPTION"
 ```
 
-## Step 6 — Wrap up
+## Step 6 — Link with the Jira ticket if one exists
+
+Final mission: check whether the change in progress already has a Jira ticket and, if so, link PR and ticket.
+
+Look for a Jira key (e.g. `TIF-123`, `TS-45`) in the branch name, the commit messages or the session context
+(same sources as Step 3.2). If none is found, skip the linking.
+
+If a ticket exists, link both ways:
+- Add a comment on the ticket with the PR link (`mcp__claude_ai_Atlassian__addCommentToJiraIssue`).
+- If the PR title does not already include the ticket key, prepend it (Bitbucket auto-links the Jira key), using
+  the Step 5b update with the `title` field instead of `description`.
+
+## Step 7 — Wrap up
 
 - Return the PR URL to the user.
-- If the PR has an associated Jira ticket, add a comment on the ticket with the PR link (`mcp__claude_ai_Atlassian__addCommentToJiraIssue`).
 - Then STOP and return control to the user: do not start any other phase of the flow on your own.

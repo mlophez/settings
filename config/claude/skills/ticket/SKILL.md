@@ -52,6 +52,16 @@ Tipos de incidencia válidos (usar exactamente este nombre):
 - `Incidencia` — incidente o problema en producción.
 - `Solicitud` — petición de recurso o acceso.
 
+Antes de crear, resolver el `accountId` propio llamando a `mcp__claude_ai_Atlassian__atlassianUserInfo`:
+el ticket **siempre se asigna a uno mismo** (`assignee_account_id`).
+
+El ticket **siempre lleva etiquetas** (`labels`): nunca crear uno sin al menos una. Elegirlas del contexto del
+cambio **únicamente de esta lista cerrada**:
+
+`aws`, `compliance`, `patches`, `kubernetes`, `monitoring`, `finops`, `database`
+
+No inventar etiquetas fuera de esa lista. Si ninguna encaja con el cambio, preguntar al usuario cuál de ellas poner.
+
 Llamar a `mcp__claude_ai_Atlassian__createJiraIssue` con:
 
 ```json
@@ -61,15 +71,45 @@ Llamar a `mcp__claude_ai_Atlassian__createJiraIssue` con:
   "issueTypeName": "<tipo>",
   "summary": "<titulo>",
   "description": "<descripcion con secciones Contexto / Alcance / Plan de implementación>",
+  "assignee_account_id": "<accountId propio>",
   "additional_fields": {
+    "labels": ["<etiqueta1>", "<etiqueta2>"],
     "duedate": "<YYYY-MM-DD>",
     "parent": {"key": "<PROJ-XXX>"}
   }
 }
 ```
 
-Omitir los `additional_fields` que no apliquen.
+`assignee_account_id` y `labels` son obligatorios. Omitir el resto de `additional_fields` que no apliquen.
 
-## 4. Devolver resultado
+## 4. Vincular con la PR si ya existe
 
-Tras crearlo, devolver la clave del ticket (ej. `TIF-123`) con su enlace, y sugerir referenciarla en la rama o en el commit del cambio.
+Última misión: comprobar si el cambio en curso ya tiene una pull request abierta y, si la hay, vincular ticket y PR.
+
+Detectar el repo y la rama, y consultar si hay PR abierta para esa rama en Bitbucket:
+
+```bash
+REMOTE_URL=$(git remote get-url origin)
+WORKSPACE=$(echo "$REMOTE_URL" | sed -E 's|.*bitbucket\.org[:/]([^/]+)/([^/.]+)(\.git)?.*|\1|')
+REPO=$(echo "$REMOTE_URL" | sed -E 's|.*bitbucket\.org[:/]([^/]+)/([^/.]+)(\.git)?.*|\2|')
+BRANCH=$(git branch --show-current)
+
+http --ignore-stdin -a "$BITBUCKET_EMAIL:$BITBUCKET_TOKEN" GET \
+  "https://api.bitbucket.org/2.0/repositories/$WORKSPACE/$REPO/pullrequests?q=source.branch.name=\"$BRANCH\"+AND+state=\"OPEN\""
+```
+
+Si el remote no es Bitbucket, o no hay PR abierta para la rama, omitir este paso.
+
+Si hay PR abierta, vincular en ambos sentidos:
+- Añadir un comentario en el ticket con el enlace de la PR (`mcp__claude_ai_Atlassian__addCommentToJiraIssue`).
+- Si el título de la PR no incluye ya la clave del ticket, anteponerla (Bitbucket autoenlaza la clave de Jira):
+  ```bash
+  http --ignore-stdin -a "$BITBUCKET_EMAIL:$BITBUCKET_TOKEN" PUT \
+    "https://api.bitbucket.org/2.0/repositories/$WORKSPACE/$REPO/pullrequests/$PR_ID" \
+    title="<CLAVE> <título actual>"
+  ```
+
+## 5. Devolver resultado
+
+Tras crearlo, devolver la clave del ticket (ej. `TIF-123`) con su enlace. Si se vinculó con una PR, indicarlo;
+si no había PR, sugerir referenciar la clave en la rama o en el commit del cambio.
