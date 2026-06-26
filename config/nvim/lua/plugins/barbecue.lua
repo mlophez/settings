@@ -1,6 +1,6 @@
 return {
 	"utilyre/barbecue.nvim",
-	lazy = false,
+	event = "VeryLazy",
 	dependencies = {
 		"SmiteshP/nvim-navic",
 		"nvim-tree/nvim-web-devicons",

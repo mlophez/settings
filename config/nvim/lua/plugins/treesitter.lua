@@ -23,34 +23,22 @@ return {
     require('nvim-treesitter').install(to_install)
 
     vim.api.nvim_create_autocmd('FileType', {
-      callback = function()
-        -- Enable treesitter highlighting and disable regex syntax
+      callback = function(ev)
+        -- Skip highlight and folds on very large files to avoid hangs
+        local max_filesize = 100 * 1024
+        local ok, stats = pcall(vim.uv.fs_stat, vim.api.nvim_buf_get_name(ev.buf))
+        if ok and stats and stats.size > max_filesize then
+          return
+        end
+
         pcall(vim.treesitter.start)
-        -- Enable treesitter-based indentation
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+        -- Treesitter-based folding; start unfolded so the user folds on demand
+        vim.wo.foldmethod = "expr"
+        vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        vim.wo.foldenable = false
       end,
     })
   end,
-  opts = {
-    sync_install = false,
-    auto_install = true,
-
-    highlight = {
-      enable = true,
-      -- use_languagetree = true,
-      -- disable = { "css" },
-      -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-      disable = function(lang, buf)
-        local max_filesize = 100 * 1024 -- 100 KB
-        local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-        if ok and stats and stats.size > max_filesize then
-          return true
-        end
-      end,
-    },
-    indent = { enable = true },
-    folds = { enable = true },
-
-    ignore_install = { "phpdoc" },
-  },
 }

@@ -6,6 +6,7 @@ return {
     bigfile = { enabled = true },
     quickfile = { enabled = true },
     lazygit = { enabled = true },
+    input = { enabled = true },
     -- scroll = { enabled = true }
     -- rename = { enabled = false },
     -- bufdelete = { enabled = true },

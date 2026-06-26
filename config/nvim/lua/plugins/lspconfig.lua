@@ -7,9 +7,6 @@ return {
     "b0o/schemastore.nvim",
   },
   init = function()
-    -- Mejor completado
-    vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
     -- PATH para node_modules y venv
     vim.env.PATH = table.concat({
       os.getenv("PWD") .. "/node_modules/.bin",
@@ -34,12 +31,31 @@ return {
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
         local opts = { buffer = ev.buf }
 
+        -- gd/gD are not Neovim 0.11+ defaults, so keep them explicit
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+
+        -- Code actions via actions-preview (richer UI than the default gra)
         vim.keymap.set("n", "ca", require("actions-preview").code_actions, opts)
+
+        -- Explicit rename binding; 0.11+ ships grn as default but make it visible
+        vim.keymap.set("n", "grn", vim.lsp.buf.rename, opts)
+
+        -- NOTE: do NOT map bare "gr" here — it shadows the built-in gr* prefix
+        -- (grn rename, gra code-action, grr references, gri implementation, grt type-def).
+        -- Use grr for references instead.
+
+        -- Inlay hints toggle when the server supports them
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        if client and client:supports_method("textDocument/inlayHint") then
+          vim.keymap.set("n", "<leader>th", function()
+            vim.lsp.inlay_hint.enable(
+              not vim.lsp.inlay_hint.is_enabled({ bufnr = ev.buf }),
+              { bufnr = ev.buf }
+            )
+          end, opts)
+        end
       end,
     })
 
@@ -131,8 +147,7 @@ return {
 
     -- TypeScript
     if vim.fn.executable("typescript-language-server") == 1 then
-      vim.lsp.enable('tsserver')
-      vim.lsp.config('tsserver', {})
+      vim.lsp.enable('ts_ls')
     end
 
     -- Astro

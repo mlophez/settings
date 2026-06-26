@@ -1,4 +1,4 @@
 return {
 	"NoahTheDuke/vim-just",
-	lazy = false,
+	ft = "just",
 }
