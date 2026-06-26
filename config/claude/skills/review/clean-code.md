@@ -19,3 +19,8 @@ in this same directory.
 - No magic numbers or strings: give them a named constant with a meaningful identifier.
 - YAGNI: build what the task needs, not speculative abstraction; but never copy-paste to avoid a small, justified
   abstraction.
+
+## Python
+
+- Type hints: annotate every function parameter and return value, and any variable whose type is not obvious from its
+  assignment. Code must pass the project's type checker (`mypy`, `pyright` or equivalent) with no new errors.
