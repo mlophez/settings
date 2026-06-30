@@ -1,0 +1,9 @@
+# Harlequin TUI database client configuration.
+# Theme matches the terminal (Catppuccin Mocha). The `theme` key only lives inside a
+# profile, so a single default profile carries it and `default_profile` activates it
+# without needing `-P`. No connection is set: `harlequin` bare opens in-memory DuckDB,
+# `harlequin <db>` takes the connection from the CLI argument.
+default_profile = "default"
+
+[profiles.default]
+theme = "catppuccin-mocha"

@@ -33,6 +33,7 @@ config:
   link $(pwd)/config/k9s $HOME/.config/k9s
   link $(pwd)/config/lazygit $HOME/.config/lazygit
   link $(pwd)/config/ngrok $HOME/.config/ngrok
+  link $(pwd)/config/harlequin $HOME/.config/harlequin
   link $(pwd)/config/just $HOME/.config/just
   link $(pwd)/config/kube/config $HOME/.config/kube/config
   link $(pwd)/config/aws/config $HOME/.aws/config
@@ -53,6 +54,7 @@ config:
     link $(pwd)/config/k9s "$HOME/Library/Application Support/k9s"
     link $(pwd)/config/lazygit "$HOME/Library/Application Support/lazygit"
     link $(pwd)/config/ngrok "$HOME/Library/Application Support/ngrok"
+    link $(pwd)/config/harlequin "$HOME/Library/Application Support/harlequin"
     link /opt/podman/bin/podman $HOME/.local/bin/docker
   fi
 

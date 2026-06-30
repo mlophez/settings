@@ -10,6 +10,10 @@ install-devbox:
 install-kiro:
   curl -fsSL https://cli.kiro.dev/install | bash
 
+[group('Apps')]
+install-harlequin:
+  uv tool install harlequin
+
 # Configure server and login to self-hosted Bitwarden
 [group('Apps')]
 bw-login:
