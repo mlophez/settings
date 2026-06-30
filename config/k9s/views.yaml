@@ -27,9 +27,14 @@ views:
     sortColumn: AGE:asc
     columns:
       - NAME
-      - NODEPOOL:.metadata.labels.karpenter\.sh/nodepool
+      # Fallback: nodepool de Karpenter y, si no, nodegroup de EKS (si no, "-").
+      # Los >=2 pipes hacen que k9s evalue el spec como JQ (gojq) en vez de JSONPath,
+      # lo que permite el operador de alternativa // para el fallback.
+      - 'NODEPOOL:.metadata.labels | .["karpenter.sh/nodepool"] // .["eks.amazonaws.com/nodegroup"] // "-" | tostring'
       - TYPE:.metadata.labels.node\.kubernetes\.io/instance-type
-      - CAPACITY:.metadata.labels.karpenter\.sh/capacity-type
+      # Mismo fallback que NODEPOOL: capacity-type de Karpenter y, si no, el de EKS.
+      # Normaliza al formato Karpenter: minusculas y _ -> - (EKS usa ON_DEMAND/SPOT).
+      - 'CAPACITY:.metadata.labels | (.["karpenter.sh/capacity-type"] // .["eks.amazonaws.com/capacityType"] // "-") | ascii_downcase | gsub("_";"-")'
       - ZONE:.metadata.labels.topology\.kubernetes\.io/zone
       - TAINTS
       - PODS
