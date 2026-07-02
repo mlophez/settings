@@ -16,6 +16,7 @@ return {
 				statusline = {
 					"NvimTree",
 					"TelescopePrompt",
+					"snacks_picker_input",
 					"lazy",
 					"mason",
 				},
@@ -23,6 +24,7 @@ return {
 			ignore_focus = {
 				"NvimTree",
 				"TelescopePrompt",
+				"snacks_picker_input",
 				"lazy",
 				"mason",
 			},

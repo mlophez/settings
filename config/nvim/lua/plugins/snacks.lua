@@ -17,5 +17,12 @@ return {
     { "<leader>g",  function() Snacks.lazygit() end,             desc = "Lazygit" },
     { "<leader>gl", function() Snacks.picker.git_log_file() end, desc = "Git file history" },
     --{ "<leader>gl", function() Snacks.lazygit.log() end,        desc = "Lazygit Log (cwd)" },
+    -- pickers (migrated from telescope.nvim)
+    { "<C-p>",     function() Snacks.picker.files() end,      desc = "Find Files" },
+    { "<leader>f", function() Snacks.picker.files() end,      desc = "Find Files" },
+    { "<leader>s", function() Snacks.picker.grep() end,       desc = "Live Grep" },
+    { "<leader>gf", function() Snacks.picker.treesitter() end, desc = "Treesitter Symbols" },
+    { "<leader>fh", function() Snacks.picker.help() end,      desc = "Help Tags" },
+    { "<leader>b",  function() Snacks.picker.buffers() end,   desc = "Buffers" },
   }
 }
