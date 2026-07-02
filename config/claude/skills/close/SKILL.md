@@ -6,7 +6,7 @@ description: >
   ambos. Úsala cuando el usuario diga "/close", "cierra esto", "cierra la PR",
   "cierra el ticket" o "da por cerrado el cambio". Sin argumento cierra PR y ticket;
   con argumento acota: /close pr, /close ticket, /close TIF-123.
-model: sonnet
+#model: sonnet
 effort: low
 disable-model-invocation: true
 ---

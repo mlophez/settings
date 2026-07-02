@@ -6,7 +6,7 @@ description: >
   wrong with the change (failing test, crash, regression, unexpected behavior),
   before fixing it. Diagnoses and reports the root cause with evidence and a
   proposed fix; it does not apply the fix.
-model: opus
+#model: opus
 effort: high
 disable-model-invocation: true
 ---

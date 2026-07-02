@@ -6,7 +6,7 @@ description: >
   is done, before committing or opening a PR, whether in the main session or
   inside the reviewer agent. Read-only: it reports findings but never fixes
   them.
-model: opus
+#model: opus
 effort: high
 disable-model-invocation: true
 ---
