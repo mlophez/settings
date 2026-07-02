@@ -5,7 +5,17 @@ return {
   opts = {
     bigfile = { enabled = true },
     quickfile = { enabled = true },
-    lazygit = { enabled = true },
+    lazygit = {
+      enabled = true,
+      config = {
+        os = {
+          editPreset = "nvim-remote",
+          -- make lazygit's "o" (openFile) also target the running Neovim
+          -- instead of the OS default app, same nvim-remote trick as "edit"
+          open = '[ -z "$NVIM" ] && (nvim -- {{filename}}) || (nvim --server "$NVIM" --remote-send "q" && nvim --server "$NVIM" --remote-tab {{filename}})',
+        },
+      },
+    },
     picker = { enabled = true },
     input = { enabled = true },
     -- scroll = { enabled = true }
