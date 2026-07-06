@@ -29,6 +29,9 @@ return {
           dark = "mocha",
         },
         transparent_background = true,
+        integrations = {
+          snacks = true,
+        },
       })
       vim.cmd.colorscheme("catppuccin")
     end,
