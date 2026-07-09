@@ -1,5 +1,5 @@
 ---
-name: implement
+name: build
 description: >
   Implements a plan or a concrete development task following the project
   architecture and code style docs. Use it after planning, to write the
