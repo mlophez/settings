@@ -16,7 +16,14 @@ return {
         },
       },
     },
-    picker = { enabled = true },
+    picker = {
+      enabled = true,
+      win = {
+        -- close picker on Esc from insert mode instead of just going to normal
+        -- (needed because <esc> is globally nop'd in insert mode, see mappings.lua)
+        input = { keys = { ["<Esc>"] = { "close", mode = { "n", "i" } } } },
+      },
+    },
     input = { enabled = true },
     -- scroll = { enabled = true }
     -- rename = { enabled = false },
