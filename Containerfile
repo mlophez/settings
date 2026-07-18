@@ -10,13 +10,13 @@ RUN --mount=type=cache,dst=/var/cache \
     dnf5 -y copr disable wezfurlong/wezterm-nightly && \
     dnf5 clean all && rm -rf /var/lib/dnf
 
-# COSMIC desktop environment (selectable session alongside GNOME)
-RUN --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    --mount=type=tmpfs,dst=/run \
-    dnf5 install -y @cosmic-desktop-environment && \
-    dnf5 clean all && rm -rf /var/lib/dnf
+# # COSMIC desktop environment (selectable session alongside GNOME)
+# RUN --mount=type=cache,dst=/var/cache \
+#     --mount=type=cache,dst=/var/log \
+#     --mount=type=tmpfs,dst=/tmp \
+#     --mount=type=tmpfs,dst=/run \
+#     dnf5 install -y @cosmic-desktop-environment && \
+#     dnf5 clean all && rm -rf /var/lib/dnf
 
 # Custom configs
 # COPY default/<file> /etc/<file>
