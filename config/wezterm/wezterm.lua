@@ -6,6 +6,26 @@ wezterm.on("gui-startup", function(cmd)
   window:gui_window():maximize()
 end)
 
+-- Tab title: zellij session name if present, otherwise cwd basename (never the command)
+wezterm.on("format-tab-title", function(tab)
+  local pane = tab.active_pane
+  local title = tab.tab_title ~= "" and tab.tab_title or pane.title
+  -- zellij sets the terminal title to "Zellij (session) - tabname" via OSC
+  local session, ztab = title:match("^Zellij %((.-)%) %- (.*)$")
+  if session then
+    title = session .. ":" .. ztab
+  else
+    -- ponytail: cwd basename; no process-name lookups
+    local cwd = pane.current_working_dir
+    if cwd and cwd.file_path then
+      title = cwd.file_path:match("([^/]+)/?$") or title
+    end
+  end
+  -- retro tab bar has no padding option: the spaces ARE the padding
+  return string.format(" %d %s ", tab.tab_index + 1, "- Terminal")
+  -- return string.format(" %d %s ", tab.tab_index + 1, title)
+end)
+
 local function executable(bin)
   local home = os.getenv("HOME") or ""
   local dirs = {
@@ -21,7 +41,9 @@ local function executable(bin)
   for _, dir in ipairs(dirs) do
     local path = dir .. "/" .. bin
     local f = io.open(path, "r")
-    if f then f:close(); return path end
+    if f then
+      f:close(); return path
+    end
   end
   return nil
 end
@@ -35,8 +57,8 @@ return {
   window_background_opacity = 0.95,
   win32_system_backdrop = "Mica",
   text_background_opacity = 1.0,
-  use_fancy_tab_bar = false,
-  hide_tab_bar_if_only_one_tab = true,
+  use_fancy_tab_bar = true,
+  hide_tab_bar_if_only_one_tab = false,
   default_prog = { executable("fish") or executable("zsh") or executable("bash") or "/bin/sh", "-l" },
   disable_default_key_bindings = true,
   debug_key_events = true,
