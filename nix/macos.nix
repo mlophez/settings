@@ -14,7 +14,7 @@
     pkgs.wget
     pkgs.autossh
     pkgs.sshpass
-    pkgs.wol
+    #pkgs.wol
     pkgs.inetutils
     pkgs.dnsutils
     pkgs.nmap
@@ -116,7 +116,8 @@
     # pkgs.jdk8
     # pkgs.jdk11
     # pkgs.jdk17
-    pkgs.jdk25
+    pkgs.jdk21
+    #pkgs.jdk25
     # OTHERS
     pkgs.fastlane
     ##################### DEV/OPS #####################
