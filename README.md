@@ -2,123 +2,95 @@
 
 Repositorio personal de configuración versionada de la workstation (Linux y macOS) de Miguel.
 
-No es código de aplicación: contiene dotfiles, configuración de sistema, un Containerfile bootc derivado de Bluefin y un orquestador en `just` para reconstruir todo el entorno desde cero en una máquina nueva.
+No es código de aplicación: contiene dotfiles, configuración y un orquestador en `just`
+para reconstruir todo el entorno desde cero en una máquina nueva.
 
 ## Para qué sirve
 
-- **Linux (Bluefin/ublue):** mantener una imagen OCI bootc derivada de `ghcr.io/ublue-os/bluefin:gts` con paquetes y configuración adicionales. El sistema arranca directamente de esa imagen (modelo *image-based OS* de bootc).
-- **macOS:** instalar paquetes CLI vía Nix Home Manager + apps gráficas vía Homebrew.
-- **Ambas plataformas:** enlazar todos los dotfiles (`config/*`), scripts (`bin/*`) y configuración de sistema (`default/*`) mediante symlinks idempotentes al `$HOME` y `/etc/` correspondientes.
+- **Linux (Fedora KDE Plasma, mutable):** Fedora KDE sobre Btrfs con snapshots (Snapper),
+  UEFI + systemd-boot y gestión de paquetes con DNF5. Apps gráficas vía Flatpak,
+  herramientas CLI vía DNF nativo, distrobox archlinux y/o Nix Home Manager. Los datos
+  persistentes viven en `/srv`, separados del sistema. Ver `docs/design.md` (diseño) y
+  `docs/install.md` (instalación paso a paso).
+- **macOS:** paquetes CLI vía Nix Home Manager + apps gráficas vía Homebrew.
+- **Ambas plataformas:** enlazar todos los dotfiles (`config/*`) y scripts (`bin/*`)
+  mediante symlinks idempotentes al `$HOME` correspondiente.
+
+> El flujo anterior estaba basado en una imagen bootc inmutable derivada de Bluefin/ublue.
+> Se conserva, sin uso, en `legacy/` (ver `legacy/README.md`).
 
 ## Arquitectura
 
-Tres jerarquías versionadas, todas mapeadas al sistema mediante symlinks creados por `just dotfiles`:
+Jerarquías versionadas, mapeadas al sistema mediante symlinks creados por `just config`:
 
 - `config/` → dotfiles de usuario (enlazados a `$HOME` y `~/.config/<app>`).
-- `default/` → configuración de sistema (enlazados a `/etc/<path>`, requiere `sudo`).
 - `bin/` → scripts ejecutables del usuario (enlazados a `$HOME/.local/bin/<script>`).
+- `default/` → configuración de sistema (`/etc/<path>`), cuando exista.
 
 Además:
-- `Containerfile` → derivación bootc desde Bluefin GTS (solo Linux ublue).
 - `flake.nix` + `nix/` → configuración Home Manager para `linux` y `macos`.
-- `Justfile` → orquestador único con todas las recetas organizadas por secciones.
+- `Justfile` → orquestador; las recetas viven en `just/*.just`, importadas por sección.
+- `legacy/` → flujo bootc/ublue anterior (no importado; solo referencia).
+- `docs/` → diseño (`design.md`) e instalación (`install.md`).
 
 ---
 
-## LINUX (Bluefin / ublue)
+## LINUX (Fedora KDE Plasma)
 
-### 1. Instalar la distro oficial de ublue
+### 1. Instalación del sistema base
 
-Antes de nada, la máquina necesita una base bootc-compatible. Descargar e instalar Bluefin desde:
-
-https://projectbluefin.io/
-
-Variantes recomendadas:
-- **Bluefin GTS** (estable, Fedora N-2) → es la base de este repo.
-- Bluefin DX si quieres herramientas dev preinstaladas.
-
-Tras la instalación inicial y el primer login, comprobar que el sistema es bootc:
-
-```bash
-sudo bootc status
-```
+La instalación desde cero (particionado Btrfs + subvolúmenes, systemd-boot, Snapper +
+DNF5) está documentada paso a paso en **`docs/install.md`**. El diseño y sus decisiones,
+en **`docs/design.md`**.
 
 ### 2. Clonar este repositorio
 
 ```bash
-mkdir -p ~/Code
-cd ~/Code
+mkdir -p ~/Code && cd ~/Code
 git clone https://github.com/mlophez/settings.git Workstation
 cd Workstation
 ```
 
-### 3. Construir e instalar la imagen derivada
-
-Primera vez (build + rebase):
+### 3. Montar el entorno de usuario
 
 ```bash
-just bootc-build      # construye localhost/workstation:YYYYMMDD + :latest
-just bootc-switch     # rebase del sistema a la imagen local
-sudo systemctl reboot # arrancar con la nueva imagen
+just config              # symlinks de config/* y bin/* a $HOME (idempotente)
+just install-all         # bootstrap: apps flatpak + distrobox + dotfiles (+ GNOME, inerte en KDE)
+just nix-install         # opcional: herramientas CLI cross-platform vía Nix
+just distrobox-setup     # contenedor archlinux para herramientas no disponibles en el host
+just config-repositories # clona los repos de trabajo en ~/Code
 ```
 
-Actualizaciones posteriores (rebuild + upgrade):
+### Uso habitual
 
-```bash
-just upgrade-system   # build + bootc upgrade
-sudo systemctl reboot
-```
+- `just upgrade` — actualiza los paquetes del host (`dnf5 upgrade`). Los snapshots
+  pre/post los gestiona el hook de Snapper (ver `docs/install.md`).
+- `just install <pkg>...` — instala paquetes del host (`dnf5 install`).
+- `just upgrade-all` — actualiza todo el entorno de terminal: host (dnf) + distrobox +
+  flatpak + plugins de nvim.
+- `just config` — recrea los symlinks de `config/*` y `bin/*`.
+- `just clean-cache` — limpia cachés para liberar disco.
 
-### 4. Setup del entorno de usuario
+### Recetas por grupo
 
-Tras arrancar con la imagen ya rebajada:
-
-```bash
-just setup            # gnome settings, flatpaks, distrobox, dotfiles
-just dotfiles         # solo los symlinks (si solo quieres re-enlazar)
-just clone-repositories
-```
-
-### Comandos bootc disponibles
-
-- `just bootc-build` — construye imagen local desde `Containerfile` (tag `YYYYMMDD` + `latest`).
-- `just bootc-switch` — primer rebase del sistema a la imagen local.
-- `just upgrade-system` — rebuild + `bootc upgrade` (uso habitual).
-- `just bootc-status` — estado del deployment actual.
-- `just bootc-rollback` — vuelve al deployment anterior.
-- `just bootc-images` — lista imágenes locales del workstation.
-- `just bootc-prune` — borra tags antiguos (mantiene `latest` y el del día).
-
-### Comandos de setup y mantenimiento
-
-- `just setup` — bootstrap completo (gnome + flatpaks + distrobox + dotfiles).
-- `just upgrade` — actualiza paquetes en distrobox + flatpak + plugins nvim.
-- `just dotfiles` — recrea symlinks de `config/*` a `$HOME` (idempotente).
-- `just clone-repositories` — clona repos auxiliares en `$HOME/Code`.
-- `just upgrade-archlinux` — `pacman -Syu` dentro del distrobox arch.
-- `just upgrade-flatpak` — actualiza todos los flatpaks.
-- `just nvim-upgrade-plugins` — actualiza plugins lazy.nvim.
-- `just backup` — monta disco de backup y lista contenido.
-
-### Nix (opcional en Linux)
-
-- `just nix-install` — primer install de home-manager.
-- `just nix-switch` — aplica configuración del flake (`.#linux`).
-- `just nix-upgrade` — actualiza flake + reaplica.
-- `just nix-clean` — recolector de basura.
-- `just nix-packages` / `just nix-news` — info.
+- **Distrobox:** `distrobox-setup` (`dx-setup`), `distrobox-init`, `distrobox-install`,
+  `distrobox-upgrade`, `distrobox-config`.
+- **Nix (opcional):** `nix-install`, `nix-switch`, `nix-upgrade`, `nix-clean`,
+  `nix-packages`, `nix-news`.
+- **GNOME (config previa; inerte en KDE):** `gnome-load-config`, `gnome-save-config`,
+  `gnome-load-keybinds`.
+- **Backup:** `backup-to-disk`.
 
 ---
 
-## MAC OS
+## MACOS
 
-En macOS no hay bootc. El flujo es Homebrew + Nix Home Manager.
+En macOS el flujo es Homebrew + Nix Home Manager.
 
 ### 1. Clonar repositorio
 
 ```bash
-mkdir -p ~/Code
-cd ~/Code
+mkdir -p ~/Code && cd ~/Code
 git clone https://github.com/mlophez/settings.git Workstation
 cd Workstation
 ```
@@ -140,25 +112,18 @@ brew tap hashicorp/tap
 brew install hashicorp/tap/terraform
 ```
 
-### 3. Instalar Nix (Determinate) y home-manager
+### 3. Instalar Nix (Determinate) y home-manager + setup
 
 ```bash
-nix run home-manager/master -- --extra-experimental-features "nix-command flakes" switch --flake .#macos --impure
+just install-all         # delega en nix-install (home-manager switch .#macos)
+just config              # symlinks de config/* (incluye duplicados en ~/Library/Application Support/)
 ```
 
-### 4. Setup
+### Uso habitual (macOS)
 
-```bash
-just setup            # delega en mac-setup (nix-install)
-just dotfiles
-```
-
-### Comandos macOS
-
-- `just setup` — bootstrap (nix-install).
-- `just upgrade` — `nix-upgrade` + plugins nvim.
-- `just dotfiles` — symlinks de `config/*` (incluye duplicados en `~/Library/Application Support/` para k9s/ngrok).
-- `just clean` — limpia cachés (navegadores, Go, Poetry, Homebrew, Gradle, Podman, Terraform, Claude vm_bundles).
+- `just upgrade-all` — `nix-upgrade` + plugins de nvim.
+- `just config` — recrea symlinks.
+- `just clean-cache` — limpia cachés (navegadores, Go, Poetry, Homebrew, Gradle, Podman, Terraform, Claude vm_bundles).
 - `just nix-switch` / `just nix-upgrade` / `just nix-clean` — gestión Home Manager.
 
 ### Netskope (entorno corporativo Logalty)
@@ -188,23 +153,28 @@ xcode-select --install
 sudo xcodebuild -license accept
 ```
 
-En Linux: `just linux-setup-flutter-development`.
+En Linux: `just install-flutter`.
 
 ---
 
 ## Comandos transversales
 
-- `just claude-install` — instala Claude Code CLI.
-- `just claude-setup` — instala el plugin marketplace caveman.
-- `just kiro-install` — instala Kiro CLI.
 - `just` (sin args) — lista todas las recetas disponibles.
+- `just install-claude` — instala Claude Code CLI.
+- `just config-claude` — instala el plugin marketplace caveman.
+- `just install-kiro` / `just install-devbox` / `just install-harlequin`.
+- `just download-resources` — clona repos de referencia en `resources/` (ignorado por git).
 
 ---
 
 ## Convenciones para extender
 
-- **App nueva de usuario:** crear `config/<app>/` y añadir la línea `install` en la receta `dotfiles` del `Justfile`.
-- **Config de sistema:** colocarla bajo `default/` replicando la ruta de `/etc/` (ej. `default/ssh/sshd_config` → `/etc/ssh/sshd_config`).
-- **Script nuevo:** colocarlo en `bin/`, `chmod +x` y añadir el enlace en `dotfiles`.
-- **Paquete extra en imagen Linux:** editar `Containerfile` (raíz), añadir `RUN dnf5 install -y <pkg> && dnf5 clean all`, luego `just upgrade-system` + reboot.
+- **App nueva de usuario:** crear `config/<app>/` y añadir la línea `link` en la receta
+  `config` (`just/settings.just`).
+- **Script nuevo:** colocarlo en `bin/`, `chmod +x` y enlazarlo desde `config`.
+- **Config de sistema:** bajo `default/` replicando la ruta de `/etc/`.
+- **Receta nueva:** crear `just/<sección>.just` (o añadirla al grupo correspondiente) y,
+  si es un fichero nuevo, importarla en el `Justfile` raíz.
+- **Paquete del host Linux:** `just install <pkg>` (DNF5). Snapshots automáticos vía el
+  hook de Snapper.
 - **Paquete CLI cross-platform:** editar `nix/linux.nix` o `nix/macos.nix` y `just nix-switch`.

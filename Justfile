@@ -1,5 +1,5 @@
 platform := os()
-image := "localhost/workstation"
+image := "localhost/workstation" # solo usado por legacy/system.just (flujo bootc)
 distrobox_image := "docker.io/library/archlinux:latest"
 # distrobox_image := "quay.io/toolbx-images/archlinux-toolbox:latest"
 # distrobox_image := "ghcr.io/ublue-os/arch-distrobox:latest"

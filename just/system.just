@@ -1,49 +1,15 @@
-# Rebuild local image and apply with bootc upgrade
-[group('System')]
-upgrade: build
-  sudo bootc upgrade
+# Package management for the mutable Fedora KDE host (DNF5).
+# Snapshots pre/post NO se hacen aquí: los gestiona el plugin de acciones de
+# libdnf5 (snapper) configurado a nivel de sistema. Ver docs/install.md.
 
-# Build local bootc image from Containerfile (tag = YYYYMMDD + latest)
+# Upgrade all host packages (dnf5). Snapshots automáticos vía libdnf5-plugin-actions.
 [group('System')]
-build:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  tag="$(date +%Y%m%d)"
-  cpus=$(( $(nproc) / 2 ))
-  sudo podman build --pull=newer \
-    --squash \
-    --retry=5 --retry-delay=10s \
-    --cpu-shares=2 \
-    -t {{image}}:"${tag}" \
-    -t {{image}}:latest \
-    -f Containerfile .
+[linux]
+upgrade:
+  sudo dnf5 upgrade
 
-# Rebase running system to the local image (first-time switch)
+# Install host packages, e.g. `just install neovim ripgrep fd-find`
 [group('System')]
-switch:
-  sudo bootc switch --transport containers-storage {{image}}:latest
-
-# Show current bootc deployment status
-[group('System')]
-status:
-  sudo bootc status
-
-# Rollback to previous deployment
-[group('System')]
-rollback:
-  sudo bootc rollback
-
-# List local images built for this workstation
-[group('System')]
-list-images:
-  sudo podman images {{image}}
-
-# Prune old local images (keep latest + today's date tag)
-[group('System')]
-prune-images:
-  #!/usr/bin/env bash
-  set -euo pipefail
-  keep="$(date +%Y%m%d)"
-  sudo podman images --format '{{{{.Repository}}:{{{{.Tag}}' {{image}} \
-    | grep -v -E ":(latest|${keep})$" \
-    | xargs -r -n1 sudo podman rmi -f
+[linux]
+install *packages:
+  sudo dnf5 install {{packages}}

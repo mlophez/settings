@@ -9,7 +9,7 @@ system-setup-linux:
   @just distrobox-setup
   #@just nix-install
   # Configure dotfiles
-  @just dotfiles
+  @just config
 
 [private]
 [group('Apps')]
@@ -142,9 +142,10 @@ system-set-locale:
 [private]
 [group('System')]
 system-upgrade-terminal-linux:
-  @just system-upgrade-archlinux
-  @just system-upgrade-flatpak
-  @just nvim-upgrade-plugins
+  @just upgrade
+  @just distrobox-upgrade
+  @just upgrade-flatpak-apps
+  @just upgrade-nvim-plugins
 
 [private]
 [group('System')]
