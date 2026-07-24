@@ -1,15 +1,15 @@
 # Package management for the mutable Fedora KDE host (DNF5).
-# Snapshots pre/post NO se hacen aquí: los gestiona el plugin de acciones de
-# libdnf5 (snapper) configurado a nivel de sistema. Ver docs/install.md.
+# Los snapshots pre/post los crea el script propio `bin/snapshot` (Snapper,
+# subvolumen root), que envuelve la operación de DNF. Ver docs/install.md.
 
-# Upgrade all host packages (dnf5). Snapshots automáticos vía libdnf5-plugin-actions.
+# Upgrade all host packages (dnf5), envuelto en snapshots pre/post de snapper.
 [group('System')]
 [linux]
 upgrade:
-  sudo dnf5 upgrade
+  bin/snapshot sudo dnf5 upgrade
 
-# Install host packages, e.g. `just install neovim ripgrep fd-find`
+# Install host packages con snapshots pre/post, e.g. `just install neovim ripgrep`
 [group('System')]
 [linux]
 install *packages:
-  sudo dnf5 install {{packages}}
+  bin/snapshot sudo dnf5 install {{packages}}

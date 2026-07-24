@@ -167,17 +167,17 @@ casi siempre son entradas BLS ausentes o mal formadas: regenerar con
 
 ## 5. Snapshots: Snapper + DNF5
 
-`docs/design.md`: snapshot **antes** y **después** de cada `dnf upgrade`, sobre el
-subvolumen `root`. La instalación de paquetes se hace con `just upgrade` / `just install`
-(que solo lanzan DNF5); los snapshots los gestiona un **script propio** enganchado a
-cada transacción vía el plugin de acciones de libdnf5.
+`docs/design.md`: snapshot **antes** y **después** de cada actualización, sobre el
+subvolumen `root`. Aquí los crea el script propio **`bin/snapshot`**, que envuelve la
+operación de DNF en un par pre/post de Snapper. La instalación de paquetes se hace
+siempre con las recetas `just upgrade` / `just install`, que internamente llaman a
+`bin/snapshot sudo dnf5 ...`.
 
-> Con DNF5 el antiguo plugin `python3-dnf-plugin-snapper` ya no aplica: la integración
-> es `libdnf5-plugin-actions`.
+Preparar Snapper una sola vez:
 
 ```bash
-# Paquetes
-sudo dnf5 install -y snapper libdnf5-plugin-actions
+# Paquete
+sudo dnf5 install -y snapper
 
 # Config de Snapper para el subvolumen root
 sudo snapper -c root create-config /
@@ -187,23 +187,34 @@ sudo systemctl enable --now snapper-timeline.timer
 sudo systemctl enable --now snapper-cleanup.timer
 ```
 
-**Hook DNF5 → snapshots (el "script propio").** Crear scripts pre/post en
-`/usr/local/bin/` (que hacen `snapper -c root create -t pre|post ...` y guardan el
-número del snapshot pre para emparejarlo con el post) y declararlos en
-`/etc/dnf/libdnf5-plugins/actions.d/snapper.actions`. Formato del fichero de acciones:
+A partir de ahí, cada `just upgrade` / `just install` deja un snapshot pre y otro post
+emparejados. Uso manual directo del script:
+
+```bash
+bin/snapshot sudo dnf5 upgrade
+bin/snapshot sudo dnf5 install neovim ripgrep
+```
+
+**Opcional — cubrir también las transacciones fuera de `just`** (DNF directo, GNOME
+Software, KDE Discover): el plugin de acciones de libdnf5 dispara snapshots en cualquier
+transacción DNF5, no solo en las lanzadas por `bin/snapshot`.
+
+```bash
+sudo dnf5 install -y libdnf5-plugin-actions
+```
+
+Declarar los hooks en `/etc/dnf/libdnf5-plugins/actions.d/snapper.actions`, apuntando a
+scripts pre/post en `/usr/local/bin/`:
 
 ```
-# Crear snapshot PRE antes de la transacción
 pre_transaction::::/usr/local/bin/snapper-pre.sh ${pid}
-# Crear snapshot POST tras la transacción
 post_transaction::::/usr/local/bin/snapper-post.sh ${pid}
 ```
 
 > **Fix WAL importante:** desde Fedora 44 PackageKit usa el backend DNF5/libdnf5, lo
-> que introduce una inconsistencia de la base de datos RPM (SQLite WAL) que rompe el
-> rollback si no se aplica un checkpoint tras la transacción. El script `post` debe
-> incluir el fix. Setup automatizado y probado (incluye el fix WAL):
-> <https://github.com/SysGuides/sysguides-snapper-fedora>.
+> que introduce una inconsistencia de la base de datos RPM (SQLite WAL) que puede romper
+> el rollback si no se aplica un checkpoint tras la transacción. Setup automatizado y
+> probado (incluye el fix WAL): <https://github.com/SysGuides/sysguides-snapper-fedora>.
 
 **Rollback de sistema** (revertir cambios entre dos snapshots):
 

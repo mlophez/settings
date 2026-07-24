@@ -63,9 +63,9 @@ just config-repositories # clona los repos de trabajo en ~/Code
 
 ### Uso habitual
 
-- `just upgrade` — actualiza los paquetes del host (`dnf5 upgrade`). Los snapshots
-  pre/post los gestiona el hook de Snapper (ver `docs/install.md`).
-- `just install <pkg>...` — instala paquetes del host (`dnf5 install`).
+- `just upgrade` — actualiza los paquetes del host (`dnf5 upgrade`), envuelto por el
+  script `bin/snapshot` en un par de snapshots pre/post de Snapper (ver `docs/install.md`).
+- `just install <pkg>...` — instala paquetes del host (`dnf5 install`), también con snapshots.
 - `just upgrade-all` — actualiza todo el entorno de terminal: host (dnf) + distrobox +
   flatpak + plugins de nvim.
 - `just config` — recrea los symlinks de `config/*` y `bin/*`.
@@ -175,6 +175,6 @@ En Linux: `just install-flutter`.
 - **Config de sistema:** bajo `default/` replicando la ruta de `/etc/`.
 - **Receta nueva:** crear `just/<sección>.just` (o añadirla al grupo correspondiente) y,
   si es un fichero nuevo, importarla en el `Justfile` raíz.
-- **Paquete del host Linux:** `just install <pkg>` (DNF5). Snapshots automáticos vía el
-  hook de Snapper.
+- **Paquete del host Linux:** `just install <pkg>` (DNF5). Snapshots pre/post vía el
+  script `bin/snapshot`.
 - **Paquete CLI cross-platform:** editar `nix/linux.nix` o `nix/macos.nix` y `just nix-switch`.

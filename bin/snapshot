@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# snapshot — ejecuta un comando entre un par de snapshots pre/post de Snapper
+# (subvolumen root) para poder revertir cambios del sistema con:
+#   sudo snapper -c root undochange <pre>..<post>
+#
+# Uso: snapshot <comando...>
+#   p. ej.  snapshot sudo dnf5 upgrade
+#           snapshot sudo dnf5 install neovim
+#
+# La config de snapper puede sobreescribirse con SNAPPER_CONFIG (por defecto: root).
+#
+# ponytail: asume una config de snapper 'root' ya creada (ver docs/install.md).
+# Si snapper no está instalado, ejecuta el comando igual, sin snapshots.
+set -uo pipefail
+
+CONFIG="${SNAPPER_CONFIG:-root}"
+
+if [[ $# -eq 0 ]]; then
+  echo "uso: snapshot <comando...>" >&2
+  exit 1
+fi
+
+desc="$*"
+
+# Sin snapper: no bloquear, ejecutar el comando tal cual.
+if ! command -v snapper >/dev/null 2>&1; then
+  echo "[snapshot] snapper no instalado; ejecutando sin snapshots" >&2
+  exec "$@"
+fi
+
+# Snapshot PRE (guardamos su número para emparejar el POST)
+pre=$(sudo snapper -c "$CONFIG" create --type pre --print-number --description "$desc")
+
+# Comando real
+"$@"
+status=$?
+
+# Snapshot POST emparejado con el PRE (se crea aunque el comando falle)
+sudo snapper -c "$CONFIG" create --type post --pre-number "$pre" --description "$desc"
+
+exit "$status"
