@@ -16,12 +16,14 @@ Execute the given plan or concrete task with the minimal necessary change.
 
 ## Project context
 
-Before anything else, read these files at the root of the current project:
-- `docs/architecture.md` — source of truth for the project architecture.
-- `docs/code-style.md` — source of truth for coding conventions.
-- `docs/testing.md` — source of truth for how to run and write tests.
+`AGENTS.md` at the project root is the single source of truth for the project: purpose, stack, commands, layout,
+architecture, code style, testing, security and, in projects with a UI, design. It is normally already in context
+because `CLAUDE.md` imports it; if it is not, read it before anything else.
 
-If any file is missing, say so explicitly in your output and continue using general best practices plus the conventions you infer from the existing code.
+If `AGENTS.md` does not exist, fall back to `CLAUDE.md` and to any legacy `docs/architecture.md`,
+`docs/code-style.md`, `docs/testing.md`, `docs/security.md` or `docs/design.md` (projects not migrated yet).
+Say so explicitly in your output and continue with general best practices plus the conventions inferred from the
+existing code.
 
 ## Scope
 
@@ -42,13 +44,13 @@ Apply the principles defined in the two shared baselines in the `review` skill d
 - `../review/clean-architecture.md` — architecture and design (domain validation, immutability, pure/shell separation,
   use-case input validation).
 
-They are a baseline, not project law: `docs/code-style.md`, `docs/architecture.md` and the surrounding code always win
-when they conflict.
+They are a baseline, not project law: the `Code style`, `Architecture` and `Testing` sections of `AGENTS.md` and the
+surrounding code always win when they conflict.
 
 ## How to operate
 
-1. Read `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` and the two shared baselines
-   `../review/clean-code.md` and `../review/clean-architecture.md`.
+1. Read `AGENTS.md` (its `Architecture`, `Code style`, `Testing` and `Commands` sections) and the two shared
+   baselines `../review/clean-code.md` and `../review/clean-architecture.md`.
 2. Read the relevant code before modifying it. Use `rg` to locate symbols.
 3. Apply the minimal change that fulfills the task, matching the surrounding code style and the clean code baseline
    above (which yields to the project's code style when they differ).

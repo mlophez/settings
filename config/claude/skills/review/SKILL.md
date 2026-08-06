@@ -17,13 +17,14 @@ Review the code changes and report findings. Never modify files.
 
 ## Project context
 
-Before anything else, read these files at the root of the current project:
-- `docs/architecture.md` — source of truth for the project architecture.
-- `docs/code-style.md` — source of truth for coding conventions.
-- `docs/testing.md` — source of truth for the testing requirements.
-- `docs/security.md` — source of truth for the project security policy.
+`AGENTS.md` at the project root is the single source of truth for the project: purpose, stack, commands, layout,
+architecture, code style, testing, security and, in projects with a UI, design. It is normally already in context
+because `CLAUDE.md` imports it; if it is not, read it before anything else.
 
-If any file is missing, say so explicitly in your report and continue using general best practices plus the conventions you infer from the existing code.
+If `AGENTS.md` does not exist, fall back to `CLAUDE.md` and to any legacy `docs/architecture.md`,
+`docs/code-style.md`, `docs/testing.md`, `docs/security.md` or `docs/design.md` (projects not migrated yet).
+Say so explicitly in your report and continue with general best practices plus the conventions inferred from the
+existing code.
 
 ## Scope
 
@@ -44,23 +45,24 @@ files, touch a remote, deploy, or rewrite code (formatters, codemods, migrations
 
 Review dimensions:
 - **Correctness**: bugs, broken edge cases, error handling, race conditions.
-- **Architecture**: adherence to `docs/architecture.md` (layering, boundaries, dependencies) and to the general
-  architecture baseline `clean-architecture.md` in this skill's directory (domain validation, immutability,
-  pure/shell separation, use-case input validation), as a baseline that yields to `docs/architecture.md` and the
+- **Architecture**: adherence to the `Architecture` section of `AGENTS.md` (layering, boundaries, dependencies) and to
+  the general architecture baseline `clean-architecture.md` in this skill's directory (domain validation, immutability,
+  pure/shell separation, use-case input validation), as a baseline that yields to that section and the
   surrounding code when they conflict.
-- **Code style**: adherence to `docs/code-style.md` (naming, structure, idioms).
+- **Code style**: adherence to the `Code style` section of `AGENTS.md` (naming, structure, idioms).
 - **Clean code**: adherence to the general clean-code principles in `clean-code.md` (in this skill's directory), as a
-  baseline that yields to `docs/code-style.md` and the surrounding code when they conflict.
-- **Security**: adherence to `docs/security.md`; hardcoded secrets, tokens or credentials; missing input validation; unsafe operations.
-- **Tests**: missing or insufficient tests for the changed behavior, against the requirements in `docs/testing.md`.
+  baseline that yields to the `Code style` section of `AGENTS.md` and the surrounding code when they conflict.
+- **Security**: adherence to the `Security` section of `AGENTS.md`; hardcoded secrets, tokens or credentials; missing input validation; unsafe operations.
+- **Tests**: missing or insufficient tests for the changed behavior, against the requirements in the `Testing` section
+  of `AGENTS.md`.
 - **Simplification**: over-engineering, unnecessary indirection or abstraction, and code that could be expressed more
   directly (the DRY, dead-code and reuse items are covered under Clean code above).
 
 ## How to operate
 
-1. Read `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` and `docs/security.md` (note any that are
-   missing), plus the two shared baselines `clean-code.md` and `clean-architecture.md` in this skill's directory.
-   For each absent docs file, fall back to best practices and the conventions inferred from the existing code.
+1. Read `AGENTS.md` (note it if missing), plus the two shared baselines `clean-code.md` and `clean-architecture.md`
+   in this skill's directory. When `AGENTS.md` is absent, use the fallback described in "Project context" and rely on
+   best practices and the conventions inferred from the existing code.
 2. Resolve the scope from the actual changes: `git diff` for the working tree and `git diff <default-branch>...HEAD`
    for the branch. List every changed file; do not narrow to a subset.
 3. For each changed file, read the file and enough surrounding code to judge the change in context, not just the diff
@@ -92,5 +94,5 @@ A report with:
   - Suggested fix (described, not applied).
 - **Coverage**: which files and areas were reviewed, whether read-only checks were run and their result, and anything
   deliberately left out of scope.
-- **Missing docs**: only if `docs/architecture.md`, `docs/code-style.md`, `docs/testing.md` or `docs/security.md` was not found.
+- **Missing docs**: only if `AGENTS.md` was not found; state which fallback was used instead.
 - **Verdict**: `approve` | `approve with changes` | `request changes`.

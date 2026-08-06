@@ -1,7 +1,7 @@
 # Clean code baseline
 
 General coding style principles shared by the `review` and `implement` skills. They are a baseline, not project law:
-`docs/code-style.md` and the surrounding code always win when they conflict with anything here.
+the `Code style` section of `AGENTS.md` and the surrounding code always win when they conflict with anything here.
 
 For architecture and design principles (domain validation, immutability, pure/shell separation) see `clean-architecture.md`
 in this same directory.

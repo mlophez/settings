@@ -23,20 +23,19 @@ executor in the plan file, and do not name a specific agent in it.
 - Interview the user in the language of the session; the plan file is ALWAYS in English.
 - Do not write markdown tables in the plan file.
 - Wrap lines in the plan file at 120 characters maximum (code blocks included when feasible).
-- Whoever implements the plan reads `docs/architecture.md`, `docs/code-style.md` and `docs/testing.md` on their own: do not restate conventions, reference them.
+- Whoever implements the plan reads `AGENTS.md` on their own: do not restate conventions, reference them.
 
 ## 1. Project context
 
-Read these files at the root of the current project:
-- `docs/architecture.md` — source of truth for the project architecture.
-- `docs/code-style.md` — source of truth for coding conventions.
-- `docs/testing.md` — source of truth for how changes are tested; feeds the "Verification" section.
-- `docs/design.md` — source of truth for the product/system design; the plan must be consistent with it. It only exists in projects with a UI (the project `CLAUDE.md` references it in that case).
+`AGENTS.md` at the project root is the single source of truth for the project: purpose, stack, commands, layout,
+architecture, code style, testing, security and, in projects with a UI, design. It is normally already in context
+because `CLAUDE.md` imports it; if it is not, read it before anything else. Its `Testing` and `Commands` sections
+feed the plan's "Verification", and the plan must stay consistent with its `Design` section, which only exists in
+projects with a UI.
 
-If any file is missing, note it in the plan and continue using general best
-practices plus the conventions inferred from the existing code. Exception:
-a missing `docs/design.md` is only worth noting if the project `CLAUDE.md`
-references it; in a project without UI its absence is correct.
+If `AGENTS.md` does not exist, fall back to `CLAUDE.md` and to any legacy `docs/architecture.md`,
+`docs/code-style.md`, `docs/testing.md`, `docs/security.md` or `docs/design.md` (projects not migrated yet).
+Note it in the plan and continue with general best practices plus the conventions inferred from the existing code.
 
 ## 2. Explore
 
@@ -92,7 +91,7 @@ Structure:
   - The verification command for the task with its expected result.
 - **Risks**: what could break and how to mitigate it.
 - **Verification**: how to verify the change end to end (commands, tests).
-- **Missing docs**: only if `docs/architecture.md`, `docs/code-style.md` or `docs/testing.md` was not found, or if `docs/design.md` is referenced by the project `CLAUDE.md` but missing.
+- **Missing docs**: only if `AGENTS.md` was not found; state which fallback was used instead.
 
 No placeholders. These are plan failures, never write them:
 - "TBD", "TODO", "implement later", "fill in details".

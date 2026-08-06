@@ -19,13 +19,16 @@ evidence, and hand off a concrete fix proposal. The fix itself belongs to the
 
 ## Project context
 
-Before anything else, read these files at the root of the current project:
-- `docs/architecture.md` — source of truth for the project architecture.
-- `docs/code-style.md` — source of truth for coding conventions.
-- `docs/testing.md` — source of truth for how the project is tested and run.
+`AGENTS.md` at the project root is the single source of truth for the project:
+purpose, stack, commands, layout, architecture, code style, testing, security and,
+in projects with a UI, design. It is normally already in context because
+`CLAUDE.md` imports it; if it is not, read it before anything else.
 
-If any file is missing, say so explicitly and continue using general best
-practices plus the conventions you infer from the existing code.
+If `AGENTS.md` does not exist, fall back to `CLAUDE.md` and to any legacy
+`docs/architecture.md`, `docs/code-style.md`, `docs/testing.md`,
+`docs/security.md` or `docs/design.md` (projects not migrated yet). Say so
+explicitly and continue with general best practices plus the conventions
+inferred from the existing code.
 
 ## 1. Capture the symptom
 
@@ -49,7 +52,7 @@ existing code, but do not assume it: keep pre-existing causes on the table.
 ## 3. Reproduce
 
 Reproduce the problem deterministically before investigating, using the
-project's own commands (`docs/testing.md`). A failing reproduction you control
+project's own commands (`Commands` and `Testing` in `AGENTS.md`). A failing reproduction you control
 is the baseline for everything below. If you cannot reproduce it, say so and ask
 the user for the missing piece instead of guessing at a cause.
 
@@ -76,4 +79,4 @@ A report with:
 - **Root cause**: the specific cause with reference (`file:line`) and the causal chain from cause to symptom.
 - **Evidence**: what proves it (failing test, trace, isolated trigger, bisect result).
 - **Proposed fix**: how to fix it, described and located (`file:line`), not applied. Note alternatives or trade-offs if there is more than one reasonable fix.
-- **Missing docs**: only if `docs/architecture.md`, `docs/code-style.md` or `docs/testing.md` was not found.
+- **Missing docs**: only if `AGENTS.md` was not found; state which fallback was used instead.

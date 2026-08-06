@@ -1,8 +1,8 @@
 # Clean architecture baseline
 
 General architecture and design principles shared by the `review` and `implement` skills. They are a baseline, not
-project law: `docs/architecture.md`, `docs/code-style.md` and the surrounding code always win when they conflict with
-anything here.
+project law: the `Architecture` and `Code style` sections of `AGENTS.md` and the surrounding code always win when they
+conflict with anything here.
 
 - Validate domain objects at creation: domain entities and value objects enforce their invariants in the constructor
   or factory, so an instance can never exist in an invalid state (fail fast on construction).

@@ -47,6 +47,9 @@ set -gx RUSTUP_HOME $HOME/.local/share/rustup
 # NODEJS
 set -gx NPM_CONFIG_PREFIX $HOME/.local
 
+# BUN
+fish_add_path --path $HOME/.bun/bin
+
 # JAVA
 set -gx M2_HOME $HOME/.local/share/maven
 

@@ -1,60 +1,68 @@
 ---
 name: setup
 description: >
-  Generates the base documentation of a project (docs/architecture.md,
-  docs/code-style.md, docs/testing.md, docs/security.md, docs/design.md,
-  README.md and CLAUDE.md) by interviewing the user. Use it when the user
-  says "/setup", "initialize the project", "generate the project docs", or
-  starts a new project without docs/.
+  Generates the single source of truth for a project (AGENTS.md, plus a thin CLAUDE.md
+  that imports it and a README.md) by interviewing the user, and installs the validation
+  hooks and the scripts/agent/ tooling scripts. Use it when the user says "/setup",
+  "initialize the project", "generate the project docs", or starts a new project without
+  an AGENTS.md.
 disable-model-invocation: true
 ---
 
 # Setup project docs
 
-Bootstrap the documentation that the `plan`, `implement`, `review` and
-`document` skills (and the agents that preload them) read as sources of truth. The
-interview is the single authority on what gets written: the skill may analyze
-the project in read-only mode to propose default answers (see step 1), but it
-never writes an inferred value the user did not confirm.
+Bootstrap the single source of truth that the `plan`, `implement`, `review` and
+`document` skills (and the agents that preload them) read, and wire the hooks
+that enforce it mechanically. The interview is the single authority on what gets
+written: the skill may analyze the project in read-only mode to propose default
+answers (see step 1), but it never writes an inferred value the user did not
+confirm.
 
 **Rules (apply to every step):**
 - Interview the user in the language of the session; generated files are ALWAYS in English.
-- Generated files always follow the templates in `templates/` of this skill: same headings, same order. Never invent new structure.
+- Generated files always follow the templates in `templates/` of this skill — `templates/AGENTS.md`, `templates/CLAUDE.md`, `templates/README.md`, `templates/hooks.sh`, `templates/settings.hooks.json` and `templates/scripts/` — with the same headings and the same order. Never invent new structure.
+- `AGENTS.md` is the single source of truth. Never write project information into a second file: `CLAUDE.md` only imports it plus Claude-specific notes, and `README.md` only targets human readers.
+- Keep `AGENTS.md` concise (target under 250 lines): one-line bullets, no prose, no restating the code.
 - Do not write markdown tables in the generated files.
 - Ask per thematic block (one `AskUserQuestion` call per block for closed questions, grouped free-text questions for open ones). Do not interrogate one question at a time. `AskUserQuestion` allows at most 4 questions per call: if a block accumulates more closed questions, split them into several calls within the same block. If `AskUserQuestion` is not available, ask the closed questions as grouped free text too.
-- Keep the file name `architecture.md` exactly as is (the agents expect this spelling).
 
 ## 0. Pre-checks
 
-Check if any of `CLAUDE.md` (project root), `README.md` (project root),
-`docs/architecture.md`, `docs/code-style.md`, `docs/testing.md`,
-`docs/security.md` or `docs/design.md` already exists.
+Check if any of these already exists: `AGENTS.md` (project root), `CLAUDE.md`
+(project root), `README.md` (project root), `.claude/settings.json`,
+`scripts/agent/`, and the legacy documentation set `docs/architecture.md`,
+`docs/arquitecture.md` (the misspelling used by old versions of this skill),
+`docs/code-style.md`, `docs/testing.md`, `docs/security.md`, `docs/design.md`.
 
 - The full interview ALWAYS runs, even if some or all files exist; existing
   files are regenerated from the new answers.
-- If any file exists, list the ones that will be overwritten and confirm once
-  before starting the interview.
-- If `docs/arquitecture.md` exists (the misspelling used by old versions of
-  this skill), treat it as the existing `docs/architecture.md`: use it as a
-  default-answer source like any other existing doc, and delete it during
-  generation so only `docs/architecture.md` remains.
-- When regenerating `docs/architecture.md`, preserve the existing content of
-  its "Architecture decisions" section instead of resetting it to `None yet.`
-- If `docs/design.md` exists but the block 2 answer is that the project has
-  no UI, warn that it is now obsolete and ask for confirmation to delete it;
-  either way, do not reference it from the generated `CLAUDE.md` or
-  `README.md`.
+- List everything that will be overwritten or deleted and confirm once before
+  starting the interview. The legacy `docs/` deletions are presented as a single
+  item of that confirmation.
+- Never touch `docs/usecases/` or any other file under `docs/`: only the legacy
+  files listed above are migrated into `AGENTS.md` and deleted.
+- When regenerating, preserve the existing content of the
+  `## Architecture decisions` section instead of resetting it to `None yet.`,
+  reading it from `AGENTS.md` or, when migrating, from the legacy
+  `docs/architecture.md`.
+- If the project has no UI (block 2), the `## Design` section is not generated,
+  and a legacy `docs/design.md` is deleted with the rest of the legacy set.
 
 ## 1. Gather defaults
 
 Before interviewing, collect a proposed default answer for each question so
 the user only corrects what is wrong or missing. Sources, in priority order:
 
-1. The existing docs from the pre-checks: their content was already
-   confirmed by the user in a previous run, so it is the best default.
-2. Read-only analysis of the project code: manifests (`package.json`,
+1. The existing `AGENTS.md` and the legacy `docs/*.md` from the pre-checks:
+   their content was already confirmed by the user in a previous run, so it is
+   the best default.
+2. An existing `.claude/settings.json`, to detect which hooks are already
+   installed and which scripts they point at.
+3. Read-only analysis of the project code: manifests (`package.json`,
    `pyproject.toml`, `go.mod`...), `Justfile`/`Makefile`, the folder tree,
-   linter/formatter configs and CI workflows.
+   linter/formatter configs (`.ruff.toml`, `eslint.config.*`, `.golangci.yml`,
+   `.pre-commit-config.yaml`) and CI workflows. These also feed the tooling
+   commands of the hooks block.
 
 When a default comes from code analysis, state its origin when presenting it
 (e.g. "inferred from package.json") so the user knows it needs validation.
@@ -69,16 +77,11 @@ Ask:
   (closed options; `AskUserQuestion` allows at most 4 options and the
   automatic "Other" covers anything else). The UI and stack questions
   refine the nuance (e.g. frontend vs fullstack).
-- Does it have a UI? → decides whether `docs/design.md` is generated and block 6 runs.
+- Does it have a UI? → decides whether the `## Design` section is generated and
+  whether block 6 runs.
 - Main stack: language(s), framework(s), versions (free text).
-- "Should the `docs/` folder be referenced in `CLAUDE.md`?" → closed yes/no.
-  The `docs/` files are generated either way; this answer only decides whether
-  the generated `CLAUDE.md` points to them (see block 8). Default: no, because
-  Miguel's skills and agents load the docs on their own. Answer yes when working
-  in a project where those skills/agents are not used, so plain Claude has no
-  other way to load the docs.
 
-## 3. Architecture block → `docs/architecture.md`
+## 3. Architecture block → `## Project layout` and `## Architecture`
 
 Ask:
 - Folder layout and what goes in each folder.
@@ -90,7 +93,7 @@ Ask:
 Do not ask about "Architecture decisions": that section is a cumulative log
 that always starts with `None yet.`
 
-## 4. Code conventions block → `docs/code-style.md`
+## 4. Code conventions block → `## Code style`
 
 Ask:
 - Formatter/linter tools and the exact commands.
@@ -99,7 +102,7 @@ Ask:
 - Dependency policy and git workflow (branches, commits).
 - Forbidden patterns / anti-patterns in this project.
 
-## 5. Testing block → `docs/testing.md`
+## 5. Testing block → `## Testing`
 
 Ask:
 - Strategy: kinds of tests in the project (unit, integration, e2e...) and
@@ -111,7 +114,7 @@ Ask:
 - Acceptance criteria: what a change needs to be accepted (coverage,
   required kinds of tests).
 
-## 6. Design block (only if the project has a UI) → `docs/design.md`
+## 6. Design block (only if the project has a UI) → `## Design`
 
 Ask:
 - Visual identity and tone.
@@ -119,12 +122,12 @@ Ask:
 - Where shared components and the theme live, how to reuse them.
 - Standard UI states (loading, error, empty) and accessibility/i18n requirements.
 
-## 7. Security block → `docs/security.md`
+## 7. Security block → `## Security`
 
 Always generated: security applies to every project, and unanswered sections
 stay as `TBD`. Reuses the secrets handling answer from block 3 — do not ask
-for it again: `docs/architecture.md` keeps where and how configuration and
-secrets are loaded, `docs/security.md` records the policy. Ask:
+for it again: `## Architecture` keeps where and how configuration and secrets
+are loaded, `## Security` records the policy. Ask:
 - Secrets & credentials policy: what counts as a secret, where secrets live,
   how they are injected and rotated.
 - Authentication & authorization approach — omit the section if not applicable.
@@ -133,28 +136,38 @@ secrets are loaded, `docs/security.md` records the policy. Ask:
 - Dependency audit: tooling and update policy.
 - Compliance requirements (ENS, eIDAS, GDPR...) — omit the section if not applicable.
 
-## 8. CLAUDE.md block
+## 8. Commands & project notes block → `## Commands` and `## Project notes`
 
-Reuses the lint commands from block 4 and the test commands from block 5; do
-not ask for them again. Ask:
+Reuses the lint and format commands from block 4 and the test commands from
+block 5; do not ask for them again. Ask:
 - Build and run commands (free text), then confirm the full command set
-  (build, test, lint, run).
+  (build, run, test, single test, lint, format).
 - Project-specific notes not derivable from the code (AWS profiles, kubectl contexts, quirks).
 
-Documentation references in the generated `CLAUDE.md`, driven by the block 2
-"reference the `docs/` folder in `CLAUDE.md`?" answer:
-- If no (default): do not add references to the `docs/` files; Miguel's skills
-  and agents load them on their own. Keep the existing behavior (only reference
-  `docs/design.md` conditionally, per step 10).
-- If yes: reference the generated docs from `CLAUDE.md` using the `@` import
-  syntax so Claude loads them automatically — one `@`-reference per file:
-  `@docs/architecture.md`, `@docs/code-style.md`, `@docs/testing.md`,
-  `@docs/security.md` (and `@docs/design.md` only if the project has a UI).
-  Add them under a clear heading at the top of `CLAUDE.md` (e.g. a
-  "Documentation" section) stating they are the sources of truth, since no
-  skill or agent will load them automatically in this project.
+## 9. Hooks & validation block → `.claude/settings.json` + `scripts/agent/`
 
-## 9. README block → `README.md`
+Hooks are what makes the conventions enforceable instead of advisory. Ask, in one `AskUserQuestion` call:
+
+- Which hooks to install (multi-select, all four selected by default):
+  - `format-on-edit` — formats the file right after every Edit/Write. Never blocks.
+  - `lint-on-edit` — lints the edited file and blocks the agent until it is clean.
+  - `validate-on-stop` — runs lint, build and tests when the turn ends and blocks the stop if they fail.
+  - `guard` — denies edits to protected paths and asks before writing credential-looking content.
+- Protected paths for the guard, if it was selected. Propose defaults from the project layout: `.env*`, private
+  keys and certificates, detected lockfiles and generated directories.
+
+Do not ask again for the formatter, linter, build or test commands: reuse blocks 4, 5 and 8. Derive the per-file
+dispatch from the project stack — one `case` branch per file extension the project actually contains.
+
+All the commands go into a single easily editable file, `hooks.sh` at the project root: `format_file` and
+`lint_file` (per file type), `run_lint`/`run_build`/`run_test` (project-wide), `PROTECTED_PATHS` and
+`SECRET_PATTERNS`. The scripts under `scripts/agent/` hold only the hook logic and source that file; never put a
+project command inside them.
+
+If the user selects no hook, skip the `scripts/agent/` generation and the `.claude/settings.json` merge entirely,
+and omit the `## Agent hooks` section from `AGENTS.md` and the hooks bullet from `CLAUDE.md`.
+
+## 10. README block → `README.md`
 
 Reuses the purpose (block 2) and the main commands (blocks 4, 5 and 8): the
 "Development" section is filled with those commands and the "Usage" section
@@ -164,21 +177,59 @@ starts from the run command of block 8, do not ask for them again. Only ask:
 - Usage examples: only if applicable, basic usage examples (endpoints, CLI
   invocations...) to complement the run command.
 
-## 10. Generation
+## 11. Generation
 
-1. Create `docs/` if it does not exist.
-2. For each file to generate, copy the matching template from `templates/`
-   in this skill and fill each section with the answers:
-   - Remove the `<!-- ... -->` guidance comments and follow any conditional
-     instructions they contain.
-   - Sections without information are filled with `TBD` — never delete them —
-     except sections whose guidance comment says "Omit this section ...",
-     which are removed entirely when the condition applies.
-   - In `CLAUDE.md`, only reference `docs/design.md` if the project has a UI
-     and the file exists or was generated.
-   - In `CLAUDE.md`, add the explicit "read the docs as sources of truth"
-     instruction (block 8) only when the block 2 answer is yes to referencing
-     the `docs/` folder in `CLAUDE.md`.
-3. Show a summary of the created files, list the sections left as `TBD` so
-   the user knows what remains to be completed, and remind the user to
-   commit them.
+1. Generate `AGENTS.md` from `templates/AGENTS.md`, filling each section with the interview answers:
+   - Remove the `<!-- ... -->` guidance comments and follow any conditional instruction they contain.
+   - Sections without information are filled with `TBD` — never delete them — except sections whose guidance
+     comment says "Omit this section ...", which are removed entirely when the condition applies.
+   - `## Design` is generated only when the project has a UI; `## Agent hooks` only when hooks were installed.
+2. Generate `CLAUDE.md` from `templates/CLAUDE.md`: the `@AGENTS.md` import plus, only when there is something to
+   say, the `## Claude Code` section. Never duplicate project information here.
+3. Generate `README.md` from `templates/README.md`.
+4. If any hook was selected:
+   - Copy `templates/hooks.sh` to `hooks.sh` at the project root and fill it with the real commands: the
+     `format_file` and `lint_file` dispatch branches per file extension, `run_lint`/`run_build`/`run_test`, and the
+     `PROTECTED_PATHS` entries. Leave a function returning 3 when the project has no such tool; never invent a
+     command the user did not confirm. `SECRET_PATTERNS` stays as shipped unless the user asks for changes.
+   - Create `scripts/agent/` and copy from `templates/scripts/` only the scripts backing the selected hooks
+     (`format.sh` for format-on-edit, `lint.sh` for lint-on-edit, `after-edit.sh` when either of the two was
+     selected, `validate.sh` for validate-on-stop, `guard.sh` for the guard) plus `README.md`, then
+     `chmod +x scripts/agent/*.sh`. Do not copy a script whose hook was not selected: `after-edit.sh` activates
+     each step by the mere existence of its script. These scripts are copied verbatim: they contain no project
+     command, they source `hooks.sh`.
+   - Build the settings fragment from `templates/settings.hooks.json`, dropping the entries for hooks that
+     were not selected (`PreToolUse` for the guard, `Stop` for validate-on-stop, `PostToolUse` when neither
+     format-on-edit nor lint-on-edit was selected).
+   - Merge it into `.claude/settings.json`, preserving every other key and making the merge repeatable by first
+     dropping the entries pointing at `scripts/agent/` from a previous run:
+
+     ```bash
+     mkdir -p .claude
+     [ -f .claude/settings.json ] || echo '{}' > .claude/settings.json
+     jq -s '
+       def strip_ours:
+         with_entries(
+           # The parentheses are mandatory: without them "map" would apply to the whole
+           # {key, value} entry instead of to the rewritten hook list.
+           .value = (
+             [ .value[] | .hooks = [ .hooks[] | select((.command // "") | test("scripts/agent/") | not) ] ]
+             | map(select((.hooks | length) > 0))
+           )
+         );
+       .[0] as $cur | .[1] as $new
+       | (($cur.hooks // {}) | strip_ours) as $kept
+       | $cur + { hooks: ($kept + ($new.hooks | with_entries(.value = (($kept[.key] // []) + .value)))) }
+     ' .claude/settings.json <fragment.json> > .claude/settings.json.tmp \
+       && mv .claude/settings.json.tmp .claude/settings.json
+     ```
+
+     Write `<fragment.json>` to a temporary file first, and delete it afterwards.
+   - Smoke-test the scripts before reporting success: `bash -n` on each generated script, and
+     `scripts/agent/validate.sh </dev/null` to confirm it runs (a genuine lint/test failure here is a finding to
+     report, not a generation error).
+5. Delete the legacy files confirmed in step 0 (`docs/architecture.md`, `docs/arquitecture.md`,
+   `docs/code-style.md`, `docs/testing.md`, `docs/security.md`, `docs/design.md`) now that their content lives in
+   `AGENTS.md`. Remove `docs/` only if it ended up empty. Never delete `docs/usecases/`.
+6. Show a summary: files created, legacy files deleted, hooks installed, and the sections left as `TBD` so the
+   user knows what remains. Remind the user to commit, `.claude/settings.json` and `scripts/agent/` included.

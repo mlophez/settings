@@ -17,13 +17,11 @@ Review the changes made in the project and make sure they are properly documente
 
 ## Project context
 
-Before anything else, read these files at the root of the current project if they exist:
-- `docs/architecture.md` — project architecture, to understand where the change fits.
-- `docs/code-style.md` — coding conventions, including documentation conventions.
+`AGENTS.md` at the project root is the single source of truth for the project: its `Architecture` section says where the change fits and its `Code style` section holds the coding and documentation conventions. It is normally already in context because `CLAUDE.md` imports it; if it is not, read it before anything else. Also read, if they exist:
 - `docs/usecases/` — existing use case documentation, to learn its structure and naming.
 - `README.md` — to detect when a change makes it outdated.
 
-If any of them is missing, note it in your report and continue with general best practices.
+If `AGENTS.md` does not exist, fall back to `CLAUDE.md` and to any legacy `docs/architecture.md` or `docs/code-style.md` (projects not migrated yet). Note it in your report and continue with general best practices.
 
 ## Scope
 
@@ -34,7 +32,7 @@ By default review the pending changes: `git diff` for the working tree and `git 
 ### Code documentation
 - Public APIs (functions, classes, modules, endpoints, CLI commands) get doc comments in the idiom of the language (docstrings, Javadoc, JSDoc, rustdoc, etc.): purpose, parameters, return value, errors.
 - Non-obvious logic gets a short comment explaining the why (constraints, trade-offs, gotchas), never the what.
-- Do not pad obvious code with comments. Comment density must match the surrounding code and `docs/code-style.md`.
+- Do not pad obvious code with comments. Comment density must match the surrounding code and the `Code style` section of `AGENTS.md`.
 - Fix documentation that the change made stale (outdated comments, wrong parameter descriptions, dead references).
 
 ### Use case documentation (`docs/usecases/`)
@@ -60,5 +58,5 @@ A short report with:
 - **Summary**: one or two sentences on the documentation state of the change.
 - **Code documentation**: list of files where you added or updated doc comments, with a one-line reason each.
 - **Use cases**: files created or updated under `docs/usecases/`, or an explicit "not needed" with the reason.
-- **Stale docs**: documentation you found outdated elsewhere (e.g. `README.md`, `docs/architecture.md`) — updated if trivial, otherwise reported.
+- **Stale docs**: documentation you found outdated elsewhere (e.g. `README.md`, `AGENTS.md`) — updated if trivial, otherwise reported.
 - **Issues found**: bugs or inconsistencies noticed while reading, reported but not fixed.

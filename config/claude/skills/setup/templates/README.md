@@ -26,15 +26,12 @@ goes here, not in Development. -->
 
 ## Development
 
-<!-- Exact commands for the daily cycle: build, test, lint and format.
-Reuse the answers from the CLAUDE.md and code conventions blocks. -->
+<!-- Exact commands for the daily cycle: build, test, lint and format. Reuse the
+answers from the commands and code conventions blocks. If the agent hooks were
+installed, add that `scripts/agent/validate.sh` runs the full validation (lint,
+build, tests) and that `hooks.sh` at the project root is the only place to edit
+when tooling changes. -->
 
 ## Documentation
 
-- [Architecture](docs/architecture.md)
-- [Code style](docs/code-style.md)
-- [Testing](docs/testing.md)
-- [Security](docs/security.md)
-<!-- Include the next line only if the project has a UI and docs/design.md
-exists or was generated. -->
-- [Design](docs/design.md)
+- [Agent and project reference](AGENTS.md) — architecture, code style, testing, security and design.
