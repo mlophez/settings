@@ -1,132 +1,94 @@
 # WORKSTATION
 
-Repositorio personal de configuración versionada de la workstation (Linux y macOS) de Miguel.
+## Description
 
-No es código de aplicación: contiene dotfiles, configuración y un orquestador en `just`
-para reconstruir todo el entorno desde cero en una máquina nueva.
+Personal, versioned configuration repository for Miguel's workstation (Linux and macOS). It is not application
+code: it holds user dotfiles, system configuration and a `just` orchestrator that rebuilds the whole environment
+from scratch on a new machine. Configuration is mapped onto the system through idempotent symlinks, and
+cross-platform CLI packages are managed with Nix Home Manager.
 
-## Para qué sirve
+- **Linux (Fedora KDE Plasma, mutable):** Fedora KDE on Btrfs with Snapper snapshots, UEFI + systemd-boot and
+  DNF5 package management. GUI apps via Flatpak, CLI tools via native DNF, the Arch distrobox and/or Nix Home
+  Manager. Persistent data lives in `/srv`, separated from the system. See `docs/design.md` for the design and
+  `docs/install.md` for the step-by-step installation.
+- **macOS:** CLI packages via Nix Home Manager, GUI apps via Homebrew.
+- **Both platforms:** every dotfile (`config/*`) and script (`bin/*`) is symlinked into the corresponding `$HOME`.
 
-- **Linux (Fedora KDE Plasma, mutable):** Fedora KDE sobre Btrfs con snapshots (Snapper),
-  UEFI + systemd-boot y gestión de paquetes con DNF5. Apps gráficas vía Flatpak,
-  herramientas CLI vía DNF nativo, distrobox archlinux y/o Nix Home Manager. Los datos
-  persistentes viven en `/srv`, separados del sistema. Ver `docs/design.md` (diseño) y
-  `docs/install.md` (instalación paso a paso).
-- **macOS:** paquetes CLI vía Nix Home Manager + apps gráficas vía Homebrew.
-- **Ambas plataformas:** enlazar todos los dotfiles (`config/*`) y scripts (`bin/*`)
-  mediante symlinks idempotentes al `$HOME` correspondiente.
+> The previous flow was based on an immutable bootc image derived from Bluefin/ublue. It is kept, unused, in
+> `legacy/` (see `legacy/README.md`).
 
-> El flujo anterior estaba basado en una imagen bootc inmutable derivada de Bluefin/ublue.
-> Se conserva, sin uso, en `legacy/` (ver `legacy/README.md`).
+## Requirements
 
-## Arquitectura
+- `git`
+- `just` (installed through Nix)
+- Nix with flakes enabled — Determinate installer — plus `home-manager`
+- `npm` (used for the global `tree-sitter-cli`)
+- **Linux:** Fedora KDE Plasma, `dnf5`, `flatpak`, `podman`, `distrobox`
+- **macOS:** Homebrew, Xcode Command Line Tools
 
-Jerarquías versionadas, mapeadas al sistema mediante symlinks creados por `just config`:
+## Setup
 
-- `config/` → dotfiles de usuario (enlazados a `$HOME` y `~/.config/<app>`).
-- `bin/` → scripts ejecutables del usuario (enlazados a `$HOME/.local/bin/<script>`).
-- `default/` → configuración de sistema (`/etc/<path>`), cuando exista.
+### Linux (Fedora KDE Plasma)
 
-Además:
-- `flake.nix` + `nix/` → configuración Home Manager para `linux` y `macos`.
-- `Justfile` → orquestador; las recetas viven en `just/*.just`, importadas por sección.
-- `legacy/` → flujo bootc/ublue anterior (no importado; solo referencia).
-- `docs/` → diseño (`design.md`) e instalación (`install.md`).
+1. Install the base system. The from-scratch installation (Btrfs partitioning and subvolumes, systemd-boot,
+   Snapper + DNF5) is documented step by step in **`docs/install.md`**; the design and its rationale in
+   **`docs/design.md`**.
 
----
+2. Clone this repository:
 
-## LINUX (Fedora KDE Plasma)
+   ```bash
+   mkdir -p ~/Code && cd ~/Code
+   git clone <repo-url> Workstation
+   cd Workstation
+   ```
 
-### 1. Instalación del sistema base
+3. Set up the user environment:
 
-La instalación desde cero (particionado Btrfs + subvolúmenes, systemd-boot, Snapper +
-DNF5) está documentada paso a paso en **`docs/install.md`**. El diseño y sus decisiones,
-en **`docs/design.md`**.
+   ```bash
+   just config              # symlinks config/* and bin/* into $HOME (idempotent)
+   just install-all         # bootstrap: flatpak apps + distrobox + dotfiles (+ GNOME, inert on KDE)
+   just nix-install         # optional: cross-platform CLI tools via Nix
+   just distrobox-setup     # archlinux container for tools not available on the host
+   just config-repositories # clones the work repositories into ~/Code
+   ```
 
-### 2. Clonar este repositorio
+### macOS
 
-```bash
-mkdir -p ~/Code && cd ~/Code
-git clone https://github.com/mlophez/settings.git Workstation
-cd Workstation
-```
+1. Clone this repository:
 
-### 3. Montar el entorno de usuario
+   ```bash
+   mkdir -p ~/Code && cd ~/Code
+   git clone <repo-url> Workstation
+   cd Workstation
+   ```
 
-```bash
-just config              # symlinks de config/* y bin/* a $HOME (idempotente)
-just install-all         # bootstrap: apps flatpak + distrobox + dotfiles (+ GNOME, inerte en KDE)
-just nix-install         # opcional: herramientas CLI cross-platform vía Nix
-just distrobox-setup     # contenedor archlinux para herramientas no disponibles en el host
-just config-repositories # clona los repos de trabajo en ~/Code
-```
+2. Install Homebrew and the GUI applications:
 
-### Uso habitual
+   ```bash
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-- `just upgrade` — actualiza los paquetes del host (`dnf5 upgrade`), envuelto por el
-  script `bin/snapshot` en un par de snapshots pre/post de Snapper (ver `docs/install.md`).
-- `just install <pkg>...` — instala paquetes del host (`dnf5 install`), también con snapshots.
-- `just upgrade-all` — actualiza todo el entorno de terminal: host (dnf) + distrobox +
-  flatpak + plugins de nvim.
-- `just config` — recrea los symlinks de `config/*` y `bin/*`.
-- `just clean-cache` — limpia cachés para liberar disco.
+   brew install --cask container
+   container system start
 
-### Recetas por grupo
+   brew tap FelixKratz/formulae
+   brew install sketchybar
 
-- **Distrobox:** `distrobox-setup` (`dx-setup`), `distrobox-init`, `distrobox-install`,
-  `distrobox-upgrade`, `distrobox-config`.
-- **Nix (opcional):** `nix-install`, `nix-switch`, `nix-upgrade`, `nix-clean`,
-  `nix-packages`, `nix-news`.
-- **GNOME (config previa; inerte en KDE):** `gnome-load-config`, `gnome-save-config`,
-  `gnome-load-keybinds`.
-- **Backup:** `backup-to-disk`.
+   brew install --cask spaceid raycast
 
----
+   brew tap hashicorp/tap
+   brew install hashicorp/tap/terraform
+   ```
 
-## MACOS
+3. Install Nix (Determinate) and home-manager, then link the dotfiles:
 
-En macOS el flujo es Homebrew + Nix Home Manager.
+   ```bash
+   just install-all         # delegates to nix-install (home-manager switch .#macos)
+   just config              # symlinks config/* (including the ~/Library/Application Support duplicates)
+   ```
 
-### 1. Clonar repositorio
+### Netskope (Logalty corporate environment)
 
-```bash
-mkdir -p ~/Code && cd ~/Code
-git clone https://github.com/mlophez/settings.git Workstation
-cd Workstation
-```
-
-### 2. Instalar Homebrew y apps gráficas
-
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-brew install --cask container
-container system start
-
-brew tap FelixKratz/formulae
-brew install sketchybar
-
-brew install --cask spaceid raycast
-
-brew tap hashicorp/tap
-brew install hashicorp/tap/terraform
-```
-
-### 3. Instalar Nix (Determinate) y home-manager + setup
-
-```bash
-just install-all         # delega en nix-install (home-manager switch .#macos)
-just config              # symlinks de config/* (incluye duplicados en ~/Library/Application Support/)
-```
-
-### Uso habitual (macOS)
-
-- `just upgrade-all` — `nix-upgrade` + plugins de nvim.
-- `just config` — recrea symlinks.
-- `just clean-cache` — limpia cachés (navegadores, Go, Poetry, Homebrew, Gradle, Podman, Terraform, Claude vm_bundles).
-- `just nix-switch` / `just nix-upgrade` / `just nix-clean` — gestión Home Manager.
-
-### Netskope (entorno corporativo Logalty)
+The corporate CA has to be injected by hand into the Java truststore and into DBeaver:
 
 ```bash
 security find-certificate -a -p /System/Library/Keychains/SystemRootCertificates.keychain > ~/system-ca.pem
@@ -141,40 +103,63 @@ keytool -importcert \
   -keystore ~/.local/share/certificates/netskope.jks \
   -storepass changeit
 
-# DBeaver: añadir el JKS a /Applications/DBeaver.app/Contents/Eclipse/dbeaver.ini
-#   -Djavax.net.ssl.trustStore=/Users/miguel.lopez/.local/share/certificates/netskope.jks
+# DBeaver: add the JKS to /Applications/DBeaver.app/Contents/Eclipse/dbeaver.ini
+#   -Djavax.net.ssl.trustStore=/Users/<user>/.local/share/certificates/netskope.jks
 #   -Djavax.net.ssl.trustStorePassword=changeit
 ```
 
-### Flutter / Android (opcional)
+### Flutter / Android (optional)
 
 ```bash
 xcode-select --install
 sudo xcodebuild -license accept
 ```
 
-En Linux: `just install-flutter`.
+On Linux: `just install-flutter`.
 
----
+## Usage
 
-## Comandos transversales
+Single entry point: `just` from the repository root. Run it without arguments to list every available recipe.
 
-- `just` (sin args) — lista todas las recetas disponibles.
-- `just install-claude` — instala Claude Code CLI.
-- `just config-claude` — instala el plugin marketplace caveman.
-- `just install-kiro` / `just install-devbox` / `just install-harlequin`.
-- `just download-resources` — clona repos de referencia en `resources/` (ignorado por git).
+### Day-to-day (Linux)
 
----
+- `just upgrade` — upgrades the host packages (`dnf5 upgrade`), wrapped by `bin/snapshot` in a pre/post pair of
+  Snapper snapshots (see `docs/install.md`).
+- `just install <pkg>...` — installs host packages (`dnf5 install`), also with snapshots.
+- `just upgrade-all` — upgrades the whole terminal environment: host (dnf) + distrobox + flatpak + nvim plugins.
+- `just config` — recreates the `config/*` and `bin/*` symlinks.
+- `just clean-cache` — clears caches to free disk space.
 
-## Convenciones para extender
+### Day-to-day (macOS)
 
-- **App nueva de usuario:** crear `config/<app>/` y añadir la línea `link` en la receta
-  `config` (`just/settings.just`).
-- **Script nuevo:** colocarlo en `bin/`, `chmod +x` y enlazarlo desde `config`.
-- **Config de sistema:** bajo `default/` replicando la ruta de `/etc/`.
-- **Receta nueva:** crear `just/<sección>.just` (o añadirla al grupo correspondiente) y,
-  si es un fichero nuevo, importarla en el `Justfile` raíz.
-- **Paquete del host Linux:** `just install <pkg>` (DNF5). Snapshots pre/post vía el
-  script `bin/snapshot`.
-- **Paquete CLI cross-platform:** editar `nix/linux.nix` o `nix/macos.nix` y `just nix-switch`.
+- `just upgrade-all` — `nix-upgrade` plus nvim plugins.
+- `just config` — recreates the symlinks.
+- `just clean-cache` — clears caches (browsers, Go, Poetry, Homebrew, Gradle, Podman, Terraform, Claude
+  vm_bundles).
+- `just nix-switch` / `just nix-upgrade` / `just nix-clean` — Home Manager management.
+
+### Recipes by group
+
+- **Distrobox:** `distrobox-setup` (`dx-setup`), `distrobox-init`, `distrobox-install`, `distrobox-upgrade`,
+  `distrobox-config`.
+- **Nix (optional):** `nix-install`, `nix-switch`, `nix-upgrade`, `nix-clean`, `nix-packages`, `nix-news`.
+- **GNOME (previous setup; inert on KDE):** `gnome-load-config`, `gnome-save-config`, `gnome-load-keybinds`.
+- **Backup:** `backup-to-disk`.
+- **Cross-platform:** `install-claude`, `config-claude`, `install-kiro`, `install-devbox`, `install-harlequin`,
+  `download-resources`.
+
+## Development
+
+- Build: not applicable.
+- Test: not applicable, there is no test suite. Changes are verified manually on the target machine.
+- Lint: `just --fmt --unstable --check`
+- Format: `just --fmt --unstable`
+
+Before committing, check that `just config` is still idempotent, and that the Home Manager configuration builds
+when `flake.nix` or `nix/*.nix` were touched.
+
+## Documentation
+
+- [Agent and project reference](AGENTS.md) — architecture, code style, testing and security.
+- [System design](docs/design.md) — Fedora / Btrfs / Snapper design and its rationale.
+- [Installation](docs/install.md) — step-by-step installation of the base Linux system.
