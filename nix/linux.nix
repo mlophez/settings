@@ -77,6 +77,7 @@
     pkgs.yq
     pkgs.eza
     pkgs.lsd
+    pkgs.superfile # TUI file manager
     pkgs.colordiff
     pkgs.bat
     pkgs.dialog

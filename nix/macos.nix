@@ -40,6 +40,7 @@
     pkgs.tree
     pkgs.eza
     pkgs.lsd
+    pkgs.superfile # TUI file manager
     pkgs.colordiff
     pkgs.bat
     pkgs.gnused
@@ -120,6 +121,8 @@
     #pkgs.jdk25
     # OTHERS
     pkgs.fastlane
+    # IA
+    pkgs.opencode
     ##################### DEV/OPS #####################
     # GIT
     pkgs.git
