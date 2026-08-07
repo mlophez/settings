@@ -156,6 +156,9 @@ source_profile = terraform
 region = eu-south-2
 output = json
 
+[profile cubbit]
+output = json
+
 [sso-session awscli]
 sso_start_url = https://logalty.awsapps.com/start
 sso_region = eu-west-1
