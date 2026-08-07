@@ -102,7 +102,7 @@ alias fedora 'exec distrobox enter fedora -- fish'
 alias systemctl 'systemctl --user'
 
 # HOME-MANAGER
-alias hm-switch 'home-manager switch --impure'
+alias nix-switch 'just nix-switch'
 
 # ANDROID
 alias emu emulator

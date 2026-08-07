@@ -111,7 +111,7 @@ alias root="distrobox-host-exec sudo bash"
 alias systemctl="systemctl --user"
 
 # HOME-MANAGER
-alias switch="home-manager switch --impure"
+alias switch="just nix-switch"
 
 # ANDROID
 alias emu="emulator"

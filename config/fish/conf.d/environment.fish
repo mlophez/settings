@@ -110,11 +110,6 @@ if test -f /usr/lib/locale/locale-archive
     set -gx LOCALE_ARCHIVE /usr/lib/locale/locale-archive
 end
 
-# HOME MANAGER (fish-native, si existe)
-if test -e $HOME/.nix-profile/etc/profile.d/hm-session-vars.fish
-    source $HOME/.nix-profile/etc/profile.d/hm-session-vars.fish
-end
-
 # HYPRLAND autostart (Linux, login shell, TTY1, no Wayland)
 if status is-login
     and test -z "$WAYLAND_DISPLAY"
