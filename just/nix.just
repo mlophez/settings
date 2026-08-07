@@ -26,6 +26,22 @@ nix-packages:
 
   ls "$HOME/.nix-profile/bin" | sort
 
+# List the profile generations, newest last, marking the current one
+[group('Nix')]
+nix-generations:
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  # Same resolution as nix-switch: the profile path is fixed at install time,
+  # so it is read from the symlink instead of being derived from XDG_STATE_HOME.
+  if [[ -L $HOME/.nix-profile ]]; then
+    profile=$(readlink "$HOME/.nix-profile")
+  else
+    profile="$HOME/.local/state/nix/profiles/profile"
+  fi
+
+  nix-env --profile "$profile" --list-generations
+
 # Update flake.lock to the latest nixpkgs and apply it
 [group('Nix')]
 nix-upgrade: && nix-switch nix-clean
@@ -48,7 +64,24 @@ nix-fonts:
   mkdir -p "$dst"
   rsync -acL --chmod=u+w --delete "$src/" "$dst/"
 
-# Delete generations older than 30 days and collect garbage
+# Keep only the two most recent generations and collect garbage
 [group('Nix')]
 nix-clean:
-  nix-collect-garbage --delete-older-than 30d
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  # Same resolution as nix-switch: the profile path is fixed at install time,
+  # so it is read from the symlink instead of being derived from XDG_STATE_HOME.
+  if [[ -L $HOME/.nix-profile ]]; then
+    profile=$(readlink "$HOME/.nix-profile")
+  else
+    profile="$HOME/.local/state/nix/profiles/profile"
+  fi
+
+  # +2 keeps the two newest generations (the current one and one rollback step)
+  # and deletes the rest. Targets this profile only, unlike --delete-older-than.
+  echo "Deleting all but the two most recent generations of $profile"
+  nix-env --profile "$profile" --delete-generations +2
+
+  # Second phase: sweep the store paths no generation references anymore
+  nix-collect-garbage
