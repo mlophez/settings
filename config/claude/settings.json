@@ -46,7 +46,8 @@
     "lua-lsp@claude-plugins-official": true,
     "logalty-ai@logalty": false,
     "superpowers@claude-plugins-official": false,
-    "ponytail@ponytail": true
+    "ponytail@ponytail": false,
+    "pyright-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
