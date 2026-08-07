@@ -2,14 +2,22 @@
 [group('General')]
 install-all:
   @just system-setup-{{platform}}
-  npm -g install tree-sitter-cli
+  @just npm-global
   # cargo install --locked tree-sitter-cli
 
 # Upgrade all in terminal, packages nvim plugins etc.
 [group('General')]
 upgrade-all:
   @just system-upgrade-terminal-{{platform}}
+  @just npm-global
+
+# Global npm CLI tools not available in nixpkgs
+[group('General')]
+npm-global:
+  # tree-sitter grammars compiler used by Neovim
   npm -g install tree-sitter-cli
+  # pi coding agent + its multi-agent orchestration framework
+  npm -g install @earendil-works/pi-coding-agent oh-my-pi
 
 # Clone reference config repos into resources/ (ignored by git)
 [group('General')]
