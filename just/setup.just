@@ -142,7 +142,7 @@ system-set-locale:
 [private]
 [group('System')]
 system-upgrade-terminal-linux:
-  @just upgrade
+  @just system-upgrade
   @just distrobox-upgrade
   @just upgrade-flatpak-apps
   @just upgrade-nvim-plugins

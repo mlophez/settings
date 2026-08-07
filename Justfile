@@ -7,17 +7,18 @@ chooser := "fzf --preview 'just --show {}'"
 
 [private]
 default:
-  @just -u -l
+    @just -u -l
 
 [private]
 ui:
-  @just --choose --unsorted --chooser {{quote(chooser)}}
+    @just --choose --unsorted --chooser {{ quote(chooser) }}
 
 import 'just/general.just'
 import 'just/system.just'
 import 'just/apps.just'
 import 'just/setup.just'
 import 'just/nix.just'
+import 'just/rust.just'
 import 'just/distrobox.just'
 import 'just/settings.just'
 import 'just/gnome.just'

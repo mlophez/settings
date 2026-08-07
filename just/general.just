@@ -5,6 +5,14 @@ install-all:
   @just npm-global
   # cargo install --locked tree-sitter-cli
 
+# Punto de entrada único y multiplataforma para actualizar todo el software
+# gestionado por este repo: se le añaden canales a medida que aparecen.
+# Upgrade all software channels managed by this repo
+[group('General')]
+upgrade:
+  @just nix-switch
+  @just rust-upgrade
+
 # Upgrade all in terminal, packages nvim plugins etc.
 [group('General')]
 upgrade-all:
