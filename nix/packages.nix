@@ -98,12 +98,21 @@ with pkgs; [
   # TOOLS
   devbox
 
+  # C/C++
+  # El compilador en sí vive en ./linux.nix (gcc) y ./macos.nix (clang):
+  # ambos aportan bin/cc y bin/c++ y colisionarían en el mismo perfil.
+  cmake
+  gnumake
+  ninja
+  pkg-config
+
   # PYTHON
   python3
   pyright
   mypy
   isort
   black
+  pylint
   ruff
   uv
 
@@ -124,6 +133,9 @@ with pkgs; [
 
   # RUST
   rustup
+  # rust-analyzer: no se añade aquí porque rustup ya publica su propio shim
+  # bin/rust-analyzer y buildEnv falla por conflicto. Se instala con:
+  #   rustup component add rust-analyzer
 
   # LUA
   lua-language-server
@@ -161,7 +173,9 @@ with pkgs; [
   stern
   conftest
   kubernetes-helm # ojo: 'helm' a secas es un sintetizador, no el de Kubernetes
+  helmfile
   kompose
+  eksctl
   k9s
   trivy
   kubeseal
