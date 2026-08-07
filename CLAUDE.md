@@ -3,7 +3,8 @@
 ## Claude Code
 
 - `config/claude/` is symlinked into `~/.claude`: editing it changes the global Claude Code configuration of this
-  machine immediately (`CLAUDE.md`, `skills/`, `commands/`, `agents/`, `settings.json`, `statusline.sh`).
+  machine immediately (`CLAUDE.md`, `skills/`, `commands/`, `agents/`, `references/`, `settings.json`,
+  `statusline.sh`).
 
 ### Task management
 

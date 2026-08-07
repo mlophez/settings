@@ -10,6 +10,7 @@ config/containers/podman-connections.json
 config/containers/podman-connections.json.lock
 config/containers/podman/
 resources/
+.plans/
 
 # Files
 .zcompdump*
