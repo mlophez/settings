@@ -49,6 +49,7 @@ nix-upgrade: && nix-switch nix-clean
 
 # Sync fonts into ~/Library/Fonts on macOS (no-op elsewhere)
 [group('Nix')]
+[private]
 nix-fonts:
   #!/usr/bin/env bash
   set -euo pipefail
