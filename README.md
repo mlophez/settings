@@ -46,8 +46,8 @@ cross-platform CLI packages are managed with Nix Home Manager.
 
    ```bash
    just config              # symlinks config/* and bin/* into $HOME (idempotent)
-   just install-all         # bootstrap: flatpak apps + distrobox + dotfiles (+ GNOME, inert on KDE)
-   just nix-install         # optional: cross-platform CLI tools via Nix
+   just system-setup-linux  # bootstrap: flatpak apps + distrobox + dotfiles (+ GNOME, inert on KDE)
+   just install             # toolchains: Nix (CLI tools), Rust and Neovim
    just distrobox-setup     # archlinux container for tools not available on the host
    just config-repositories # clones the work repositories into ~/Code
    ```
@@ -82,7 +82,7 @@ cross-platform CLI packages are managed with Nix Home Manager.
 3. Install Nix (Determinate) and home-manager, then link the dotfiles:
 
    ```bash
-   just install-all         # delegates to nix-install (home-manager switch .#macos)
+   just install             # toolchains: Nix (nix-switch), Rust and Neovim
    just config              # symlinks config/* (including the ~/Library/Application Support duplicates)
    ```
 
@@ -123,18 +123,18 @@ Single entry point: `just` from the repository root. Run it without arguments to
 
 ### Day-to-day (Linux)
 
-- `just upgrade` — upgrades the host packages (`dnf5 upgrade`), wrapped by `bin/snapshot` in a pre/post pair of
-  Snapper snapshots (see `docs/install.md`).
-- `just install <pkg>...` — installs host packages (`dnf5 install`), also with snapshots.
-- `just upgrade-all` — upgrades the whole terminal environment: host (dnf) + distrobox + flatpak + nvim plugins.
+- `just system-upgrade` — upgrades the host packages (`dnf5 upgrade`), wrapped by `bin/snapshot` in a pre/post
+  pair of Snapper snapshots (see `docs/install.md`).
+- `just system-install <pkg>...` — installs host packages (`dnf5 install`), also with snapshots.
+- `just install` / `just upgrade` — cross-platform toolchains: Nix, Rust and Neovim.
 - `just config` — recreates the `config/*` and `bin/*` symlinks.
-- `just clean-cache` — clears caches to free disk space.
+- `just clean` — clears caches to free disk space.
 
 ### Day-to-day (macOS)
 
-- `just upgrade-all` — `nix-upgrade` plus nvim plugins.
+- `just upgrade` — `nix-upgrade` plus the Rust toolchain and the Neovim plugins.
 - `just config` — recreates the symlinks.
-- `just clean-cache` — clears caches (browsers, Go, Poetry, Homebrew, Gradle, Podman, Terraform, Claude
+- `just clean` — clears caches (browsers, Go, Poetry, Homebrew, Gradle, Podman, Terraform, Claude
   vm_bundles).
 - `just nix-switch` / `just nix-upgrade` / `just nix-clean` — Home Manager management.
 
@@ -142,9 +142,12 @@ Single entry point: `just` from the repository root. Run it without arguments to
 
 - **Distrobox:** `distrobox-setup` (`dx-setup`), `distrobox-init`, `distrobox-install`, `distrobox-upgrade`,
   `distrobox-config`.
-- **Nix (optional):** `nix-install`, `nix-switch`, `nix-upgrade`, `nix-clean`, `nix-packages`, `nix-news`.
+- **Nix:** `nix-switch`, `nix-upgrade`, `nix-clean`, `nix-packages`.
+- **Rust:** `rust-install`, `rust-upgrade`.
+- **Neovim:** `nvim-install`, `nvim-upgrade`.
 - **GNOME (previous setup; inert on KDE):** `gnome-load-config`, `gnome-save-config`, `gnome-load-keybinds`.
 - **Backup:** `backup-to-disk`.
+- **Clean:** `clean-cache`.
 - **Cross-platform:** `install-claude`, `config-claude`, `install-kiro`, `install-devbox`, `install-harlequin`,
   `download-resources`.
 

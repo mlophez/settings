@@ -170,7 +170,7 @@ casi siempre son entradas BLS ausentes o mal formadas: regenerar con
 `docs/design.md`: snapshot **antes** y **después** de cada actualización, sobre el
 subvolumen `root`. Aquí los crea el script propio **`bin/snapshot`**, que envuelve la
 operación de DNF en un par pre/post de Snapper. La instalación de paquetes se hace
-siempre con las recetas `just upgrade` / `just install`, que internamente llaman a
+siempre con las recetas `just system-upgrade` / `just system-install`, que internamente llaman a
 `bin/snapshot sudo dnf5 ...`.
 
 Preparar Snapper una sola vez:
@@ -187,7 +187,7 @@ sudo systemctl enable --now snapper-timeline.timer
 sudo systemctl enable --now snapper-cleanup.timer
 ```
 
-A partir de ahí, cada `just upgrade` / `just install` deja un snapshot pre y otro post
+A partir de ahí, cada `just system-upgrade` / `just system-install` deja un snapshot pre y otro post
 emparejados. Uso manual directo del script:
 
 ```bash
@@ -250,10 +250,10 @@ cd Workstation
 just config
 
 # Bootstrap completo: apps flatpak + distrobox + dotfiles (+ GNOME, inerte en KDE)
-just install-all
+just system-setup-linux
 
-# Herramientas CLI cross-platform vía Nix Home Manager (opcional)
-just nix-install
+# Toolchains cross-platform: Nix (herramientas CLI), Rust y Neovim
+just install
 
 # Contenedor archlinux para herramientas no disponibles en el host
 just distrobox-setup
@@ -262,7 +262,7 @@ just distrobox-setup
 just config-repositories
 ```
 
-Herramientas del host que no vengan por defecto: `just install <paquete>` (DNF5).
+Herramientas del host que no vengan por defecto: `just system-install <paquete>` (DNF5).
 
 KDE guarda su configuración en `~/.config` y `~/.local/share`. La captura/versionado
 de la config KDE es un paso pendiente (el repo aún versiona la config GNOME previa);

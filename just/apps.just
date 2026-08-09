@@ -1,3 +1,9 @@
+# Global npm CLI tools not available in nixpkgs
+[group('Apps')]
+npm-global:
+  # pi coding agent + its multi-agent orchestration framework
+  npm -g install @earendil-works/pi-coding-agent oh-my-pi
+
 [group('Apps')]
 install-claude:
   curl -fsSL https://claude.ai/install.sh | bash
@@ -45,8 +51,3 @@ install-flutter:
 upgrade-flatpak-apps:
   #!/usr/bin/env bash
   flatpak update -y
-
-[group('Apps')]
-upgrade-nvim-plugins:
-  #!/usr/bin/env bash
-  nvim --headless +Lazy! update +qa

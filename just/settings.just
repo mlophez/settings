@@ -1,6 +1,8 @@
+# Único sitio donde se declaran los symlinks de config/* y bin/* hacia $HOME.
+# El punto de entrada de diario es `just config` (general.just), que la encadena.
 # Configure symlinks for config files
 [group('Settings')]
-config:
+config-dotfiles:
   #!/bin/bash
   link () { echo $1 - $2; mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
   unlink () { [[ -L "$2" ]] && rm "$2"; }
@@ -120,3 +122,11 @@ config-vscode-extensions:
 
 	code --install-extension catppuccin.catppuccin-vsc
 	code --install-extension pkief.material-icon-theme
+
+# Clone reference config repos into resources/ (ignored by git)
+[group('Settings')]
+download-resources:
+  #!/usr/bin/env bash
+  clone () { local repo=$1; local path=$2; if [[ -d $path/.git ]]; then git -C "$path" pull --ff-only; else git clone "$repo" "$path"; fi; }
+  mkdir -p $(pwd)/resources
+  clone https://github.com/basecamp/omarchy.git $(pwd)/resources/omarchy

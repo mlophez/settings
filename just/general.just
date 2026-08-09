@@ -1,64 +1,39 @@
-# Run all
+# Punto de entrada único y multiplataforma para instalar los toolchains
+# gestionados por este repo. Espejo de `just upgrade`: mismos canales, misma
+# ampliación a medida que aparecen otros nuevos.
+# Install all toolchains managed by this repo
 [group('General')]
-install-all:
-  @just system-setup-{{platform}}
-  @just npm-global
-  # cargo install --locked tree-sitter-cli
+install:
+  @just nix-switch
+  @just rust-install
+  @just nvim-install
 
 # Punto de entrada único y multiplataforma para actualizar todo el software
 # gestionado por este repo: se le añaden canales a medida que aparecen.
 # Upgrade all software channels managed by this repo
 [group('General')]
 upgrade:
-  @just nix-switch
+  @just nix-upgrade
   @just rust-upgrade
+  @just nvim-upgrade
 
-# Upgrade all in terminal, packages nvim plugins etc.
+# Punto de entrada único para la configuración del usuario. De momento solo
+# encadena los symlinks; se le añaden otras recetas config-* cuando toque.
+# Apply the user configuration
 [group('General')]
-upgrade-all:
-  @just system-upgrade-terminal-{{platform}}
-  @just npm-global
+config:
+  @just config-dotfiles
 
-# Global npm CLI tools not available in nixpkgs
+# Punto de entrada único para los backups. Hoy solo hay un destino (el disco
+# USB externo); se le añaden más a medida que aparezcan, igual que install/upgrade.
+# Back up user files to every configured destination
 [group('General')]
-npm-global:
-  # tree-sitter grammars compiler used by Neovim
-  npm -g install tree-sitter-cli
-  # pi coding agent + its multi-agent orchestration framework
-  npm -g install @earendil-works/pi-coding-agent oh-my-pi
+backup:
+  @just backup-to-disk
 
-# Clone reference config repos into resources/ (ignored by git)
+# Punto de entrada único para liberar espacio en disco. De momento solo encadena
+# las cachés; se le añaden otras recetas clean-* cuando toque.
+# Free up disk space
 [group('General')]
-download-resources:
-  #!/usr/bin/env bash
-  clone () { local repo=$1; local path=$2; if [[ -d $path/.git ]]; then git -C "$path" pull --ff-only; else git clone "$repo" "$path"; fi; }
-  mkdir -p $(pwd)/resources
-  clone https://github.com/basecamp/omarchy.git $(pwd)/resources/omarchy
-
-# Limpia cachés del sistema para liberar espacio en disco
-[group('Clean')]
-clean-cache:
-  @echo "Limpiando cachés de navegadores..."
-  rm -rf ~/Library/Caches/BraveSoftware
-  rm -rf ~/Library/Caches/Firefox
-  rm -rf ~/Library/Caches/Google
-  @echo "Limpiando cachés de Go..."
-  rm -rf ~/Library/Caches/go-build
-  rm -rf ~/Library/Caches/goimports
-  rm -rf ~/Library/Caches/gopls
-  @echo "Limpiando caché de Poetry..."
-  rm -rf ~/Library/Caches/pypoetry
-  @echo "Limpiando Homebrew..."
-  brew cleanup
-  @echo "Limpiando cachés de Gradle..."
-  rm -rf ~/.gradle/caches
-  @echo "Limpiando Podman..."
-  podman machine start || true
-  podman system prune -a --volumes -f
-  @echo "Limpiando VM de Claude Code..."
-  rm -rf ~/Library/Application\ Support/Claude/vm_bundles
-  @echo "Limpiando módulos de Go..."
-  go clean -modcache
-  @echo "Limpiando Terraform plugin cache..."
-  rm -rf ~/.local/share/terraform/plugin-cache/*
-  @echo "Listo."
+clean:
+  @just clean-cache

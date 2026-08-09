@@ -52,7 +52,8 @@ The whole repo tree is also symlinked at `$HOME/.local/share/settings`.
 
 - Recipes (`just/*.just`) are the only entry point: every reproducible action is a recipe.
 - `config/` and `bin/` are pure data: they are never executed from the repo, always through their symlink.
-- `just/settings.just` owns the `config` recipe, the single place where symlinks are declared.
+- `just/settings.just` owns the `config-dotfiles` recipe, the single place where symlinks are declared;
+  `just config` (in `just/general.just`) is the entry point that chains it.
 - `just/system.just` and `just/setup.just` own host-level actions (DNF5, fonts, locale, cursors) and are the only
   ones allowed to require `sudo`.
 - `nix/*.nix` owns cross-platform CLI packages; recipes never install a CLI tool directly.
@@ -81,9 +82,9 @@ No enforced naming convention. Follow the naming already used by the surrounding
 
 ### File organization
 
-- New user application: create `config/<app>/` and add its `link` line to the `config` recipe in
+- New user application: create `config/<app>/` and add its `link` line to the `config-dotfiles` recipe in
   `just/settings.just`.
-- New script: place it in `bin/`, `chmod +x`, and link it from the `config` recipe.
+- New script: place it in `bin/`, `chmod +x`, and link it from the `config-dotfiles` recipe.
 - New system configuration: place it under `default/`, replicating its `/etc/` path.
 - New recipe: add it to the matching `just/<section>.just`; if the file is new, import it from the root `Justfile`.
 
@@ -99,7 +100,7 @@ Pick the channel by the nature of the dependency:
 
 - Cross-platform CLI tool: add it to `nix/linux.nix` or `nix/macos.nix`, then `just nix-switch`.
 - GUI application: Flatpak on Linux (`just/apps.just`), Homebrew on macOS.
-- Fedora host package: `just install <pkg>` (DNF5, wrapped in pre/post snapshots).
+- Fedora host package: `just system-install <pkg>` (DNF5, wrapped in pre/post snapshots).
 - Not available on the host: install it inside the Arch distrobox and expose it with `distrobox-export`.
 
 ### Git workflow
@@ -157,14 +158,14 @@ infrastructure URLs.
 Manual, periodic updates. There is no CVE audit tooling.
 
 - `just nix-upgrade` — updates `flake.lock` and applies the new generation
-- `just upgrade-all` — host packages, distrobox, Flatpak apps and Neovim plugins
+- `just upgrade` — Nix profile, Rust toolchain and Neovim (tree-sitter-cli + lazy.nvim plugins)
 
 ## Project notes
 
 - Symlinks are live: editing `config/<app>` changes the running configuration of the machine immediately. There is
   no deploy step, so a broken file breaks the real application.
 - On macOS several applications are additionally linked into `~/Library/Application Support/`: add the extra line
-  to the platform-specific block of the `config` recipe.
+  to the platform-specific block of the `config-dotfiles` recipe.
 - Always pass the profile/context explicitly: `aws --profile <profile>` and `kubectl --context <context>`. Ignore
   the global `AWS_PROFILE`.
 - In the Logalty corporate environment the Netskope CA must be injected by hand into the Java truststore and into
@@ -172,4 +173,7 @@ Manual, periodic updates. There is no CVE audit tooling.
 
 ## Architecture decisions
 
-None yet.
+### How write just recipes
+
+- Must be idempotent, multiple execution must be output same changes or not changes if already done.
+- The recepies in General section always point to other recipies.

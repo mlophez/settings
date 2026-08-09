@@ -14,7 +14,7 @@ system-setup-linux:
 [private]
 [group('Apps')]
 system-setup-macos:
-  @just nix-install
+  @just nix-switch
 
 [private]
 [group('System')]
@@ -145,7 +145,7 @@ system-upgrade-terminal-linux:
   @just system-upgrade
   @just distrobox-upgrade
   @just upgrade-flatpak-apps
-  @just upgrade-nvim-plugins
+  @just nvim-upgrade
 
 [private]
 [group('System')]

@@ -10,8 +10,10 @@
 system-upgrade:
   bin/snapshot sudo dnf5 upgrade
 
-# Install host packages con snapshots pre/post, e.g. `just install neovim ripgrep`
+# Install host packages con snapshots pre/post, e.g. `just system-install neovim ripgrep`
+# Se llama system-install y no install por el mismo motivo que system-upgrade:
+# `just install` es el agregador multiplataforma de general.just.
 [group('System')]
 [linux]
-install *packages:
+system-install *packages:
   bin/snapshot sudo dnf5 install {{packages}}
