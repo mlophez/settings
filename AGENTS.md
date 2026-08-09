@@ -37,8 +37,10 @@ No agent hooks are installed in this repository.
 - `bin/` — user executable scripts, symlinked into `$HOME/.local/bin/<script>`
 - `default/` — system configuration, replicating the `/etc/` path (convention; the folder does not exist yet)
 - `Justfile` — root orchestrator, only variables and imports
-- `just/` — recipes split by section: `general`, `system`, `apps`, `setup`, `nix`, `distrobox`, `settings`,
-  `gnome`, `backup`
+- `just/` — recipes split by section, one file per section: `general`, `system`, `setup`, `nix`, `rust`, `nvim`,
+  `pi`, `claude`, `devbox`, `kiro`, `harlequin`, `bitwarden`, `flutter`, `flatpak`, `vscode`, `distrobox`,
+  `settings`, `gnome`, `backup`, `clean`. Recipe names follow `<section>-<verb>` (`devbox-install`,
+  `devbox-upgrade`), never `<verb>-<section>`
 - `flake.nix` + `nix/` — Home Manager configuration, one entry point per platform
 - `docs/` — `design.md` (Fedora/Btrfs/Snapper system design) and `install.md` (step-by-step installation)
 - `share/` — installable assets (backgrounds, cursors)
@@ -99,7 +101,7 @@ No enforced naming convention. Follow the naming already used by the surrounding
 Pick the channel by the nature of the dependency:
 
 - Cross-platform CLI tool: add it to `nix/linux.nix` or `nix/macos.nix`, then `just nix-switch`.
-- GUI application: Flatpak on Linux (`just/apps.just`), Homebrew on macOS.
+- GUI application: Flatpak on Linux (`just/flatpak.just`), Homebrew on macOS.
 - Fedora host package: `just system-install <pkg>` (DNF5, wrapped in pre/post snapshots).
 - Not available on the host: install it inside the Arch distrobox and expose it with `distrobox-export`.
 

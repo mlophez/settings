@@ -4,7 +4,7 @@ system-setup-linux:
   # Setup gnome
   @just gnome-load-config
   # Install gui apps
-  @just system-install-apps
+  @just flatpak-install
   # Install distroboxes
   @just distrobox-setup
   #@just nix-install
@@ -12,39 +12,9 @@ system-setup-linux:
   @just config
 
 [private]
-[group('Apps')]
+[group('System')]
 system-setup-macos:
   @just nix-switch
-
-[private]
-[group('System')]
-system-install-apps:
-	flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-	flatpak --user install -y flathub com.brave.Browser
-	#flatpak --user install -y flathub com.google.Chrome
-	#flatpak --user install -y flathub com.microsoft.Edge
-	#flatpak --user install -y flathub org.chromium.Chromium
-	#flatpak --user install -y flathub org.freedesktop.Platform.ffmpeg-full
-	flatpak install -y flathub org.mozilla.firefox
-	flatpak install -y flathub org.keepassxc.KeePassXC
-	flatpak install -y flathub com.github.tchx84.Flatseal
-	flatpak install -y flathub org.mozilla.Thunderbird
-	flatpak install -y flathub com.calibre_ebook.calibre
-	flatpak install -y flathub com.spotify.Client
-	flatpak install -y flathub org.libreoffice.LibreOffice
-	flatpak install -y flathub org.videolan.VLC
-	flatpak install -y flathub org.gnome.Boxes
-	flatpak install -y flathub com.usebottles.bottles
-	flatpak install -y flathub org.telegram.desktop
-	flatpak install -y flathub io.dbeaver.DBeaverCommunity
-	flatpak install -y flathub com.ticktick.TickTick
-	flatpak install -y flathub com.bitwarden.desktop
-	flatpak install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
-
-	flatpak install flathub com.mattjakeman.ExtensionManager
-
-	#flatpak --user override --filesystem=xdg-data/themes
-	#flatpak --user override --filesystem=xdg-data/icons
 
 [private]
 [group('System')]
@@ -144,7 +114,7 @@ system-set-locale:
 system-upgrade-terminal-linux:
   @just system-upgrade
   @just distrobox-upgrade
-  @just upgrade-flatpak-apps
+  @just flatpak-upgrade
   @just nvim-upgrade
 
 [private]

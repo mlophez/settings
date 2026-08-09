@@ -115,7 +115,7 @@ xcode-select --install
 sudo xcodebuild -license accept
 ```
 
-On Linux: `just install-flutter`.
+On Linux: `just flutter-install`.
 
 ## Usage
 
@@ -148,8 +148,12 @@ Single entry point: `just` from the repository root. Run it without arguments to
 - **GNOME (previous setup; inert on KDE):** `gnome-load-config`, `gnome-save-config`, `gnome-load-keybinds`.
 - **Backup:** `backup-to-disk`.
 - **Clean:** `clean-cache`.
-- **Cross-platform:** `install-claude`, `config-claude`, `install-kiro`, `install-devbox`, `install-harlequin`,
-  `download-resources`.
+- **CLI tools (cross-platform):** `claude-install` / `claude-upgrade`, `kiro-install` / `kiro-upgrade`,
+  `devbox-install` / `devbox-upgrade`, `harlequin-install` / `harlequin-upgrade`, `pi-install` / `pi-upgrade`.
+- **VS Code:** `vscode-extensions-install`, `vscode-extensions-upgrade`.
+- **Bitwarden:** `bitwarden-login`, `bitwarden-unlock`.
+- **Linux only:** `flatpak-install` / `flatpak-upgrade`, `flutter-install` / `flutter-upgrade`.
+- **Settings:** `config-claude`, `config-repositories`, `download-resources`.
 
 ## Development
 
