@@ -18,9 +18,15 @@ pi-install:
 
 # Actualiza pi-coding-agent y oh-my-pi a la última versión publicada
 [group('Pi')]
-pi-upgrade: pi-install
+pi-upgrade:
   #!/usr/bin/env bash
   set -euo pipefail
+
+  # Se omite en lugar de fallar: esta receta va encadenada en `just upgrade`.
+  if ! command -v npm >/dev/null 2>&1; then
+    echo "npm no está en el PATH; omitiendo."
+    exit 0
+  fi
 
   # @latest fuerza la resolución al último publicado: 'npm -g install <pkg>' a
   # secas no reinstala si ya hay una versión cualquiera en el perfil global.

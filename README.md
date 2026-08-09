@@ -45,9 +45,9 @@ cross-platform CLI packages are managed with Nix Home Manager.
 3. Set up the user environment:
 
    ```bash
-   just config              # symlinks config/* and bin/* into $HOME (idempotent)
+   just config              # symlinks config/* and bin/* into $HOME + VS Code extensions (idempotent)
    just system-setup-linux  # bootstrap: flatpak apps + distrobox + dotfiles (+ GNOME, inert on KDE)
-   just install             # toolchains: Nix (CLI tools), Rust and Neovim
+   just install             # every toolchain: Nix, Rust, Neovim, pi, Claude, Kiro, Devbox, Harlequin, Flatpak
    just distrobox-setup     # archlinux container for tools not available on the host
    just config-repositories # clones the work repositories into ~/Code
    ```
@@ -82,8 +82,8 @@ cross-platform CLI packages are managed with Nix Home Manager.
 3. Install Nix (Determinate) and home-manager, then link the dotfiles:
 
    ```bash
-   just install             # toolchains: Nix (nix-switch), Rust and Neovim
-   just config              # symlinks config/* (including the ~/Library/Application Support duplicates)
+   just install             # every toolchain: Nix, Rust, Neovim, pi, Claude, Kiro, Devbox, Harlequin
+   just config              # symlinks config/* (plus the ~/Library/Application Support duplicates) + VS Code extensions
    ```
 
 ### Netskope (Logalty corporate environment)
@@ -126,14 +126,16 @@ Single entry point: `just` from the repository root. Run it without arguments to
 - `just system-upgrade` — upgrades the host packages (`dnf5 upgrade`), wrapped by `bin/snapshot` in a pre/post
   pair of Snapper snapshots (see `docs/install.md`).
 - `just system-install <pkg>...` — installs host packages (`dnf5 install`), also with snapshots.
-- `just install` / `just upgrade` — cross-platform toolchains: Nix, Rust and Neovim.
-- `just config` — recreates the `config/*` and `bin/*` symlinks.
+- `just install` / `just upgrade` — every toolchain managed by this repo: Nix, Rust, Neovim, pi, Claude Code,
+  Kiro, Devbox, Harlequin and the Flatpak applications.
+- `just config` — recreates the `config/*` and `bin/*` symlinks and installs the VS Code extensions.
 - `just clean` — clears caches to free disk space.
 
 ### Day-to-day (macOS)
 
-- `just upgrade` — `nix-upgrade` plus the Rust toolchain and the Neovim plugins.
-- `just config` — recreates the symlinks.
+- `just upgrade` — Nix, the Rust toolchain, the Neovim plugins and the CLI tools (pi, Claude Code, Kiro, Devbox,
+  Harlequin). The Flatpak step skips itself on macOS.
+- `just config` — recreates the symlinks and installs the VS Code extensions (skipped when `code` is absent).
 - `just clean` — clears caches (browsers, Go, Poetry, Homebrew, Gradle, Podman, Terraform, Claude
   vm_bundles).
 - `just nix-switch` / `just nix-upgrade` / `just nix-clean` — Home Manager management.

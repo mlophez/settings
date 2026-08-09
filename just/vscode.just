@@ -8,9 +8,11 @@ vscode-extensions-install:
 	#!/usr/bin/env bash
 	set -euo pipefail
 
+	# Se omite en lugar de fallar: esta receta va encadenada en `just config` y
+	# no toda máquina tiene VS Code instalado.
 	if ! command -v code >/dev/null 2>&1; then
-	  echo "Error: code no está en el PATH. Instala VS Code primero." >&2
-	  exit 1
+	  echo "VS Code no está instalado; omitiendo las extensiones."
+	  exit 0
 	fi
 
 	code --install-extension ms-python.python --force
