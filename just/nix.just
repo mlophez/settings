@@ -6,10 +6,20 @@ nix-switch: && nix-fonts
 
   # No se deduce de XDG_STATE_HOME: Nix fija la ruta del perfil al instalarse
   # y no vuelve a leer esa variable. Se pregunta al propio symlink.
+  default_profile="$HOME/.local/state/nix/profiles/profile"
   if [[ -L $HOME/.nix-profile ]]; then
     profile=$(readlink "$HOME/.nix-profile")
+    # Symlink obsoleto (p. ej. /var/home/<user>, del antiguo layout ostree donde
+    # el home real vivía en /var/home): si el directorio del perfil ya no
+    # existe, volver al path por defecto y reparar ~/.nix-profile, que el PATH
+    # de fish/zsh referencia.
+    if [[ ! -d $(dirname "$profile") ]]; then
+      echo "Stale ~/.nix-profile -> $profile; relinking to $default_profile"
+      profile="$default_profile"
+      ln -sfn "$profile" "$HOME/.nix-profile"
+    fi
   else
-    profile="$HOME/.local/state/nix/profiles/profile"
+    profile="$default_profile"
   fi
 
   echo "Building the package environment..."
