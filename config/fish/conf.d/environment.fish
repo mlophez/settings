@@ -81,12 +81,18 @@ fish_add_path --path $HOME/.nix-profile/bin
 # OPENCODE
 fish_add_path --path $HOME/.opencode/bin
 
-# TLS (Fedora)
+# TLS (Linux)
 # El tooling instalado con nix no busca el trust store del host por diseño:
-# se le apunta al bundle del sistema. Solo existe en Fedora/Linux, y el bloque
-# NETSKOPE de debajo lo sobreescribe cuando aplica.
-if test -e /etc/pki/tls/certs/ca-bundle.crt
-    set -gx SSL_CERT_FILE /etc/pki/tls/certs/ca-bundle.crt
+# se le apunta al bundle del sistema, probando las rutas habituales (la
+# canónica de Fedora, su symlink de compatibilidad y la de Debian/Ubuntu).
+# El bloque NETSKOPE de debajo lo sobreescribe cuando aplica.
+for ca_bundle in /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem \
+    /etc/pki/tls/certs/ca-bundle.crt \
+    /etc/ssl/certs/ca-certificates.crt
+    if test -e $ca_bundle
+        set -gx SSL_CERT_FILE $ca_bundle
+        break
+    end
 end
 
 # NETSKOPE
