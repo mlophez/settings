@@ -10,7 +10,9 @@
 base_packages := "git just podman podman-compose flatpak nix snapper ghostty"
 
 # COPRs a habilitar antes de instalar: paquetes que no están en los repos oficiales.
-coprs := "pgdev/ghostty"
+# scottames/ghostty publica chroots de fedora-43/44/rawhide y va al día
+# (pgdev/ghostty ya no existe en Copr).
+coprs := "scottames/ghostty"
 
 # Install host packages, e.g. `just system-install neovim ripgrep`
 # Sin argumentos instala el conjunto base (base_packages), pensado para un host
