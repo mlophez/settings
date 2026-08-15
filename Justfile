@@ -29,6 +29,8 @@ install:
   @just harlequin-install
   # Declarada por partida doble ([linux] y [macos]): en macOS es un no-op.
   @just flatpak-install
+  # Declarada por partida doble ([macos] y [linux]): en Linux es un no-op.
+  @just brew-install
 
 # Punto de entrada único y multiplataforma para actualizar todo el software
 # gestionado por este repo: se le añaden canales a medida que aparecen.
@@ -44,6 +46,8 @@ upgrade:
   @just harlequin-upgrade
   # Declarada por partida doble ([linux] y [macos]): en macOS es un no-op.
   @just flatpak-upgrade
+  # Declarada por partida doble ([macos] y [linux]): en Linux es un no-op.
+  @just brew-upgrade
 
 # Punto de entrada único para la configuración del usuario: symlinks primero y
 # después la configuración de aplicaciones que no se resuelve con un symlink.
@@ -80,6 +84,7 @@ import 'just/harlequin.just'
 import 'just/bitwarden.just'
 import 'just/flutter.just'
 import 'just/flatpak.just'
+import 'just/brew.just'
 import 'just/vscode.just'
 import 'just/distrobox.just'
 import 'just/settings.just'

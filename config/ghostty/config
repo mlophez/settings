@@ -1,0 +1,64 @@
+# Ghostty configuration, migrated from config/wezterm/wezterm.lua.
+# Reference: https://ghostty.org/docs/config/reference
+# Reload with cmd+shift+, (macOS) / ctrl+shift+, (Linux) or restarting Ghostty.
+
+# --- Appearance ---------------------------------------------------------
+# Same theme as wezterm's color_scheme; bundled with Ghostty (+list-themes).
+theme = Catppuccin Mocha
+font-size = 14
+# wezterm: window_background_opacity = 0.95
+background-opacity = 0.95
+
+# --- Window behaviour ---------------------------------------------------
+# wezterm maximized the window on gui-startup.
+maximize = true
+# wezterm: window_close_confirmation = "NeverPrompt"
+confirm-close-surface = false
+
+# --- Shell --------------------------------------------------------------
+# wezterm probed a list of dirs for fish/zsh/bash; both platforms install
+# fish through Nix Home Manager, so its path is stable. Value goes through
+# shell expansion, so ~ resolves to $HOME.
+command = ~/.nix-profile/bin/fish --login
+
+# --- macOS keyboard -----------------------------------------------------
+# wezterm: send_composed_key_when_right_alt_is_pressed = true.
+# Left option acts as alt (zellij bindings), right option keeps composing
+# characters on the Spanish layout.
+macos-option-as-alt = left
+
+# --- Keybindings --------------------------------------------------------
+# wezterm ran with disable_default_key_bindings; mirror that by clearing
+# every default and re-adding only what was defined there.
+keybind = clear
+
+# Clipboard
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
+
+# Font size
+keybind = ctrl++=increase_font_size:1
+keybind = ctrl+-=decrease_font_size:1
+keybind = ctrl+0=reset_font_size
+
+# Quit (needed on macOS because `clear` also removes the menu shortcuts)
+keybind = super+q=quit
+
+# Zellij prefix adapter: alt+space sends F10 (CSI 21~), like wezterm did.
+keybind = alt+space=csi:21~
+
+# Movement adapters: alt+jkl(ñ) send arrow keys for zellij navigation.
+# ñ sits on the physical Semicolon key of the Spanish layout (wezterm used
+# raw:47 on Linux / raw:41 on macOS for the same physical key). W3C key
+# codes in CamelCase mean physical key in Ghostty.
+keybind = alt+j=csi:D
+keybind = alt+k=csi:B
+keybind = alt+l=csi:A
+keybind = alt+Semicolon=csi:C
+
+# Not migrated from wezterm:
+# - format-tab-title / use_fancy_tab_bar: Ghostty tabs are not scriptable.
+# - ctrl+shift+x copy mode: Ghostty has no copy mode (use mouse selection).
+# - middle-click paste: built into Ghostty on Linux, no config needed.

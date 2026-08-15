@@ -16,6 +16,7 @@ config-dotfiles:
   link $(pwd)/config/waybar $HOME/.config/waybar
   # TERMINAL AND SHELL
   link $(pwd)/config/wezterm $HOME/.config/wezterm
+  link $(pwd)/config/ghostty $HOME/.config/ghostty
   link $(pwd)/config/fish $HOME/.config/fish
   link $(pwd)/config/starship.toml $HOME/.config/starship.toml
   link $(pwd)/config/zellij $HOME/.config/zellij
