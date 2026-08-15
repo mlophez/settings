@@ -54,6 +54,7 @@ return {
   font_size = 14.0,
   enable_wayland = true,
   window_close_confirmation = 'NeverPrompt',
+  window_decorations = "TITLE|RESIZE",
   window_background_opacity = 0.95,
   win32_system_backdrop = "Mica",
   text_background_opacity = 1.0,
