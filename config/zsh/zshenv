@@ -95,12 +95,20 @@ export DOCKER_HOST="unix:///run/user/$UID/podman/podman.sock"
 # NIX
 export PATH=${PATH}:${HOME}/.nix-profile/bin
 
-# TLS (Fedora)
+# TLS (Linux)
 # El tooling instalado con nix no busca el trust store del host por diseño:
-# se le apunta al bundle del sistema. Solo existe en Fedora/Linux, y el bloque
-# NETSKOPE de debajo lo sobreescribe cuando aplica.
-[[ -e /etc/pki/tls/certs/ca-bundle.crt ]] && \
-  export SSL_CERT_FILE="/etc/pki/tls/certs/ca-bundle.crt"
+# se le apunta al bundle del sistema, probando las rutas habituales (la
+# canónica de Fedora, su symlink de compatibilidad y la de Debian/Ubuntu).
+# El bloque NETSKOPE de debajo lo sobreescribe cuando aplica.
+for ca_bundle in /etc/pki/ca-trust/extracted/pem/tls-ca-bundle.pem \
+  /etc/pki/tls/certs/ca-bundle.crt \
+  /etc/ssl/certs/ca-certificates.crt; do
+  if [[ -e $ca_bundle ]]; then
+    export SSL_CERT_FILE="$ca_bundle"
+    break
+  fi
+done
+unset ca_bundle
 
 # NETSKOPE
 # Add netskope CA cert to aws cli if we are working with netskope: Logalty
