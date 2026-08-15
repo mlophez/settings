@@ -4,7 +4,19 @@
 [group('Settings')]
 config-dotfiles:
   #!/bin/bash
-  link () { echo $1 - $2; mkdir -p "$(dirname "$2")"; ln -sfn "$1" "$2"; }
+  # Si el destino ya existe como directorio/fichero real (no symlink), ln -sfn
+  # crearía el enlace DENTRO del directorio: se aparta antes a <dst>.bak
+  # (sustituyendo un .bak anterior) y así el relink es idempotente.
+  link () {
+    echo $1 - $2
+    mkdir -p "$(dirname "$2")"
+    if [[ -e "$2" && ! -L "$2" ]]; then
+      echo "  existing $2 moved to $2.bak"
+      rm -rf "$2.bak"
+      mv "$2" "$2.bak"
+    fi
+    ln -sfn "$1" "$2"
+  }
   unlink () { [[ -L "$2" ]] && rm "$2"; }
   # DoIt
   link $(pwd) $HOME/.local/share/settings

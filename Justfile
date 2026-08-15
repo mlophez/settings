@@ -54,6 +54,8 @@ upgrade:
 # Apply the user configuration
 [group('General')]
 config:
+  # Declarada por partida doble ([linux] y [macos]): en macOS es un no-op.
+  @just system-config
   @just config-dotfiles
   @just vscode-extensions-install
 

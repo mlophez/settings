@@ -31,20 +31,39 @@ system-install *packages=base_packages:
   done
   echo "Installing: {{ packages }}"
   sudo dnf5 install {{ packages }}
+  # Tras instalar los paquetes del host, aplicar la configuración
+  # (just config: system-config, symlinks de dotfiles y demás), para dejar el
+  # host operativo en una sola pasada.
+  just config
+
+# Configuración del host que no es un symlink de dotfiles: hoy, dejar operativo
+# el nix de Fedora (grupo y daemon). La encadena `just config` (general).
+[group('System')]
+[linux]
+system-config:
+  #!/usr/bin/env bash
+  set -euo pipefail
   # nix (paquete de Fedora): el uso single-user requiere pertenecer al grupo
-  # nixbld. Guardado con getent para ser un no-op si nix no se instaló, y con
-  # id -nG para ser idempotente. El grupo se aplica al reiniciar la sesión.
+  # nixbld. Guardado con getent para ser un no-op si nix no está instalado, y
+  # con id -nG para ser idempotente. El grupo se aplica al reiniciar la sesión.
   if getent group nixbld >/dev/null && ! id -nG "$USER" | grep -qw nixbld; then
     echo "Adding $USER to nixbld group"
     sudo usermod -aG nixbld "$USER"
   fi
   # nix en modo multiusuario: sin el daemon activo, nix escribe directo en
   # /nix/store y falla con "permission denied". enable --now es idempotente;
-  # guardado con el mismo getent para ser un no-op si nix no se instaló.
+  # guardado con el mismo getent para ser un no-op si nix no está instalado.
   if getent group nixbld >/dev/null; then
     echo "Enabling nix-daemon"
     sudo systemctl enable --now nix-daemon
   fi
+
+# Declarada por partida doble ([linux] y [macos]): en macOS es un no-op para
+# que `just config` pueda encadenarla incondicionalmente.
+[group('System')]
+[macos]
+system-config:
+  @echo "system-config: no-op on macOS"
 
 # Upgrade all host packages con un dnf5 normal, sin bin/snapshot (aparcado).
 # Se llama system-upgrade y no upgrade: `just upgrade` es ahora el agregador
