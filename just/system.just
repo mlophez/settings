@@ -38,6 +38,13 @@ system-install *packages=base_packages:
     echo "Adding $USER to nixbld group"
     sudo usermod -aG nixbld "$USER"
   fi
+  # nix en modo multiusuario: sin el daemon activo, nix escribe directo en
+  # /nix/store y falla con "permission denied". enable --now es idempotente;
+  # guardado con el mismo getent para ser un no-op si nix no se instaló.
+  if getent group nixbld >/dev/null; then
+    echo "Enabling nix-daemon"
+    sudo systemctl enable --now nix-daemon
+  fi
 
 # Upgrade all host packages con un dnf5 normal, sin bin/snapshot (aparcado).
 # Se llama system-upgrade y no upgrade: `just upgrade` es ahora el agregador
