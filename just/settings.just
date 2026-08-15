@@ -20,6 +20,7 @@ config-dotfiles:
   link $(pwd)/config/starship.toml $HOME/.config/starship.toml
   link $(pwd)/config/zellij $HOME/.config/zellij
   link $(pwd)/config/television $HOME/.config/television
+  link $(pwd)/config/atuin $HOME/.config/atuin
   link $(pwd)/config/nvim $HOME/.config/nvim
   # ZSH
   link $(pwd)/config/zsh $HOME/.config/zsh

@@ -35,6 +35,7 @@ with pkgs; [
   # SHELL
   fish
   nushell
+  atuin # historial de shell con sincronización y búsqueda
 
   # TOOLS
   fzf

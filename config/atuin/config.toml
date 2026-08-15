@@ -1,0 +1,20 @@
+# Atuin config. Referencia completa: https://docs.atuin.sh/configuration/config/
+# La base de datos y la clave de cifrado viven en ~/.local/share/atuin (no versionadas).
+
+## Búsqueda difusa en la TUI (Ctrl-R)
+search_mode = "fuzzy"
+
+## Ámbito inicial del filtro: "global", "host", "session" o "directory".
+## Dentro de la TUI se rota con Ctrl-R.
+filter_mode = "global"
+
+## La TUI se abre inline bajo el prompt en vez de a pantalla completa
+inline_height = 20
+
+## Enter ejecuta el comando directamente; con "return-query" solo lo pega en el prompt
+enter_accept = true
+
+## Sync: descomentar tras `atuin register` / `atuin login`
+# auto_sync = true
+# sync_frequency = "10m"
+# sync_address = "https://api.atuin.sh"

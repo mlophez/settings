@@ -23,6 +23,12 @@ if type -q starship
     starship init fish | source
 end
 
+# Atuin shell history (Ctrl-R). --disable-up-arrow conserva la flecha
+# arriba nativa de fish; quitar el flag para que también la capture atuin.
+if type -q atuin
+    atuin init fish --disable-up-arrow | source
+end
+
 # Kubectl completions
 # if type -q kubectl
 #     kubectl completion fish | source
