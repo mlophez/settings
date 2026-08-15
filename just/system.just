@@ -31,6 +31,13 @@ system-install *packages=base_packages:
   done
   echo "Installing: {{ packages }}"
   sudo dnf5 install {{ packages }}
+  # nix (paquete de Fedora): el uso single-user requiere pertenecer al grupo
+  # nixbld. Guardado con getent para ser un no-op si nix no se instaló, y con
+  # id -nG para ser idempotente. El grupo se aplica al reiniciar la sesión.
+  if getent group nixbld >/dev/null && ! id -nG "$USER" | grep -qw nixbld; then
+    echo "Adding $USER to nixbld group"
+    sudo usermod -aG nixbld "$USER"
+  fi
 
 # Upgrade all host packages con un dnf5 normal, sin bin/snapshot (aparcado).
 # Se llama system-upgrade y no upgrade: `just upgrade` es ahora el agregador
