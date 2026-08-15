@@ -76,6 +76,11 @@ with pkgs; [
   mdformat
 
   # SECURITY
+  # Bundle de CAs de Mozilla: publica ~/.nix-profile/etc/ssl/certs/ca-bundle.crt
+  # para que el tooling de nix (curl, git, python...) pueda verificar TLS fuera
+  # de NixOS, donde no encuentra el trust store del sistema (p. ej. Fedora usa
+  # /etc/pki/tls). El shell exporta SSL_CERT_FILE apuntando a este bundle.
+  cacert
   gnupg
   paperkey
   zbar
