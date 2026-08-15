@@ -79,8 +79,8 @@ with pkgs; [
   # Bundle de CAs de Mozilla: publica ~/.nix-profile/etc/ssl/certs/ca-bundle.crt
   # para que el tooling de nix (curl, git, python...) pueda verificar TLS fuera
   # de NixOS, donde no encuentra el trust store del sistema (p. ej. Fedora usa
-  # /etc/pki/tls). Requiere SSL_CERT_FILE apuntando al bundle (aún sin exportar
-  # en la shell; de momento se hace a mano donde haga falta).
+  # /etc/pki/tls). En Fedora la shell exporta SSL_CERT_FILE hacia el bundle del
+  # sistema; este queda disponible para usarlo a mano en hosts sin él.
   cacert
   gnupg
   paperkey
