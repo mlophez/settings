@@ -1,21 +1,60 @@
 # Package management for the mutable Fedora KDE host (DNF5).
-# Los snapshots pre/post los crea el script propio `bin/snapshot` (Snapper,
-# subvolumen root), que envuelve la operación de DNF. Ver docs/install.md.
+# bin/snapshot (snapshots pre/post con Snapper) está aparcado: las operaciones
+# de DNF se lanzan directas. Para snapshots manuales, ver system-snapshot.
 
 
-# Install host packages con snapshots pre/post, e.g. `just system-install neovim ripgrep`
+# Paquetes base del host Fedora: control de versiones, orquestador, contenedores,
+# canal de apps GUI (flatpak), canal CLI multiplataforma (nix, en los repos
+# oficiales desde Fedora 44), snapshots del sistema (snapper) y terminal (ghostty,
+# desde COPR).
+base_packages := "git just podman podman-compose flatpak nix snapper ghostty"
+
+# COPRs a habilitar antes de instalar: paquetes que no están en los repos oficiales.
+coprs := "pgdev/ghostty"
+
+# Install host packages, e.g. `just system-install neovim ripgrep`
+# Sin argumentos instala el conjunto base (base_packages), pensado para un host
+# recién instalado. Primero habilita los COPR (idempotente) y después lanza el
+# dnf5 normal, sin envolver en bin/snapshot (aparcado por ahora).
 # Se llama system-install y no install por el mismo motivo que system-upgrade:
 # `just install` es el agregador multiplataforma de general.just.
 [group('System')]
 [linux]
-system-install *packages:
-  bin/snapshot sudo dnf5 install {{packages}}
+system-install *packages=base_packages:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  for copr in {{ coprs }}; do
+    echo "Enabling COPR $copr"
+    sudo dnf5 copr enable -y "$copr"
+  done
+  echo "Installing: {{ packages }}"
+  sudo dnf5 install {{ packages }}
 
-# Upgrade all host packages (dnf5), envuelto en snapshots pre/post de snapper.
+# Upgrade all host packages con un dnf5 normal, sin bin/snapshot (aparcado).
 # Se llama system-upgrade y no upgrade: `just upgrade` es ahora el agregador
 # multiplataforma de general.just.
 [group('System')]
 [linux]
 system-upgrade:
-  bin/snapshot sudo dnf5 upgrade
+  sudo dnf5 upgrade
+
+# Create a manual snapper snapshot of the root subvolume, e.g. `just system-snapshot "antes de tocar X"`.
+# Es un no-op (sale con 0) si snapper no está instalado o si / no es btrfs, para
+# poder llamarla incondicionalmente desde otras recetas o en hosts sin snapshots.
+[group('System')]
+[linux]
+system-snapshot description="manual snapshot":
+  #!/usr/bin/env bash
+  set -euo pipefail
+  if ! command -v snapper >/dev/null 2>&1; then
+    echo "[system-snapshot] snapper no está instalado; nada que hacer"
+    exit 0
+  fi
+  # stat -f devuelve el tipo del sistema de ficheros que contiene /
+  if [[ "$(stat -f -c %T /)" != "btrfs" ]]; then
+    echo "[system-snapshot] / no es btrfs; nada que hacer"
+    exit 0
+  fi
+  echo "[system-snapshot] creando snapshot: {{ description }}"
+  sudo snapper -c root create --description "{{ description }}"
 
