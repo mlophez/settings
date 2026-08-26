@@ -29,7 +29,7 @@ flatpak-install:
   flatpak install -y flathub io.dbeaver.DBeaverCommunity
   flatpak install -y flathub com.ticktick.TickTick
   flatpak install -y flathub com.bitwarden.desktop
-  flatpak install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref || /bin/true
+  #flatpak install -y https://downloads.1password.com/linux/flatpak/1Password.flatpakref
   # -y como el resto: sin él la receta se queda esperando confirmación y bloquea
   # la cadena de `just install`.
   #flatpak install -y flathub com.mattjakeman.ExtensionManager
