@@ -8,8 +8,19 @@ search_mode = "fuzzy"
 ## Dentro de la TUI se rota con Ctrl-R.
 filter_mode = "global"
 
-## La TUI se abre inline bajo el prompt en vez de a pantalla completa
-inline_height = 20
+## La TUI se abre inline bajo el prompt en vez de a pantalla completa.
+## Atuin no tiene un ajuste de "número de resultados": el límite sale de la altura.
+## En estilo compact la UI gasta 2 líneas (buscador + línea de estado),
+## así que 12 líneas dejan 10 resultados visibles.
+inline_height = 12
+
+## Misma altura cuando Atuin se invoca desde la flecha arriba de la shell
+## (por defecto 0, que significa pantalla completa)
+inline_height_shell_up_key_binding = 12
+
+## Invierte la TUI: el buscador se dibuja arriba, pegado al prompt, y los
+## resultados caen hacia abajo (por defecto el buscador va abajo del todo)
+invert = true
 
 ## Enter ejecuta el comando directamente; con "return-query" solo lo pega en el prompt
 enter_accept = true
