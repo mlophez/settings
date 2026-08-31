@@ -149,7 +149,7 @@ with pkgs; [
 
   # JAVA
   maven
-  jdk21
+  jdk25
 
   # IA
   opencode
