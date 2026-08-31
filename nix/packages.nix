@@ -130,7 +130,10 @@ with pkgs; [
   delve
 
   # NODE
-  nodejs
+  # nodejs_latest (26.x) en lugar del nodejs por defecto (24.x): el frontend de
+  # platform exige Node >=26 en engines y su .npmrc pasa --no-webstorage, un
+  # flag que no existe antes de Node 25.
+  nodejs_latest
   yarn
   pnpm
   bun
@@ -148,7 +151,10 @@ with pkgs; [
   lua-language-server
 
   # JAVA
-  maven
+  # Override: el maven de nixpkgs empaqueta un JDK 21 propio y lo usa cuando
+  # JAVA_HOME no está definido, aunque el perfil tenga jdk25. Con el override
+  # mvn arranca directamente sobre Java 25 sin exportar nada.
+  (maven.override { jdk_headless = jdk25; })
   jdk25
 
   # IA
