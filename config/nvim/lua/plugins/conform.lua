@@ -78,7 +78,8 @@ return {
         -- yaml = { "prettier" }, -- yaml = { { "yq" } },
         --xml = { "xmlformat" },
         -- yaml = { { "prettier", "yamlfmt" } },
-        --markdown = { "prettier" },
+        -- prettier formats the document, injected formats fenced code blocks with each language's formatter
+        markdown = { "prettier", "injected" },
         --graphql = { "prettier" },
         python = { "isort", "ruff_fix", "ruff_format" }, -- { "isort", "black" },
         go = { "gofmt" },
