@@ -6,11 +6,11 @@ goproject() {
     (
       if [ -d "$HOME/Code" ]; then
         find "$HOME/Code" -mindepth 1 -maxdepth 1 -type d,l -print
-        find "$HOME/Code" -mindepth 1 -maxdepth 3 -type d -name ".git" -exec dirname {} \;
+        find "$HOME/Code" -mindepth 1 -maxdepth 4 -type d -name ".git" -exec dirname {} \;
       fi
       if [ -d "$HOME/Documents/Code" ]; then
         find "$HOME/Documents/Code" -mindepth 1 -maxdepth 1 -type d,l -print
-        find "$HOME/Documents/Code" -mindepth 1 -maxdepth 3 -type d -name ".git" -exec dirname {} \;
+        find "$HOME/Documents/Code" -mindepth 1 -maxdepth 4 -type d -name ".git" -exec dirname {} \;
       fi
     ) | sort -u    # elimina duplicados
   }

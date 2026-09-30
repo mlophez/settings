@@ -63,7 +63,7 @@ return {
           leave_dirs_open = false,
         },
         filtered_items = {
-          always_show = { ".gitignored", ".gitignore" },
+          always_show = { ".gitignored", ".gitignore", ".ignore", ".claude" },
         },
         window = {
           mappings = {
