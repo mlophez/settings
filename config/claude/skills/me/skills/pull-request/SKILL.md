@@ -20,6 +20,7 @@ BRANCH=$(git branch --show-current)
 ```
 
 Checks before continuing:
+
 - If the remote is not Bitbucket, stop and tell the user.
 - If `BRANCH` is the default branch (`main`/`master`), the change has no feature branch yet. Run **Step 1b** to create the branch and commit the change before continuing.
 - If the branch has commits not pushed to origin, push it first (ask the user if the push needs `--set-upstream`).
@@ -33,7 +34,7 @@ Trigger this step only when Step 1 detected that `BRANCH` is the default branch.
    ```bash
    git switch -c "$BRANCH"
    ```
-3. **Commit the change** by invoking the `commit` skill (it handles `pull --rebase`, `add`, `commit` and `push`). When pushing the new branch, it must set upstream (`git push --set-upstream origin "$BRANCH"`).
+3. **Commit the change** by invoking the `me:commit` skill (it handles `pull --rebase`, `add`, `commit` and `push`). When pushing the new branch, it must set upstream (`git push --set-upstream origin "$BRANCH"`).
 4. Re-read the current branch (`BRANCH=$(git branch --show-current)`) and continue with Step 2.
 
 If there are no pending changes to commit and no commits ahead of the default branch, stop: there is nothing to open a PR for.
@@ -57,9 +58,14 @@ Derive everything possible before asking:
 4. **Validation**: how the change was tested. Take it from the session (tests/build run during implementation) if available.
 
 Description sections (always these three):
+
 - **Contexto**: motivación del cambio, con enlace al ticket de Jira si existe.
 - **Cambios**: lista de los cambios técnicos concretos de la PR.
 - **Validación**: cómo se ha probado el cambio.
+
+Rules:
+
+- **Don`t co-author pull requests**
 
 Only ask the user (single `AskUserQuestion` batch) what cannot be deduced: typically the validation if no tests were run in the session, the destination branch if it is not the default one, or the Jira ticket if none was found.
 
@@ -98,6 +104,7 @@ Look for a Jira key (e.g. `TIF-123`, `TS-45`) in the branch name, the commit mes
 (same sources as Step 3.2). If none is found, skip the linking.
 
 If a ticket exists, link both ways:
+
 - Add a comment on the ticket with the PR link (`mcp__claude_ai_Atlassian__addCommentToJiraIssue`).
 - If the PR title does not already include the ticket key, prepend it (Bitbucket auto-links the Jira key), using
   the Step 5b update with the `title` field instead of `description`.

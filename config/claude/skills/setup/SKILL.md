@@ -11,8 +11,8 @@ disable-model-invocation: true
 
 # Setup project docs
 
-Bootstrap the single source of truth that the `plan`, `implement`, `review` and
-`document` skills (and the agents that preload them) read, and wire the hooks
+Bootstrap the single source of truth that the `me:plan`, `implement`, `me:review` and
+`me:document` skills (and the agents that preload them) read, and wire the hooks
 that enforce it mechanically. The interview is the single authority on what gets
 written: the skill may analyze the project in read-only mode to propose default
 answers (see step 1), but it never writes an inferred value the user did not

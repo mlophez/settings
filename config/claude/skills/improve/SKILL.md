@@ -3,7 +3,7 @@ name: improve
 description: >
   Looks for opportunities to improve code that already works and writes them as
   a plan of optional, ranked recommendations. Use it when the user invokes
-  `/improve`, with or without a target. It is not `/review`: `/review` judges
+  `/improve`, with or without a target. It is not `/me:review`: `/me:review` judges
   whether a change is correct, `/improve` takes correctness as a given and asks
   how the code could be better. Read-only over the codebase; the only file it
   writes is the plan.
@@ -139,7 +139,7 @@ English, no markdown tables, lines wrapped at 120 characters. Sections, in this 
 - **Considered and rejected** — one line per dropped candidate with the reason, so the reader knows it was looked
   at and does not re-raise it.
 - **Defects spotted** — real bugs noticed by accident, reported and not fixed, each with `file:line`. Note that
-  they belong to `/review` or `/troubleshoot`, not here. Omit the section if there are none.
+  they belong to `/me:review` or `/troubleshoot`, not here. Omit the section if there are none.
 - **Risks** — what could break if these recommendations are applied, and how to mitigate it.
 - **Verification** — how to verify the whole set end to end: commands and expected results.
 - **Missing docs** — only if `AGENTS.md` was not found; state which fallback was used instead.
@@ -173,7 +173,7 @@ Your final message is what the caller relays to the user, so keep it short and s
 - Read-only: you never edit, write, commit or change any state yourself. The subagent writes the plan file; you do
   not touch it.
 - Do not add recommendations of your own, and do not re-rank or filter the subagent's: you only relay.
-- `/improve` is not `/review`. If the user is asking whether a change is correct, say so and point at `/review`
+- `/improve` is not `/me:review`. If the user is asking whether a change is correct, say so and point at `/me:review`
   instead of running an improvement pass.
 - When the summary is relayed, STOP and return control to the user. Do not implement any recommendation and do not
   start the next phases of the flow: the user decides each phase manually and may skip any of them.

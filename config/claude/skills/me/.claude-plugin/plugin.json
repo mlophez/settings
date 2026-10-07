@@ -1,0 +1,7 @@
+{
+  "name": "me",
+  "description": "Personal skills of Miguel, namespaced as /me:<skill> so they never shadow the project skills of the same name",
+  "author": {
+    "name": "Miguel López Ruiz"
+  }
+}
