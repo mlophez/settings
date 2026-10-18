@@ -31,7 +31,7 @@
     ],
     "defaultMode": "auto"
   },
-  "model": "opus[1m]",
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "bash $HOME/.claude/statusline.sh"
@@ -71,11 +71,59 @@
   },
   "language": "Español",
   "effortLevel": "medium",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "xhigh"
+    },
+    "claude-fable-5": {
+      "effortLevel": "high"
+    },
+    "claude-fable-5-1": {
+      "effortLevel": "high"
+    },
+    "claude-opus-5-5": {
+      "effortLevel": "high"
+    }
+  },
+  "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(git push --force*) in /Users/miguel.lopez/Notes — Git Destructive carve-out reinforcement for this private notes repo, no evidence supports broader push force allowance"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: private (mlophez/notes, confirmed via gh)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured",
+      "**Default / protected branches**: default branch unknown (origin/HEAD unset); no protected branches listed via gh (rulesets not queryable here — treat as unconfirmed, not as proof of no protection)",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine with open internet",
+      "**Source control**: The trusted repo (mlophez/notes) and its origin remote only (no additional orgs configured)",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: PKM/desplegar-checker-de-mutua-en-prod.md, PKM/formacion-de-kubernetes.md, PKM/kubernetes 1.md, PKM/kubernetes.md, PKM/logalty-terraform.md, PKM/migracion-del-entorno-de-santander-a-aws-con-kubernetes.md, PKM/subida-de-prod-a-boidas.md, PKM/terraform.md — any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; share only with cleared audiences",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (e.g. references to prod environments noted in PKM/desplegar-checker-de-mutua-en-prod.md, PKM/subida-de-prod-a-boidas.md)",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: personal knowledge management (Obsidian vault) with occasional Logalty-related technical notes (Kubernetes, Terraform, AWS)",
+      "**Trusted repo**: /Users/miguel.lopez/Notes (origin: https://github.com/mlophez/notes.git, private)",
+      "**Org-specific CLIs**: None configured",
+      "routine under /Users/miguel.lopez/Notes/ prefix: file reads/edits, rg/fd searches, markdown/frontmatter edits — excluding .trash/ and .obsidian/ per repo CLAUDE.md"
+    ]
+  },
   "voiceEnabled": true
 }
