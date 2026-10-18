@@ -1,21 +1,25 @@
 layout {
+  // Every tab gets the compact bar on top and a shell below
   default_tab_template {
     pane size=1 borderless=true {
       plugin location="zellij:compact-bar"
     }
-    pane cwd="$HOME"
+    pane
   }
+  // Same floating pane geometry as the main layout
   swap_floating_layout {
     floating_panes max_panes=5 {
-      pane { x "5%"; y "10%"; width "90%"; height "80%"; }
-      pane { x "5%"; y "12%"; width "90%"; height "80%"; }
-      pane { x "5%"; y "14%"; width "90%"; height "80%"; }
-      pane { x "5%"; y "16%"; width "90%"; height "80%"; }
-      pane { x "5%"; y "18%"; width "90%"; height "80%"; }
+      pane { x "0%";  y "6%";  width "100%"; height "85%"; }
+      pane { x "0%";  y "8%";  width "100%"; height "85%"; }
+      pane { x "0%";  y "10%";  width "100%"; height "85%"; }
+      pane { x "0%";  y "12%";  width "100%"; height "85%"; }
+      pane { x "0%";  y "14%";  width "100%"; height "85%"; }
     }
   }
-  tab name="1# LOCAL"
-  tab name="2# LOGALTY" cwd="$HOME/Code/Logalty"
-  tab name="3# KUBERNETES" cwd="$HOME/Code/Logalty/config/kubernetes"
-  tab name="4# TERRAFORM" cwd="$HOME/Code/Logalty/config/terraform"
+  // One tab per Logalty project, each opened in its working directory
+  tab name="LOCAL" cwd="$HOME"
+  tab name="LOGALTY" cwd="$HOME/Code/Logalty"
+  tab name="KUBERNETES" cwd="$HOME/Code/Logalty/repositories/kubernetes"
+  tab name="TERRAFORM" cwd="$HOME/Code/Logalty/repositories/terraform"
+  tab name="PLATFORM" cwd="$HOME/Code/Logalty/repositories/platform"
 }
