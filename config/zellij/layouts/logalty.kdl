@@ -1,8 +1,8 @@
 layout {
-  // Every tab gets the compact bar on top and a shell below
+  // Every tab gets the tab bar on top and a shell below
   default_tab_template {
     pane size=1 borderless=true {
-      plugin location="zellij:compact-bar"
+      plugin location="zellij:tab-bar"
     }
     pane
   }
