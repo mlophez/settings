@@ -2,7 +2,10 @@
   description = "Nix CLI packages for mlr's workstation (Linux + macOS)";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable y no nixos-unstable: este último solo espera a los
+    # tests de NixOS (Linux) y puede avanzar sin binarios de darwin en la
+    # caché, lo que obliga a compilar paquetes pesados (node, jdk) en el Mac.
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
 
   outputs = { self, nixpkgs }:

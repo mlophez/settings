@@ -57,6 +57,72 @@ nix-generations:
 nix-upgrade: && nix-switch nix-clean
   nix flake update
 
+# Write the workstation settings into the Nix daemon config and restart it
+[group('Nix')]
+nix-custom:
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  # nix.custom.conf es el fichero que el instalador de Determinate reserva para
+  # cambios del usuario: nix.conf se reescribe en cada actualización.
+  conf=/etc/nix/nix.custom.conf
+  begin="# BEGIN workstation (just nix-custom)"
+  end="# END workstation (just nix-custom)"
+
+  if ! rg -q '^!include nix.custom.conf' /etc/nix/nix.conf; then
+    echo "/etc/nix/nix.conf does not include nix.custom.conf; nothing to do" >&2
+    exit 1
+  fi
+
+  # Bundle de CAs que ya usa el propio daemon. En macOS Determinate lo genera
+  # desde el llavero, así que incluye la CA de Netskope cuando está instalada.
+  cert=$(nix config show ssl-cert-file)
+  if [[ -z $cert || ! -r $cert ]]; then
+    echo "ssl-cert-file is not set or not readable: '$cert'" >&2
+    exit 1
+  fi
+
+  # impure-env pasa NIX_SSL_CERT_FILE a las derivaciones fixed-output (fetchers,
+  # módulos Go, npm...). Sin ello usan el bundle de cacert, que no trae la CA de
+  # Netskope, y fallan con "certificate signed by unknown authority".
+  block=$(cat <<EOF
+  $begin
+  extra-experimental-features = configurable-impure-env
+  impure-env = NIX_SSL_CERT_FILE=$cert
+  $end
+  EOF
+  )
+
+  # Bloque gestionado actual (vacío si aún no existe): si coincide, no se toca
+  # nada ni se reinicia el daemon.
+  current=$(awk -v b="$begin" -v e="$end" '$0 == b {f = 1} f {print} $0 == e {f = 0}' "$conf" 2>/dev/null || true)
+  if [[ $current == "$block" ]]; then
+    echo "$conf is already up to date"
+    exit 0
+  fi
+
+  # Se reconstruye el fichero: todo lo ajeno al bloque se conserva tal cual y el
+  # bloque se añade al final con el contenido nuevo.
+  tmp=$(mktemp)
+  trap 'rm -f "$tmp"' EXIT
+  awk -v b="$begin" -v e="$end" '$0 == b {f = 1} !f {print} $0 == e {f = 0}' "$conf" > "$tmp" 2>/dev/null || true
+  printf '%s\n' "$block" >> "$tmp"
+
+  echo "Writing $conf (requires sudo)"
+  sudo install -m 644 "$tmp" "$conf"
+
+  # El daemon solo lee la configuración al arrancar
+  echo "Restarting the Nix daemon"
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    for label in systems.determinate.nix-daemon org.nixos.nix-daemon; do
+      if [[ -f /Library/LaunchDaemons/$label.plist ]]; then
+        sudo launchctl kickstart -k "system/$label"
+      fi
+    done
+  else
+    sudo systemctl restart nix-daemon
+  fi
+
 # Sync fonts into ~/Library/Fonts on macOS (no-op elsewhere)
 [group('Nix')]
 [private]

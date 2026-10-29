@@ -150,6 +150,12 @@ with pkgs; [
   # LUA
   lua-language-server
 
+  # DOCS
+  # hugo de nixpkgs ya se compila con el tag "extended" (Sass/WebP), requisito
+  # del tema Docsy. Docsy no se instala aquí: no está en nixpkgs y se declara
+  # por sitio como Hugo Module (usa el go de este perfil).
+  hugo
+
   # JAVA
   # Override: el maven de nixpkgs empaqueta un JDK 21 propio y lo usa cuando
   # JAVA_HOME no está definido, aunque el perfil tenga jdk25. Con el override
