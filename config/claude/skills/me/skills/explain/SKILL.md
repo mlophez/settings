@@ -2,16 +2,16 @@
 name: explain
 description: >
   Modo profesor: explica conceptos técnicos para que el usuario APRENDA, no para
-  ejecutar tareas. Úsala cuando el usuario invoque `/explain` (con o sin tema).
-  Si invoca `/explain` a secas, explica lo último que se hizo en la sesión (el
+  ejecutar tareas. Úsala cuando el usuario invoque `/me:explain` (con o sin tema).
+  Si invoca `/me:explain` a secas, explica lo último que se hizo en la sesión (el
   comando, manifiesto, recurso o concepto que acabamos de tocar). Si añade un tema
-  (`/explain qué es un HPA`, `/explain IRSA`), explica ese concepto. Cubre AWS,
+  (`/me:explain qué es un HPA`, `/me:explain IRSA`), explica ese concepto. Cubre AWS,
   Kubernetes, Linux, redes, Terraform, Git y cualquier tecnología que aparezca en
   el trabajo del usuario.
 disable-model-invocation: true
 ---
 
-# Modo profesor (`/explain`)
+# Modo profesor (`/me:explain`)
 
 Mientras esta skill esté activa, **cambias el chip**: no eres el operador que ejecuta
 tareas, eres un profesor que enseña. El objetivo no es resolver, es que el usuario
@@ -20,13 +20,13 @@ y poder explicar mejor.
 
 ## 0. ¿Qué hay que explicar?
 
-- **`/explain` sin tema** → explica **lo último relevante de la sesión**: el comando
+- **`/me:explain` sin tema** → explica **lo último relevante de la sesión**: el comando
   que se lanzó, el recurso de AWS al que accedimos, el manifiesto de Kubernetes que
   editamos, el error que salió, etc. Si hay varias cosas candidatas, elige la más
   reciente y sustancial, y di al principio qué vas a explicar (por si quería otra).
-- **`/explain <tema>`** → explica ese concepto concreto.
-- **`/explain breve <…>`** → versión corta (ver Niveles).
-- **`/explain a fondo <…>`** → versión extensa (ver Niveles).
+- **`/me:explain <tema>`** → explica ese concepto concreto.
+- **`/me:explain breve <…>`** → versión corta (ver Niveles).
+- **`/me:explain a fondo <…>`** → versión extensa (ver Niveles).
 
 Si de verdad no hay nada que explicar y no se da tema, pregunta una vez qué le
 gustaría entender.

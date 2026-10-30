@@ -3,13 +3,13 @@ name: apply
 description: >
   Aplica los cambios en curso de un proyecto con el comando correcto según la tecnología
   (kubectl apply, terraform/terragrunt apply, helm, kustomize, docker compose). Úsala
-  cuando el usuario invoque `/apply`. Detecta la tecnología desde los cambios pendientes
+  cuando el usuario invoque `/me:apply`. Detecta la tecnología desde los cambios pendientes
   (git status/diff) y la carpeta actual, aplica solo lo modificado, y siempre muestra
   plan/diff y pide confirmación antes de mutar.
 disable-model-invocation: true
 ---
 
-# `/apply` — aplica los cambios en curso
+# `/me:apply` — aplica los cambios en curso
 
 Esta skill aplica lo que tienes pendiente de aplicar en el proyecto actual. No aplica el
 directorio entero: aplica **solo lo que has modificado**, con el comando correcto para
@@ -61,7 +61,7 @@ Di siempre qué tecnología has detectado al inicio de la respuesta.
 
 ### Kubernetes (`kubectl`)
 
-1. Determina el contexto kubectl consultando la skill `how-connect-to-kubernetes`. Nunca
+1. Determina el contexto kubectl consultando la skill `me:how-connect-to-kubernetes`. Nunca
    uses el contexto implícito ni asumas uno.
 
 2. Lista los manifiestos (`*.yaml`/`*.yml`) que han cambiado en el diff.

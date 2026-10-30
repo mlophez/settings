@@ -3,7 +3,7 @@ name: setup
 description: >
   Generates the single source of truth for a project (AGENTS.md, plus a thin CLAUDE.md
   that imports it and a README.md) by interviewing the user, and installs the validation
-  hooks and the scripts/agent/ tooling scripts. Use it when the user says "/setup",
+  hooks and the scripts/agent/ tooling scripts. Use it when the user says "/me:setup",
   "initialize the project", "generate the project docs", or starts a new project without
   an AGENTS.md.
 disable-model-invocation: true

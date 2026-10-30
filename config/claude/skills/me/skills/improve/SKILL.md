@@ -3,8 +3,8 @@ name: improve
 description: >
   Looks for opportunities to improve code that already works and writes them as
   a plan of optional, ranked recommendations. Use it when the user invokes
-  `/improve`, with or without a target. It is not `/me:review`: `/me:review` judges
-  whether a change is correct, `/improve` takes correctness as a given and asks
+  `/me:improve`, with or without a target. It is not `/me:review`: `/me:review` judges
+  whether a change is correct, `/me:improve` takes correctness as a given and asks
   how the code could be better. Read-only over the codebase; the only file it
   writes is the plan.
 effort: low
@@ -23,8 +23,8 @@ justifications or trade-offs already discussed in this session.
 ## How to operate
 
 1. Resolve the **target** from the invocation:
-   - `/improve <target>` — a path, a directory, a module, a feature name or a symbol: that is the target.
-   - `/improve` with no argument: the target is the pending changes.
+   - `/me:improve <target>` — a path, a directory, a module, a feature name or a symbol: that is the target.
+   - `/me:improve` with no argument: the target is the pending changes.
    Pass the target through as the user wrote it. Do not read code to resolve or expand it: the subagent resolves it
    itself, and pre-digesting it here would leak this session's framing into its clean context.
 2. Derive the **plan path**: `<current_path>/.plans/improve-<short-kebab-case-target>.md`, where the slug is a short
@@ -139,7 +139,7 @@ English, no markdown tables, lines wrapped at 120 characters. Sections, in this 
 - **Considered and rejected** — one line per dropped candidate with the reason, so the reader knows it was looked
   at and does not re-raise it.
 - **Defects spotted** — real bugs noticed by accident, reported and not fixed, each with `file:line`. Note that
-  they belong to `/me:review` or `/troubleshoot`, not here. Omit the section if there are none.
+  they belong to `/me:review` or `/me:troubleshoot`, not here. Omit the section if there are none.
 - **Risks** — what could break if these recommendations are applied, and how to mitigate it.
 - **Verification** — how to verify the whole set end to end: commands and expected results.
 - **Missing docs** — only if `AGENTS.md` was not found; state which fallback was used instead.
@@ -173,7 +173,7 @@ Your final message is what the caller relays to the user, so keep it short and s
 - Read-only: you never edit, write, commit or change any state yourself. The subagent writes the plan file; you do
   not touch it.
 - Do not add recommendations of your own, and do not re-rank or filter the subagent's: you only relay.
-- `/improve` is not `/me:review`. If the user is asking whether a change is correct, say so and point at `/me:review`
+- `/me:improve` is not `/me:review`. If the user is asking whether a change is correct, say so and point at `/me:review`
   instead of running an improvement pass.
 - When the summary is relayed, STOP and return control to the user. Do not implement any recommendation and do not
   start the next phases of the flow: the user decides each phase manually and may skip any of them.

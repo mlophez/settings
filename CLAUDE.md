@@ -10,7 +10,7 @@
 
 - Two sources, different purpose: TickTick MCP (`mcp__ticktick__*`) is for personal reminders and informal to-dos
   not tied to a work ticket; Jira via the Atlassian MCP (`mcp__claude_ai_Atlassian__*`) is for tracked work items
-  (see the `ticket` and `close` skills for how Jira tickets are created/closed).
+  (see the `me:ticket` and `me:close` skills for how Jira tickets are created/closed).
 - Only act on these when Miguel explicitly asks for one of them or uses matching phrasing below. Never capture,
   complete, or sync a task on your own initiative.
 
@@ -50,7 +50,7 @@ Trigger phrases: "márcalo como hecho", "he terminado X", "cambia la fecha/prior
 
 Trigger phrases: "apunta el ticket X en TickTick", "pon TIF-123 en mi TickTick".
 
-- Resolve the Jira key from the request (or from session context, same resolution order as the `close` skill).
+- Resolve the Jira key from the request (or from session context, same resolution order as the `me:close` skill).
 - Fetch its summary with `mcp__claude_ai_Atlassian__getJiraIssue` (fields: `summary`).
 - Create a TickTick task via `mcp__ticktick__create_task` with `title` set to `"<KEY> <summary>"` and `content` set
   to the ticket URL, in the Inbox unless Miguel names a project.

@@ -3,9 +3,9 @@ name: close
 description: >
   Cierra el cambio en curso: hace squash-merge de la pull request de la rama en
   Bitbucket y pasa el ticket de Jira a Completado, dejando un comentario final en
-  ambos. Úsala cuando el usuario diga "/close", "cierra esto", "cierra la PR",
+  ambos. Úsala cuando el usuario diga "/me:close", "cierra esto", "cierra la PR",
   "cierra el ticket" o "da por cerrado el cambio". Sin argumento cierra PR y ticket;
-  con argumento acota: /close pr, /close ticket, /close TIF-123.
+  con argumento acota: /me:close pr, /me:close ticket, /me:close TIF-123.
 #model: sonnet
 effort: low
 disable-model-invocation: true
@@ -102,7 +102,7 @@ Rules:
 - `**Objetivo:**` and `**Resumen de lo realizado:**` are word-for-word identical in both comments.
 - The `**Pull request:**` line appears only on the Jira comment, and only when a PR was merged in this run. Omit it on
   the PR comment (circular reference) and when closing only the ticket with no PR.
-- When scope is PR-only (`/close pr`), derive `**Objetivo:**` from the PR title/description and post the comment only
+- When scope is PR-only (`/me:close pr`), derive `**Objetivo:**` from the PR title/description and post the comment only
   on the PR.
 
 ### PR guards (skip when scope is ticket-only)

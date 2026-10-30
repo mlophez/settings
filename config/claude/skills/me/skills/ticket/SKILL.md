@@ -2,7 +2,7 @@
 name: ticket
 description: >
   Crea en Jira el ticket asociado al cambio en curso usando el MCP de
-  Atlassian. Úsala cuando el usuario diga "/ticket", "abre el ticket de esto",
+  Atlassian. Úsala cuando el usuario diga "/me:ticket", "abre el ticket de esto",
   "crea el ticket de este cambio" o quiera abrir un ticket nuevo. Deriva el
   contenido del contexto de la sesión y de los cambios pendientes, y solo
   pregunta lo que no pueda deducir.
