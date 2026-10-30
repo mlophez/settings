@@ -11,6 +11,8 @@ config/containers/podman-connections.json.lock
 config/containers/podman/
 resources/
 .plans/
+config/claude/skills/.trash/
+config/claude/skills/synced/
 
 # Files
 .zcompdump*
