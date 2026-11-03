@@ -1,58 +1,40 @@
 # CLAUDE.md
 
 ## Context
+
 - Location: Madrid, Spain (`Europe/Madrid`, Spanish locale)
-- Training data may be outdated: always verify current libraries, APIs, tools, versions, and docs using WebSearch/WebFetch before recommending or implementing.
 
 ## Communication
+
 - Spanish for explanations
 - English for code, commands, and technical terms
 - No emojis
 
-## Behavior
-- If context is low: commit progress and prepare handoff prompt
-- Remove temporary files/scripts created during work
-
-## Planning
-- To plan features, refactors or bugfixes, always use the `plan` skill
-- The `plan` skill replaces plan mode: never call EnterPlanMode for planning
-
-## Development flow
-- Do exactly what is asked, nothing more. When the task is done, stop and return control.
-- Never chain into a follow-up action (plan, implement, review, document, commit, PR or any other) on your own: Miguel launches each one manually when he wants it.
-- Do not propose or insist on a next step or a sequence unless Miguel asks for it.
-
-## Subagents
-- `#<agent-name>` in a prompt (e.g. `#implementer`, `#reviewer`) means: launch that subagent immediately for the task, do not handle it in the main session
-
-## Quality
-- No hardcoded/test-only solutions
-- Build general, maintainable implementations
-- If task/tests are wrong or infeasible, say so clearly
-
 ## AWS
+
 - Always use `aws --profile <profile>`
 - Never rely on default profile/env vars
 - Ignore global `AWS_PROFILE=tools` for workload commands
 - Unknown profile: ask Miguel and update inventory
 
 ## Kubernetes
+
 - Always use `kubectl --context <context>`
 - Never rely on current context
 - Unknown context: ask Miguel and update inventory
 
 ## Git
+
 - No co-authoring commits
-- Never commit automatically: only commit when Miguel explicitly asks for it
 
 ## Markdown
+
 - Do not write tables in markdown
 
-## Coding
-- Always comment generated code for human understand.
-
 ## Shell Preferences
+
 Use modern tools when available:
+
 - `rg` instead of `grep`
 - `fd` instead of `find`
 - `bat` instead of `cat`
@@ -73,4 +55,3 @@ zellij action new-pane --floating --cwd "<project-path>" -- claude "$PROMPT"
 # Old way
 zellij action new-tab -n "<project-name>" -c "<project-path>" -- claude "$PROMPT"
 ```
-
