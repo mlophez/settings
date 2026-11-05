@@ -126,6 +126,7 @@ with pkgs; [
   # GO
   go
   go-tools
+  golangci-lint
   gopls
   delve
 
