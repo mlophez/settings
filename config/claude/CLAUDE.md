@@ -4,6 +4,13 @@
 
 - Location: Madrid, Spain (`Europe/Madrid`, Spanish locale)
 
+## Workstation Layout
+
+- **~/Code/**: Every git repository.
+- **~/Code/Workstation/**: Dotfiles, machine config and `just` orchestrator.
+- **~/Code/Logalty/**: All repositories of Logalty
+- **~/Notes/**: Obsidian vault (PKM) with routines, calendar, task lists and meetings.
+
 ## Communication
 
 - Spanish for explanations

@@ -47,7 +47,8 @@
     "logalty-ai@logalty": false,
     "superpowers@claude-plugins-official": false,
     "ponytail@ponytail": false,
-    "pyright-lsp@claude-plugins-official": true
+    "pyright-lsp@claude-plugins-official": true,
+    "polix@polix": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -66,6 +67,12 @@
       "source": {
         "source": "github",
         "repo": "DietrichGebert/ponytail"
+      }
+    },
+    "polix": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/miguel.lopez/.polix/marketplace"
       }
     }
   },
